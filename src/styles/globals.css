@@ -1,26 +1,145 @@
 @import "tailwindcss";
+@import "./typorgraphy.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Black & White */
+  --color-black: #000000;
+  --color-white: #ffffff;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Neutral colors */
+  --color-neutral-700: #2f2f2f;
+  --color-neutral-600: #484848;
+  --color-neutral-500: #6b6b6b;
+  --color-neutral-400: #9c9c9c;
+  --color-neutral-300: #b7b7b7;
+  --color-neutral-200: #d3d3d3;
+  --color-neutral-100: #e7e7e7;
+  --color-neutral-50: #f4f4f4;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Primary Blue */
+  --color-primary-blue-700: #192f65;
+  --color-primary-blue-600: #1a3c7b;
+  --color-primary-blue-500: #2652c4;
+  --color-primary-blue-400: #2e67e2;
+  --color-primary-blue-300: #4a83f1;
+  --color-primary-blue-200: #6d99f3;
+  --color-primary-blue-100: #a3bff8;
+  --color-primary-blue-50: #d8e5fd;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Primary Green */
+  --color-primary-green-700: #0f633e;
+  --color-primary-green-600: #147a4e;
+  --color-primary-green-500: #199b63;
+  --color-primary-green-400: #26bb81;
+  --color-primary-green-300: #36d695;
+  --color-primary-green-200: #63e0af;
+  --color-primary-green-100: #92eac5;
+  --color-primary-green-50: #c7f5e2;
+
+  /* Primary Red */
+  --color-primary-red-700: #7c1d39;
+  --color-primary-red-600: #9d2344;
+  --color-primary-red-500: #e03b67;
+  --color-primary-red-400: #e95a7f;
+  --color-primary-red-300: #ee7a97;
+  --color-primary-red-200: #f29baf;
+  --color-primary-red-100: #f7bdc9;
+  --color-primary-red-50: #fadde4;
+
+  /* Primary Orange */
+  --color-primary-orange-700: #a83800;
+  --color-primary-orange-600: #c94212;
+  --color-primary-orange-500: #ed5c34;
+  --color-primary-orange-400: #f47458;
+  --color-primary-orange-300: #f78d75;
+  --color-primary-orange-200: #f9a693;
+  --color-primary-orange-100: #fbcbbf;
+  --color-primary-orange-50: #fde8e1;
+
+  /* Danger (Red) */
+  --color-danger-700: #c22826;
+  --color-danger-600: #d63a3a;
+  --color-danger-500: #e85f5c;
+  --color-danger-400: #eb7d7a;
+  --color-danger-300: #f1a3a1;
+  --color-danger-200: #f6c4c3;
+  --color-danger-100: #f9dddc;
+  --color-danger-50: #fceeee;
+
+  /* Warning (Yellow) */
+  --color-warning-700: #d18300;
+  --color-warning-600: #eba600;
+  --color-warning-500: #ffd249;
+  --color-warning-400: #ffda6c;
+  --color-warning-300: #ffe48f;
+  --color-warning-200: #ffedb2;
+  --color-warning-100: #fff5d4;
+  --color-warning-50: #fffbea;
+
+  /* Success (Green) */
+  --color-success-700: #0f6b42;
+  --color-success-600: #108550;
+  --color-success-500: #36b37e;
+  --color-success-400: #4bc393;
+  --color-success-300: #7dd4b0;
+  --color-success-200: #a6e2c8;
+  --color-success-100: #caeedf;
+  --color-success-50: #e7f7f1;
+
+  /* Info (Blue) */
+  --color-info-700: #1d4ed8;
+  --color-info-600: #2563eb;
+  --color-info-500: #3b82f6;
+  --color-info-400: #60a5fa;
+  --color-info-300: #93c5fd;
+  --color-info-200: #bfdbfe;
+  --color-info-100: #dbeafe;
+  --color-info-50: #eff6ff;
+
+  /* Font Family */
+  --font-primary: "Tajawal", sans-serif;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Titles */
+  --font-size-title-42: 42px;
+  --line-height-title-42: 58px;
+
+  --font-size-title-32: 32px;
+  --line-height-title-32: 40px;
+
+  --font-size-title-24: 24px;
+  --line-height-title-24: 36px;
+
+  /* Subtitles */
+  --font-size-subtitle-20: 20px;
+  --line-height-subtitle-20: 24px;
+
+  --font-size-subtitle-18: 18px;
+  --line-height-subtitle-18: 22px;
+
+  --font-size-subtitle-16: 16px;
+  --line-height-subtitle-16: 20px;
+
+  /* Body */
+  --font-size-body-16: 16px;
+  --line-height-body-16: 24px;
+
+  --font-size-body-14: 14px;
+  --line-height-body-14: 22px;
+
+  /* Captions */
+  --font-size-caption-12: 12px;
+  --line-height-caption-12: 20px;
+
+  /* Action elements */
+  --font-size-button-16: 16px;
+  --line-height-button-16: 100%;
+
+  --font-size-link-14: 14px;
+  --line-height-link-14: 18px;
 }
