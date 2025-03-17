@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "../styles/globals.css";
+import TopBar from "@/components/layout/topBar";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -19,7 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${tajawal.className} antialiased`}>{children}</body>
+      <body className={`${tajawal.className} antialiased`}>
+        <TopBar />
+        {children}
+      </body>
     </html>
   );
 }
