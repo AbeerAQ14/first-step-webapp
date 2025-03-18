@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import TopBar from "@/components/layout/TopBar";
 import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
+import Footer from "@/components/layout/Footer";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -22,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${tajawal.className} antialiased`}>
+      <body
+        className={`${tajawal.className} min-h-screen flex flex-col antialiased`}
+      >
         <TopBar />
         <Navbar>
           <Link
@@ -33,6 +36,7 @@ export default function RootLayout({
           </Link>
         </Navbar>
         {children}
+        <Footer />
       </body>
     </html>
   );

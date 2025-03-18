@@ -3,8 +3,8 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <path
@@ -17,8 +17,8 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <path
@@ -41,8 +41,8 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <path
@@ -55,8 +55,8 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <path
@@ -72,14 +72,14 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <mask
         id="a"
-        width="16"
-        height="16"
+        width={props.width || "16"}
+        height={props.height || "16"}
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
@@ -99,8 +99,8 @@ export const Icons = {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width={props.width || "16"}
+      height={props.height || "16"}
       fill="#000"
     >
       <path
