@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "../styles/globals.css";
-import TopBar from "@/components/layout/topBar";
+import TopBar from "@/components/layout/TopBar";
+import Navbar from "@/components/layout/Navbar";
+import Link from "next/link";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -22,6 +24,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${tajawal.className} antialiased`}>
         <TopBar />
+        <Navbar>
+          <Link
+            href="/sign-in"
+            className="inline-block font-medium text-lg md:text-xl text-[#4BB484] underline decoration-[2px] underline-offset-8 decoration-[#4BB484]"
+          >
+            تسجيل الدخول
+          </Link>
+        </Navbar>
         {children}
       </body>
     </html>

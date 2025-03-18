@@ -1,0 +1,138 @@
+"use client";
+
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Button } from "../ui/button";
+
+const Navbar = ({ children }: { children?: React.ReactNode }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const links = [
+    { id: 1, title: "الرئيسية", path: "/" },
+    { id: 2, title: "خدماتنا", path: "/services" },
+    { id: 3, title: "الحضانات", path: "/nurseries" },
+    { id: 4, title: "المراكز", path: "/centers" },
+    { id: 5, title: "المدونة", path: "/blog" },
+    { id: 6, title: "قصتنا", path: "/our-story" },
+    { id: 7, title: "تواصل معنا", path: "/contact" },
+  ];
+
+  const hoverEffect =
+    "hover:text-primary hover:font-bold hover:text-xl hover:text-secondary-orange duration-300 ";
+
+  return (
+    <div className="container mx-auto px-4 py-2.5">
+      <div className="flex justify-between items-center gap-x-8">
+        {/* Left */}
+        <div className="flex-1">
+          <Image
+            src="/complete_logo.svg"
+            alt="logo"
+            width={236}
+            height={59.9}
+          />
+        </div>
+
+        {/* Mobile menu overlay */}
+        <div
+          className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
+            isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          onClick={toggleMenu}
+          aria-hidden="true"
+        />
+
+        {/* Slide-out menu */}
+        <div
+          className={`fixed top-0 bottom-0 right-0 w-4/5 max-w-xs bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Menu header */}
+          <div className="flex justify-between items-center p-4 border-b">
+            <button
+              onClick={toggleMenu}
+              className="p-2 rounded-full hover:bg-gray-100"
+              aria-label="Close menu"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Menu items */}
+          <ul className="pt-2 pb-4">
+            {links.map((link) => (
+              <li key={link.id}>
+                <Link
+                  href={link.path}
+                  className={`block px-6 py-4 text-base hover:bg-emerald-50 transition-colors ${
+                    link.id === 1
+                      ? "font-bold text-emerald-600"
+                      : "text-gray-700"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Call to action button */}
+          <div className="block sm:hidden mt-5 justify-self-center">
+            {children}
+          </div>
+        </div>
+
+        {/* Centered navigation */}
+        <div className="hidden xl:block shrink-0 py-7 px-14 rounded-full bg-gradient-to-t from-white from-[28%] to-[#E2F3EB]">
+          <ul className="flex justify-between items-center gap-x-9">
+            {links.map((link) => (
+              <li
+                key={link.id}
+                className="relative inline-block font-medium text-center"
+              >
+                <Link
+                  href={link.path}
+                  className={`text-base text-gray ${hoverEffect} ${
+                    link.id === 1 ? "text-xl font-extrabold text-primary" : ""
+                  }`}
+                >
+                  {link.title}
+                </Link>
+
+                <span className="relative h-0 inset-0 pointer-events-none flex items-center justify-center text-xl font-extrabold opacity-0">
+                  {link.title}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right */}
+        {
+          <div className="flex-1 text-right flex items-center justify-end">
+            {/* Menu Icon */}
+            <Button
+              className="xl:hidden mr-8 p-2 rounded-full bg-gradient-to-t from-white from-30 to-emerald-50 text-gray-700"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle navigation menu"
+              onClick={toggleMenu}
+            >
+              <Menu size={24} />
+            </Button>
+
+            <div className="hidden sm:block">{children}</div>
+          </div>
+        }
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
