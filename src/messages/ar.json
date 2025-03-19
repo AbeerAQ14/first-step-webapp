@@ -1,4 +1,8 @@
 {
+  "language": {
+    "ar": "لغة عربية",
+    "en": "English"
+  },
   "navbar": {
     "home": { "title": "الرئيسية", "path": "/" },
     "services": { "title": "خدماتنا", "path": "/services" },
