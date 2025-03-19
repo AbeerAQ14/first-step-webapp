@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "home": { "title": "الرئيسية", "path": "/" },
+    "services": { "title": "خدماتنا", "path": "/services" },
+    "nurseries": { "title": "الحضانات", "path": "/nurseries" },
+    "centers": { "title": "المراكز", "path": "/centers" },
+    "blog": { "title": "المدونة", "path": "/blog" },
+    "story": { "title": "قصتنا", "path": "/our-story" },
+    "contact": { "title": "تواصل معنا", "path": "/contact" }
+  }
+}

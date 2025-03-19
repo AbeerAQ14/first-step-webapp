@@ -1,15 +1,5 @@
 import type { Metadata } from "next";
-import { Tajawal } from "next/font/google";
 import "../styles/globals.css";
-import TopBar from "@/components/layout/TopBar";
-import Navbar from "@/components/layout/Navbar";
-import Link from "next/link";
-import Footer from "@/components/layout/Footer";
-
-const tajawal = Tajawal({
-  weight: ["400", "500", "700", "800"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "First Step",
@@ -21,23 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${tajawal.className} min-h-screen flex flex-col antialiased`}
-      >
-        <TopBar />
-        <Navbar>
-          <Link
-            href="/sign-in"
-            className="inline-block font-medium text-lg md:text-xl text-[#4BB484] underline decoration-[2px] underline-offset-8 decoration-[#4BB484]"
-          >
-            تسجيل الدخول
-          </Link>
-        </Navbar>
-        {children}
-        <Footer />
-      </body>
-    </html>
-  );
+  return children;
 }
