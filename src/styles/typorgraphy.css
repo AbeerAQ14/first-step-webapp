@@ -86,7 +86,6 @@ p,
 .body-16-regular {
   font-size: var(--font-size-body-16);
   line-height: var(--line-height-body-16);
-  font-weight: var(--font-weight-regular);
 }
 
 .body-14-medium {

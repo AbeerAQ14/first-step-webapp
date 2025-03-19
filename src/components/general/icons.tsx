@@ -1,3 +1,5 @@
+import { Mail } from "lucide-react";
+
 export const Icons = {
   snapchat: (props: React.SVGProps<SVGSVGElement>) => (
     <svg
@@ -109,4 +111,5 @@ export const Icons = {
       />
     </svg>
   ),
+  mail: Mail,
 };
