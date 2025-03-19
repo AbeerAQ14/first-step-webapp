@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,15 +13,25 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const links = [
-    { id: 1, title: "الرئيسية", path: "/" },
-    { id: 2, title: "خدماتنا", path: "/services" },
-    { id: 3, title: "الحضانات", path: "/nurseries" },
-    { id: 4, title: "المراكز", path: "/centers" },
-    { id: 5, title: "المدونة", path: "/blog" },
-    { id: 6, title: "قصتنا", path: "/our-story" },
-    { id: 7, title: "تواصل معنا", path: "/contact" },
+
+  const t = useTranslations("navbar");
+
+  const keys = [
+    "home",
+    "services",
+    "nurseries",
+    "centers",
+    "blog",
+    "story",
+    "contact",
   ];
+  const links = keys.map((key, index) => {
+    return {
+      id: index,
+      title: t(`${key}.title`),
+      path: t(`${key}.path`),
+    };
+  });
 
   const hoverEffect =
     "hover:text-primary hover:font-bold hover:text-xl hover:text-secondary-orange duration-300 ";
