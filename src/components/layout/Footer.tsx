@@ -7,7 +7,7 @@ import { Icons } from "../general/icons";
 
 const Footer = () => {
   return (
-    <footer className="mt-auto">
+    <footer dir="ltr" className="mt-auto">
       <div className="flex flex-col container mx-auto px-4">
         <div className="w-full flex flex-col md:flex-row">
           {/* Left section (Red) */}
@@ -33,7 +33,7 @@ export default Footer;
 
 const TopLeftSection = () => {
   return (
-    <div className="relative flex-1/2 xl:flex-4/12 bg-secondary-burgundy text-white flex flex-col items-center md:items-end justify-between pt-10 pb-5 pr-10">
+    <div className="relative order-2 flex-1/2 xl:flex-4/12 bg-secondary-burgundy text-white flex flex-col items-center md:items-end justify-between pt-10 pb-5 pr-10">
       <div className="-z-50  absolute top-0 bottom-0 right-[-500%] md:right-0 left-[-500%] bg-secondary-burgundy" />
 
       <div className="w-full flex flex-col items-center md:items-end space-y-4">
@@ -83,7 +83,7 @@ const TopLeftSection = () => {
 
 const TopRightSection = () => {
   return (
-    <div className="relative flex-1/2 xl:flex-8/12 bg-secondary-mint-green flex flex-col   justify-between pt-10 pb-5">
+    <div className="relative md:order-2 flex-1/2 xl:flex-8/12 bg-secondary-mint-green flex flex-col   justify-between pt-10 pb-5">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] md:left-0 bg-secondary-mint-green" />
 
       <div className="w-full mb-6 justify-items-center md:justify-items-end">
@@ -150,7 +150,7 @@ const TopRightSection = () => {
 
 const BottomLeftSection = () => {
   return (
-    <div className="relative flex-1/2 xl:flex-4/12 flex bg-primary text-white pt-2.5 pb-5  text-center md:text-left">
+    <div className="order-2 relative flex-1/2 xl:flex-4/12 flex bg-primary text-white pt-2.5 pb-5  text-center md:text-left">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] md:right-0 left-[-500%] bg-primary" />
 
       <p className="mt-auto w-full">© 2025 First Step. All rights reserved.</p>
@@ -193,7 +193,7 @@ const BottomRightSection = () => {
   ];
 
   return (
-    <div className="relative flex-1/2 xl:flex-8/12 bg-secondary-orange text-white pt-2.5 pb-5 flex justify-center md:justify-end items-center">
+    <div className="md:order-2 relative flex-1/2 xl:flex-8/12 bg-secondary-orange text-white pt-2.5 pb-5 flex justify-center md:justify-end items-center">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] md:left-0 bg-secondary-orange" />
 
       <div className="flex flex-col gap-3 items-center md:items-end">
