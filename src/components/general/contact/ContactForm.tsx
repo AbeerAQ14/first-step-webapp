@@ -60,9 +60,9 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="mx-auto">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid space-y-6">
           <FormField
             control={form.control}
             name="name"
@@ -168,7 +168,7 @@ const ContactForm: React.FC = () => {
           <Button
             size={"lg"}
             type="submit"
-            className="w-full"
+            className="w-full justify-self-end"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "جاري الإرسال..." : "إرسال"}
