@@ -11,5 +11,33 @@
     "blog": { "title": "Blog", "path": "/blog" },
     "story": { "title": "Our story", "path": "/our-story" },
     "contact": { "title": "Contact us", "path": "/contact" }
+  },
+  "faqs": {
+    "title": {
+      "line1": "Frequently Asked",
+      "line2": " Questions"
+    },
+    "questions": {
+      "1": {
+        "question": "How do I get to nearby centers?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "2": {
+        "question": "What transportation options are available?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "3": {
+        "question": "Can I walk there?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "4": {
+        "question": "What are the working hours of the centers?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "5": {
+        "question": "Are there parking spaces nearby?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      }
+    }
   }
 }
