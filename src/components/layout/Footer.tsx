@@ -7,22 +7,27 @@ import { Icons } from "../general/icons";
 
 const Footer = () => {
   return (
-    <footer dir="ltr" className="mt-auto">
-      <div className="flex flex-col container mx-auto px-4">
-        <div className="w-full flex flex-col md:flex-row">
-          {/* Left section (Red) */}
-          <TopLeftSection />
+    <footer
+      dir="ltr"
+      className="mt-auto max-w-full w-full box-border overflow-hidden"
+    >
+      <div>
+        <div className="flex flex-col container mx-auto px-4">
+          <div className="w-full flex flex-col md:flex-row">
+            {/* Left section (Red) */}
+            <TopLeftSection />
 
-          {/* Right section (Green) */}
-          <TopRightSection />
-        </div>
+            {/* Right section (Green) */}
+            <TopRightSection />
+          </div>
 
-        <div className="w-full flex flex-col md:flex-row">
-          {/* Navy blue section */}
-          <BottomLeftSection />
+          <div className="w-full flex flex-col md:flex-row">
+            {/* Navy blue section */}
+            <BottomLeftSection />
 
-          {/* Red section */}
-          <BottomRightSection />
+            {/* Red section */}
+            <BottomRightSection />
+          </div>
         </div>
       </div>
     </footer>
