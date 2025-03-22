@@ -39,5 +39,23 @@
         "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
       }
     }
+  },
+  "footer": {
+    "links": {
+      "home": { "title": "Home", "path": "/" },
+      "services": { "title": "Our Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
+      "centers": { "title": "Centers", "path": "/centers" },
+      "blog": { "title": "Blog", "path": "/blog" },
+      "story": { "title": "Our Story", "path": "/our-story" },
+      "contact": { "title": "Contact Us", "path": "/contact" },
+      "help": { "title": "Help", "path": "/help" },
+      "privacy": { "title": "Privacy", "path": "/privacy" },
+      "terms": { "title": "Terms and Conditions", "path": "/terms" }
+    },
+    "contactTitle": "Contact us",
+    "newsletter": { "title": "Our Newsletter", "button": "Join Now" },
+    "appDownloadTitle": "Download App Now",
+    "followTitle": "Follow us"
   }
 }

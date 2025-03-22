@@ -36,5 +36,23 @@
         "answer": "نؤمن أن التزامنا بأداء مهمتنا تجاه أطفالكم لا يتوقف عند حر معين، فنسعى دوماً إلى إحداث التطوير والتغيير الإيجابي المتمركي حياة أطفالكم. من خلال قريق عملنا الشهوف بتعليمهم وتحفيزهم وتقنية هدائهم."
       }
     }
+  },
+  "footer": {
+    "links": {
+      "home": { "title": "الرئيسية", "path": "/" },
+      "services": { "title": "خدماتنا", "path": "/services" },
+      "nurseries": { "title": "الحضانات", "path": "/nurseries" },
+      "centers": { "title": "المراكز", "path": "/centers" },
+      "blog": { "title": "المدونة", "path": "/blog" },
+      "story": { "title": "قصتنا", "path": "/our-story" },
+      "contact": { "title": "تواصل معنا", "path": "/contact" },
+      "help": { "title": "المساعدة", "path": "/help" },
+      "privacy": { "title": "الخصوصية", "path": "/privacy" },
+      "terms": { "title": "الشروط والأحكام", "path": "/terms" }
+    },
+    "contactTitle": "تواصل معنا",
+    "newsletter": { "title": "نشرة أخبارنا", "button": "سجل الآن" },
+    "appDownloadTitle": "حمل التطبيق الآن",
+    "followTitle": "تابعونا هنا"
   }
 }
