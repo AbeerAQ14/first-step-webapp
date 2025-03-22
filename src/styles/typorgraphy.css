@@ -1,131 +1,38 @@
-/* Title styles */
-h1,
-.heading-1,
-.title-42-bold {
-  font-size: var(--font-size-title-42);
-  line-height: var(--line-height-title-42);
-  font-weight: var(--font-weight-bold);
-}
+@layer base {
+  /* Title styles */
+  h1,
+  .heading-1 {
+    font-size: 3.75rem;
+    font-weight: bold;
+  }
 
-h2,
-.heading-2,
-.title-32-bold {
-  font-size: var(--font-size-title-32);
-  line-height: var(--line-height-title-32);
-  font-weight: var(--font-weight-bold);
-}
+  h2,
+  .heading-2 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
 
-h3,
-.heading-3,
-.title-24-bold {
-  font-size: var(--font-size-title-24);
-  line-height: var(--line-height-title-24);
-  font-weight: var(--font-weight-bold);
-}
+  h3,
+  .heading-3 {
+    font-size: 2.25rem;
+    font-weight: bold;
+  }
 
-h4,
-.heading-4,
-.title-24-medium {
-  font-size: var(--font-size-title-24);
-  line-height: var(--line-height-title-24);
-  font-weight: var(--font-weight-medium);
-}
+  h4,
+  .heading-4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
-/* Subtitle styles */
-.subtitle-20-bold {
-  font-size: var(--font-size-subtitle-20);
-  line-height: var(--line-height-subtitle-20);
-  font-weight: var(--font-weight-bold);
-}
+  .relaxed {
+    @apply leading-9;
+  }
 
-.subtitle-20-medium {
-  font-size: var(--font-size-subtitle-20);
-  line-height: var(--line-height-subtitle-20);
-  font-weight: var(--font-weight-medium);
-}
+  .snug {
+    @apply leading-5;
+  }
 
-.subtitle-18-bold {
-  font-size: var(--font-size-subtitle-18);
-  line-height: var(--line-height-subtitle-18);
-  font-weight: var(--font-weight-bold);
-}
-
-.subtitle-18-semibold {
-  font-size: var(--font-size-subtitle-18);
-  line-height: var(--line-height-subtitle-18);
-  font-weight: var(--font-weight-semibold);
-}
-
-.subtitle-18-medium {
-  font-size: var(--font-size-subtitle-18);
-  line-height: var(--line-height-subtitle-18);
-  font-weight: var(--font-weight-medium);
-}
-
-.subtitle-18-regular {
-  font-size: var(--font-size-subtitle-18);
-  line-height: var(--line-height-subtitle-18);
-  font-weight: var(--font-weight-regular);
-}
-
-.subtitle-16-semibold {
-  font-size: var(--font-size-subtitle-16);
-  line-height: var(--line-height-subtitle-16);
-  font-weight: var(--font-weight-semibold);
-}
-
-/* Body styles */
-.body-16-medium {
-  font-size: var(--font-size-body-16);
-  line-height: var(--line-height-body-16);
-  font-weight: var(--font-weight-medium);
-}
-
-p,
-.body-text,
-.body-16-regular {
-  font-size: var(--font-size-body-16);
-  line-height: var(--line-height-body-16);
-}
-
-.body-14-medium {
-  font-size: var(--font-size-body-14);
-  line-height: var(--line-height-body-14);
-  font-weight: var(--font-weight-medium);
-}
-
-.small-text,
-.body-14-regular {
-  font-size: var(--font-size-body-14);
-  line-height: var(--line-height-body-14);
-  font-weight: var(--font-weight-regular);
-}
-
-/* Caption styles */
-.caption-12-medium {
-  font-size: var(--font-size-caption-12);
-  line-height: var(--line-height-caption-12);
-  font-weight: var(--font-weight-medium);
-}
-
-.caption,
-.caption-12-regular {
-  font-size: var(--font-size-caption-12);
-  line-height: var(--line-height-caption-12);
-  font-weight: var(--font-weight-regular);
-}
-
-/* Action element styles */
-button,
-.button-16 {
-  font-size: var(--font-size-button-16);
-  line-height: var(--line-height-button-16);
-  font-weight: var(--font-weight-medium);
-}
-
-.link,
-.link-14 {
-  font-size: var(--font-size-link-14);
-  line-height: var(--line-height-link-14);
-  font-weight: var(--font-weight-semibold);
+  .tight {
+    @apply leading-4;
+  }
 }

@@ -117,50 +117,6 @@
 
   /* Font Family */
   --font-primary: "Tajawal", sans-serif;
-
-  /* Font Weights */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* Titles */
-  --font-size-title-42: 2.625rem;
-  --line-height-title-42: 1.38;
-
-  --font-size-title-32: 2rem;
-  --line-height-title-32: 1.25;
-
-  --font-size-title-24: 1.5rem;
-  --line-height-title-24: 1.5;
-
-  /* Subtitles */
-  --font-size-subtitle-20: 1.25rem;
-  --line-height-subtitle-20: 1.2;
-
-  --font-size-subtitle-18: 1.125rem;
-  --line-height-subtitle-18: 1.22;
-
-  --font-size-subtitle-16: 1rem;
-  --line-height-subtitle-16: 1.25;
-
-  /* Body */
-  --font-size-body-16: 1rem;
-  --line-height-body-16: 1.5;
-
-  --font-size-body-14: 0.875rem;
-  --line-height-body-14: 1.57;
-
-  /* Captions */
-  --font-size-caption-12: 0.75rem;
-  --line-height-caption-12: 1.67;
-
-  /* Action elements */
-  --font-size-button-16: 1rem;
-  --line-height-button-16: 1;
-
-  --font-size-link-14: 0.875rem;
-  --line-height-link-14: 1.29;
 }
 
 :root {
