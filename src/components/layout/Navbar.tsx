@@ -6,9 +6,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 
 const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isActive = (path: string) => pathname === path;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -82,7 +85,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
                 <Link
                   href={link.path}
                   className={`block px-6 py-4 text-base hover:bg-emerald-50 transition-colors ${
-                    link.id === 1
+                    isActive(link.path)
                       ? "font-bold text-emerald-600"
                       : "text-gray-700"
                   }`}
@@ -111,7 +114,9 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
                 <Link
                   href={link.path}
                   className={`text-base text-gray ${hoverEffect} ${
-                    link.id === 1 ? "text-xl font-extrabold text-primary" : ""
+                    isActive(link.path)
+                      ? "text-xl font-extrabold text-primary"
+                      : ""
                   }`}
                 >
                   {link.title}
