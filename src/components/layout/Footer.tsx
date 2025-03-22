@@ -38,19 +38,22 @@ export default Footer;
 
 const TopLeftSection = () => {
   return (
-    <div className="relative order-2 flex-1/2 xl:flex-4/12 bg-secondary-burgundy text-white flex flex-col items-center md:items-end justify-between pt-10 pb-5 pr-10">
+    <div className="relative order-2 flex-1/2 xl:flex-4/12 bg-secondary-burgundy text-white flex flex-col items-center md:items-end justify-between pt-10 pb-5 md:pr-10">
       <div className="-z-50  absolute top-0 bottom-0 right-[-500%] md:right-0 left-[-500%] bg-secondary-burgundy" />
 
       <div className="w-full flex flex-col items-center md:items-end space-y-4">
-        <h3 className="text-xl font-bold text-right">نشرة أخبارنا</h3>
+        <p className="text-xl font-medium text-right">نشرة أخبارنا</p>
 
-        <div className="flex flex-col md:flex-row w-full gap-3">
-          <Button className="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-medium order-2 md:order-1">
+        <div className="flex flex-col items-center sm:flex-row w-full gap-3">
+          <Button
+            size={"sm"}
+            className="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-medium order-2 md:order-1"
+          >
             سجل الآن
           </Button>
-          <div className="relative grow w-full md:w-auto order-1 md:order-2 flex bg-white rounded-lg">
+          <div className="relative grow w-full sm:w-auto order-1 sm:order-2 flex bg-white rounded-lg">
             <Input
-              className="text-[#2A3342] text-xs pl-12"
+              className="text-[#2A3342] text-xs pl-12 py-5"
               type="email"
               placeholder="Email"
             />
@@ -88,7 +91,7 @@ const TopLeftSection = () => {
 
 const TopRightSection = () => {
   return (
-    <div className="relative md:order-2 flex-1/2 xl:flex-8/12 bg-secondary-mint-green flex flex-col   justify-between pt-10 pb-5">
+    <div className="relative md:order-2 flex-1/2 xl:flex-8/12 bg-secondary-mint-green flex flex-col justify-between pt-10 pb-5">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] md:left-0 bg-secondary-mint-green" />
 
       <div className="w-full mb-6 justify-items-center md:justify-items-end">
@@ -158,7 +161,9 @@ const BottomLeftSection = () => {
     <div className="order-2 relative flex-1/2 xl:flex-4/12 flex bg-primary text-white pt-2.5 pb-5  text-center md:text-left">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] md:right-0 left-[-500%] bg-primary" />
 
-      <p className="mt-auto w-full">© 2025 First Step. All rights reserved.</p>
+      <p className="mt-auto w-full font-medium">
+        © 2025 First Step. All rights reserved.
+      </p>
     </div>
   );
 };
