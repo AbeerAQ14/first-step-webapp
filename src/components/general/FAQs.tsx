@@ -13,11 +13,9 @@ const FAQs = () => {
 
   return (
     <section
-      className="w-full"
+      className="w-full bg-cover md:bg-contain bg-repeat-x bg-center"
       style={{
         backgroundImage: "url(/faqs-bg.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
@@ -46,7 +44,7 @@ const FAQs = () => {
     </section>
   );
 };
-// const t = useTranslations('faqs.questions');
+
 const FAQAccordion = () => {
   const t = useTranslations("faqs.questions");
 
