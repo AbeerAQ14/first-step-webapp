@@ -166,9 +166,9 @@ const ContactForm: React.FC = () => {
           />
 
           <Button
-            size={"lg"}
+            size={"sm"}
             type="submit"
-            className="w-full justify-self-end"
+            className="w-fit justify-self-end"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "جاري الإرسال..." : "إرسال"}
