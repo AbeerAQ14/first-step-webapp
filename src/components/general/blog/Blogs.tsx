@@ -4,38 +4,34 @@ import { Icons } from "../icons";
 
 const Blogs = () => {
   return (
-    <section className="container mx-auto px-4 my-20 relative">
-      <div className="-z-50 absolute -inset-20">
-        <Image
-          className="object-cover object-center"
-          src="/bubbles-bg.svg"
-          fill
-          alt=""
-        />
-      </div>
+    <section
+      className="my-20 bg-center bg-cover xl:bg-[size-120%] xl:bg-center 2xl:bg-contain bg-no-repeat"
+      style={{ backgroundImage: `url(/bubbles-bg.svg)` }}
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center flex flex-col items-center gap-y-6">
+          <div className="space-y-4">
+            <h2 className="text-primary">
+              <span>مدونة</span>
+              <span className="block">First Step</span>
+            </h2>
 
-      <div className="text-center flex flex-col items-center gap-y-6">
-        <div className="space-y-4">
-          <h2 className="text-primary">
-            <span>مدونة</span>
-            <span className="block">First Step</span>
-          </h2>
+            <span className="text-gray">
+              مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة
+              الأسرية
+            </span>
+          </div>
 
-          <span className="text-gray">
-            مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة
-            الأسرية
-          </span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 items-center gap-10">
+            {Array(4)
+              .fill(1)
+              .map((item, idx) => (
+                <BlogCard key={idx} />
+              ))}
+          </div>
+
+          <Button size={"sm"}>عرض كل المدونات</Button>
         </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 items-center gap-10">
-          {Array(4)
-            .fill(1)
-            .map((item, idx) => (
-              <BlogCard key={idx} />
-            ))}
-        </div>
-
-        <Button size={"sm"}>عرض كل المدونات</Button>
       </div>
     </section>
   );
