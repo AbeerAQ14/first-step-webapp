@@ -1,3 +1,4 @@
+import Blogs from "@/components/general/blog/Blogs";
 import Contact from "@/components/general/contact/Contact";
 import SocialQR from "@/components/general/SocialQR";
 
@@ -6,6 +7,7 @@ export default function ContactPage() {
     <div>
       <Contact />
       <SocialQR />
+      <Blogs />
     </div>
   );
 }
