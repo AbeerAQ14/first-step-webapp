@@ -117,6 +117,9 @@
 
   /* Font Family */
   --font-primary: "Tajawal", sans-serif;
+
+  /* Shadows */
+  --shadow-subtle: 0 2px 16px rgba(0, 0, 0, 0.12);
 }
 
 :root {
@@ -236,6 +239,9 @@
   }
   body {
     @apply bg-background text-foreground max-w-screen overflow-x-hidden;
+  }
+  section {
+    @apply py-10;
   }
 }
 
