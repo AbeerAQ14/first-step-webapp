@@ -57,5 +57,55 @@
     "newsletter": { "title": "Our Newsletter", "button": "Join Now" },
     "appDownloadTitle": "Download App Now",
     "followTitle": "Follow us"
+  },
+  "contact": {
+    "title": "Always happy to help you",
+    "subtitle": "If you have an inquiry or issue, don't hesitate to contact us",
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": ""
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": ""
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": ""
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "",
+        "options": {
+          "inquiry": "Inquiry",
+          "complaint": "Complaint",
+          "suggestion": "Suggestion",
+          "other": "Other"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": ""
+      },
+      "button": {
+        "label": "Send",
+        "loading": "Sending..."
+      }
+    }
+  },
+  "socialqr": {
+    "title": {
+      "line1": "Follow Us",
+      "line2": "Step by Step"
+    }
+  },
+  "blogsection": {
+    "title": {
+      "line1": "Blog",
+      "line2": "First Step"
+    },
+    "subtitle": "Articles and resources about childcare and achieving work-life balance",
+    "button": "View All Blogs"
   }
 }

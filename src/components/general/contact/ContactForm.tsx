@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Define schema using Zod
 const contactSchema = z.object({
@@ -43,6 +43,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 const ContactForm: React.FC = () => {
   const locale = useLocale();
+  const t = useTranslations("contact");
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -68,9 +69,9 @@ const ContactForm: React.FC = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>الاسم</FormLabel>
+                <FormLabel>{t("form.name.label")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="محمد علي" {...field} />
+                  <Input placeholder={t("form.name.placeholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,11 +83,11 @@ const ContactForm: React.FC = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>الإيميل</FormLabel>
+                <FormLabel>{t("form.email.label")}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="mohammedalrazi@gmail.com"
+                    placeholder={t("form.email.placeholder")}
                     {...field}
                   />
                 </FormControl>
@@ -100,7 +101,7 @@ const ContactForm: React.FC = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>رقم الجوال</FormLabel>
+                <FormLabel>{t("form.phone.label")}</FormLabel>
                 <FormControl>
                   <div className="relative flex items-center">
                     <span className="absolute ltr:left-3 rtl:right-3 text-gray-500">
@@ -124,21 +125,31 @@ const ContactForm: React.FC = () => {
             name="subject"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>موضوع الرسالة</FormLabel>
+                <FormLabel>{t("form.subject.label")}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="اختر موضوع" />
+                      <SelectValue
+                        placeholder={t("form.subject.placeholder")}
+                      />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="استفسار">استفسار</SelectItem>
-                    <SelectItem value="شكوى">شكوى</SelectItem>
-                    <SelectItem value="اقتراح">اقتراح</SelectItem>
-                    <SelectItem value="أخرى">أخرى</SelectItem>
+                    <SelectItem value="استفسار">
+                      {t("form.subject.options.inquiry")}
+                    </SelectItem>
+                    <SelectItem value="شكوى">
+                      {t("form.subject.options.complaint")}
+                    </SelectItem>
+                    <SelectItem value="اقتراح">
+                      {t("form.subject.options.suggestion")}
+                    </SelectItem>
+                    <SelectItem value="أخرى">
+                      {t("form.subject.options.other")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -151,12 +162,12 @@ const ContactForm: React.FC = () => {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>الرسالة</FormLabel>
+                <FormLabel>{t("form.message.label")}</FormLabel>
                 <FormControl>
                   <Textarea
                     className="min-h-44"
                     rows={5}
-                    placeholder="ألرسالة"
+                    placeholder={t("form.message.placeholder")}
                     {...field}
                   />
                 </FormControl>
@@ -171,7 +182,9 @@ const ContactForm: React.FC = () => {
             className="w-fit justify-self-end"
             disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting ? "جاري الإرسال..." : "إرسال"}
+            {form.formState.isSubmitting
+              ? t("form.button.loading")
+              : t("form.button.label")}
           </Button>
         </form>
       </Form>

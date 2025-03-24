@@ -54,5 +54,55 @@
     "newsletter": { "title": "نشرة أخبارنا", "button": "سجل الآن" },
     "appDownloadTitle": "حمل التطبيق الآن",
     "followTitle": "تابعونا هنا"
+  },
+  "contact": {
+    "title": "سعداء دائمًا لمساعدتك",
+    "subtitle": "إذا كان لديك استفسار او مشكلة لا تتردد بالتواصل معنا",
+    "form": {
+      "name": {
+        "label": "الاسم",
+        "placeholder": ""
+      },
+      "email": {
+        "label": "الايميل",
+        "placeholder": ""
+      },
+      "phone": {
+        "label": "رقم الجوال",
+        "placeholder": ""
+      },
+      "subject": {
+        "label": "موضوع الرسالة",
+        "placeholder": "",
+        "options": {
+          "inquiry": "استفسار",
+          "complaint": "شكوى",
+          "suggestion": "اقتراح",
+          "other": "اخرى"
+        }
+      },
+      "message": {
+        "label": "الرسالة",
+        "placeholder": ""
+      },
+      "button": {
+        "label": "إرسال",
+        "loading": "جارى الإرسال"
+      }
+    }
+  },
+  "socialqr": {
+    "title": {
+      "line1": "تابعونا",
+      "line2": "خطوة بخطوة"
+    }
+  },
+  "blogsection": {
+    "title": {
+      "line1": "مدونة",
+      "line2": "First Step"
+    },
+    "subtitle": "مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة الأسرية",
+    "button": "عرض كل المدونات"
   }
 }

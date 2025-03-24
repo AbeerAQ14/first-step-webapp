@@ -1,6 +1,9 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const SocialQR = () => {
+  const t = useTranslations("socialqr");
+
   return (
     <section dir="ltr" className="container mx-auto px-4">
       <div className="relative max-w-3xl mx-auto">
@@ -13,9 +16,9 @@ const SocialQR = () => {
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-[3.25rem] font-bold text-primary mb-2">
-            <span className="text">تابعونا</span>
+            <span className="text">{t("title.line1")}</span>
             <span className="block text-4xl md:text-5xl lg:text-6xl">
-              خطوة بخطوة
+              {t("title.line2")}
             </span>
           </h2>
         </div>
