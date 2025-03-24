@@ -120,6 +120,9 @@
 
   /* Shadows */
   --shadow-subtle: 0 2px 16px rgba(0, 0, 0, 0.12);
+
+  /* Radius */
+  --radius-5xl: 2.25rem;
 }
 
 :root {
