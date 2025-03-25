@@ -120,6 +120,7 @@
 
   /* Shadows */
   --shadow-subtle: 0 2px 16px rgba(0, 0, 0, 0.12);
+  --shadow-icon: 0 2px 4px rgba(0, 0, 0, 0.08);
 
   /* Radius */
   --radius-5xl: 2.25rem;
