@@ -25,9 +25,9 @@ const WhyUs = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4">
+    <section className="xl:container mx-auto px-4 overflow-hidden">
       <div className="relative flex flex-col md:flex-row items-center justify-between gap-x-4 2xl:gap-x-24">
-        <div className="order-2 md:order-1 md:pl-72 xl:pl-0">
+        <div className="order-2 md:order-1 rtl:md:pl-72 rtl:xl:pl-0 ltr:md:pr-72 ltr:xl:pr-0">
           <h2 className="text-primary">لماذا First Step؟</h2>
 
           <div className="mt-9 flex flex-col gap-y-6">
@@ -41,7 +41,7 @@ const WhyUs = () => {
         </div>
 
         <Image
-          className="order-1 md:order-2 grow md:absolute inset-y-0 -left-40 -z-50 xl:relative xl:left-0 shrink-0"
+          className="order-1 md:order-2 grow md:absolute inset-y-0 rtl:-left-40 ltr:-right-40 -z-50 xl:relative rtl:xl:left-0 ltr:xl:right-0 shrink-0"
           src="/mother-and-daughter.png"
           alt="Mother And Daughter"
           width={508}

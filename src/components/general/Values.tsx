@@ -32,7 +32,7 @@ const Values = () => {
     {
       iconSrc: "/mother-nurse.svg",
       alt: "",
-      bg: "#83CBAA",
+      bg: "#73B094",
       color: "#fff",
       title: "الشفافية",
       description:
@@ -50,6 +50,7 @@ const Values = () => {
       <div className="grid gap-y-2 sm:gap-y-0 sm:grid-cols-2 sm:w-fit sm:mx-auto">
         {values.map((item, index) => (
           <div
+            key={item.title}
             className={`w-full sm:max-w-[400px] gap-y-6 py-6 px-8 md:px-14 flex flex-col items-center ${
               index === 0 ? "rounded-tl-5xl rounded-br-5xl" : ""
             }

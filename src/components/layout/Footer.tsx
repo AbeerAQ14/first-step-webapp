@@ -115,15 +115,15 @@ const TopRightSection = () => {
   });
 
   return (
-    <div className="relative md:order-1 flex-1/2 xl:flex-8/12 bg-secondary-mint-green flex flex-col justify-between pt-10 pb-5">
-      <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] rtl:md:left-0 ltr:md:right-0 bg-secondary-mint-green" />
+    <div className="relative md:order-1 flex-1/2 xl:flex-8/12 bg-primary flex flex-col justify-between pt-10 pb-5">
+      <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] rtl:md:left-0 ltr:md:right-0 bg-primary" />
 
       <div className="w-full mb-6 justify-items-center md:justify-items-start">
         <div className="flex justify-center md:justify-start mb-6">
           <Image
-            src="/complete_logo.svg"
+            src="/complete_logo_white.svg"
             alt="First Step"
-            width={236}
+            width={236.4}
             height={60}
           />
         </div>
@@ -149,7 +149,11 @@ const TopRightSection = () => {
             >
               info@firststep.com
             </a>
-            <a href="tel:+966539949732" className="text-white hover:underline">
+            <a
+              dir="ltr"
+              href="tel:+966539949732"
+              className="text-white hover:underline"
+            >
               +966 53 994 9732
             </a>
           </div>
@@ -161,10 +165,10 @@ const TopRightSection = () => {
 
 const BottomLeftSection = () => {
   return (
-    <div className="order-2 relative flex-1/2 xl:flex-4/12 flex bg-primary text-white pt-2.5 pb-5  text-center md:text-left">
-      <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] rtl:md:right-0 ltr:md:left-0 bg-primary" />
+    <div className="order-2 relative flex-1/2 xl:flex-4/12 flex bg-secondary-mint-green text-white pt-2.5 pb-5  text-center md:text-left">
+      <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] rtl:md:right-0 ltr:md:left-0 bg-secondary-mint-green" />
 
-      <p className="mt-auto w-full font-medium ltr:md:text-right">
+      <p className="mt-auto w-full text-gray font-medium ltr:md:text-right">
         © 2025 First Step. All rights reserved.
       </p>
     </div>

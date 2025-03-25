@@ -5,8 +5,8 @@ const VisionMission = () => {
   const locale = useLocale();
 
   return (
-    <section className="2xl:container mx-auto my-10 px-4 sm:px-0 flex flex-col ltr:flex-col-reverse -gap-y-60 sm:gap-y-28">
-      <div className="flex flex-col items-start ltr:items-end text-center text-primary">
+    <section className="2xl:container mx-auto my-10 px-4 sm:px-0 flex flex-col ltr:flex-col-reverse sm:gap-y-28">
+      <div className="rtl:-mb-[80%] ltr:-mt-[80%] sm:!my-0 flex flex-col items-start ltr:items-end text-center text-primary">
         <div className="sm:max-w-[988px] flex flex-col sm:relative items-center sm:items-start ltr:sm:items-end sm:left-0 sm:right-0">
           {locale === "en" ? <MissionContent /> : <VisionContent />}
         </div>
