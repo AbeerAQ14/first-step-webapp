@@ -19,7 +19,7 @@ const Advertisment = () => {
   ];
 
   return (
-    <section className="2xl:container mx-auto pt-0 px-4 sm:px-0">
+    <section className="2xl:container mx-auto pt-0 px-0">
       <Carousel items={items} locale={locale} />
     </section>
   );
