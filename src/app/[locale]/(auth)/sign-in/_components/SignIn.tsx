@@ -122,7 +122,7 @@ const SignIn = () => {
                         <span className="text-light-gray">
                           هل نسيت كلمة السر؟
                         </span>
-                        <Link className="text-info" href="/reset-password">
+                        <Link className="text-info" href="/forgot-password">
                           إعادة تعيين كلمة السر
                         </Link>
                       </FormDescription>
