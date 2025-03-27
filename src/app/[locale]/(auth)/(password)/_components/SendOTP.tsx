@@ -7,35 +7,47 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
+import useOTPTimer from "@/hooks/useOTPTimer";
 
 // Define schema using Zod
 const formSchema = z.object({
-  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
+  otp: z.string().min(4, { message: "يرجى إدخال الكود بشكل صحيح" }),
 });
 
 // Define type based on schema
 type FormData = z.infer<typeof formSchema>;
 
-const SendEmail = () => {
+const SendOTP = () => {
   const router = useRouter();
+  const { timeLeft, otpExpired } = useOTPTimer({
+    duration: 10,
+    onExpire: () => {
+      console.log("OTP expired");
+    },
+  });
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      otp: "",
     },
   });
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
-    router.push("/otp-verification");
+    router.push("/reset-password");
   };
 
   return (
@@ -49,9 +61,7 @@ const SendEmail = () => {
         />
 
         <div className="flex flex-col w-full max-w-[41.25rem]">
-          <h1 className="heading-3 text-center text-primary">
-            إعادة تعيين كلمة السر
-          </h1>
+          <h1 className="heading-3 text-center text-primary">كود ال OTP</h1>
 
           <div className="mt-9 flex flex-col gap-y-6">
             <Form {...form}>
@@ -61,47 +71,39 @@ const SendEmail = () => {
               >
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="otp"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        البريد الإلكتروني
-                        <span className="text-red-500">*</span>
+                    <FormItem dir="ltr" className="flex flex-col items-center">
+                      <FormLabel className="font-medium text-mid-gray">
+                        راجع بريدك الإلكتروني
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="example@gmail.com"
-                          {...field}
-                        />
+                        <InputOTP maxLength={4} {...field}>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                          </InputOTPGroup>
+                        </InputOTP>
                       </FormControl>
+                      <FormDescription className="font-medium text-mid-gray text-base">
+                        {otpExpired
+                          ? "OTP Expired. Please request a new one."
+                          : `سينتهي صلاحية الكود خلال: ${timeLeft}`}
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <div className="mt-12 flex flex-col items-center gap-y-4">
+                <div className="mt-9 flex flex-col items-center gap-y-4">
                   <Button
                     size={"long"}
                     type="submit"
                     disabled={form.formState.isSubmitting}
                   >
-                    إرسال الكود
-                  </Button>
-                  <Button
-                    variant={"outline"}
-                    size={"long"}
-                    type="button"
-                    className="text-mid-gray !border-light-gray"
-                    disabled={form.formState.isSubmitting}
-                  >
-                    <span>سجل دخولك عن طريق جوجل</span>
-                    <Image
-                      src="/google_icon.svg"
-                      alt="Google Logo"
-                      width={36}
-                      height={36}
-                    />
+                    تأكيد
                   </Button>
                 </div>
               </form>
@@ -113,4 +115,4 @@ const SendEmail = () => {
   );
 };
 
-export default SendEmail;
+export default SendOTP;
