@@ -5,17 +5,17 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
 
-export const contactSchema = z.object({
+export const signInSchema = z.object({
   email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
   password: z
     .string()
     .min(8, { message: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل" }),
 });
 
-export type ContactFormData = z.infer<typeof contactSchema>;
+export type SignInFormData = z.infer<typeof signInSchema>;
 
 const SignIn = () => {
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: SignInFormData) => {
     console.log(data);
   };
 

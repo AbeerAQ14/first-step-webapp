@@ -17,17 +17,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
-import { ContactFormData, contactSchema } from "./SignIn";
+import { SignInFormData, signInSchema } from "./SignIn";
 
 const SignInForm = ({
   onSubmit,
 }: {
-  onSubmit: (data: ContactFormData) => void;
+  onSubmit: (data: SignInFormData) => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+  const form = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
