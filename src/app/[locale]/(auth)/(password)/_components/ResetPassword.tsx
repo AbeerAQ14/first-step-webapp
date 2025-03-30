@@ -1,25 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import * as z from "zod";
 import ResetPasswordForm from "./ResetPasswordForm";
-
-export const formSchema = z
-  .object({
-    password: z
-      .string()
-      .min(8, { message: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل" }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "كلمات المرور غير متطابقة",
-    path: ["confirmPassword"],
-  });
-
-export type FormData = z.infer<typeof formSchema>;
+import { ResetPasswordFormData } from "@/lib/schemas";
 
 const ResetPassword = () => {
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ResetPasswordFormData) => {
     console.log(data);
   };
 

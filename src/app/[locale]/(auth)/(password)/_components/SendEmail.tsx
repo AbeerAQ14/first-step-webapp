@@ -3,18 +3,12 @@
 import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
 import SendEmailForm from "./SendEmailForm";
-import * as z from "zod";
-
-export const formSchema = z.object({
-  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
-});
-
-export type FormData = z.infer<typeof formSchema>;
+import { ForgotPasswordFormData } from "@/lib/schemas";
 
 const SendEmail = () => {
   const router = useRouter();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     console.log(data);
     router.push("/otp-verification");
   };

@@ -2,19 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
-import * as z from "zod";
 import SendOTPForm from "./SendOTPForm";
-
-export const formSchema = z.object({
-  otp: z.string().min(4, { message: "يرجى إدخال الكود بشكل صحيح" }),
-});
-
-export type FormData = z.infer<typeof formSchema>;
+import { OTPVerificationFormData } from "@/lib/schemas";
 
 const SendOTP = () => {
   const router = useRouter();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: OTPVerificationFormData) => {
     console.log(data);
     router.push("/reset-password");
   };

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { useLocale } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,14 +14,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { formSchema, FormData } from "./SendEmail";
+import {
+  createForgotPasswordSchema,
+  ForgotPasswordFormData,
+} from "@/lib/schemas";
 
 const SendEmailForm = ({
   onSubmit,
 }: {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: ForgotPasswordFormData) => void;
 }) => {
-  const form = useForm<FormData>({
+  const locale = useLocale();
+  const formSchema = createForgotPasswordSchema(locale as "ar" | "en");
+  const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",

@@ -1,18 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
-
-export const signInSchema = z.object({
-  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
-  password: z
-    .string()
-    .min(8, { message: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل" }),
-});
-
-export type SignInFormData = z.infer<typeof signInSchema>;
+import { SignInFormData } from "@/lib/schemas";
 
 const SignIn = () => {
   const onSubmit = async (data: SignInFormData) => {

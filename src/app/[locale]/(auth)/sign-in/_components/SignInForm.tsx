@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocale } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -17,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
-import { SignInFormData, signInSchema } from "./SignIn";
+import { createSignInSchema, SignInFormData } from "@/lib/schemas";
 
 const SignInForm = ({
   onSubmit,
@@ -25,6 +26,8 @@ const SignInForm = ({
   onSubmit: (data: SignInFormData) => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const locale = useLocale();
+  const signInSchema = createSignInSchema(locale as "ar" | "en");
 
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),

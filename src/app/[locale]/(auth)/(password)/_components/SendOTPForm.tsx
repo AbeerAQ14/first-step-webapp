@@ -18,10 +18,20 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { FormData, formSchema } from "./SendOTP";
+import {
+  createOTPVerificationSchema,
+  OTPVerificationFormData,
+} from "@/lib/schemas";
+import { useLocale } from "next-intl";
 
-const SendOTPForm = ({ onSubmit }: { onSubmit: (data: FormData) => void }) => {
-  const form = useForm<FormData>({
+const SendOTPForm = ({
+  onSubmit,
+}: {
+  onSubmit: (data: OTPVerificationFormData) => void;
+}) => {
+  const locale = useLocale();
+  const formSchema = createOTPVerificationSchema(locale as "ar" | "en");
+  const form = useForm<OTPVerificationFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       otp: "",

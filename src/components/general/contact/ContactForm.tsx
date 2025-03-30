@@ -2,9 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
-// Import shadcn components
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,30 +21,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useLocale, useTranslations } from "next-intl";
-
-// Define schema using Zod
-const contactSchema = z.object({
-  name: z.string().min(2, { message: "الاسم مطلوب" }),
-  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
-  phone: z
-    .string()
-    .regex(/^\+?[0-9]{8,15}$/, { message: "يرجى إدخال رقم هاتف صحيح" }),
-  subject: z.string().min(1, { message: "يرجى اختيار موضوع" }),
-  message: z
-    .string()
-    .min(10, { message: "الرسالة يجب أن تكون على الأقل 10 أحرف" }),
-});
-
-// Define type based on schema
-type ContactFormData = z.infer<typeof contactSchema>;
+import { ContactFormData, createContactSchema } from "@/lib/schemas";
 
 const ContactForm: React.FC = () => {
-  const locale = useLocale();
   const t = useTranslations("contact");
+  const locale = useLocale();
+  const formSchema = createContactSchema(locale as "ar" | "en");
 
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",

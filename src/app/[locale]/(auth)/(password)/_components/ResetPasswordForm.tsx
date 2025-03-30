@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocale } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,16 +16,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Eye, EyeOff } from "lucide-react";
-import { FormData, formSchema } from "./ResetPassword";
+import {
+  createResetPasswordSchema,
+  ResetPasswordFormData,
+} from "@/lib/schemas";
 
 const ResetPasswordForm = ({
   onSubmit,
 }: {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: ResetPasswordFormData) => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<FormData>({
+  const locale = useLocale();
+  const formSchema = createResetPasswordSchema(locale as "ar" | "en");
+  const form = useForm<ResetPasswordFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
