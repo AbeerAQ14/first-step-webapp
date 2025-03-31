@@ -2,6 +2,7 @@
 
 import useOTPTimer from "@/hooks/useOTPTimer";
 import { useForm } from "react-hook-form";
+import { useLocale, useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,13 +23,14 @@ import {
   createOTPVerificationSchema,
   OTPVerificationFormData,
 } from "@/lib/schemas";
-import { useLocale } from "next-intl";
 
 const SendOTPForm = ({
   onSubmit,
 }: {
   onSubmit: (data: OTPVerificationFormData) => void;
 }) => {
+  const t = useTranslations("auth.otp.form");
+  const tBtns = useTranslations("auth.buttons");
   const locale = useLocale();
   const formSchema = createOTPVerificationSchema(locale as "ar" | "en");
   const form = useForm<OTPVerificationFormData>({
@@ -57,7 +59,7 @@ const SendOTPForm = ({
           render={({ field }) => (
             <FormItem dir="ltr" className="flex flex-col items-center">
               <FormLabel className="font-medium text-mid-gray">
-                راجع بريدك الإلكتروني
+                {t("description")}
               </FormLabel>
               <FormControl>
                 <InputOTP maxLength={4} {...field}>
@@ -71,8 +73,8 @@ const SendOTPForm = ({
               </FormControl>
               <FormDescription className="font-medium text-mid-gray text-base">
                 {otpExpired
-                  ? "OTP Expired. Please request a new one."
-                  : `سينتهي صلاحية الكود خلال: ${timeLeft}`}
+                  ? `${t("timer-expired")} ${t("request-code")}`
+                  : `${t("timer")} ${timeLeft}`}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -85,7 +87,7 @@ const SendOTPForm = ({
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            تأكيد
+            {tBtns("send-code")}
           </Button>
         </div>
       </form>

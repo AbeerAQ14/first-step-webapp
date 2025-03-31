@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,9 @@ const ResetPasswordForm = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const t = useTranslations("auth.reset-password.form");
+  const tBtns = useTranslations("auth.buttons");
+
   const locale = useLocale();
   const formSchema = createResetPasswordSchema(locale as "ar" | "en");
   const form = useForm<ResetPasswordFormData>({
@@ -50,14 +53,14 @@ const ResetPasswordForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                إنشاء كلمة سر جديدة
+                {t("password.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder=""
+                    placeholder={t("password.placeholder")}
                     {...field}
                   />
                   <Button
@@ -86,14 +89,14 @@ const ResetPasswordForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                تأكيد كلمة السر
+                {t("password-confirm.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder=""
+                    placeholder={t("password-confirm.placeholder")}
                     {...field}
                   />
                   <Button
@@ -122,7 +125,7 @@ const ResetPasswordForm = ({
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            تغيير كلمة السر
+            {tBtns("sign-in")}
           </Button>
           <Button
             variant={"outline"}
@@ -131,7 +134,7 @@ const ResetPasswordForm = ({
             className="text-mid-gray !border-light-gray"
             disabled={form.formState.isSubmitting}
           >
-            <span>سجل دخولك عن طريق جوجل</span>
+            <span>{tBtns("sign-in-google")}</span>
             <Image
               src="/google_icon.svg"
               alt="Google Logo"

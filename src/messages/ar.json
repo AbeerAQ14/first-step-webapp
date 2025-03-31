@@ -104,5 +104,67 @@
     },
     "subtitle": "مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة الأسرية",
     "button": "عرض كل المدونات"
+  },
+  "auth": {
+    "buttons": {
+      "sign-in": "سجل دخولك",
+      "sign-in-google": "سجل دخولك عن طريق جوجل",
+      "sign-up-parent": "إنشاء حساب ولي أمر",
+      "sign-up-center": "إنشاء حساب مركز",
+      "send-code": "إرسال الكود",
+      "change-password": "تغيير كلمة السر"
+    },
+    "sign-in": {
+      "title": "مرحبًا مرة أخرى، سجل دخولك",
+      "form": {
+        "email": {
+          "label": "البريد الإلكترومي",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "كلمة السر",
+          "placeholder": ""
+        },
+        "forgot-password": {
+          "label": "هل نسيت كلمة المرور؟",
+          "button": "إعادة تعيين كلمة المرور"
+        }
+      }
+    },
+    "forgot-password": {
+      "title": "إعادة تعيين كلمة السر",
+      "form": {
+        "email": {
+          "label": "البريد الإلكتروني",
+          "placeholder": ""
+        }
+      }
+    },
+    "otp": {
+      "title": "كود ال OTP",
+      "form": {
+        "description": "راجع بريدك الإلكتروني",
+        "timer": "سينتهي صلاحية الكود خلال:",
+        "timer-expired": "انتهت صلاحية الكود",
+        "request-code": "اطلب كود جديد"
+      }
+    },
+    "reset-password": {
+      "title": "إنشاء كلمة سر جديدة",
+      "form": {
+        "password": {
+          "label": "كلمة السر الجديدة",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "تأكيد كلمة السر",
+          "placeholder": ""
+        }
+      }
+    },
+    "options": {
+      "have": "ليدك حساب بالفعل؟",
+      "dont-have": "ليس لديك حساب؟"
+    }
   }
 }

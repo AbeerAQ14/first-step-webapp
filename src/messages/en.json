@@ -107,5 +107,67 @@
     },
     "subtitle": "Articles and resources about childcare and achieving work-life balance",
     "button": "View All Blogs"
+  },
+  "auth": {
+    "buttons": {
+      "sign-in": "Sign In",
+      "sign-in-google": "Sign In with Google",
+      "sign-up-parent": "Create Parent Account",
+      "sign-up-center": "Create Center Account",
+      "send-code": "Send Code",
+      "change-password": "Change Password"
+    },
+    "sign-in": {
+      "title": "Welcome Back, Sign In",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": ""
+        },
+        "forgot-password": {
+          "label": "Forgot Password?",
+          "button": "Reset Password"
+        }
+      }
+    },
+    "forgot-password": {
+      "title": "Reset Password",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": ""
+        }
+      }
+    },
+    "otp": {
+      "title": "OTP Code",
+      "form": {
+        "description": "Check your email",
+        "timer": "Code will expire in:",
+        "timer-expired": "Code has expired",
+        "request-code": "Request new code"
+      }
+    },
+    "reset-password": {
+      "title": "Create New Password",
+      "form": {
+        "password": {
+          "label": "New Password",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "Confirm Password",
+          "placeholder": ""
+        }
+      }
+    },
+    "options": {
+      "have": "Already have an account?",
+      "dont-have": "Don't have an account?"
+    }
   }
 }

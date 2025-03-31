@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,8 @@ const SendEmailForm = ({
 }: {
   onSubmit: (data: ForgotPasswordFormData) => void;
 }) => {
+  const t = useTranslations("auth.forgot-password.form");
+  const tBtns = useTranslations("auth.buttons");
   const locale = useLocale();
   const formSchema = createForgotPasswordSchema(locale as "ar" | "en");
   const form = useForm<ForgotPasswordFormData>({
@@ -45,13 +47,13 @@ const SendEmailForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                البريد الإلكتروني
+                {t("email.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="example@gmail.com"
+                  placeholder={t("email.placeholder")}
                   {...field}
                 />
               </FormControl>
@@ -66,7 +68,7 @@ const SendEmailForm = ({
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            إرسال الكود
+            {tBtns("send-code")}
           </Button>
           <Button
             variant={"outline"}
@@ -75,7 +77,7 @@ const SendEmailForm = ({
             className="text-mid-gray !border-light-gray"
             disabled={form.formState.isSubmitting}
           >
-            <span>سجل دخولك عن طريق جوجل</span>
+            <span>{tBtns("sign-in-google")}</span>
             <Image
               src="/google_icon.svg"
               alt="Google Logo"

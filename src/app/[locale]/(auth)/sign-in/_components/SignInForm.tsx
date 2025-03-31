@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -25,6 +25,8 @@ const SignInForm = ({
 }: {
   onSubmit: (data: SignInFormData) => void;
 }) => {
+  const t = useTranslations("auth.sign-in");
+  const tBtns = useTranslations("auth.buttons");
   const [showPassword, setShowPassword] = useState(false);
   const locale = useLocale();
   const signInSchema = createSignInSchema(locale as "ar" | "en");
@@ -49,13 +51,13 @@ const SignInForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                البريد الإلكتروني
+                {t("form.email.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="example@gmail.com"
+                  placeholder={t("form.email.placeholder")}
                   {...field}
                 />
               </FormControl>
@@ -70,14 +72,14 @@ const SignInForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                كلمة السر
+                {t("form.password.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder="أدخل كلمة المرور"
+                    placeholder={t("form.password.placeholder")}
                     {...field}
                   />
                   <Button
@@ -97,9 +99,11 @@ const SignInForm = ({
               </FormControl>
               <FormMessage />
               <FormDescription className="text-sm flex items-center gap-x-1">
-                <span className="text-light-gray">هل نسيت كلمة السر؟</span>
+                <span className="text-light-gray">
+                  {t("form.forgot-password.label")}
+                </span>
                 <Link className="text-info" href="/forgot-password">
-                  إعادة تعيين كلمة السر
+                  {t("form.forgot-password.button")}
                 </Link>
               </FormDescription>
             </FormItem>
@@ -112,7 +116,7 @@ const SignInForm = ({
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            سجل دخولك
+            {tBtns("sign-in")}
           </Button>
           <Button
             variant={"outline"}
@@ -121,7 +125,7 @@ const SignInForm = ({
             className="text-mid-gray !border-light-gray"
             disabled={form.formState.isSubmitting}
           >
-            <span>سجل دخولك عن طريق جوجل</span>
+            <span>{tBtns("sign-in-google")}</span>
             <Image
               src="/google_icon.svg"
               alt="Google Logo"
