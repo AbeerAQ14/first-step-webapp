@@ -5,7 +5,6 @@ import { routing } from "@/i18n/routing";
 import { Tajawal } from "next/font/google";
 import TopBar from "@/components/layout/TopBar";
 import Navbar from "@/components/layout/Navbar";
-import Link from "next/link";
 import Footer from "@/components/layout/Footer";
 import "../../styles/globals.css";
 
@@ -44,14 +43,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider>
           <TopBar />
-          <Navbar>
-            <Link
-              href="/sign-in"
-              className="inline-block font-medium text-lg md:text-xl text-[#4BB484] underline decoration-[2px] underline-offset-8 decoration-[#4BB484]"
-            >
-              تسجيل الدخول
-            </Link>
-          </Navbar>
+          <Navbar />
           {children}
           <Footer />
         </NextIntlClientProvider>

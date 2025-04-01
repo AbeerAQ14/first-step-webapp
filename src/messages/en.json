@@ -4,13 +4,20 @@
     "en": "English"
   },
   "navbar": {
-    "home": { "title": "Home", "path": "/" },
-    "services": { "title": "Services", "path": "/services" },
-    "nurseries": { "title": "Nurseries", "path": "/nurseries" },
-    "centers": { "title": "Centers", "path": "/centers" },
-    "blog": { "title": "Blog", "path": "/blog" },
-    "story": { "title": "Our story", "path": "/our-story" },
-    "contact": { "title": "Contact us", "path": "/contact" }
+    "links": {
+      "home": { "title": "Home", "path": "/" },
+      "services": { "title": "Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
+      "centers": { "title": "Centers", "path": "/centers" },
+      "blog": { "title": "Blog", "path": "/blog" },
+      "story": { "title": "Our story", "path": "/our-story" },
+      "contact": { "title": "Contact us", "path": "/contact" }
+    },
+    "buttons": {
+      "sign-up": "Sign Up",
+      "sign-in": "Sign In",
+      "already-have-account": "Already have an account?"
+    }
   },
   "faqs": {
     "title": {
