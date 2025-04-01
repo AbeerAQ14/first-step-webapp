@@ -114,6 +114,11 @@ const TopRightSection = () => {
     };
   });
 
+  const hoverEffect =
+    "hover:text-primary hover:font-bold hover:text-xl hover:text-secondary-orange duration-300 ";
+  const linkClasses =
+    "absolute inset-0 md:left-0 md:right-auto rtl:md:right-0 rtl:md:left-auto";
+
   return (
     <div className="relative md:order-1 flex-1/2 xl:flex-8/12 bg-primary flex flex-col justify-between pt-10 pb-5">
       <div className="-z-50 absolute top-0 bottom-0 right-[-500%] left-[-500%] rtl:md:left-0 ltr:md:right-0 bg-primary" />
@@ -129,33 +134,54 @@ const TopRightSection = () => {
         </div>
 
         <div className="max-w-[523px] mt-6 font-medium">
-          <nav className="flex flex-wrap justify-center md:justify-start gap-x-9 gap-y-2">
-            {links.map((link) => (
-              <Link
-                key={link.id}
-                href={link.path}
-                className="text-white hover:underline"
-              >
-                {link.title}
-              </Link>
-            ))}
+          <nav>
+            <ul className="flex flex-wrap justify-center md:justify-start gap-x-9 gap-y-2">
+              {links.map((link) => (
+                <li
+                  key={link.id}
+                  className="relative inline-block font-medium text-center"
+                >
+                  <Link
+                    href={link.path}
+                    className={`text-white ${linkClasses} ${hoverEffect}`}
+                  >
+                    {link.title}
+                  </Link>
+
+                  <span className="relative -top-1/2 pointer-events-none flex items-center justify-center md:justify-start text-xl font-bold opacity-0">
+                    {link.title}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </nav>
 
           <div className="mt-9 flex flex-wrap justify-center md:justify-start gap-x-9 gap-y-2">
             <p className="text-white font-medium">{t("contactTitle")}:</p>
-            <a
-              href="mailto:info@firststep.com"
-              className="text-white hover:underline"
-            >
-              info@firststep.com
-            </a>
-            <a
-              dir="ltr"
-              href="tel:+966539949732"
-              className="text-white hover:underline"
-            >
-              +966 53 994 9732
-            </a>
+            <div className="relative">
+              <a
+                href="mailto:info@firststep.com"
+                className={`text-white ${linkClasses} ${hoverEffect}`}
+              >
+                info@firststep.com
+              </a>
+              <span className="relative -top-1/2 pointer-events-none flex items-center justify-center md:justify-start text-xl font-bold opacity-0">
+                info@firststep.com
+              </span>
+            </div>
+
+            <div className="relative">
+              <a
+                dir="ltr"
+                href="tel:+966539949732"
+                className={`text-white ${linkClasses} ${hoverEffect}`}
+              >
+                +966 53 994 9732
+              </a>
+              <span className="relative -top-1/2 pointer-events-none flex items-center justify-center md:justify-start text-xl font-bold opacity-0">
+                +966 53 994 9732
+              </span>
+            </div>
           </div>
         </div>
       </div>
