@@ -66,7 +66,7 @@ export default function Carousel({
               key={index}
               onClick={() => api?.scrollTo(index)}
               className={`
-              w-6 h-6 rounded-full border-2 border-white
+              size-4 md:size-5 xl:size-6 rounded-full border-2 border-white
               ${current === index ? "bg-white" : "bg-transparent"}
               transition-colors duration-300
             `}
