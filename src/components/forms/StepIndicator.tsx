@@ -27,7 +27,7 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({
           {index !== 0 && (
             <div
               className={clsx(
-                "-z-10 absolute translate-x-1/2 top-1/2 w-full h-[2px] transition-all",
+                "-z-10 absolute translate-x-1/2 ltr:-translate-x-1/2 top-1/2 w-full h-[2px] transition-all",
                 index < currentStep ? "w-full" : "w-0",
                 step.number <= currentStep
                   ? "bg-[repeating-linear-gradient(to_right,#2B3990_0_24px,transparent_24px_48px)]"
