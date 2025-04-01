@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import NavbarButton from "./NavbarButton";
 
 const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,6 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
   };
 
   const t = useTranslations("navbar.links");
-  const tBtns = useTranslations("navbar.buttons");
 
   const keys = [
     "home",
@@ -100,7 +100,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
 
           {/* Call to action button */}
           <div className="block sm:hidden mt-5 justify-self-center">
-            {children}
+            {children ? children : <NavbarButton />}
           </div>
         </div>
 
@@ -145,24 +145,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
             </Button>
 
             <div className="hidden sm:block">
-              {children ? (
-                children
-              ) : (
-                <Button size={"sm"} asChild>
-                  {1 === 1 ? (
-                    <Link href="/sign-in" className="inline-block">
-                      <span className="font-normal text-xs">
-                        {tBtns("already-have-account")}
-                      </span>
-                      <span>{tBtns("sign-in")}</span>
-                    </Link>
-                  ) : (
-                    <Link href="/sign-up" className="inline-block">
-                      {tBtns("sign-up")}
-                    </Link>
-                  )}
-                </Button>
-              )}
+              {children ? children : <NavbarButton />}
             </div>
           </div>
         }
