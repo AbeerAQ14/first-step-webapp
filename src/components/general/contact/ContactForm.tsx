@@ -95,6 +95,12 @@ const ContactForm: React.FC = () => {
                       type="tel"
                       className="ltr:pr-0 ltr:pl-14 rtl:pl-0 rtl:pr-14"
                       {...field}
+                      onChange={(e) => {
+                        field.onChange(
+                          `+966${e.target.value.replace(/^(\+966)?/, "")}`
+                        );
+                      }}
+                      value={field.value?.replace(/^\+966/, "")}
                     />
                   </div>
                 </FormControl>
