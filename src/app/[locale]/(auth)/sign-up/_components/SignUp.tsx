@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
+import ParentSignUp from "@/components/forms/parent/ParentSignUp";
 import { Icons } from "@/components/general/icons";
 import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
 
@@ -79,6 +80,15 @@ const SignUp = () => {
               e.preventDefault();
             }}
           >
+            {currentStep === 1 && (
+              <div className="mb-10 space-y-9 ">
+                <h1 className="heading-2 text-primary text-center">
+                  إنشاء حساب ولي أمر
+                </h1>
+                <ParentSignUp />
+              </div>
+            )}
+
             <div className="sm:p-10 rounded-3xl border border-secondary-burgundy">
               <div className="w-full">
                 <StepIndicator steps={steps} currentStep={currentStep} />
