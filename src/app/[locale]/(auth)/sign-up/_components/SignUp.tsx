@@ -8,6 +8,7 @@ import StepIndicator from "@/components/forms/StepIndicator";
 import ParentSignUp from "@/components/forms/parent/ParentSignUp";
 import { Icons } from "@/components/general/icons";
 import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
+import Step1ChildInfo from "@/components/forms/child/Step1";
 
 const SignUp = () => {
   const steps = [
@@ -31,7 +32,7 @@ const SignUp = () => {
       password: "",
       confirmPassword: "",
       childName: "",
-      birthDate: "",
+      birthDate: undefined,
       fatherName: "",
       motherName: "",
       gender: undefined,
@@ -89,12 +90,14 @@ const SignUp = () => {
               </div>
             )}
 
-            <div className="sm:p-10 rounded-3xl border border-secondary-burgundy">
+            <div className="p-5 sm:p-10 rounded-3xl border border-secondary-burgundy">
               <div className="w-full">
                 <StepIndicator steps={steps} currentStep={currentStep} />
               </div>
 
-              <div className="mt-40"></div>
+              <div className="mt-40">
+                <Step1ChildInfo />
+              </div>
 
               <FormNavigation
                 currentStep={currentStep}

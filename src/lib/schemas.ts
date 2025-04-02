@@ -106,7 +106,7 @@ export type JustSignUpParentFormData = z.infer<typeof parentSchema>;
 export const addChildSchema = z.object({
   // Step 1: Child Information
   childName: z.string().min(2, { message: "اسم الطفل مطلوب" }),
-  birthDate: z.string().min(1, { message: "تاريخ الميلاد مطلوب" }),
+  birthDate: z.date({ required_error: "تاريخ الميلاد مطلوب" }),
   fatherName: z.string().min(2, { message: "اسم الأب مطلوب" }),
   motherName: z.string().min(2, { message: "اسم الأم مطلوب" }),
   gender: z.enum(["male", "female"], {
