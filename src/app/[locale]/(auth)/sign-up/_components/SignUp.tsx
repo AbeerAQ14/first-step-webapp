@@ -10,6 +10,7 @@ import { Icons } from "@/components/general/icons";
 import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
 import Step1ChildInfo from "@/components/forms/child/Step1";
 import Step2ChronicDiseases from "@/components/forms/child/Step2";
+import Step3Recommendations from "@/components/forms/child/Step3";
 
 const SignUp = () => {
   const steps = [
@@ -111,7 +112,7 @@ const SignUp = () => {
       case 2:
         return <Step2ChronicDiseases />;
       case 3:
-        return <div></div>;
+        return <Step3Recommendations />;
       case 4:
         return <div></div>;
       default:
