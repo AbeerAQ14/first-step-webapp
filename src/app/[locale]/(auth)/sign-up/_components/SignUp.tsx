@@ -37,14 +37,14 @@ const SignUp = () => {
       motherName: "",
       gender: undefined,
       chronicDiseases: {
-        hasDiseases: undefined,
+        hasDiseases: "yes",
         diseases: [],
       },
       childDescription: "",
       favoriteThings: "",
       recommendations: "",
       allergies: {
-        hasAllergies: undefined,
+        hasAllergies: "yes",
         allergyTypes: "",
         allergyFoods: "",
         allergyProcedures: "",
@@ -64,23 +64,71 @@ const SignUp = () => {
   const totalSteps = steps.length;
 
   const goToNextStep = async () => {
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    const fieldsToValidate = getFieldsToValidate(currentStep);
+    const isValid = await methods.trigger(fieldsToValidate as any);
+
+    if (isValid) {
+      setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    }
   };
 
   const goToPreviousStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const getFieldsToValidate = (step: number) => {
+    switch (step) {
+      case 1:
+        return [
+          "name",
+          "phone",
+          "email",
+          "relation",
+          "password",
+          "confirmPassword",
+          "childName",
+          "birthDate",
+          "fatherName",
+          "motherName",
+          "gender",
+        ];
+      case 2:
+        return ["chronicDiseases", "allergies"];
+      case 3:
+        return ["childDescription", "favoriteThings", "recommendations"];
+      case 4:
+        return ["authorizedPersons"];
+      default:
+        return [];
+    }
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return <Step1ChildInfo />;
+      case 2:
+        return <div></div>;
+      case 3:
+        return <div></div>;
+      case 4:
+        return <div></div>;
+      default:
+        return null;
+    }
+  };
+
+  const onSubmit = (data: SignUpParentFormData) => {
+    console.log("Form submitted:", data);
+
+    alert("Form submitted successfully!");
+  };
+
   return (
     <>
       <div className="flex flex-col items-center container mx-auto px-4">
         <FormProvider {...methods}>
-          <form
-            className="w-full"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
+          <form className="w-full" onSubmit={methods.handleSubmit(onSubmit)}>
             {currentStep === 1 && (
               <div className="mb-10 space-y-9 ">
                 <h1 className="heading-2 text-primary text-center">
@@ -95,9 +143,7 @@ const SignUp = () => {
                 <StepIndicator steps={steps} currentStep={currentStep} />
               </div>
 
-              <div className="mt-40">
-                <Step1ChildInfo />
-              </div>
+              <div className="mt-40">{renderStep()}</div>
 
               <FormNavigation
                 currentStep={currentStep}
