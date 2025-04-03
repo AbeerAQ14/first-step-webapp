@@ -170,31 +170,50 @@ export const addChildSchema = z.object({
       hasAllergies: z.enum(["yes", "no"], {
         required_error: "يرجى الإجابة على هذا السؤال",
       }),
-      allergyTypes: z.string().trim().optional(),
-      allergyFoods: z.string().trim().optional(),
-      allergyProcedures: z.string().trim().optional(),
+      allergies: z
+        .array(
+          z.object({
+            allergyTypes: z.string().trim().optional(),
+            allergyFoods: z.string().trim().optional(),
+            allergyProcedures: z.string().trim().optional(),
+          })
+        )
+        .optional(),
     })
     .superRefine((data, ctx) => {
       if (data.hasAllergies === "yes") {
-        if (!data.allergyTypes || data.allergyTypes.trim() === "") {
+        if (!data.allergies || data.allergies.length === 0) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "يرجى إدخال نوع الحساسية",
-            path: ["allergyTypes"],
+            message: "يجب إدخال نوع حساسية واحد على الأقل",
+            path: ["allergies"],
           });
-        }
-        if (!data.allergyFoods || data.allergyFoods.trim() === "") {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "يرجى إدخال الأطعمة المسببة للحساسية",
-            path: ["allergyFoods"],
-          });
-        }
-        if (!data.allergyProcedures || data.allergyProcedures.trim() === "") {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "يرجى إدخال إجراءات التعامل مع الحساسية",
-            path: ["allergyProcedures"],
+        } else {
+          data.allergies.forEach((allergy, index) => {
+            if (!allergy.allergyTypes || allergy.allergyTypes.trim() === "") {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال نوع الحساسية",
+                path: [`allergies.${index}.allergyTypes`],
+              });
+            }
+            if (!allergy.allergyFoods || allergy.allergyFoods.trim() === "") {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال الأطعمة المسببة للحساسية",
+                path: [`allergies.${index}.allergyFoods`],
+              });
+            }
+            if (
+              !allergy.allergyProcedures ||
+              allergy.allergyProcedures.trim() === ""
+            ) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال إجراءات التعامل مع الحساسية",
+                path: [`allergies.${index}.allergyProcedures`],
+              });
+            }
           });
         }
       }
