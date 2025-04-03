@@ -9,6 +9,7 @@ import ParentSignUp from "@/components/forms/parent/ParentSignUp";
 import { Icons } from "@/components/general/icons";
 import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
 import Step1ChildInfo from "@/components/forms/child/Step1";
+import Step2ChronicDiseases from "@/components/forms/child/Step2";
 
 const SignUp = () => {
   const steps = [
@@ -108,7 +109,7 @@ const SignUp = () => {
       case 1:
         return <Step1ChildInfo />;
       case 2:
-        return <div></div>;
+        return <Step2ChronicDiseases />;
       case 3:
         return <div></div>;
       case 4:
