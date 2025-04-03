@@ -114,33 +114,91 @@ export const addChildSchema = z.object({
   }),
 
   // Step 2: Chronic Diseases and Allergies
-  chronicDiseases: z.object({
-    hasDiseases: z.enum(["yes", "no"], {
-      required_error: "يرجى الإجابة على هذا السؤال",
+  chronicDiseases: z
+    .object({
+      hasDiseases: z.enum(["yes", "no"], {
+        required_error: "يرجى الإجابة على هذا السؤال",
+      }),
+      diseases: z
+        .array(
+          z.object({
+            name: z.string().trim().optional(),
+            medication: z.string().trim().optional(),
+            procedures: z.string().trim().optional(),
+          })
+        )
+        .optional(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.hasDiseases === "yes") {
+        if (!data.diseases || data.diseases.length === 0) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "يجب إدخال مرض واحد على الأقل",
+            path: ["diseases"],
+          });
+        } else {
+          data.diseases.forEach((disease, index) => {
+            if (!disease.name || disease.name.trim() === "") {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال اسم المرض",
+                path: [`diseases.${index}.name`],
+              });
+            }
+            if (!disease.medication || disease.medication.trim() === "") {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال الدواء المستخدم",
+                path: [`diseases.${index}.medication`],
+              });
+            }
+            if (!disease.procedures || disease.procedures.trim() === "") {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "يرجى إدخال الإجراءات المتبعة",
+                path: [`diseases.${index}.procedures`],
+              });
+            }
+          });
+        }
+      }
     }),
-    diseases: z
-      .array(
-        z.object({
-          name: z.string().optional(),
-          medication: z.string().optional(),
-          procedures: z.string().optional(),
-        })
-      )
-      .optional(),
-  }),
 
   allergies: z
     .object({
-      hasAllergies: z
-        .enum(["yes", "no"], {
-          required_error: "يرجى الإجابة على هذا السؤال",
-        })
-        .optional(),
-      allergyTypes: z.string().optional(),
-      allergyFoods: z.string().optional(),
-      allergyProcedures: z.string().optional(),
+      hasAllergies: z.enum(["yes", "no"], {
+        required_error: "يرجى الإجابة على هذا السؤال",
+      }),
+      allergyTypes: z.string().trim().optional(),
+      allergyFoods: z.string().trim().optional(),
+      allergyProcedures: z.string().trim().optional(),
     })
-    .optional(),
+    .superRefine((data, ctx) => {
+      if (data.hasAllergies === "yes") {
+        if (!data.allergyTypes || data.allergyTypes.trim() === "") {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "يرجى إدخال نوع الحساسية",
+            path: ["allergyTypes"],
+          });
+        }
+        if (!data.allergyFoods || data.allergyFoods.trim() === "") {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "يرجى إدخال الأطعمة المسببة للحساسية",
+            path: ["allergyFoods"],
+          });
+        }
+        if (!data.allergyProcedures || data.allergyProcedures.trim() === "") {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "يرجى إدخال إجراءات التعامل مع الحساسية",
+            path: ["allergyProcedures"],
+          });
+        }
+      }
+    }),
 
   // Step 3: Recommendations
   childDescription: z.string().min(2, { message: "وصف الطفل مطلوب" }),
