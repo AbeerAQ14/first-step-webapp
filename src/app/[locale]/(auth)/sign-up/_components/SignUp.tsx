@@ -46,9 +46,9 @@ const SignUp = () => {
       recommendations: "",
       allergies: {
         hasAllergies: "yes",
-        allergyTypes: "",
-        allergyFoods: "",
-        allergyProcedures: "",
+        allergies: [
+          { allergyTypes: "", allergyFoods: "", allergyProcedures: "" },
+        ],
       },
       authorizedPersons: [
         {

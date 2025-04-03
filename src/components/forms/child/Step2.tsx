@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup } from "@/components/general/RadioGroup";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import type { ChronicDisease } from "@/types";
+import type { Allergy, ChronicDisease } from "@/types";
 import type { SignUpParentFormData } from "@/lib/schemas";
 
 export default function Step2ChronicDiseases() {
@@ -30,8 +30,25 @@ export default function Step2ChronicDiseases() {
     name: "chronicDiseases.diseases",
   });
 
+  const {
+    fields: allergies,
+    append: appendAllergy,
+    remove: removeAllergy,
+  } = useFieldArray({
+    control,
+    name: "allergies.allergies",
+  });
+
   const addDisease = () => {
     appendDisease({ name: "", medication: "", procedures: "" });
+  };
+
+  const addAllergy = () => {
+    appendAllergy({
+      allergyTypes: "",
+      allergyFoods: "",
+      allergyProcedures: "",
+    });
   };
 
   return (
@@ -44,7 +61,13 @@ export default function Step2ChronicDiseases() {
         removeDisease={removeDisease}
       />
 
-      <AllergiesForm control={control} hasAllergies={hasAllergies} />
+      <AllergiesForm
+        control={control}
+        hasAllergies={hasAllergies}
+        allergies={allergies}
+        addAllergy={addAllergy}
+        removeAllergy={removeAllergy}
+      />
     </div>
   );
 }
@@ -55,6 +78,14 @@ interface DiseasesFormProps {
   diseases: ChronicDisease[];
   addDisease: () => void;
   removeDisease: () => void;
+}
+
+interface AllergiesFormProps {
+  control: Control<SignUpParentFormData>;
+  hasAllergies: "yes" | "no";
+  allergies: Allergy[];
+  addAllergy: () => void;
+  removeAllergy: () => void;
 }
 
 const DiseasesForm = ({
@@ -172,7 +203,7 @@ const DiseasesForm = ({
         ))}
 
       <div className="flex justify-center items-center gap-2">
-        {hasDiseases && (
+        {hasDiseases === "yes" && (
           <Button
             type="button"
             size={"lg"}
@@ -204,15 +235,18 @@ const DiseasesForm = ({
 const AllergiesForm = ({
   control,
   hasAllergies,
-}: {
-  control: Control<SignUpParentFormData>;
-  hasAllergies: "yes" | "no";
-}) => {
+  allergies,
+  addAllergy,
+  removeAllergy,
+}: AllergiesFormProps) => {
   return (
-    <>
+    <div>
       <div className="flex flex-col items-center gap-y-4">
-        <p className="text-primary font-medium text-center text-xl md:text-2xl">
-          هل يعاني طفلك من أي نوع من الحساسية؟
+        <p className="flex justify-center items-center gap-x-1 flex-col lg:flex-row text-primary font-medium text-center text-xl md:text-2xl">
+          <span>هل يعاني طفلك من أي نوع من الحساسية؟</span>
+          <span className="font-normal text-sm md:text-base text-mid-gray">
+            (مثل حساسية الطعام , الأدوية , او أي مواد اخري)
+          </span>
         </p>
 
         <FormField
@@ -243,67 +277,102 @@ const AllergiesForm = ({
         />
       </div>
 
-      {hasAllergies === "yes" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={control}
-            name="allergies.allergyTypes"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  نوع الحساسية<span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="مثال: حساسية صدرية"
-                    {...field}
-                    className=""
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {hasAllergies === "yes" &&
+        allergies.map((_, index) => (
+          <div
+            key={index}
+            className="mt-10 mb-3.5 grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            <FormField
+              control={control}
+              name={`allergies.allergies.${index}.allergyTypes`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    نوع الحساسية<span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="مثال: حساسية صدرية"
+                      {...field}
+                      className=""
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={control}
-            name="allergies.allergyFoods"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  ما هي المواد أو الأطعمة المسببة للحساسية؟
-                  <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="مثال: المكسرات" {...field} className="" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={control}
+              name={`allergies.allergies.${index}.allergyFoods`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    ما هي المواد أو الأطعمة المسببة للحساسية؟
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="مثال: المكسرات"
+                      {...field}
+                      className=""
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={control}
-            name="allergies.allergyProcedures"
-            render={({ field }) => (
-              <FormItem className="col-span-1 md:col-span-2">
-                <FormLabel>
-                  ما هي الإجراءات الواجب اتخاذها في حالة حدوث رد فعل تحسسي؟
-                  <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="اكتب هنا..."
-                    {...field}
-                    className="min-h-[100px]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-      )}
-    </>
+            <FormField
+              control={control}
+              name={`allergies.allergies.${index}.allergyProcedures`}
+              render={({ field }) => (
+                <FormItem className="col-span-1 md:col-span-2">
+                  <FormLabel>
+                    ما هي الإجراءات الواجب اتخاذها في حالة حدوث رد فعل تحسسي؟
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="اكتب هنا..."
+                      {...field}
+                      className="min-h-[100px]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        ))}
+
+      <div className="flex justify-center items-center gap-2">
+        {hasAllergies === "yes" && (
+          <Button
+            type="button"
+            size={"lg"}
+            variant="outline"
+            onClick={addAllergy}
+            className="font-bold"
+          >
+            <Plus className="size-6" size={24} />
+            إضافة نوع حساسية
+          </Button>
+        )}
+
+        {allergies.length > 1 && (
+          <Button
+            type="button"
+            size={"sm"}
+            variant="outline"
+            onClick={removeAllergy}
+            className="font-bold aspect-square"
+          >
+            <Minus className="size-6" size={24} />
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
