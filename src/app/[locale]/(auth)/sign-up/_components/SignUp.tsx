@@ -39,7 +39,7 @@ const SignUp = () => {
       gender: undefined,
       chronicDiseases: {
         hasDiseases: "yes",
-        diseases: [],
+        diseases: [{ name: "", medication: "", procedures: "" }],
       },
       childDescription: "",
       favoriteThings: "",
