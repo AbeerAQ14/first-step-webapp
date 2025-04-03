@@ -11,6 +11,7 @@ import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
 import Step1ChildInfo from "@/components/forms/child/Step1";
 import Step2ChronicDiseases from "@/components/forms/child/Step2";
 import Step3Recommendations from "@/components/forms/child/Step3";
+import Step4AuthorizedPersons from "@/components/forms/child/Step4";
 
 const SignUp = () => {
   const steps = [
@@ -114,7 +115,7 @@ const SignUp = () => {
       case 3:
         return <Step3Recommendations />;
       case 4:
-        return <div></div>;
+        return <Step4AuthorizedPersons />;
       default:
         return null;
     }
