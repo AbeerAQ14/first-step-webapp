@@ -77,7 +77,7 @@ interface DiseasesFormProps {
   hasDiseases: "yes" | "no";
   diseases: ChronicDisease[];
   addDisease: () => void;
-  removeDisease: () => void;
+  removeDisease: (index?: number) => void;
 }
 
 interface AllergiesFormProps {
@@ -85,7 +85,7 @@ interface AllergiesFormProps {
   hasAllergies: "yes" | "no";
   allergies: Allergy[];
   addAllergy: () => void;
-  removeAllergy: () => void;
+  removeAllergy: (index?: number) => void;
 }
 
 const DiseasesForm = ({
@@ -221,7 +221,7 @@ const DiseasesForm = ({
             type="button"
             size={"sm"}
             variant="outline"
-            onClick={removeDisease}
+            onClick={() => removeDisease(diseases.length - 1)}
             className="font-bold aspect-square"
           >
             <Minus className="size-6" size={24} />
@@ -366,7 +366,7 @@ const AllergiesForm = ({
             type="button"
             size={"sm"}
             variant="outline"
-            onClick={removeAllergy}
+            onClick={() => removeAllergy(allergies.length - 1)}
             className="font-bold aspect-square"
           >
             <Minus className="size-6" size={24} />
