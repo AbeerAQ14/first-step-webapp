@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getErrorMessage } from "./utils";
+import { create } from "domain";
 
 // Sign In Form
 export const createSignInSchema = (locale: "ar" | "en" = "ar") =>
@@ -291,4 +292,105 @@ export const createSignUpParentSchema = () => {
 
 export type SignUpParentFormData = z.infer<
   ReturnType<typeof createSignUpParentSchema>
+>;
+
+// Sign Up For Centers Step 1
+const createCenterStep1Schema = () =>
+  z.object({
+    // Step 1: Basic Information
+    centerNameArabic: z.string().min(2, { message: "اسم المركز مطلوب" }),
+    centerNameEnglish: z
+      .string()
+      .min(2, { message: "اسم المركز باللغة الإنجليزية مطلوب" }),
+    email: z.string().email({ message: "البريد الإلكتروني غير صالح" }),
+    phone: z.string().min(9, { message: "رقم الجوال غير صالح" }),
+    city: z.string().min(2, { message: "المدينة مطلوبة" }),
+    district: z.string().min(2, { message: "الحي مطلوب" }),
+    street: z.string().min(2, { message: "الشارع مطلوب" }),
+    locationLink: z.string().min(5, { message: "رابط الموقع مطلوب" }),
+    branches: z.string().optional(),
+    centerType: z
+      .array(z.string())
+      .min(1, { message: "يجب اختيار نوع المركز" }),
+    services: z
+      .array(z.string())
+      .min(1, { message: "يجب اختيار خدمة واحدة على الأقل" }),
+    additionalServices: z.string().optional(),
+  });
+
+export type CenterStep1FormData = z.infer<
+  ReturnType<typeof createCenterStep1Schema>
+>;
+
+// Sign Up For Centers Step 2
+const createCenterStep2Schema = () =>
+  z.object({
+    // Step 2: Ages and Hours
+    ageGroups: z
+      .array(z.string())
+      .min(1, { message: "يجب اختيار فئة عمرية واحدة على الأقل" }),
+    additionalInfo: z.string().optional(),
+    workDays: z.object({
+      from: z.string().min(1, { message: "يوم البداية مطلوب" }),
+      to: z.string().min(1, { message: "يوم النهاية مطلوب" }),
+    }),
+    workHours: z.object({
+      from: z.string().min(1, { message: "ساعة البداية مطلوبة" }),
+      to: z.string().min(1, { message: "ساعة النهاية مطلوبة" }),
+    }),
+  });
+
+export type CenterStep2FormData = z.infer<
+  ReturnType<typeof createCenterStep2Schema>
+>;
+
+// Sign Up For Centers Step 3
+const createCenterStep3Schema = () =>
+  z.object({
+    // Step 3: Communication and Food
+    emergencyContact: z.boolean(),
+    communicationMethods: z
+      .array(z.string())
+      .min(1, { message: "يجب اختيار طريقة تواصل واحدة على الأقل" }),
+    foodService: z.boolean(),
+    meals: z
+      .array(
+        z.object({
+          name: z.string().optional(),
+          ingredients: z.string().optional(),
+          drink: z.string().optional(),
+        })
+      )
+      .optional(),
+  });
+
+export type CenterStep3FormData = z.infer<
+  ReturnType<typeof createCenterStep3Schema>
+>;
+
+// Sign Up For Centers Step 4
+const createCenterStep4Schema = () =>
+  z.object({
+    // Step 4: Permits
+    businessLicense: z.any().optional(),
+    commercialRegistration: z.any().optional(),
+    comments: z.string().optional(),
+  });
+
+export type CenterStep4FormData = z.infer<
+  ReturnType<typeof createCenterStep4Schema>
+>;
+
+// Sign Up For Centers Schema
+export const createSignUpCenterSchema = () => {
+  const step1Schema = createCenterStep1Schema();
+  const step2Schema = createCenterStep2Schema();
+  const step3Schema = createCenterStep3Schema();
+  const step4Schema = createCenterStep4Schema();
+
+  return step1Schema.merge(step2Schema).merge(step3Schema).merge(step4Schema);
+};
+
+export type SignUpCenterFormData = z.infer<
+  ReturnType<typeof createSignUpCenterSchema>
 >;
