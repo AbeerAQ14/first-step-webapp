@@ -42,7 +42,7 @@ const WhyUs = () => {
 
         <Image
           className="order-1 md:order-2 grow md:absolute inset-y-0 rtl:-left-40 ltr:-right-40 -z-50 xl:relative rtl:xl:left-0 ltr:xl:right-0 shrink-0"
-          src="/mother-and-daughter.png"
+          src="/assets/general/mother-and-daughter.png"
           alt="Mother And Daughter"
           width={508}
           height={499.33}

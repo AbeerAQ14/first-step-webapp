@@ -108,7 +108,7 @@ export default function Step1ChildInfo() {
                     />
                     <div className="group relative transition-all duration-300 peer-checked:saturate-100 group-hover:saturate-100 saturate-0">
                       <Image
-                        src="/boy.png"
+                        src="/assets/illustrations/boy.png"
                         alt="ولد"
                         width={91.32}
                         height={120}
@@ -138,7 +138,7 @@ export default function Step1ChildInfo() {
                     />
                     <div className="group relative transition-all duration-300 peer-checked:saturate-100 group-hover:saturate-100 saturate-0">
                       <Image
-                        src="/girl.png"
+                        src="/assets/illustrations/girl.png"
                         alt="Girl"
                         width={84.74}
                         height={120}

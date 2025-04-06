@@ -5,7 +5,7 @@ const Headline = () => {
     <section className="flex items-center justify-center gap-x-2 md:gap-x-14">
       <Image
         className="ltr:order-3 rotate-180 rotate-y-180 rotate-z-180"
-        src="/logo.svg"
+        src="/assets/logos/logo.svg"
         alt="First Step Logo"
         width={96.13}
         height={120}
@@ -24,7 +24,7 @@ const Headline = () => {
 
       <Image
         className="ltr:order-1"
-        src="/logo.svg"
+        src="/assets/logos/logo.svg"
         alt="First Step Logo"
         width={96.13}
         height={120}

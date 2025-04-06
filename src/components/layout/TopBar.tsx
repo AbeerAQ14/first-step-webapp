@@ -72,7 +72,8 @@ function LanguageSwitcher() {
   const locale = useLocale();
   const t = useTranslations("language");
   const language = locale === "en" ? t("en") : t("ar");
-  const iconSrc = locale === "en" ? "/english.svg" : "/arabic.svg";
+  const iconSrc =
+    locale === "en" ? "/assets/icons/english.svg" : "/assets/icons/arabic.svg";
 
   const toggleLanguage = (newLocale: "ar" | "en") => {
     const path = window.location.pathname;
@@ -94,13 +95,23 @@ function LanguageSwitcher() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => toggleLanguage("ar")}>
           <div className="flex items-center gap-x-1">
-            <Image src="/arabic.svg" alt="arabic" width={20} height={20} />
+            <Image
+              src="/assets/icons/arabic.svg"
+              alt="arabic"
+              width={20}
+              height={20}
+            />
             <div className="caption-12-medium font-bold">{t("ar")}</div>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => toggleLanguage("en")}>
           <div className="flex items-center gap-x-1">
-            <Image src="/english.svg" alt="english" width={20} height={20} />
+            <Image
+              src="/assets/icons/english.svg"
+              alt="english"
+              width={20}
+              height={20}
+            />
             <div className="caption-12-medium font-bold">{t("en")}</div>
           </div>
         </DropdownMenuItem>

@@ -46,7 +46,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
         {/* Left */}
         <div className="flex-1">
           <Image
-            src="/complete_logo.svg"
+            src="/assets/logos/complete_logo.svg"
             alt="logo"
             width={236}
             height={59.9}

@@ -9,10 +9,20 @@ const SocialQR = () => {
       <div className="relative max-w-3xl mx-auto">
         <div className="max-w-fit mx-auto p-8 text-center sm:absolute -top-10 right-0">
           <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-196.26deg] rotate-z-180 rotate-y-180 absolute top-[20%] right-[70%]">
-            <Image src="/arrow.svg" alt="Arrow" width={282.97} height={91.82} />
+            <Image
+              src="/assets/icons/arrow.svg"
+              alt="Arrow"
+              width={282.97}
+              height={91.82}
+            />
           </div>
           <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-248.91deg] absolute top-[120%] right-[20%] md:top-[130%] md:right-[22%] xl:top-[170%] xl:right-[4%]">
-            <Image src="/arrow.svg" alt="Arrow" width={282.97} height={91.82} />
+            <Image
+              src="/assets/icons/arrow.svg"
+              alt="Arrow"
+              width={282.97}
+              height={91.82}
+            />
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-[3.25rem] font-bold text-primary mb-2">
@@ -32,27 +42,27 @@ const QRSquare = () => {
   const socialQRs = [
     {
       platform: "Snapchat",
-      image: "/qr/snapchat.jpg",
+      image: "/assets/social/snapchat.jpg",
     },
     {
       platform: "Facebook",
-      image: "/qr/facebook.jpg",
+      image: "/assets/social/facebook.jpg",
     },
     {
       platform: "LinkedIn",
-      image: "/qr/linkedin.jpg",
+      image: "/assets/social/linkedin.jpg",
     },
     {
       platform: "Instagram",
-      image: "/qr/instagram.jpg",
+      image: "/assets/social/instagram.jpg",
     },
     {
       platform: "TikTok",
-      image: "/qr/tiktok.jpg",
+      image: "/assets/social/tiktok.jpg",
     },
     {
       platform: "X",
-      image: "/qr/x.jpg",
+      image: "/assets/social/x.jpg",
     },
   ];
 

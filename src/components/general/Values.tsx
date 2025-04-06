@@ -3,7 +3,7 @@ import Image from "next/image";
 const Values = () => {
   const values = [
     {
-      iconSrc: "/mother.svg",
+      iconSrc: "/assets/illustrations/mother.svg",
       alt: "",
       bg: "#B12F53",
       color: "#fff",
@@ -12,7 +12,7 @@ const Values = () => {
         "ننظر إلى المستقبل بعيون متجددة، فلا نكتفي بما هو متاح، بل نبحث دائمًا عن حلول إبداعية ترتقي برعاية الأطفال إلى مستوى جديد. نواكب أحدث الأساليب التربوية والتقنيات الحديثة، لنقدم بيئة تعليمية وترفيهية متطورة تلبي احتياجات الأجيال القادمة.",
     },
     {
-      iconSrc: "/mother.svg",
+      iconSrc: "/assets/illustrations/mother.svg",
       alt: "",
       bg: "#2B3990",
       color: "#fff",
@@ -21,7 +21,7 @@ const Values = () => {
         "نستمع، نفهم، ونتواصل بقلوب مفتوحة، لأننا نؤمن بأن رعاية الأطفال تبدأ ببناء علاقات قوية ومستدامة مع العائلات والمراكز؛ لذلك نسعى إلى بناء جسور من الثقة والتفاهم، لنكون دائمًا الشريك الداعم والموثوق الذي يمكن الاعتماد عليه في كل خطوة.",
     },
     {
-      iconSrc: "/mother-nurse.svg",
+      iconSrc: "/assets/illustrations/mother-nurse.svg",
       alt: "",
       bg: "#D9534F",
       color: "#fff",
@@ -30,7 +30,7 @@ const Values = () => {
         "نحن لا نقدم مجرد حلول، بل نساهم في بناء مستقبل أكثر إشراقًا للأطفال وعائلاتهم. نسعى أن يكون لكل خطوة نخطوها تأثير إيجابي ينعكس على حياة الأطفال اليوم، ويستمر معهم إلى الغد، لنُمهد لهم طريقًا مليئًا بالفرص والنمو المستدام.",
     },
     {
-      iconSrc: "/mother-nurse.svg",
+      iconSrc: "/assets/illustrations/mother-nurse.svg",
       alt: "",
       bg: "#73B094",
       color: "#fff",

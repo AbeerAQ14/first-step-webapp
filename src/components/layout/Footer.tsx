@@ -70,7 +70,7 @@ const TopLeftSection = () => {
           <div className="flex gap-3 justify-center md:justify-end">
             <Link href="#" className="inline-block">
               <Image
-                src="/googleplay.png"
+                src="/assets/store/googleplay.png"
                 alt="Get it on Google Play"
                 width={138}
                 height={40}
@@ -78,7 +78,7 @@ const TopLeftSection = () => {
             </Link>
             <Link href="#" className="inline-block">
               <Image
-                src="/appstore.png"
+                src="/assets/store/appstore.png"
                 alt="Download on the App Store"
                 width={138}
                 height={40}
@@ -126,7 +126,7 @@ const TopRightSection = () => {
       <div className="w-full mb-6 justify-items-center md:justify-items-start">
         <div className="flex justify-center md:justify-start mb-6">
           <Image
-            src="/complete_logo_white.svg"
+            src="/assets/logos/complete_logo_white.svg"
             alt="First Step"
             width={236.4}
             height={60}

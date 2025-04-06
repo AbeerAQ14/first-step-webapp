@@ -136,7 +136,7 @@ const ResetPasswordForm = ({
           >
             <span>{tBtns("sign-in-google")}</span>
             <Image
-              src="/google_icon.svg"
+              src="/assets/icons/google_icon.svg"
               alt="Google Logo"
               width={36}
               height={36}

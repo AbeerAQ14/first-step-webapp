@@ -20,7 +20,7 @@ const Contact = () => {
 
         <div className="max-w-xs md:max-w-max md:order-2 grow w-full flex justify-end pointer-events-none select-none">
           <Image
-            src="/contact-logo.png"
+            src="/assets/logos/contact-logo.png"
             alt="First Step"
             width={561}
             height={708}

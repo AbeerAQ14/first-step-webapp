@@ -15,7 +15,7 @@ const FAQs = () => {
     <section
       className="w-full bg-cover md:bg-contain bg-repeat-x bg-center"
       style={{
-        backgroundImage: "url(/faqs-bg.png)",
+        backgroundImage: "url(/assets/backgrounds/faqs-bg.svg)",
       }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
@@ -32,7 +32,7 @@ const FAQs = () => {
           )}
           <Image
             className={locale === "en" ? "rotate-x-180 rotate-z-180" : ""}
-            src="/faqs-child.png"
+            src="/assets/illustrations/faqs-child.png"
             alt="child"
             width={640}
             height={1016.52}
