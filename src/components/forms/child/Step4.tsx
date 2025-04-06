@@ -12,10 +12,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Minus, Plus } from "lucide-react";
-import type { SignUpParentFormData } from "@/lib/schemas";
+import type { ChildStep4FormData } from "@/lib/schemas";
 
 export default function Step4AuthorizedPersons() {
-  const { control } = useFormContext<SignUpParentFormData>();
+  const { control } = useFormContext<ChildStep4FormData>();
 
   const {
     fields: authorizedPersons,

@@ -14,10 +14,10 @@ import { RadioGroup } from "@/components/general/RadioGroup";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 import type { Allergy, ChronicDisease } from "@/types";
-import type { SignUpParentFormData } from "@/lib/schemas";
+import type { ChildStep2FormData } from "@/lib/schemas";
 
 export default function Step2ChronicDiseases() {
-  const { control, watch } = useFormContext<SignUpParentFormData>();
+  const { control, watch } = useFormContext<ChildStep2FormData>();
   const hasDiseases = watch("chronicDiseases.hasDiseases");
   const hasAllergies = watch("allergies.hasAllergies");
 
@@ -73,7 +73,7 @@ export default function Step2ChronicDiseases() {
 }
 
 interface DiseasesFormProps {
-  control: Control<SignUpParentFormData>;
+  control: Control<ChildStep2FormData>;
   hasDiseases: "yes" | "no";
   diseases: ChronicDisease[];
   addDisease: () => void;
@@ -81,7 +81,7 @@ interface DiseasesFormProps {
 }
 
 interface AllergiesFormProps {
-  control: Control<SignUpParentFormData>;
+  control: Control<ChildStep2FormData>;
   hasAllergies: "yes" | "no";
   allergies: Allergy[];
   addAllergy: () => void;

@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { SignUpParentFormData } from "@/lib/schemas";
+import type { ChildStep3FormData } from "@/lib/schemas";
 
 export default function Step3Recommendations() {
-  const { control } = useFormContext<SignUpParentFormData>();
+  const { control } = useFormContext<ChildStep3FormData>();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

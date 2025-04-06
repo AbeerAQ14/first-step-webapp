@@ -7,11 +7,11 @@ import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
 import ParentSignUp from "@/components/forms/parent/ParentSignUp";
 import { Icons } from "@/components/general/icons";
-import { SignUpParentFormData, signUpParentSchema } from "@/lib/schemas";
 import Step1ChildInfo from "@/components/forms/child/Step1";
 import Step2ChronicDiseases from "@/components/forms/child/Step2";
 import Step3Recommendations from "@/components/forms/child/Step3";
 import Step4AuthorizedPersons from "@/components/forms/child/Step4";
+import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 
 const SignUp = () => {
   const steps = [
@@ -24,6 +24,8 @@ const SignUp = () => {
       icon: Icons.four,
     },
   ];
+
+  const signUpParentSchema = createSignUpParentSchema();
 
   const methods = useForm<SignUpParentFormData>({
     resolver: zodResolver(signUpParentSchema),

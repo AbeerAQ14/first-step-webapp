@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/general/DatePicker";
-import type { SignUpParentFormData } from "@/lib/schemas";
+import type { ChildStep1FormData } from "@/lib/schemas";
 
 export default function Step1ChildInfo() {
-  const { control } = useFormContext<SignUpParentFormData>();
+  const { control } = useFormContext<ChildStep1FormData>();
 
   return (
     <div className="space-y-10">
