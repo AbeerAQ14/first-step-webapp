@@ -9,6 +9,7 @@ import StepIndicator from "@/components/forms/StepIndicator";
 import { Icons } from "@/components/general/icons";
 import { createSignUpCenterSchema, SignUpCenterFormData } from "@/lib/schemas";
 import { Step1BasicInfo } from "@/components/forms/center/Step1";
+import { Step2AgesAndHours } from "@/components/forms/center/Step2";
 
 export function SignUp() {
   const steps = [
@@ -80,17 +81,17 @@ export function SignUp() {
     switch (step) {
       case 1:
         return [
-          "centerNameArabic",
-          "centerNameEnglish",
-          "email",
-          "phone",
-          "city",
-          "district",
-          "street",
-          "locationLink",
-          "branches",
-          "centerType",
-          "services",
+          // "centerNameArabic",
+          // "centerNameEnglish",
+          // "email",
+          // "phone",
+          // "city",
+          // "district",
+          // "street",
+          // "locationLink",
+          // "branches",
+          // "centerType",
+          // "services",
         ];
       case 2:
         return ["ageGroups", "workDays", "workHours"];
@@ -108,7 +109,7 @@ export function SignUp() {
       case 1:
         return <Step1BasicInfo />;
       case 2:
-        return <div></div>;
+        return <Step2AgesAndHours />;
       case 3:
         return <div></div>;
       case 4:
