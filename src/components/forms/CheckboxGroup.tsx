@@ -4,23 +4,23 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Control } from "react-hook-form";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
 
-interface CheckboxGroupProbs {
+interface CheckboxGroupProbs<T extends FieldValues> {
   items: { id: string; label: string }[];
-  control: Control<any>;
-  name: string;
+  control: Control<T>;
+  name: FieldPath<T>;
   className?: string;
 }
 
-const CheckboxGroup = ({
+const CheckboxGroup = <T extends FieldValues>({
   items,
   control,
   name,
   className,
-}: CheckboxGroupProbs) => {
+}: CheckboxGroupProbs<T>) => {
   return (
     <div
       className={cn(
