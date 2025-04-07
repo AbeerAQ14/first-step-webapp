@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { useLocale } from "next-intl";
 import {
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import type { JustSignUpParentFormData } from "@/lib/schemas";
+import PhoneInput from "../PhoneInput";
 
 export default function ParentSignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,23 +52,16 @@ export default function ParentSignUp() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <div className="relative flex items-center">
-                  <span className="absolute ltr:left-3 rtl:right-3 text-gray-500">
-                    +966
-                  </span>
-                  <Input
-                    dir={locale === "ar" ? "rtl" : "ltr"}
-                    type="tel"
-                    className="ltr:pr-0 ltr:pl-14 rtl:pl-0 rtl:pr-14"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(
-                        `+966${e.target.value.replace(/^(\+966)?/, "")}`
-                      );
-                    }}
-                    value={field.value?.replace(/^\+966/, "")}
-                  />
-                </div>
+                <PhoneInput
+                  {...field}
+                  value={field.value?.replace(/^\+966/, "")}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    field.onChange(
+                      `+966${e.target.value.replace(/^(\+966)?/, "")}`
+                    );
+                  }}
+                  locale={locale}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
