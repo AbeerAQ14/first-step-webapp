@@ -110,7 +110,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
             {links.map((link) => (
               <li
                 key={link.id}
-                className="relative inline-block font-medium text-center"
+                className="relative inline-block font-medium text-center h-7"
               >
                 <Link
                   href={link.path}
