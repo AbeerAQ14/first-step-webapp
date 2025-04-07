@@ -39,7 +39,7 @@ const VisionContent = () => {
 
       <Image
         className="select-none pointer-events-none w-full rounded-full -translate-y-1/2 sm:absolute sm:w-fit sm:top-1/2 sm:left-0 ltr:sm:left-auto ltr:sm:right-0"
-        src={"/vision.jpg"}
+        src={"/assets/general/vision.jpg"}
         alt="our vision"
         width={280}
         height={280}
@@ -53,7 +53,7 @@ const MissionContent = () => {
     <>
       <Image
         className="select-none pointer-events-none w-full rounded-full translate-y-1/2 sm:absolute sm:w-fit sm:bottom-1/2 sm:right-0 ltr:sm:left-0"
-        src={"/vision.jpg"}
+        src={"/assets/general/vision.jpg"}
         alt="our vision"
         width={280}
         height={280}

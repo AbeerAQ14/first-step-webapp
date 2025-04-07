@@ -9,7 +9,7 @@ const Blogs = () => {
   return (
     <section
       className="my-20 bg-center bg-cover xl:bg-[size-120%] xl:bg-center 2xl:bg-contain bg-no-repeat"
-      style={{ backgroundImage: `url(/bubbles-bg.svg)` }}
+      style={{ backgroundImage: `url(/assets/backgrounds/bubbles-bg.svg)` }}
     >
       <div className="container mx-auto px-4">
         <div className="text-center flex flex-col items-center gap-y-6">
