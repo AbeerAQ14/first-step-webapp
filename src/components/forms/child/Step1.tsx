@@ -84,7 +84,7 @@ export default function Step1ChildInfo() {
       </div>
 
       <div>
-        <p className="text-center text-primary font-bold mb-4">جنس الطفل</p>
+        <p className="form-label-sm mb-4">جنس الطفل</p>
         <div className="flex justify-center gap-8">
           <FormField
             control={control}

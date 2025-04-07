@@ -242,7 +242,7 @@ const AllergiesForm = ({
   return (
     <div>
       <div className="flex flex-col items-center gap-y-4">
-        <p className="flex justify-center items-center gap-x-1 flex-col lg:flex-row text-primary font-medium text-center text-xl md:text-2xl">
+        <p className="flex justify-center items-center gap-x-1 flex-col lg:flex-row text-center form-label">
           <span>هل يعاني طفلك من أي نوع من الحساسية؟</span>
           <span className="font-normal text-sm md:text-base text-mid-gray">
             (مثل حساسية الطعام , الأدوية , او أي مواد اخري)

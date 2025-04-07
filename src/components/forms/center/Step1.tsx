@@ -200,7 +200,7 @@ export function Step1BasicInfo() {
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
-        <p className="text-center text-primary font-bold">نوع المركز</p>
+        <p className="form-label">نوع المركز</p>
         <CheckboxGroup
           className="lg:w-3xl"
           items={centerTypes}
@@ -210,7 +210,7 @@ export function Step1BasicInfo() {
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
-        <p className="text-center text-primary font-bold">الخدمات المتوفرة</p>
+        <p className="form-label">الخدمات المتوفرة</p>
 
         <CheckboxGroup
           className="lg:w-3xl"
