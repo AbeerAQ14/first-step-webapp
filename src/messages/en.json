@@ -1,0 +1,180 @@
+{
+  "language": {
+    "ar": "لغة عربية",
+    "en": "English"
+  },
+  "navbar": {
+    "links": {
+      "home": { "title": "Home", "path": "/" },
+      "services": { "title": "Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
+      "centers": { "title": "Centers", "path": "/centers" },
+      "blog": { "title": "Blog", "path": "/blog" },
+      "story": { "title": "Our story", "path": "/our-story" },
+      "contact": { "title": "Contact us", "path": "/contact" }
+    },
+    "buttons": {
+      "sign-up": "Sign Up",
+      "sign-in": "Sign In",
+      "already-have-account": "Already have an account?"
+    }
+  },
+  "faqs": {
+    "title": {
+      "line1": "Frequently Asked",
+      "line2": " Questions"
+    },
+    "questions": {
+      "1": {
+        "question": "How do I get to nearby centers?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "2": {
+        "question": "What transportation options are available?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "3": {
+        "question": "Can I walk there?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "4": {
+        "question": "What are the working hours of the centers?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      },
+      "5": {
+        "question": "Are there parking spaces nearby?",
+        "answer": "We believe that our commitment to fulfilling our mission for your children does not stop at a certain point. We always strive to bring about positive development and change in your children's lives through our dedicated team that focuses on educating, motivating, and entertaining them."
+      }
+    }
+  },
+  "footer": {
+    "links": {
+      "home": { "title": "Home", "path": "/" },
+      "services": { "title": "Our Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
+      "centers": { "title": "Centers", "path": "/centers" },
+      "blog": { "title": "Blog", "path": "/blog" },
+      "story": { "title": "Our Story", "path": "/our-story" },
+      "contact": { "title": "Contact Us", "path": "/contact" },
+      "help": { "title": "Help", "path": "/help" },
+      "privacy": { "title": "Privacy", "path": "/privacy" },
+      "terms": { "title": "Terms and Conditions", "path": "/terms" }
+    },
+    "contactTitle": "Contact us",
+    "newsletter": { "title": "Our Newsletter", "button": "Join Now" },
+    "appDownloadTitle": "Download App Now",
+    "followTitle": "Follow us"
+  },
+  "contact": {
+    "title": "Always happy to help you",
+    "subtitle": "If you have an inquiry or issue, don't hesitate to contact us",
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": ""
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": ""
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": ""
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "",
+        "options": {
+          "inquiry": "Inquiry",
+          "complaint": "Complaint",
+          "suggestion": "Suggestion",
+          "other": "Other"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": ""
+      },
+      "button": {
+        "label": "Send",
+        "loading": "Sending..."
+      }
+    }
+  },
+  "socialqr": {
+    "title": {
+      "line1": "Follow Us",
+      "line2": "Step by Step"
+    }
+  },
+  "blogsection": {
+    "title": {
+      "line1": "Blog",
+      "line2": "First Step"
+    },
+    "subtitle": "Articles and resources about childcare and achieving work-life balance",
+    "button": "View All Blogs"
+  },
+  "auth": {
+    "buttons": {
+      "sign-in": "Sign In",
+      "sign-in-google": "Sign In with Google",
+      "sign-up-parent": "Create Parent Account",
+      "sign-up-center": "Create Center Account",
+      "send-code": "Send Code",
+      "change-password": "Change Password"
+    },
+    "sign-in": {
+      "title": "Welcome Back, Sign In",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": ""
+        },
+        "forgot-password": {
+          "label": "Forgot Password?",
+          "button": "Reset Password"
+        }
+      }
+    },
+    "forgot-password": {
+      "title": "Reset Password",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": ""
+        }
+      }
+    },
+    "otp": {
+      "title": "OTP Code",
+      "form": {
+        "description": "Check your email",
+        "timer": "Code will expire in:",
+        "timer-expired": "Code has expired",
+        "request-code": "Request new code"
+      }
+    },
+    "reset-password": {
+      "title": "Create New Password",
+      "form": {
+        "password": {
+          "label": "New Password",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "Confirm Password",
+          "placeholder": ""
+        }
+      }
+    },
+    "options": {
+      "have": "Already have an account?",
+      "dont-have": "Don't have an account?"
+    }
+  }
+}
