@@ -8,6 +8,7 @@ import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
 import { Icons } from "@/components/general/icons";
 import { createSignUpCenterSchema, SignUpCenterFormData } from "@/lib/schemas";
+import { Step1BasicInfo } from "@/components/forms/center/Step1";
 
 export function SignUp() {
   const steps = [
@@ -105,7 +106,7 @@ export function SignUp() {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <div></div>;
+        return <Step1BasicInfo />;
       case 2:
         return <div></div>;
       case 3:
