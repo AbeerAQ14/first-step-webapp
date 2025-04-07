@@ -348,11 +348,15 @@ export type CenterStep2FormData = z.infer<
 const createCenterStep3Schema = () =>
   z.object({
     // Step 3: Communication and Food
-    emergencyContact: z.boolean(),
+    emergencyContact: z.enum(["yes", "no"], {
+      required_error: "يرجى الإجابة على هذا السؤال",
+    }),
     communicationMethods: z
       .array(z.string())
       .min(1, { message: "يجب اختيار طريقة تواصل واحدة على الأقل" }),
-    foodService: z.boolean(),
+    foodService: z.enum(["yes", "no"], {
+      required_error: "يرجى الإجابة على هذا السؤال",
+    }),
     meals: z
       .array(
         z.object({

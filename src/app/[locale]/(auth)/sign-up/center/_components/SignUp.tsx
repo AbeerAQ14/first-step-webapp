@@ -10,6 +10,7 @@ import { Icons } from "@/components/general/icons";
 import { createSignUpCenterSchema, SignUpCenterFormData } from "@/lib/schemas";
 import { Step1BasicInfo } from "@/components/forms/center/Step1";
 import { Step2AgesAndHours } from "@/components/forms/center/Step2";
+import { Step3Communication } from "@/components/forms/center/Step3";
 
 export function SignUp() {
   const steps = [
@@ -50,10 +51,21 @@ export function SignUp() {
         from: "",
         to: "",
       },
-      emergencyContact: false,
+      emergencyContact: undefined,
       communicationMethods: [],
-      foodService: false,
-      meals: [],
+      foodService: "yes",
+      meals: [
+        {
+          name: "",
+          ingredients: "",
+          drink: "",
+        },
+        {
+          name: "",
+          ingredients: "",
+          drink: "",
+        },
+      ],
       businessLicense: null,
       commercialRegistration: null,
       comments: "",
@@ -94,7 +106,9 @@ export function SignUp() {
           // "services",
         ];
       case 2:
-        return ["ageGroups", "workDays", "workHours"];
+        return [
+          // "ageGroups", "workDays", "workHours"
+        ];
       case 3:
         return ["emergencyContact", "communicationMethods", "foodService"];
       case 4:
@@ -111,7 +125,7 @@ export function SignUp() {
       case 2:
         return <Step2AgesAndHours />;
       case 3:
-        return <div></div>;
+        return <Step3Communication />;
       case 4:
         return <div></div>;
       default:
