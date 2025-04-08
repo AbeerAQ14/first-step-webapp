@@ -11,6 +11,7 @@ import { createSignUpCenterSchema, SignUpCenterFormData } from "@/lib/schemas";
 import { Step1BasicInfo } from "@/components/forms/center/Step1";
 import { Step2AgesAndHours } from "@/components/forms/center/Step2";
 import { Step3Communication } from "@/components/forms/center/Step3";
+import { Step4Permits } from "@/components/forms/center/Step4";
 
 export function SignUp() {
   const steps = [
@@ -66,8 +67,8 @@ export function SignUp() {
           drink: "",
         },
       ],
-      businessLicense: null,
-      commercialRegistration: null,
+      businessLicense: undefined,
+      commercialRegistration: undefined,
       comments: "",
     },
     mode: "onChange",
@@ -93,22 +94,20 @@ export function SignUp() {
     switch (step) {
       case 1:
         return [
-          // "centerNameArabic",
-          // "centerNameEnglish",
-          // "email",
-          // "phone",
-          // "city",
-          // "district",
-          // "street",
-          // "locationLink",
-          // "branches",
-          // "centerType",
-          // "services",
+          "centerNameArabic",
+          "centerNameEnglish",
+          "email",
+          "phone",
+          "city",
+          "district",
+          "street",
+          "locationLink",
+          "branches",
+          "centerType",
+          "services",
         ];
       case 2:
-        return [
-          // "ageGroups", "workDays", "workHours"
-        ];
+        return ["ageGroups", "workDays", "workHours"];
       case 3:
         return ["emergencyContact", "communicationMethods", "foodService"];
       case 4:
@@ -127,7 +126,7 @@ export function SignUp() {
       case 3:
         return <Step3Communication />;
       case 4:
-        return <div></div>;
+        return <Step4Permits />;
       default:
         return null;
     }
