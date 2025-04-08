@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface FormNavigationProps {
   currentStep: number;
@@ -15,6 +16,8 @@ export default function FormNavigation({
   onPrevious,
   onNext,
 }: FormNavigationProps) {
+  const t = useTranslations("auth.buttons");
+
   return (
     <div className="flex justify-between gap-x-9">
       {currentStep > 1 ? (
@@ -25,17 +28,17 @@ export default function FormNavigation({
           onClick={onPrevious}
           className="!border-light-gray text-mid-gray"
         >
-          السابق
+          {t("previous")}
         </Button>
       ) : null}
 
       {currentStep < totalSteps ? (
         <Button type="button" size={"lg"} onClick={onNext}>
-          التالي
+          {t("next")}
         </Button>
       ) : (
         <Button type="submit" size={"lg"}>
-          إنشاء حساب
+          {t("sign-up")}
         </Button>
       )}
     </div>

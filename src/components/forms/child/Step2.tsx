@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Control, useFieldArray, useFormContext } from "react-hook-form";
 import {
   FormField,
@@ -95,11 +96,13 @@ const DiseasesForm = ({
   addDisease,
   removeDisease,
 }: DiseasesFormProps) => {
+  const t = useTranslations("auth.add-child.2.form.diseases");
+
   return (
     <div>
       <div className="flex flex-col items-center gap-y-4">
         <p className="text-primary font-medium text-center text-xl md:text-2xl">
-          هل يعاني طفلك من أمراض مزمنة؟
+          {t("title")}
         </p>
 
         <FormField
@@ -115,11 +118,11 @@ const DiseasesForm = ({
                   options={[
                     {
                       value: "yes",
-                      label: "نعم",
+                      label: t("options.yes"),
                     },
                     {
                       value: "no",
-                      label: "لا",
+                      label: t("options.no"),
                     },
                   ]}
                 />
@@ -142,11 +145,12 @@ const DiseasesForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    اسم المرض<span className="text-red-500">*</span>
+                    {t("disease.label")}
+                    <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="مثال: مرض السكري"
+                      placeholder={t("disease.placeholder")}
                       {...field}
                       value={field.value?.toString() || ""}
                       className=""
@@ -163,11 +167,12 @@ const DiseasesForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    اسم الدواء<span className="text-red-500">*</span>
+                    {t("medicine.label")}
+                    <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="مثال: انسولين"
+                      placeholder={t("medicine.placeholder")}
                       {...field}
                       value={field.value?.toString() || ""}
                       className=""
@@ -184,12 +189,15 @@ const DiseasesForm = ({
               render={({ field }) => (
                 <FormItem className="col-span-1 md:col-span-2">
                   <FormLabel>
-                    ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟
+                    {t("procedures.label")}
+                    <span className="font-normal text-sm md:text-base text-mid-gray">
+                      {t("procedures.sublabel")}
+                    </span>
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="اكتب هنا..."
+                      placeholder={t("procedures.placeholder")}
                       {...field}
                       value={field.value?.toString() || ""}
                       className="min-h-[100px]"
@@ -212,7 +220,7 @@ const DiseasesForm = ({
             className="font-bold"
           >
             <Plus className="size-6" size={24} />
-            إضافة مرض مزمن
+            {t("add")}
           </Button>
         )}
 
@@ -239,13 +247,15 @@ const AllergiesForm = ({
   addAllergy,
   removeAllergy,
 }: AllergiesFormProps) => {
+  const t = useTranslations("auth.add-child.2.form.allergies");
+
   return (
     <div>
       <div className="flex flex-col items-center gap-y-4">
         <p className="flex justify-center items-center gap-x-1 flex-col lg:flex-row text-center form-label">
-          <span>هل يعاني طفلك من أي نوع من الحساسية؟</span>
+          <span>{t("title")}</span>
           <span className="font-normal text-sm md:text-base text-mid-gray">
-            (مثل حساسية الطعام , الأدوية , او أي مواد اخري)
+            {t("subtitle")}
           </span>
         </p>
 
@@ -262,11 +272,11 @@ const AllergiesForm = ({
                   options={[
                     {
                       value: "yes",
-                      label: "نعم",
+                      label: t("options.yes"),
                     },
                     {
                       value: "no",
-                      label: "لا",
+                      label: t("options.no"),
                     },
                   ]}
                 />
@@ -289,11 +299,12 @@ const AllergiesForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    نوع الحساسية<span className="text-red-500">*</span>
+                    {t("allergy.label")}
+                    <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="مثال: حساسية صدرية"
+                      placeholder={t("allergy.placeholder")}
                       {...field}
                       className=""
                     />
@@ -309,12 +320,12 @@ const AllergiesForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    ما هي المواد أو الأطعمة المسببة للحساسية؟
+                    {t("causes.label")}
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="مثال: المكسرات"
+                      placeholder={t("causes.placeholder")}
                       {...field}
                       className=""
                     />
@@ -330,12 +341,12 @@ const AllergiesForm = ({
               render={({ field }) => (
                 <FormItem className="col-span-1 md:col-span-2">
                   <FormLabel>
-                    ما هي الإجراءات الواجب اتخاذها في حالة حدوث رد فعل تحسسي؟
+                    {t("procedures.label")}
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="اكتب هنا..."
+                      placeholder={t("procedures.placeholder")}
                       {...field}
                       className="min-h-[100px]"
                     />
@@ -357,7 +368,7 @@ const AllergiesForm = ({
             className="font-bold"
           >
             <Plus className="size-6" size={24} />
-            إضافة نوع حساسية
+            {t("add")}
           </Button>
         )}
 

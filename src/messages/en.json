@@ -122,7 +122,10 @@
       "sign-up-parent": "Create Parent Account",
       "sign-up-center": "Create Center Account",
       "send-code": "Send Code",
-      "change-password": "Change Password"
+      "change-password": "Change Password",
+      "next": "Next",
+      "previous": "Previous",
+      "sign-up": "Create Account"
     },
     "sign-in": {
       "title": "Welcome Back, Sign In",
@@ -141,6 +144,146 @@
         }
       }
     },
+    "parent-signup": {
+      "title": "Parent Account Signup",
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": ""
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": ""
+        },
+        "relation": {
+          "label": "Relationship",
+          "placeholder": ""
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "Confirm Password",
+          "placeholder": ""
+        }
+      }
+    },
+    "add-child": {
+      "1": {
+        "title": "Your Child's Information",
+        "form": {
+          "name": {
+            "label": "Child's Name",
+            "placeholder": ""
+          },
+          "date-of-birth": {
+            "label": "Date of Birth",
+            "placeholder": ""
+          },
+          "father-name": {
+            "label": "Father's Name",
+            "placeholder": ""
+          },
+          "mother-name": {
+            "label": "Mother's Name",
+            "placeholder": ""
+          },
+          "gender": {
+            "title": "Child's Gender",
+            "male": "Boy",
+            "female": "Girl"
+          }
+        }
+      },
+      "2": {
+        "title": "Chronic Illnesses & Allergies",
+        "form": {
+          "diseases": {
+            "title": "Does your child suffer from any chronic illnesses?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            },
+            "disease": {
+              "label": "Illness Name",
+              "placeholder": ""
+            },
+            "medicine": {
+              "label": "Medication Name",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "What actions should be taken during a sudden episode?",
+              "sublabel": "(e.g., specific medications or first aid steps)",
+              "placeholder": ""
+            },
+            "add": "Add Chronic Illness"
+          },
+          "allergies": {
+            "title": "Does your child have any allergies?",
+            "subtitle": "(e.g., food, medicine, or other substances)",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            },
+            "allergy": {
+              "label": "Type of Allergy",
+              "placeholder": ""
+            },
+            "causes": {
+              "label": "What substances or foods cause the allergy?",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "What actions should be taken during a sudden episode?",
+              "placeholder": ""
+            },
+            "add": "Add Allergy Type"
+          }
+        }
+      },
+      "3": {
+        "title": "Child-Specific Recommendations",
+        "form": {
+          "description": {
+            "label": "Describe your child in 3 words",
+            "placeholder": ""
+          },
+          "likes": {
+            "label": "Things your child likes",
+            "placeholder": ""
+          },
+          "recommendations": {
+            "label": "Do you have any recommendations regarding your child?",
+            "placeholder": ""
+          }
+        }
+      },
+      "4": {
+        "title": "Authorized Persons for Pick-Up/Drop-Off",
+        "form": {
+          "authorize": {
+            "label": "Authorized Person's Name",
+            "placeholder": ""
+          },
+          "identity": {
+            "label": "Authorized Person's ID Number",
+            "placeholder": ""
+          },
+          "comment": {
+            "label": "Any comments or notes?",
+            "placeholder": ""
+          },
+          "add": "Add Authorized Person"
+        }
+      }
+    },
+
     "forgot-password": {
       "title": "Reset Password",
       "form": {

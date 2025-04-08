@@ -12,8 +12,10 @@ import {
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/general/DatePicker";
 import type { ChildStep1FormData } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
 
 export default function Step1ChildInfo() {
+  const t = useTranslations("auth.add-child.1.form");
   const { control } = useFormContext<ChildStep1FormData>();
 
   return (
@@ -25,7 +27,7 @@ export default function Step1ChildInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                اسم الطفل
+                {t("name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
@@ -42,7 +44,8 @@ export default function Step1ChildInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                تاريخ الميلاد<span className="text-red-500">*</span>
+                {t("date-of-birth.label")}
+                <span className="text-red-500">*</span>
               </FormLabel>
               <DatePicker value={field.value} onChange={field.onChange} />
               <FormMessage />
@@ -56,7 +59,8 @@ export default function Step1ChildInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                اسم الأب<span className="text-red-500">*</span>
+                {t("father-name.label")}
+                <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
@@ -72,7 +76,8 @@ export default function Step1ChildInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                اسم الأم<span className="text-red-500">*</span>
+                {t("mother-name.label")}
+                <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
@@ -84,7 +89,7 @@ export default function Step1ChildInfo() {
       </div>
 
       <div>
-        <p className="form-label-sm mb-4">جنس الطفل</p>
+        <p className="form-label-sm mb-4">{t("gender.title")}</p>
         <div className="flex justify-center gap-8">
           <FormField
             control={control}
@@ -109,14 +114,14 @@ export default function Step1ChildInfo() {
                     <div className="group relative transition-all duration-300 peer-checked:saturate-100 group-hover:saturate-100 saturate-0">
                       <Image
                         src="/assets/illustrations/boy.png"
-                        alt="ولد"
+                        alt="Boy"
                         width={91.32}
                         height={120}
                         className="group-hover:scale-110 duration-300"
                       />
                     </div>
                     <p className="text-xl font-medium text-center mt-2 text-mid-gray peer-checked:text-primary hover:text-primary duration-300">
-                      ولد
+                      {t("gender.male")}
                     </p>
                   </label>
                 </div>
@@ -146,7 +151,7 @@ export default function Step1ChildInfo() {
                       />
                     </div>
                     <p className="text-xl font-medium text-center mt-2 text-mid-gray peer-checked:text-primary hover:text-primary duration-300">
-                      بنت
+                      {t("gender.female")}
                     </p>
                   </label>
                 </div>

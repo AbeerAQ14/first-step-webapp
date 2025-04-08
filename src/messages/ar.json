@@ -119,7 +119,10 @@
       "sign-up-parent": "إنشاء حساب ولي أمر",
       "sign-up-center": "إنشاء حساب مركز",
       "send-code": "إرسال الكود",
-      "change-password": "تغيير كلمة السر"
+      "change-password": "تغيير كلمة السر",
+      "next": "التالي",
+      "previous": "السابق",
+      "sign-up": "إنشاء حساب"
     },
     "sign-in": {
       "title": "مرحبًا مرة أخرى، سجل دخولك",
@@ -135,6 +138,145 @@
         "forgot-password": {
           "label": "هل نسيت كلمة المرور؟",
           "button": "إعادة تعيين كلمة المرور"
+        }
+      }
+    },
+    "parent-signup": {
+      "title": "إنشاء حساب ولي أمر",
+      "form": {
+        "name": {
+          "label": "الاسم",
+          "placeholder": ""
+        },
+        "phone": {
+          "label": "رقم الجوال",
+          "placeholder": ""
+        },
+        "relation": {
+          "label": "صلة القرابة",
+          "placeholder": ""
+        },
+        "email": {
+          "label": "البريد الإلكتروني",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "كلمة السر",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "تأكيد كلمة السر",
+          "placeholder": ""
+        }
+      }
+    },
+    "add-child": {
+      "1": {
+        "title": "بيانات طفلك",
+        "form": {
+          "name": {
+            "label": "اسم الطفل",
+            "placeholder": ""
+          },
+          "date-of-birth": {
+            "label": "تاريخ الميلاد",
+            "placeholder": ""
+          },
+          "father-name": {
+            "label": "اسم الأب",
+            "placeholder": ""
+          },
+          "mother-name": {
+            "label": "اسم الأم",
+            "placeholder": ""
+          },
+          "gender": {
+            "title": "جنس الطفل",
+            "male": "ولد",
+            "female": "بنت"
+          }
+        }
+      },
+      "2": {
+        "title": "الأمراض المزمنة والحساسية",
+        "form": {
+          "diseases": {
+            "title": "هل يعاني طفلك من أمراض مزمنة؟",
+            "options": {
+              "yes": "نعم",
+              "no": "لا"
+            },
+            "disease": {
+              "label": "اسم المرض",
+              "placeholder": ""
+            },
+            "medicine": {
+              "label": "اسم الدواء",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
+              "sublabel": "(مثل أدوية معينة أو خطوات إسعافية)",
+              "placeholder": ""
+            },
+            "add": "إضافة مرض مزمن"
+          },
+          "allergies": {
+            "title": "هل يعاني طفلك من أي نوع من الحساسية؟",
+            "subtitle": "(مثل حساسية الطعام , الأدوية , او أي مواد اخري)",
+            "options": {
+              "yes": "نعم",
+              "no": "لا"
+            },
+            "allergy": {
+              "label": "نوع الحساسية",
+              "placeholder": ""
+            },
+            "causes": {
+              "label": "ما هي المواد أو الأطعمة المسببة للحساسية؟",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
+              "placeholder": ""
+            },
+            "add": "إضافة نوع حساسية"
+          }
+        }
+      },
+      "3": {
+        "title": "التوصيات الخاصة بالطفل",
+        "form": {
+          "description": {
+            "label": "صف لنا طفلك في 3 كلمات",
+            "placeholder": ""
+          },
+          "likes": {
+            "label": "أشياء يحبها طفلك",
+            "placeholder": ""
+          },
+          "recommendations": {
+            "label": "هل لديك أي توصيات تتعلق بطفلك؟",
+            "placeholder": ""
+          }
+        }
+      },
+      "4": {
+        "title": "الأشخاص المصرح لهم بإرسال أو استلام الأبناء",
+        "form": {
+          "authorize": {
+            "label": "اسم الشخص المفوض",
+            "placeholder": ""
+          },
+          "identity": {
+            "label": "رقم هوية الشخص المفوض",
+            "placeholder": ""
+          },
+          "comment": {
+            "label": "هل لديك أي تعليق أو ملاحظة",
+            "placeholder": ""
+          },
+          "add": "إضافة شخص مفوض"
         }
       }
     },

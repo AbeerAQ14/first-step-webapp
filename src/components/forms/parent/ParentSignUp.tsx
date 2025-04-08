@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   FormField,
   FormItem,
@@ -17,6 +17,8 @@ import type { JustSignUpParentFormData } from "@/lib/schemas";
 import PhoneInput from "../PhoneInput";
 
 export default function ParentSignUp() {
+  const t = useTranslations("auth.parent-signup.form");
+
   const [showPassword, setShowPassword] = useState(false);
 
   const locale = useLocale();
@@ -31,11 +33,15 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                الاسم
+                {t("name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="text" placeholder="" {...field} />
+                <Input
+                  type="text"
+                  placeholder={t("name.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -48,7 +54,7 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                رقم الجوال
+                {t("phone.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
@@ -74,11 +80,15 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                صلة القرابة
+                {t("relation.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="text" placeholder="" {...field} />
+                <Input
+                  type="text"
+                  placeholder={t("name.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,11 +101,15 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                البريد الإلكتروني
+                {t("email.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="email" placeholder="" {...field} />
+                <Input
+                  type="email"
+                  placeholder={t("name.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,14 +122,14 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                كلمة السر
+                {t("password.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder=""
+                    placeholder={t("name.placeholder")}
                     {...field}
                   />
                   <Button
@@ -144,14 +158,14 @@ export default function ParentSignUp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                تأكيد كلمة السر
+                {t("password-confirm.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder=""
+                    placeholder={t("name.placeholder")}
                     {...field}
                   />
                   <Button
