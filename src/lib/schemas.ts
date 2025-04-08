@@ -372,12 +372,33 @@ export type CenterStep3FormData = z.infer<
   ReturnType<typeof createCenterStep3Schema>
 >;
 
+const MAX_FILE_SIZE = 3 * 1024 * 1024;
+const ACCEPTED_FILE_TYPES = ["application/pdf"];
+
 // Sign Up For Centers Step 4
 const createCenterStep4Schema = () =>
   z.object({
     // Step 4: Permits
-    businessLicense: z.any().optional(),
-    commercialRegistration: z.any().optional(),
+    businessLicense: z
+      .instanceof(File, { message: "File is required" })
+      .refine(
+        (file) => file.size <= MAX_FILE_SIZE,
+        "File size must be less than 3MB"
+      )
+      .refine(
+        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
+        "Only PDF files are accepted"
+      ),
+    commercialRegistration: z
+      .instanceof(File, { message: "File is required" })
+      .refine(
+        (file) => file.size <= MAX_FILE_SIZE,
+        "File size must be less than 3MB"
+      )
+      .refine(
+        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
+        "Only PDF files are accepted"
+      ),
     comments: z.string().optional(),
   });
 
