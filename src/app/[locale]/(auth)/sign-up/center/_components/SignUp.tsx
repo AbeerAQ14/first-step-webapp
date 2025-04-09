@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
@@ -16,6 +16,8 @@ import { Step4Permits } from "@/components/forms/center/Step4";
 
 export function SignUp() {
   const t = useTranslations("auth.center-signup");
+  const locale = useLocale();
+
   const steps = [
     { number: 1, label: t("1.title"), icon: Icons.one },
     { number: 2, label: t("2.title"), icon: Icons.two },
@@ -27,7 +29,7 @@ export function SignUp() {
     { number: 4, label: t("4.title"), icon: Icons.four },
   ];
 
-  const signUpCenterSchema = createSignUpCenterSchema();
+  const signUpCenterSchema = createSignUpCenterSchema(locale as "ar" | "en");
 
   const methods = useForm<SignUpCenterFormData>({
     resolver: zodResolver(signUpCenterSchema),

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormNavigation from "@/components/forms/FormNavigation";
@@ -17,6 +17,7 @@ import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 const SignUp = () => {
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");
+  const locale = useLocale();
 
   const steps = [
     { number: 1, label: tSteps("1.title"), icon: Icons.one },
@@ -29,7 +30,7 @@ const SignUp = () => {
     },
   ];
 
-  const signUpParentSchema = createSignUpParentSchema();
+  const signUpParentSchema = createSignUpParentSchema(locale as "ar" | "en");
 
   const methods = useForm<SignUpParentFormData>({
     resolver: zodResolver(signUpParentSchema),

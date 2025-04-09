@@ -7,9 +7,13 @@ export function cn(...inputs: ClassValue[]) {
 
 // form error messages en and ar
 const ERRORMESSAGES = {
-  "name-required": {
-    ar: "الاسم مطلوب",
-    en: "Name is required",
+  "general-answer-required": {
+    ar: "يرجى الإجابة على هذا السؤال",
+    en: "Please answer this question",
+  },
+  "general-field-required": {
+    ar: "هذا الحقل مطلوب",
+    en: "This field is required",
   },
   "invalid-email": {
     ar: "يرجى إدخال بريد إلكتروني صحيح",
@@ -38,6 +42,38 @@ const ERRORMESSAGES = {
   "invalid-otp": {
     ar: "يرجى إدخال الكود بشكل صحيح",
     en: "Please enter the code correctly",
+  },
+  "disease-one-required": {
+    ar: "يجب إدخال مرض واحد على الأقل",
+    en: "At least one disease must be entered",
+  },
+  "allergy-one-required": {
+    ar: "يجب إدخال نوع حساسية واحد على الأقل",
+    en: "At least one allergy type must be entered",
+  },
+  "authorized-one-required": {
+    ar: "يجب إضافة شخص مفوض واحد على الأقل",
+    en: "At least one authorized person must be added",
+  },
+  "services-one-required": {
+    ar: "يجب اختيار خدمة واحدة على الأقل",
+    en: "At least one service must be selected",
+  },
+  "age-groups-one-required": {
+    ar: "يجب اختيار فئة عمرية واحدة على الأقل",
+    en: "At least one age group must be selected",
+  },
+  "communication-methods-one-required": {
+    ar: "يجب اختيار طريقة تواصل واحدة على الأقل",
+    en: "At least one communication method must be selected",
+  },
+  "file-size": {
+    ar: "يجب أن يكون حجم الملف أقل من 3 ميغابايت",
+    en: "File size must be less than 3MB",
+  },
+  "pdf-type": {
+    ar: "يُسمح فقط بملفات PDF",
+    en: "Only PDF files are accepted",
   },
 };
 
