@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,15 +14,10 @@ import { RadioGroup } from "@/components/general/RadioGroup";
 import CheckboxGroup from "../CheckboxGroup";
 import { Minus, Plus } from "lucide-react";
 import type { CenterStep3FormData } from "@/lib/schemas";
-
-const MealPeriods = [
-  "الفترة الأولى",
-  "الفترة الثانية",
-  "الفترة الثالثة",
-  "الفترة الرابعة",
-];
+import { getMealTitle } from "@/lib/utils";
 
 export function Step3Communication() {
+  const t = useTranslations("auth.center-signup.3.form");
   const { control, watch } = useFormContext<CenterStep3FormData>();
   const hasMeals = watch("foodService");
   const {
@@ -41,17 +37,15 @@ export function Step3Communication() {
   };
 
   const communicationMethods = [
-    { id: "voice", label: "تواصل صوتي" },
-    { id: "text", label: "تواصل نصي" },
-    { id: "video", label: "تواصل فيديو" },
+    { id: "voice", label: t("communication-methods.options.voice") },
+    { id: "text", label: t("communication-methods.options.text") },
+    { id: "video", label: t("communication-methods.options.video") },
   ];
 
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <p className="form-label">
-          هل يوفر المركز تواصل فوري مع أولياء الأمور في حالات الطوارئ؟
-        </p>
+        <p className="form-label">{t("emergency-contact.label")}</p>
         <FormField
           control={control}
           name="emergencyContact"
@@ -65,11 +59,11 @@ export function Step3Communication() {
                   options={[
                     {
                       value: "yes",
-                      label: "نعم",
+                      label: t("emergency-contact.options.yes"),
                     },
                     {
                       value: "no",
-                      label: "لا",
+                      label: t("emergency-contact.options.no"),
                     },
                   ]}
                 />
@@ -81,7 +75,7 @@ export function Step3Communication() {
       </div>
 
       <div className="space-y-4">
-        <p className="form-label">طرق تواصل الأطفال مع أولياء الأمور</p>
+        <p className="form-label">{t("communication-methods.label")}</p>
         <CheckboxGroup
           control={control}
           items={communicationMethods}
@@ -90,7 +84,7 @@ export function Step3Communication() {
       </div>
 
       <div className="space-y-4">
-        <p className="form-label">هل يوفر المركز خدمة تقديم الطعام؟</p>
+        <p className="form-label">{t("food-service.label")}</p>
 
         <FormField
           control={control}
@@ -105,11 +99,11 @@ export function Step3Communication() {
                   options={[
                     {
                       value: "yes",
-                      label: "نعم",
+                      label: t("food-service.options.yes"),
                     },
                     {
                       value: "no",
-                      label: "لا",
+                      label: t("food-service.options.no"),
                     },
                   ]}
                 />
@@ -126,7 +120,7 @@ export function Step3Communication() {
           {meals.map((meal, index) => (
             <div key={meal.id} className="space-y-2 text-center">
               <p className="font-medium text-xl text-mid-gray">
-                {MealPeriods[index]}
+                {getMealTitle(index, "ar")}
               </p>
               <div className="grid grid-cols-1 gap-4">
                 <FormField
@@ -135,7 +129,10 @@ export function Step3Communication() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="اسم الوجبة" {...field} />
+                        <Input
+                          placeholder={t("food-details.name")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -147,7 +144,10 @@ export function Step3Communication() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="المكونات" {...field} />
+                        <Input
+                          placeholder={t("food-details.ingredients")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -159,7 +159,10 @@ export function Step3Communication() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="المشروب" {...field} />
+                        <Input
+                          placeholder={t("food-details.drink")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -181,7 +184,7 @@ export function Step3Communication() {
             className="font-bold"
           >
             <Plus className="size-6" size={24} />
-            إضافة وجبة
+            {t("food-details.add")}
           </Button>
         )}
 

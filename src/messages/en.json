@@ -283,7 +283,164 @@
         }
       }
     },
-
+    "center-signup": {
+      "title": "Create Center Account",
+      "1": {
+        "title": "Basic Information",
+        "form": {
+          "arabic-name": {
+            "label": "Center Name in Arabic",
+            "placeholder": ""
+          },
+          "english-name": {
+            "label": "Center Name in English",
+            "placeholder": ""
+          },
+          "phone": {
+            "label": "Mobile Number",
+            "placeholder": ""
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": ""
+          },
+          "city": {
+            "label": "City",
+            "placeholder": ""
+          },
+          "neighborhood": {
+            "label": "Neighborhood",
+            "placeholder": ""
+          },
+          "street": {
+            "label": "Street",
+            "placeholder": ""
+          },
+          "location": {
+            "label": "Location Link",
+            "placeholder": ""
+          },
+          "branches": {
+            "label": "Branch Names",
+            "placeholder": ""
+          },
+          "type": {
+            "label": "Center Type",
+            "options": {
+              "care": "Care",
+              "education": "Educational",
+              "support": "Support and Rehabilitation"
+            }
+          },
+          "services": {
+            "label": "Available Services",
+            "options": {
+              "education": "Educational",
+              "kindergarten": "Kindergarten",
+              "after-school": "After School",
+              "special-needs": "Special Needs",
+              "therapy": "Physical Therapy",
+              "speech-therapy": "Speech Therapy",
+              "occupational-therapy": "Occupational Therapy",
+              "care": "Care"
+            }
+          },
+          "other": {
+            "label": "Other Services",
+            "sublabel": "(e.g., toilet training)",
+            "placeholder": ""
+          }
+        }
+      },
+      "2": {
+        "title": "Accepted Ages and Working Hours",
+        "form": {
+          "ages": {
+            "label": "Accepted Age Ranges",
+            "options": {
+              "0-3": "0 to 3 years",
+              "3-6": "3 to 6 years",
+              "special-needs": "Children with Special Needs"
+            }
+          },
+          "addition": {
+            "label": "Is there anything else you'd like to add?",
+            "placeholder": ""
+          },
+          "from-day": {
+            "label": "From Day",
+            "placeholder": ""
+          },
+          "to-day": {
+            "label": "To Day",
+            "placeholder": ""
+          },
+          "from-hour": {
+            "label": "From Hour",
+            "placeholder": ""
+          },
+          "to-hour": {
+            "label": "To Hour",
+            "placeholder": ""
+          },
+          "days": {
+            "saturday": "Saturday",
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday"
+          }
+        }
+      },
+      "3": {
+        "title": "Parent Communication and Food Service",
+        "form": {
+          "emergency-contact": {
+            "label": "Does the center offer emergency contact with parents?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "communication-methods": {
+            "label": "Children’s Communication Methods with Parents",
+            "options": {
+              "voice": "Voice",
+              "text": "Text",
+              "video": "Video"
+            }
+          },
+          "food-service": {
+            "label": "Does the center provide food service?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "food-details": {
+            "name": "Food Name",
+            "ingredients": "Ingredients",
+            "drink": "Drink",
+            "add": "Add Meal"
+          }
+        }
+      },
+      "4": {
+        "title": "Licensing and Comments",
+        "form": {
+          "business-license": "Practice License",
+          "commercial-registration": "Commercial Registration",
+          "file-placeholder": "Choose File",
+          "description": "Required licenses to ensure and confirm the center’s credibility",
+          "comments": {
+            "label": "Do you have any comments or notes?",
+            "placeholder": ""
+          }
+        }
+      }
+    },
     "forgot-password": {
       "title": "Reset Password",
       "form": {

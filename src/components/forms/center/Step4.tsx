@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -13,6 +14,7 @@ import { FileUploader } from "../FileUploader";
 import type { CenterStep4FormData } from "@/lib/schemas";
 
 export function Step4Permits() {
+  const t = useTranslations("auth.center-signup.4.form");
   const { control } = useFormContext<CenterStep4FormData>();
 
   return (
@@ -23,7 +25,7 @@ export function Step4Permits() {
           name="businessLicense"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>رخصة المزاولة</FormLabel>
+              <FormLabel>{t("business-license")}</FormLabel>
               <FormControl>
                 <FileUploader
                   value={field.value}
@@ -41,7 +43,7 @@ export function Step4Permits() {
           name="commercialRegistration"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>السجل التجاري</FormLabel>
+              <FormLabel>{t("commercial-registration")}</FormLabel>
               <FormControl>
                 <FileUploader
                   value={field.value}
@@ -56,7 +58,7 @@ export function Step4Permits() {
       </div>
 
       <p className="text-center text-sm lg:text-base text-info">
-        التصريحات المطلوبة لضمان وتأكيد موثوقية المركز
+        {t("description")}
       </p>
 
       <FormField
@@ -64,10 +66,10 @@ export function Step4Permits() {
         name="comments"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>هل لديك أي تعليق أو ملاحظة؟</FormLabel>
+            <FormLabel>{t("comments.label")}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="اكتب هنا..."
+                placeholder={t("comments.placeholder")}
                 className="min-h-[100px]"
                 {...field}
               />

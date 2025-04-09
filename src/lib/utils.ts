@@ -57,3 +57,43 @@ export const getErrorMessage = (
 
   return message;
 };
+
+// get meal title
+const getArabicOrdinal = (index: number) => {
+  const arabicOrdinals = [
+    "الأولى",
+    "الثانية",
+    "الثالثة",
+    "الرابعة",
+    "الخامسة",
+    "السادسة",
+    "السابعة",
+    "الثامنة",
+    "التاسعة",
+    "العاشرة",
+  ];
+  return arabicOrdinals[index] || `${index + 1}`;
+};
+
+const getEnglishOrdinal = (index: number) => {
+  const englishOrdinals = [
+    "First",
+    "Second",
+    "Third",
+    "Fourth",
+    "Fifth",
+    "Sixth",
+    "Seventh",
+    "Eighth",
+    "Ninth",
+    "Tenth",
+  ];
+  return englishOrdinals[index] || `${index + 1}`;
+};
+
+export const getMealTitle = (index: number, lang: string) => {
+  if (lang === "ar") {
+    return `الوجبة ${getArabicOrdinal(index)}`;
+  }
+  return `${getEnglishOrdinal(index)} Meal`;
+};

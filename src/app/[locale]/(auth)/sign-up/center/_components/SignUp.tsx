@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
@@ -14,15 +15,16 @@ import { Step3Communication } from "@/components/forms/center/Step3";
 import { Step4Permits } from "@/components/forms/center/Step4";
 
 export function SignUp() {
+  const t = useTranslations("auth.center-signup");
   const steps = [
-    { number: 1, label: "المعلومات الأساسية", icon: Icons.one },
-    { number: 2, label: "الأعمار المقبولة وساعات العمل", icon: Icons.two },
+    { number: 1, label: t("1.title"), icon: Icons.one },
+    { number: 2, label: t("2.title"), icon: Icons.two },
     {
       number: 3,
-      label: "التواصل مع أولياء الأمور وتقديم الطعام",
+      label: t("3.title"),
       icon: Icons.three,
     },
-    { number: 4, label: "التصريحات المطلوبة", icon: Icons.four },
+    { number: 4, label: t("4.title"), icon: Icons.four },
   ];
 
   const signUpCenterSchema = createSignUpCenterSchema();
@@ -144,7 +146,7 @@ export function SignUp() {
         <form className="w-full" onSubmit={methods.handleSubmit(onSubmit)}>
           {currentStep === 1 && (
             <h1 className="mb-10 heading-2 text-primary text-center">
-              إنشاء حساب مركز
+              {t("title")}
             </h1>
           )}
 

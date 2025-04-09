@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { PaperclipIcon, X } from "lucide-react";
 
@@ -10,6 +11,8 @@ interface FileUploaderProps {
 }
 
 export function FileUploader({ value, onChange, accept }: FileUploaderProps) {
+  const t = useTranslations("auth.center-signup.4.form");
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -44,7 +47,7 @@ export function FileUploader({ value, onChange, accept }: FileUploaderProps) {
             className="flex items-center justify-between w-full px-6 py-6 h-9 gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground"
           >
             <PaperclipIcon className="h-4 w-4" />
-            <span>اختر ملف</span>
+            <span>{t("file-placeholder")}</span>
             <input
               id="file-upload"
               type="file"

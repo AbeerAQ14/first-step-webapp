@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import {
   Select,
@@ -21,28 +22,29 @@ import { Clock } from "lucide-react";
 import type { CenterStep2FormData } from "@/lib/schemas";
 
 export function Step2AgesAndHours() {
+  const t = useTranslations("auth.center-signup.2.form");
   const { control } = useFormContext<CenterStep2FormData>();
 
   const ageGroups = [
-    { id: "0-3", label: "من 0 إلى 3 سنوات" },
-    { id: "3-6", label: "من 3 إلى 6 سنوات" },
-    { id: "special-needs", label: "أطفال ذوي احتياجات خاصة" },
+    { id: "0-3", label: t("ages.options.0-3") },
+    { id: "3-6", label: t("ages.options.3-6") },
+    { id: "special-needs", label: t("ages.options.special-needs") },
   ];
 
   const days = [
-    { value: "sunday", label: "الأحد" },
-    { value: "monday", label: "الإثنين" },
-    { value: "tuesday", label: "الثلاثاء" },
-    { value: "wednesday", label: "الأربعاء" },
-    { value: "thursday", label: "الخميس" },
-    { value: "friday", label: "الجمعة" },
-    { value: "saturday", label: "السبت" },
+    { value: "sunday", label: t("days.sunday") },
+    { value: "monday", label: t("days.monday") },
+    { value: "tuesday", label: t("days.tuesday") },
+    { value: "wednesday", label: t("days.wednesday") },
+    { value: "thursday", label: t("days.thursday") },
+    { value: "friday", label: t("days.friday") },
+    { value: "saturday", label: t("days.saturday") },
   ];
 
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <p className="form-label">الأعمار المقبولة</p>
+        <p className="form-label">{t("ages.label")}</p>
         <CheckboxGroup
           control={control}
           items={ageGroups}
@@ -56,9 +58,9 @@ export function Step2AgesAndHours() {
         name="additionalInfo"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>هل يوجد شيء تريد إضافته؟</FormLabel>
+            <FormLabel>{t("addition.label")}</FormLabel>
             <FormControl>
-              <Input placeholder="اكتب هنا..." {...field} />
+              <Input placeholder={t("addition.placeholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -76,10 +78,10 @@ export function Step2AgesAndHours() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormLabel>يبدأ العمل من يوم</FormLabel>
+                  <FormLabel>{t("from-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="الأحد" />
+                      <SelectValue placeholder={t("from-day.placeholder")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -106,10 +108,10 @@ export function Step2AgesAndHours() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormLabel>إلى يوم</FormLabel>
+                  <FormLabel>{t("to-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="الخميس" />
+                      <SelectValue placeholder={t("to-day.placeholder")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -132,14 +134,14 @@ export function Step2AgesAndHours() {
             name="workHours.from"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>من الساعة</FormLabel>
+                <FormLabel>{t("from-hour.label")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
                     <Input
                       {...field}
                       type="time"
-                      placeholder="..:.. ص"
+                      placeholder={t("from-hour.placeholder")}
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
@@ -158,14 +160,14 @@ export function Step2AgesAndHours() {
             name="workHours.to"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>إلى الساعة</FormLabel>
+                <FormLabel>{t("to-hour.label")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
                     <Input
                       {...field}
                       type="time"
-                      placeholder="..:.. ص"
+                      placeholder={t("from-hour.placeholder")}
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
