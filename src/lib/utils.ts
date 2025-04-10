@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import slugify from "slugify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -133,3 +134,41 @@ export const getMealTitle = (index: number, lang: string) => {
   }
   return `${getEnglishOrdinal(index)} Meal`;
 };
+
+// Create a slug from a name
+export function createSlug(name: string, locale: string = "en"): string {
+  const options = {
+    replacement: "-",
+    lower: true,
+    strict: true,
+    locale: locale,
+  };
+
+  return slugify(name, options);
+}
+
+// Check if a string contains Arabic characters
+function containsArabic(text: string): boolean {
+  const arabicPattern = /[\u0600-\u06FF]/;
+  return arabicPattern.test(text);
+}
+
+// Utility function to try to reverse a slug back to a readable name
+// Note: This won't perfectly restore the original, but makes it more readable
+export function slugToReadableName(slug: string): string {
+  // Simple replacement of hyphens with spaces
+  const spacedText = slug.replace(/-/g, " ");
+
+  // For Arabic, we don't capitalize as Arabic doesn't have the concept of uppercase/lowercase
+  if (containsArabic(spacedText)) {
+    return decodeURIComponent(spacedText);
+  }
+
+  // For Latin and other scripts that use capitalization
+  return decodeURIComponent(
+    spacedText
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
+  );
+}
