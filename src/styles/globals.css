@@ -121,6 +121,7 @@
   /* Shadows */
   --shadow-subtle: 0 2px 16px rgba(0, 0, 0, 0.12);
   --shadow-icon: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 2px 4px rgba(189, 189, 189, 0.06);
 
   /* Radius */
   --radius-5xl: 2.25rem;
