@@ -1,3 +1,4 @@
+import Branches from "@/components/general/nurseries/Branches";
 import Header from "@/components/general/nurseries/Header";
 import { slugToReadableName } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ export default async function NurseryPage({
   return (
     <div>
       <Header name={readableName} />
+      <Branches />
     </div>
   );
 }
