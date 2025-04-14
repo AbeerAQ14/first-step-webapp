@@ -1,3 +1,4 @@
+import { Providers } from "@/app/providers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,5 +14,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="py-10 lg:py-20">{children}</main>;
+  return (
+    <main className="py-10 lg:py-20">
+      <Providers>{children}</Providers>
+    </main>
+  );
 }

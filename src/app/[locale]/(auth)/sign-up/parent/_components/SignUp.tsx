@@ -13,8 +13,43 @@ import Step2ChronicDiseases from "@/components/forms/child/Step2";
 import Step3Recommendations from "@/components/forms/child/Step3";
 import Step4AuthorizedPersons from "@/components/forms/child/Step4";
 import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
+import { useMutation } from "@tanstack/react-query";
+import { ParentRegisterFormDataInput, ParentRegisterPayload } from "@/types";
+import { transformParentDataToExpectedPayload } from "@/lib/utils";
+import { authService } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const router = useRouter();
+
+  // --- Data Fetching & Mutation ---
+  const mutation = useMutation<
+    any, // Type of successful response from submitFormData
+    Error, // Type of error thrown by submitFormData
+    ParentRegisterFormDataInput // Type of variable passed to mutate function (original form data)
+  >({
+    mutationFn: async (originalData: ParentRegisterFormDataInput) => {
+      // 1. Ensure token exists
+
+      // 2. Transform the data
+      const payload: ParentRegisterPayload =
+        transformParentDataToExpectedPayload(originalData);
+
+      // 3. Call the API service function
+      return await authService.registerParent(payload);
+    },
+    onSuccess: (data) => {
+      // Handle successful submission
+      console.log("Submission successful:", data);
+      router.push("/sign-in");
+    },
+    onError: (error) => {
+      // Handle submission error
+      console.error("Submission failed:", error);
+      alert(`Submission failed: ${error.message}`);
+    },
+  });
+
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");
   const locale = useLocale();
@@ -129,9 +164,7 @@ const SignUp = () => {
   };
 
   const onSubmit = (data: SignUpParentFormData) => {
-    console.log("Form submitted:", data);
-
-    alert("Form submitted successfully!");
+    mutation.mutate(data);
   };
 
   return (
@@ -160,6 +193,7 @@ const SignUp = () => {
                 totalSteps={totalSteps}
                 onPrevious={goToPreviousStep}
                 onNext={goToNextStep}
+                isLoading={mutation.isPending}
               />
             </div>
           </form>

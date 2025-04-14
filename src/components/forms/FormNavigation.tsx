@@ -8,6 +8,7 @@ interface FormNavigationProps {
   totalSteps: number;
   onPrevious: () => void;
   onNext: () => void;
+  isLoading: boolean;
 }
 
 export default function FormNavigation({
@@ -15,6 +16,7 @@ export default function FormNavigation({
   totalSteps,
   onPrevious,
   onNext,
+  isLoading,
 }: FormNavigationProps) {
   const t = useTranslations("auth.buttons");
 
@@ -27,17 +29,18 @@ export default function FormNavigation({
           variant="outline"
           onClick={onPrevious}
           className="!border-light-gray text-mid-gray"
+          disabled={isLoading}
         >
           {t("previous")}
         </Button>
       ) : null}
 
       {currentStep < totalSteps ? (
-        <Button type="button" size={"lg"} onClick={onNext}>
+        <Button type="button" size={"lg"} onClick={onNext} disabled={isLoading}>
           {t("next")}
         </Button>
       ) : (
-        <Button type="submit" size={"lg"}>
+        <Button type="submit" size={"lg"} disabled={isLoading}>
           {t("sign-up")}
         </Button>
       )}

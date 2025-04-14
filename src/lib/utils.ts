@@ -1,6 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import slugify from "slugify";
+import {
+  AuthorizedPerson,
+  Child,
+  ChildAllergyDetail,
+  ParentRegisterFormDataInput,
+  ParentRegisterPayload,
+} from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -171,4 +178,111 @@ export function slugToReadableName(slug: string): string {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ")
   );
+}
+
+// Transform parent Signup FormData to Expected Payload
+export function transformParentDataToExpectedPayload(
+  formData: ParentRegisterFormDataInput
+): ParentRegisterPayload {
+  // --- Child Data Processing ---
+
+  // 1. Handle Chronic Diseases
+  const hasDisease = formData.chronicDiseases?.hasDiseases === "yes";
+  const firstDisease =
+    hasDisease &&
+    formData.chronicDiseases?.diseases &&
+    formData.chronicDiseases.diseases.length > 0
+      ? formData.chronicDiseases.diseases[0]
+      : null;
+
+  // 2. Handle Allergies
+  const hasAllergy = formData.allergies?.hasAllergies === "yes";
+  const firstAllergySource =
+    hasAllergy &&
+    formData.allergies?.allergies &&
+    formData.allergies.allergies.length > 0
+      ? formData.allergies.allergies[0]
+      : null;
+
+  // Map detailed allergies array
+  const allergiesTransformed: ChildAllergyDetail[] =
+    hasAllergy && formData.allergies?.allergies
+      ? formData.allergies.allergies.map((allergy) => ({
+          name: allergy.allergyTypes,
+          // Wrap the allergyFoods string into an array as expected
+          allergy_causes: allergy.allergyFoods ? [allergy.allergyFoods] : [],
+          allergy_emergency: allergy.allergyProcedures,
+        }))
+      : []; // Return empty array if no allergies or data missing
+
+  // 3. Format Birthday Date (Extract YYYY-MM-DD)
+  let formattedBirthday: string | null = null;
+  if (formData.birthDate) {
+    try {
+      // Get the date part (YYYY-MM-DD) from the ISO string
+      formattedBirthday = new Date(formData.birthDate)
+        .toISOString()
+        .split("T")[0];
+    } catch (e) {
+      console.error("Could not parse birthDate:", formData.birthDate, e);
+      // formattedBirthday remains null if parsing fails
+    }
+  }
+
+  // 4. Map Gender
+  let childGender: "girl" | "boy" | string;
+  if (formData.gender === "female") {
+    childGender = "girl";
+  } else if (formData.gender === "male") {
+    childGender = "boy";
+  } else {
+    childGender = formData.gender; // Keep original if not male/female
+  }
+
+  // 5. Map Authorized Persons (Rename idNumber to cin)
+  const authorizedPersonsTransformed: AuthorizedPerson[] = (
+    formData.authorizedPersons || []
+  ).map((person) => ({
+    name: person.name,
+    cin: person.idNumber, // Renaming idNumber to cin
+  }));
+
+  // 6. Combine descriptive fields for recommendations
+  const recommendations = formData.recommendations || undefined;
+  const description_3_words = formData.childDescription || "";
+  const things_child_likes = formData.favoriteThings || "";
+  const notes = formData.comments || undefined;
+
+  // 7. Construct the Child object
+  const childData: Child = {
+    child_name: formData.childName,
+    birthday_date: formattedBirthday, // Use the formatted date (or null)
+    gender: childGender,
+    disease: hasDisease,
+    disease_name: firstDisease ? firstDisease.name : null,
+    medicament_disease: firstDisease ? firstDisease.medication : null,
+    disease_emergency: firstDisease ? firstDisease.procedures : null,
+    allergy: hasAllergy,
+    // Use the type from the first allergy as the primary allergy_name
+    allergy_name: firstAllergySource ? firstAllergySource.allergyTypes : null,
+    parent_name: formData.fatherName,
+    mother_name: formData.motherName,
+    recommendations,
+    description_3_words,
+    things_child_likes,
+    notes, // Use the combined text
+    authorized_persons: authorizedPersonsTransformed,
+    allergies: allergiesTransformed, // Use the transformed detailed allergies
+  };
+
+  // --- Construct Final Payload ---
+  const expectedPayload: ParentRegisterPayload = {
+    name: formData.name,
+    email: formData.email,
+    password: formData.password, // Directly mapped
+    address: "123 Main Street, Anytown, ST 12345", // Address is not present in the source formData
+    children: [childData], // Place the constructed child object into an array
+  };
+
+  return expectedPayload;
 }
