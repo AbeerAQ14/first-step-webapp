@@ -1,16 +1,54 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
 import { SignInFormData } from "@/lib/schemas";
+import { useMutation } from "@tanstack/react-query";
+import { authService } from "@/services/api";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 
 const SignIn = () => {
+  const router = useRouter();
+  const locale = useLocale();
+  // --- Data Fetching & Mutation ---
+  const mutation = useMutation<
+    any, // Type of successful response from submitFormData
+    Error, // Type of error thrown by submitFormData
+    SignInFormData // Type of variable passed to mutate function (original form data)
+  >({
+    mutationFn: async (originalData: SignInFormData) => {
+      // 1. Ensure token exists
+
+      // 2. Transform the data
+      const payload: { email: string; password: string } = originalData;
+
+      // 3. Call the API service function
+      return await authService.login(payload.email, payload.password);
+    },
+    onSuccess: (data) => {
+      // Handle successful submission
+      console.log("Submission successful:", data);
+      useAuthStore.setState({
+        token: data.token,
+        user: data.user,
+      });
+
+      router.push(`/${locale}`);
+    },
+    onError: (error) => {
+      // Handle submission error
+      console.error("Submission failed:", error);
+      alert(`Submission failed: ${error.message}`);
+    },
+  });
+
   const t = useTranslations("auth");
 
   const onSubmit = async (data: SignInFormData) => {
-    console.log(data);
+    mutation.mutate(data);
   };
 
   return (
@@ -29,7 +67,7 @@ const SignIn = () => {
           </h1>
 
           <div className="mt-9 flex flex-col gap-y-6">
-            <SignInForm onSubmit={onSubmit} />
+            <SignInForm onSubmit={onSubmit} isLoading={mutation.isPending} />
           </div>
 
           <div className="mt-12 flex flex-col gap-y-4">

@@ -22,8 +22,10 @@ import { createSignInSchema, SignInFormData } from "@/lib/schemas";
 
 const SignInForm = ({
   onSubmit,
+  isLoading,
 }: {
   onSubmit: (data: SignInFormData) => void;
+  isLoading: boolean;
 }) => {
   const t = useTranslations("auth.sign-in");
   const tBtns = useTranslations("auth.buttons");
@@ -114,7 +116,7 @@ const SignInForm = ({
           <Button
             size={"long"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={isLoading || form.formState.isSubmitting}
           >
             {tBtns("sign-in")}
           </Button>
@@ -123,7 +125,7 @@ const SignInForm = ({
             size={"long"}
             type="button"
             className="text-mid-gray !border-light-gray"
-            disabled={form.formState.isSubmitting}
+            disabled={isLoading || form.formState.isSubmitting}
           >
             <span>{tBtns("sign-in-google")}</span>
             <Image

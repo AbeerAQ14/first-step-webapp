@@ -110,4 +110,27 @@ export const authService = {
       }
     }
   },
+
+  login: async (email: string, password: string) => {
+    try {
+      const response = await apiClient.post("/login", {
+        email,
+        password,
+      });
+      return response.data;
+    } catch (error) {
+      // Handle different types of errors (network, server response)
+      if (axios.isAxiosError(error)) {
+        console.error("API Error Response:", error.response?.data);
+        // Throw a more specific error or the error response data
+        throw new Error(
+          error.response?.data?.message ||
+            "Failed to submit data. Please try again."
+        );
+      } else {
+        console.error("Unexpected Error:", error);
+        throw new Error("An unexpected error occurred.");
+      }
+    }
+  },
 };
