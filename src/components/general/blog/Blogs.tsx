@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Icons } from "../icons";
 import { useTranslations } from "next-intl";
 import BlogCard from "./BlogCard";
+import { Blog } from "@/types";
 
-const Blogs = () => {
+const Blogs = async ({ blogs }: { blogs: Blog[] }) => {
   const t = useTranslations("blogsection");
 
   return (
@@ -24,11 +23,9 @@ const Blogs = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 items-center gap-10">
-            {Array(4)
-              .fill(1)
-              .map((item, idx) => (
-                <BlogCard key={idx} />
-              ))}
+            {blogs.map((blog) => (
+              <BlogCard key={blog.id} blog={blog} />
+            ))}
           </div>
 
           <Button size={"sm"}>{t("button")}</Button>

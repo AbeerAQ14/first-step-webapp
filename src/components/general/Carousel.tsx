@@ -9,13 +9,14 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { AdSlide } from "@/types";
 
 export default function Carousel({
   locale,
   items,
 }: {
   locale: string;
-  items: { imageSrc: string }[];
+  items: AdSlide[];
 }) {
   const dir = locale === "en" ? "ltr" : "rtl";
   const plugin = React.useRef(
@@ -52,9 +53,9 @@ export default function Carousel({
           {items.map((item, index) => (
             <CarouselItem className="mx-0 px-0" key={index}>
               <div
-                className="w-full h-[30rem]"
+                className="w-full h-[30rem] bg-cover bg-center"
                 style={{
-                  backgroundImage: `url(${item.imageSrc})`,
+                  backgroundImage: `url(${item.image})`,
                 }}
               ></div>
             </CarouselItem>

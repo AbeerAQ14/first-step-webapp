@@ -6,8 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { CommonQuestion } from "@/types";
 
-const FAQs = () => {
+const FAQs = ({ commonQuestions }: { commonQuestions: CommonQuestion[] }) => {
   const locale = useLocale();
   const t = useTranslations("faqs");
 
@@ -39,13 +40,17 @@ const FAQs = () => {
           />
         </div>
 
-        <FAQAccordion />
+        <FAQAccordion commonQuestions={commonQuestions} />
       </div>
     </section>
   );
 };
 
-const FAQAccordion = () => {
+const FAQAccordion = ({
+  commonQuestions,
+}: {
+  commonQuestions: CommonQuestion[];
+}) => {
   const t = useTranslations("faqs.questions");
 
   return (
@@ -54,22 +59,20 @@ const FAQAccordion = () => {
         type="multiple"
         className="w-full flex flex-col gap-y-2 md:gap-y-4 text-mid-gray"
       >
-        {Array(5)
-          .fill(1)
-          .map((item, index) => (
-            <AccordionItem
-              className="bg-white rounded-2xl stroke-1 stroke-light-gray"
-              key={index}
-              value={`item-${t(`${index + 1}.question`)}-${index + 1}`}
-            >
-              <AccordionTrigger className="text-left font-medium md:!text-lg lg:!text-xl p-4 lg:p-6">
-                {t(`${index + 1}.question`)}
-              </AccordionTrigger>
-              <AccordionContent className="px-4 lg:px-6">
-                {t(`${index + 1}.answer`)}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+        {commonQuestions.map((item) => (
+          <AccordionItem
+            className="bg-white rounded-2xl stroke-1 stroke-light-gray"
+            key={item.id}
+            value={`${item.id}-${item.question}`}
+          >
+            <AccordionTrigger className="text-left font-medium md:!text-lg lg:!text-xl p-4 lg:p-6">
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="px-4 lg:px-6">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
       </Accordion>
     </div>
   );

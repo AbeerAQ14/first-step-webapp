@@ -1,6 +1,7 @@
+import { Blog } from "@/types";
 import BlogCard from "./BlogCard";
 
-const AllBlogs = () => {
+const AllBlogs = ({ blogs }: { blogs: Blog[] }) => {
   return (
     <section className="container mx-auto px-4">
       <div className="space-y-6 max-w-[77.5rem] mx-auto">
@@ -19,11 +20,9 @@ const AllBlogs = () => {
 
         {/* blogs */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 items-center gap-10">
-          {Array(12)
-            .fill(1)
-            .map((_, idx) => (
-              <BlogCard key={idx} />
-            ))}
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} blog={blog} />
+          ))}
         </div>
       </div>
     </section>

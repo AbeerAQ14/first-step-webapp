@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         port: "",
       },
+      {
+        protocol: "http",
+        hostname: "6ab6-196-128-73-11.ngrok-free.app",
+        port: "",
+      },
     ],
   },
 };
