@@ -52,10 +52,10 @@ const Values = async ({ locale }: { locale: "ar" | "en" }) => {
               src={valuesConstants[index].iconSrc}
               width={120}
               height={120}
-              alt={item.title[locale]}
+              alt={item.title}
             />
-            <p className="font-bold">{item.title[locale]}</p>
-            <p className="sm:max-w-72">{item.description[locale]}</p>
+            <p className="font-bold">{item.title}</p>
+            <p className="sm:max-w-72">{item.description}</p>
           </div>
         ))}
       </div>
