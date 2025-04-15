@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,42 +13,14 @@ import Step2ChronicDiseases from "@/components/forms/child/Step2";
 import Step3Recommendations from "@/components/forms/child/Step3";
 import Step4AuthorizedPersons from "@/components/forms/child/Step4";
 import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
-import { useMutation } from "@tanstack/react-query";
-import { ParentRegisterFormDataInput, ParentRegisterPayload } from "@/types";
-import { transformParentDataToExpectedPayload } from "@/lib/utils";
-import { authService } from "@/services/api";
-import { useRouter } from "next/navigation";
 
-const SignUp = () => {
-  const router = useRouter();
-
-  // --- Data Fetching & Mutation ---
-  const mutation = useMutation<
-    any, // Type of successful response from submitFormData
-    Error, // Type of error thrown by submitFormData
-    ParentRegisterFormDataInput // Type of variable passed to mutate function (original form data)
-  >({
-    mutationFn: async (originalData: ParentRegisterFormDataInput) => {
-      const payload: ParentRegisterPayload =
-        transformParentDataToExpectedPayload(originalData);
-
-      return await authService.registerParent(payload);
-    },
-    onSuccess: (data) => {
-      console.log("Submission successful:", data);
-
-      router.push(`/${locale}/sign-in`);
-    },
-    onError: (error) => {
-      console.error("Submission failed:", error);
-      alert(`Submission failed: ${error.message}`);
-    },
-  });
-
-  useEffect(() => {
-    router.prefetch(`/${locale}/sign-in`);
-  }, []);
-
+const SignUp = ({
+  submitHandler,
+  isLoading,
+}: {
+  submitHandler: (data: SignUpParentFormData) => void;
+  isLoading: boolean;
+}) => {
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");
   const locale = useLocale();
@@ -163,7 +135,7 @@ const SignUp = () => {
   };
 
   const onSubmit = (data: SignUpParentFormData) => {
-    mutation.mutate(data);
+    submitHandler(data);
   };
 
   return (
@@ -192,7 +164,7 @@ const SignUp = () => {
                 totalSteps={totalSteps}
                 onPrevious={goToPreviousStep}
                 onNext={goToNextStep}
-                isLoading={mutation.isPending}
+                isLoading={isLoading}
               />
             </div>
           </form>
