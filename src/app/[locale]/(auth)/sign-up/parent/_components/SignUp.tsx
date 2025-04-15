@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,26 +29,25 @@ const SignUp = () => {
     ParentRegisterFormDataInput // Type of variable passed to mutate function (original form data)
   >({
     mutationFn: async (originalData: ParentRegisterFormDataInput) => {
-      // 1. Ensure token exists
-
-      // 2. Transform the data
       const payload: ParentRegisterPayload =
         transformParentDataToExpectedPayload(originalData);
 
-      // 3. Call the API service function
       return await authService.registerParent(payload);
     },
     onSuccess: (data) => {
-      // Handle successful submission
       console.log("Submission successful:", data);
-      router.push("/sign-in");
+
+      router.push(`/${locale}/sign-in`);
     },
     onError: (error) => {
-      // Handle submission error
       console.error("Submission failed:", error);
       alert(`Submission failed: ${error.message}`);
     },
   });
+
+  useEffect(() => {
+    router.prefetch(`/${locale}/sign-in`);
+  }, []);
 
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");

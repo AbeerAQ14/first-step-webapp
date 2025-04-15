@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import { useEffect } from "react";
 
 const SignIn = () => {
   const router = useRouter();
@@ -20,16 +21,10 @@ const SignIn = () => {
     SignInFormData // Type of variable passed to mutate function (original form data)
   >({
     mutationFn: async (originalData: SignInFormData) => {
-      // 1. Ensure token exists
-
-      // 2. Transform the data
       const payload: { email: string; password: string } = originalData;
-
-      // 3. Call the API service function
       return await authService.login(payload.email, payload.password);
     },
     onSuccess: (data) => {
-      // Handle successful submission
       console.log("Submission successful:", data);
       useAuthStore.setState({
         token: data.token,
@@ -39,11 +34,14 @@ const SignIn = () => {
       router.push(`/${locale}`);
     },
     onError: (error) => {
-      // Handle submission error
       console.error("Submission failed:", error);
       alert(`Submission failed: ${error.message}`);
     },
   });
+
+  useEffect(() => {
+    router.prefetch(`/${locale}`);
+  }, []);
 
   const t = useTranslations("auth");
 
