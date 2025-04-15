@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import BlogCard from "./BlogCard";
 import { Blog } from "@/types";
+import { Link } from "@/i18n/navigation";
 
 const Blogs = async ({ blogs }: { blogs: Blog[] }) => {
   const t = useTranslations("blogsection");
@@ -28,7 +29,9 @@ const Blogs = async ({ blogs }: { blogs: Blog[] }) => {
             ))}
           </div>
 
-          <Button size={"sm"}>{t("button")}</Button>
+          <Button asChild size={"sm"}>
+            <Link href={`/blog`}>{t("button")}</Link>
+          </Button>
         </div>
       </div>
     </section>
