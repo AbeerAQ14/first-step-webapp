@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { getErrorMessage } from "./utils";
-import { create } from "domain";
 
 // Sign In Form
 export const createSignInSchema = (locale: "ar" | "en" = "ar") =>
@@ -61,7 +60,7 @@ export type ResetPasswordFormData = z.infer<
 export const createContactSchema = (locale: "ar" | "en" = "ar") =>
   z.object({
     name: z.string().min(2, {
-      message: getErrorMessage("name-required", locale),
+      message: getErrorMessage("general-field-required", locale),
     }),
     email: z.string().email({
       message: getErrorMessage("invalid-email", locale),
@@ -82,19 +81,26 @@ export const createContactSchema = (locale: "ar" | "en" = "ar") =>
 export type ContactFormData = z.infer<ReturnType<typeof createContactSchema>>;
 
 // --Just-- Sign Up For Parents Form Schema
-const createParentSchema = () =>
+const createParentSchema = (locale: "ar" | "en" = "ar") =>
   z.object({
-    name: z.string().min(1, "يرجى إدخال الاسم"),
+    name: z
+      .string()
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
     phone: z
       .string()
-      .regex(
-        /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/,
-        "يرجى إدخال رقم الجوال"
-      ),
-    email: z.string().email("يرجى إدخال بريد إلكتروني صحيح"),
-    relation: z.string().min(1, "يرجى إدخال صلة القرابة"),
-    password: z.string().min(8, "كلمة السر يجب أن تكون على الأقل 8 أحرف"),
-    confirmPassword: z.string().min(8, "يرجى تأكيد كلمة السر"),
+      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
+        message: getErrorMessage("invalid-phone", locale),
+      }),
+    email: z.string().email({
+      message: getErrorMessage("invalid-email", locale),
+    }),
+    relation: z
+      .string()
+      .min(1, getErrorMessage("general-field-required", locale)),
+    password: z.string().min(8, {
+      message: getErrorMessage("password-min", locale, { min: 8 }),
+    }),
+    confirmPassword: z.string(),
   });
 
 export type JustSignUpParentFormData = z.infer<
@@ -102,15 +108,23 @@ export type JustSignUpParentFormData = z.infer<
 >;
 
 // Add Child Step 1
-const createChildStep1Schema = () =>
+const createChildStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Child Information
-    childName: z.string().min(2, { message: "اسم الطفل مطلوب" }),
-    birthDate: z.date({ required_error: "تاريخ الميلاد مطلوب" }),
-    fatherName: z.string().min(2, { message: "اسم الأب مطلوب" }),
-    motherName: z.string().min(2, { message: "اسم الأم مطلوب" }),
+    childName: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    birthDate: z.date({
+      required_error: getErrorMessage("general-field-required", locale),
+    }),
+    fatherName: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    motherName: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     gender: z.enum(["male", "female"], {
-      required_error: "يرجى اختيار جنس الطفل",
+      required_error: getErrorMessage("general-answer-required", locale),
     }),
   });
 
@@ -119,13 +133,13 @@ export type ChildStep1FormData = z.infer<
 >;
 
 // Add Child Step 2
-const createChildStep2Schema = () =>
+const createChildStep2Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 2: Chronic Diseases and Allergies
     chronicDiseases: z
       .object({
         hasDiseases: z.enum(["yes", "no"], {
-          required_error: "يرجى الإجابة على هذا السؤال",
+          required_error: getErrorMessage("general-field-required", locale),
         }),
         diseases: z
           .array(
@@ -142,7 +156,7 @@ const createChildStep2Schema = () =>
           if (!data.diseases || data.diseases.length === 0) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
-              message: "يجب إدخال مرض واحد على الأقل",
+              message: getErrorMessage("disease-one-required", locale),
               path: ["diseases"],
             });
           } else {
@@ -150,21 +164,21 @@ const createChildStep2Schema = () =>
               if (!disease.name || disease.name.trim() === "") {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال اسم المرض",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`diseases.${index}.name`],
                 });
               }
               if (!disease.medication || disease.medication.trim() === "") {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال الدواء المستخدم",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`diseases.${index}.medication`],
                 });
               }
               if (!disease.procedures || disease.procedures.trim() === "") {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال الإجراءات المتبعة",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`diseases.${index}.procedures`],
                 });
               }
@@ -176,7 +190,7 @@ const createChildStep2Schema = () =>
     allergies: z
       .object({
         hasAllergies: z.enum(["yes", "no"], {
-          required_error: "يرجى الإجابة على هذا السؤال",
+          required_error: getErrorMessage("general-answer-required", locale),
         }),
         allergies: z
           .array(
@@ -193,7 +207,7 @@ const createChildStep2Schema = () =>
           if (!data.allergies || data.allergies.length === 0) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
-              message: "يجب إدخال نوع حساسية واحد على الأقل",
+              message: getErrorMessage("allergy-one-required", locale),
               path: ["allergies"],
             });
           } else {
@@ -201,14 +215,14 @@ const createChildStep2Schema = () =>
               if (!allergy.allergyTypes || allergy.allergyTypes.trim() === "") {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال نوع الحساسية",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`allergies.${index}.allergyTypes`],
                 });
               }
               if (!allergy.allergyFoods || allergy.allergyFoods.trim() === "") {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال الأطعمة المسببة للحساسية",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`allergies.${index}.allergyFoods`],
                 });
               }
@@ -218,7 +232,7 @@ const createChildStep2Schema = () =>
               ) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: "يرجى إدخال إجراءات التعامل مع الحساسية",
+                  message: getErrorMessage("general-field-required", locale),
                   path: [`allergies.${index}.allergyProcedures`],
                 });
               }
@@ -233,11 +247,15 @@ export type ChildStep2FormData = z.infer<
 >;
 
 // Add Child Step 3
-const createChildStep3Schema = () =>
+const createChildStep3Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 3: Recommendations
-    childDescription: z.string().min(2, { message: "وصف الطفل مطلوب" }),
-    favoriteThings: z.string().min(2, { message: "الأشياء المفضلة مطلوبة" }),
+    childDescription: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    favoriteThings: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     recommendations: z.string().optional(),
   });
 
@@ -246,17 +264,25 @@ export type ChildStep3FormData = z.infer<
 >;
 
 // Add Child Step 4
-const createChildStep4Schema = () =>
+const createChildStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 4: Authorized Persons
     authorizedPersons: z
       .array(
         z.object({
-          name: z.string().min(2, { message: "اسم الشخص المفوض مطلوب" }),
-          idNumber: z.string().min(2, { message: "رقم الهوية مطلوب" }),
+          name: z
+            .string()
+            .min(2, {
+              message: getErrorMessage("general-field-required", locale),
+            }),
+          idNumber: z
+            .string()
+            .min(2, {
+              message: getErrorMessage("general-field-required", locale),
+            }),
         })
       )
-      .min(1, { message: "يجب إضافة شخص مفوض واحد على الأقل" }),
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
 
     comments: z.string().optional(),
   });
@@ -266,11 +292,11 @@ export type ChildStep4FormData = z.infer<
 >;
 
 // Add Child Schema
-export const createAddChildSchema = () => {
-  const step1Schema = createChildStep1Schema();
-  const step2Schema = createChildStep2Schema();
-  const step3Schema = createChildStep3Schema();
-  const step4Schema = createChildStep4Schema();
+export const createAddChildSchema = (locale: "ar" | "en" = "ar") => {
+  const step1Schema = createChildStep1Schema(locale);
+  const step2Schema = createChildStep2Schema(locale);
+  const step3Schema = createChildStep3Schema(locale);
+  const step4Schema = createChildStep4Schema(locale);
 
   return step1Schema.merge(step2Schema).merge(step3Schema).merge(step4Schema);
 };
@@ -278,14 +304,14 @@ export const createAddChildSchema = () => {
 export type AddChildFormData = z.infer<ReturnType<typeof createAddChildSchema>>;
 
 // Sign Up For Parents w/ Add Child Form Schema
-export const createSignUpParentSchema = () => {
-  const parentSchema = createParentSchema();
-  const addChildSchema = createAddChildSchema();
+export const createSignUpParentSchema = (locale: "ar" | "en" = "ar") => {
+  const parentSchema = createParentSchema(locale);
+  const addChildSchema = createAddChildSchema(locale);
 
   return parentSchema
     .merge(addChildSchema)
     .refine((data) => data.password === data.confirmPassword, {
-      message: "كلمتا السر غير متطابقتين",
+      message: getErrorMessage("password-match", locale),
       path: ["confirmPassword"],
     });
 };
@@ -295,26 +321,42 @@ export type SignUpParentFormData = z.infer<
 >;
 
 // Sign Up For Centers Step 1
-const createCenterStep1Schema = () =>
+const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
-    centerNameArabic: z.string().min(2, { message: "اسم المركز مطلوب" }),
+    centerNameArabic: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     centerNameEnglish: z
       .string()
-      .min(2, { message: "اسم المركز باللغة الإنجليزية مطلوب" }),
-    email: z.string().email({ message: "البريد الإلكتروني غير صالح" }),
-    phone: z.string().min(9, { message: "رقم الجوال غير صالح" }),
-    city: z.string().min(2, { message: "المدينة مطلوبة" }),
-    district: z.string().min(2, { message: "الحي مطلوب" }),
-    street: z.string().min(2, { message: "الشارع مطلوب" }),
-    locationLink: z.string().min(5, { message: "رابط الموقع مطلوب" }),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    email: z
+      .string()
+      .email({ message: getErrorMessage("invalid-email", locale) }),
+    phone: z
+      .string()
+      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
+        message: getErrorMessage("invalid-phone", locale),
+      }),
+    city: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    district: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    street: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    locationLink: z
+      .string()
+      .min(5, { message: getErrorMessage("general-field-required", locale) }),
     branches: z.string().optional(),
     centerType: z
       .array(z.string())
-      .min(1, { message: "يجب اختيار نوع المركز" }),
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
     services: z
       .array(z.string())
-      .min(1, { message: "يجب اختيار خدمة واحدة على الأقل" }),
+      .min(1, { message: getErrorMessage("services-one-required", locale) }),
     additionalServices: z.string().optional(),
   });
 
@@ -323,20 +365,28 @@ export type CenterStep1FormData = z.infer<
 >;
 
 // Sign Up For Centers Step 2
-const createCenterStep2Schema = () =>
+const createCenterStep2Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 2: Ages and Hours
     ageGroups: z
       .array(z.string())
-      .min(1, { message: "يجب اختيار فئة عمرية واحدة على الأقل" }),
+      .min(1, { message: getErrorMessage("age-groups-one-required", locale) }),
     additionalInfo: z.string().optional(),
     workDays: z.object({
-      from: z.string().min(1, { message: "يوم البداية مطلوب" }),
-      to: z.string().min(1, { message: "يوم النهاية مطلوب" }),
+      from: z
+        .string()
+        .min(1, { message: getErrorMessage("general-field-required", locale) }),
+      to: z
+        .string()
+        .min(1, { message: getErrorMessage("general-field-required", locale) }),
     }),
     workHours: z.object({
-      from: z.string().min(1, { message: "ساعة البداية مطلوبة" }),
-      to: z.string().min(1, { message: "ساعة النهاية مطلوبة" }),
+      from: z
+        .string()
+        .min(1, { message: getErrorMessage("general-field-required", locale) }),
+      to: z
+        .string()
+        .min(1, { message: getErrorMessage("general-field-required", locale) }),
     }),
   });
 
@@ -345,14 +395,20 @@ export type CenterStep2FormData = z.infer<
 >;
 
 // Sign Up For Centers Step 3
-const createCenterStep3Schema = () =>
+const createCenterStep3Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 3: Communication and Food
-    emergencyContact: z.boolean(),
+    emergencyContact: z.enum(["yes", "no"], {
+      required_error: getErrorMessage("general-answer-required", locale),
+    }),
     communicationMethods: z
       .array(z.string())
-      .min(1, { message: "يجب اختيار طريقة تواصل واحدة على الأقل" }),
-    foodService: z.boolean(),
+      .min(1, {
+        message: getErrorMessage("communication-methods-one-required", locale),
+      }),
+    foodService: z.enum(["yes", "no"], {
+      required_error: getErrorMessage("general-answer-required", locale),
+    }),
     meals: z
       .array(
         z.object({
@@ -368,12 +424,37 @@ export type CenterStep3FormData = z.infer<
   ReturnType<typeof createCenterStep3Schema>
 >;
 
+const MAX_FILE_SIZE = 3 * 1024 * 1024;
+const ACCEPTED_FILE_TYPES = ["application/pdf"];
+
 // Sign Up For Centers Step 4
-const createCenterStep4Schema = () =>
+const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 4: Permits
-    businessLicense: z.any().optional(),
-    commercialRegistration: z.any().optional(),
+    businessLicense: z
+      .instanceof(File, {
+        message: getErrorMessage("general-field-required", locale),
+      })
+      .refine(
+        (file) => file.size <= MAX_FILE_SIZE,
+        getErrorMessage("file-size", locale)
+      )
+      .refine(
+        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
+        getErrorMessage("file-size", locale)
+      ),
+    commercialRegistration: z
+      .instanceof(File, {
+        message: getErrorMessage("general-field-required", locale),
+      })
+      .refine(
+        (file) => file.size <= MAX_FILE_SIZE,
+        getErrorMessage("file-size", locale)
+      )
+      .refine(
+        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
+        getErrorMessage("pdf-type", locale)
+      ),
     comments: z.string().optional(),
   });
 
@@ -382,11 +463,11 @@ export type CenterStep4FormData = z.infer<
 >;
 
 // Sign Up For Centers Schema
-export const createSignUpCenterSchema = () => {
-  const step1Schema = createCenterStep1Schema();
-  const step2Schema = createCenterStep2Schema();
-  const step3Schema = createCenterStep3Schema();
-  const step4Schema = createCenterStep4Schema();
+export const createSignUpCenterSchema = (locale: "ar" | "en" = "ar") => {
+  const step1Schema = createCenterStep1Schema(locale);
+  const step2Schema = createCenterStep2Schema(locale);
+  const step3Schema = createCenterStep3Schema(locale);
+  const step4Schema = createCenterStep4Schema(locale);
 
   return step1Schema.merge(step2Schema).merge(step3Schema).merge(step4Schema);
 };

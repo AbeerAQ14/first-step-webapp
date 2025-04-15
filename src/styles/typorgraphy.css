@@ -29,6 +29,14 @@
     @apply !text-base lg:!text-lg xl:!text-xl;
   }
 
+  .form-label {
+    @apply text-center text-primary font-medium text-xl md:text-2xl;
+  }
+
+  .form-label-sm {
+    @apply text-center text-primary font-bold text-base;
+  }
+
   .relaxed {
     @apply leading-9;
   }

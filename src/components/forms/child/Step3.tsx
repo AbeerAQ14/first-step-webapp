@@ -11,8 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { ChildStep3FormData } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
 
 export default function Step3Recommendations() {
+  const t = useTranslations("auth.add-child.3.form");
   const { control } = useFormContext<ChildStep3FormData>();
 
   return (
@@ -23,10 +25,11 @@ export default function Step3Recommendations() {
         render={({ field }) => (
           <FormItem>
             <FormLabel>
-              صف لنا طفلك في 3 كلمات<span className="text-red-500">*</span>
+              {t("description.label")}
+              <span className="text-red-500">*</span>
             </FormLabel>
             <FormControl>
-              <Input placeholder="مثال: ذكي/ نشيط/ قليل التركيز" {...field} />
+              <Input placeholder={t("description.placeholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -39,13 +42,11 @@ export default function Step3Recommendations() {
         render={({ field }) => (
           <FormItem>
             <FormLabel>
-              أشياء يحبها طفلك<span className="text-red-500">*</span>
+              {t("likes.label")}
+              <span className="text-red-500">*</span>
             </FormLabel>
             <FormControl>
-              <Input
-                placeholder="مثال: لعب التنس/ دميته الصفراء/ مشاهدة الكرتون"
-                {...field}
-              />
+              <Input placeholder={t("likes.placeholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -57,10 +58,10 @@ export default function Step3Recommendations() {
         name="recommendations"
         render={({ field }) => (
           <FormItem className="md:col-span-2">
-            <FormLabel>هل لديك أي توصيات تتعلق بطفلك؟</FormLabel>
+            <FormLabel>{t("recommendations.label")}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="مثال: يرجى تشجيع طفلي على الأنشطة"
+                placeholder={t("recommendations.placeholder")}
                 {...field}
                 className="min-h-[150px]"
               />

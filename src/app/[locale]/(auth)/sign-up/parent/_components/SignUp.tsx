@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormNavigation from "@/components/forms/FormNavigation";
@@ -14,18 +15,22 @@ import Step4AuthorizedPersons from "@/components/forms/child/Step4";
 import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 
 const SignUp = () => {
+  const t = useTranslations("auth.parent-signup");
+  const tSteps = useTranslations("auth.add-child");
+  const locale = useLocale();
+
   const steps = [
-    { number: 1, label: "بيانات طفلك", icon: Icons.one },
-    { number: 2, label: "الأمراض المزمنة والحساسية", icon: Icons.two },
-    { number: 3, label: "التوصيات الخاصة بالطفل", icon: Icons.three },
+    { number: 1, label: tSteps("1.title"), icon: Icons.one },
+    { number: 2, label: tSteps("2.title"), icon: Icons.two },
+    { number: 3, label: tSteps("3.title"), icon: Icons.three },
     {
       number: 4,
-      label: "الأشخاص المصرح لهم بإرسال أو استلام الأبناء",
+      label: tSteps("4.title"),
       icon: Icons.four,
     },
   ];
 
-  const signUpParentSchema = createSignUpParentSchema();
+  const signUpParentSchema = createSignUpParentSchema(locale as "ar" | "en");
 
   const methods = useForm<SignUpParentFormData>({
     resolver: zodResolver(signUpParentSchema),
@@ -137,7 +142,7 @@ const SignUp = () => {
             {currentStep === 1 && (
               <div className="mb-10 space-y-9 ">
                 <h1 className="heading-2 text-primary text-center">
-                  إنشاء حساب ولي أمر
+                  {t("title")}
                 </h1>
                 <ParentSignUp />
               </div>

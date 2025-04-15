@@ -13,25 +13,30 @@ import {
 import PhoneInput from "../PhoneInput";
 import CheckboxGroup from "../CheckboxGroup";
 import type { CenterStep1FormData } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
 
 export function Step1BasicInfo() {
+  const t = useTranslations("auth.center-signup.1.form");
   const { control } = useFormContext<CenterStep1FormData>();
 
   const centerTypes = [
-    { id: "care", label: "رعاية" },
-    { id: "education", label: "تعليمي" },
-    { id: "support", label: "الدعم والتأهيل" },
+    { id: "care", label: t("type.options.care") },
+    { id: "education", label: t("type.options.education") },
+    { id: "support", label: t("type.options.support") },
   ];
 
   const services = [
-    { id: "education", label: "تعليمي" },
-    { id: "support1", label: "الدعم والتأهيل" },
-    { id: "support2", label: "الدعم والتأهيل" },
-    { id: "support3", label: "الدعم والتأهيل" },
-    { id: "support4", label: "الدعم والتأهيل" },
-    { id: "support5", label: "الدعم والتأهيل" },
-    { id: "support6", label: "الدعم والتأهيل" },
-    { id: "care", label: "رعاية" },
+    { id: "education", label: t("services.options.education") },
+    { id: "kindergarten", label: t("services.options.kindergarten") },
+    { id: "after-school", label: t("services.options.after-school") },
+    { id: "special-needs", label: t("services.options.special-needs") },
+    { id: "therapy", label: t("services.options.therapy") },
+    { id: "speech-therapy", label: t("services.options.speech-therapy") },
+    {
+      id: "occupational-therapy",
+      label: t("services.options.occupational-therapy"),
+    },
+    { id: "care", label: t("services.options.care") },
   ];
 
   return (
@@ -43,11 +48,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                اسم المركز باللغة العربية
+                {t("arabic-name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: حضانة واو" {...field} />
+                <Input placeholder={t("arabic-name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -60,11 +65,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                اسم المركز باللغة الإنجليزية
+                {t("english-name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: Wow" {...field} />
+                <Input placeholder={t("english-name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -77,11 +82,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                البريد الإلكتروني
+                {t("email.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: mennaemarauxl@gmail.com" {...field} />
+                <Input placeholder={t("email.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +99,7 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                رقم الجوال
+                {t("phone.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
@@ -119,11 +124,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                المدينة
+                {t("city.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: الرياض" {...field} />
+                <Input placeholder={t("city.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -136,11 +141,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                الحي
+                {t("neighborhood.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: حي النهضة" {...field} />
+                <Input placeholder={t("neighborhood.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -153,11 +158,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                الشارع
+                {t("street.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: شارع مكة" {...field} />
+                <Input placeholder={t("street.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -170,11 +175,11 @@ export function Step1BasicInfo() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                رابط الموقع الجغرافي
+                {t("location.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="مثال: لينك جوجل مابس" {...field} />
+                <Input placeholder={t("location.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -186,12 +191,9 @@ export function Step1BasicInfo() {
           name="branches"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>أسماء الفروع</FormLabel>
+              <FormLabel>{t("branches.label")}</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="مثال: فرع جدة، فرع الرياض، فرع المدينة..."
-                  {...field}
-                />
+                <Input placeholder={t("branches.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -200,7 +202,7 @@ export function Step1BasicInfo() {
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
-        <p className="text-center text-primary font-bold">نوع المركز</p>
+        <p className="form-label">{t("type.label")}</p>
         <CheckboxGroup
           className="lg:w-3xl"
           items={centerTypes}
@@ -210,7 +212,7 @@ export function Step1BasicInfo() {
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
-        <p className="text-center text-primary font-bold">الخدمات المتوفرة</p>
+        <p className="form-label">{t("services.label")}</p>
 
         <CheckboxGroup
           className="lg:w-3xl"
@@ -226,13 +228,13 @@ export function Step1BasicInfo() {
         render={({ field }) => (
           <FormItem>
             <FormLabel className="flex justify-start items-start gap-x-1 flex-col sm:flex-row">
-              <span>هل هناك خدمة لم يتم إضافتها؟</span>
+              <span>{t("other.label")}</span>
               <span className="font-normal text-sm md:text-base text-light-gray">
-                (مثل: التدريب على دورات المرأة)
+                {t("other.sublabel")}
               </span>
             </FormLabel>
             <FormControl>
-              <Input placeholder="اكتب هنا..." {...field} />
+              <Input placeholder={t("other.placeholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

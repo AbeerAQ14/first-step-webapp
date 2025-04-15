@@ -122,7 +122,10 @@
       "sign-up-parent": "Create Parent Account",
       "sign-up-center": "Create Center Account",
       "send-code": "Send Code",
-      "change-password": "Change Password"
+      "change-password": "Change Password",
+      "next": "Next",
+      "previous": "Previous",
+      "sign-up": "Create Account"
     },
     "sign-in": {
       "title": "Welcome Back, Sign In",
@@ -138,6 +141,303 @@
         "forgot-password": {
           "label": "Forgot Password?",
           "button": "Reset Password"
+        }
+      }
+    },
+    "parent-signup": {
+      "title": "Parent Account Signup",
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": ""
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": ""
+        },
+        "relation": {
+          "label": "Relationship",
+          "placeholder": ""
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": ""
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": ""
+        },
+        "password-confirm": {
+          "label": "Confirm Password",
+          "placeholder": ""
+        }
+      }
+    },
+    "add-child": {
+      "1": {
+        "title": "Your Child's Information",
+        "form": {
+          "name": {
+            "label": "Child's Name",
+            "placeholder": ""
+          },
+          "date-of-birth": {
+            "label": "Date of Birth",
+            "placeholder": ""
+          },
+          "father-name": {
+            "label": "Father's Name",
+            "placeholder": ""
+          },
+          "mother-name": {
+            "label": "Mother's Name",
+            "placeholder": ""
+          },
+          "gender": {
+            "title": "Child's Gender",
+            "male": "Boy",
+            "female": "Girl"
+          }
+        }
+      },
+      "2": {
+        "title": "Chronic Illnesses & Allergies",
+        "form": {
+          "diseases": {
+            "title": "Does your child suffer from any chronic illnesses?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            },
+            "disease": {
+              "label": "Illness Name",
+              "placeholder": ""
+            },
+            "medicine": {
+              "label": "Medication Name",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "What actions should be taken during a sudden episode?",
+              "sublabel": "(e.g., specific medications or first aid steps)",
+              "placeholder": ""
+            },
+            "add": "Add Chronic Illness"
+          },
+          "allergies": {
+            "title": "Does your child have any allergies?",
+            "subtitle": "(e.g., food, medicine, or other substances)",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            },
+            "allergy": {
+              "label": "Type of Allergy",
+              "placeholder": ""
+            },
+            "causes": {
+              "label": "What substances or foods cause the allergy?",
+              "placeholder": ""
+            },
+            "procedures": {
+              "label": "What actions should be taken during a sudden episode?",
+              "placeholder": ""
+            },
+            "add": "Add Allergy Type"
+          }
+        }
+      },
+      "3": {
+        "title": "Child-Specific Recommendations",
+        "form": {
+          "description": {
+            "label": "Describe your child in 3 words",
+            "placeholder": ""
+          },
+          "likes": {
+            "label": "Things your child likes",
+            "placeholder": ""
+          },
+          "recommendations": {
+            "label": "Do you have any recommendations regarding your child?",
+            "placeholder": ""
+          }
+        }
+      },
+      "4": {
+        "title": "Authorized Persons for Pick-Up/Drop-Off",
+        "form": {
+          "authorize": {
+            "label": "Authorized Person's Name",
+            "placeholder": ""
+          },
+          "identity": {
+            "label": "Authorized Person's ID Number",
+            "placeholder": ""
+          },
+          "comment": {
+            "label": "Any comments or notes?",
+            "placeholder": ""
+          },
+          "add": "Add Authorized Person"
+        }
+      }
+    },
+    "center-signup": {
+      "title": "Create Center Account",
+      "1": {
+        "title": "Basic Information",
+        "form": {
+          "arabic-name": {
+            "label": "Center Name in Arabic",
+            "placeholder": ""
+          },
+          "english-name": {
+            "label": "Center Name in English",
+            "placeholder": ""
+          },
+          "phone": {
+            "label": "Mobile Number",
+            "placeholder": ""
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": ""
+          },
+          "city": {
+            "label": "City",
+            "placeholder": ""
+          },
+          "neighborhood": {
+            "label": "Neighborhood",
+            "placeholder": ""
+          },
+          "street": {
+            "label": "Street",
+            "placeholder": ""
+          },
+          "location": {
+            "label": "Location Link",
+            "placeholder": ""
+          },
+          "branches": {
+            "label": "Branch Names",
+            "placeholder": ""
+          },
+          "type": {
+            "label": "Center Type",
+            "options": {
+              "care": "Care",
+              "education": "Educational",
+              "support": "Support and Rehabilitation"
+            }
+          },
+          "services": {
+            "label": "Available Services",
+            "options": {
+              "education": "Educational",
+              "kindergarten": "Kindergarten",
+              "after-school": "After School",
+              "special-needs": "Special Needs",
+              "therapy": "Physical Therapy",
+              "speech-therapy": "Speech Therapy",
+              "occupational-therapy": "Occupational Therapy",
+              "care": "Care"
+            }
+          },
+          "other": {
+            "label": "Other Services",
+            "sublabel": "(e.g., toilet training)",
+            "placeholder": ""
+          }
+        }
+      },
+      "2": {
+        "title": "Accepted Ages and Working Hours",
+        "form": {
+          "ages": {
+            "label": "Accepted Age Ranges",
+            "options": {
+              "0-3": "0 to 3 years",
+              "3-6": "3 to 6 years",
+              "special-needs": "Children with Special Needs"
+            }
+          },
+          "addition": {
+            "label": "Is there anything else you'd like to add?",
+            "placeholder": ""
+          },
+          "from-day": {
+            "label": "From Day",
+            "placeholder": ""
+          },
+          "to-day": {
+            "label": "To Day",
+            "placeholder": ""
+          },
+          "from-hour": {
+            "label": "From Hour",
+            "placeholder": ""
+          },
+          "to-hour": {
+            "label": "To Hour",
+            "placeholder": ""
+          },
+          "days": {
+            "saturday": "Saturday",
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday"
+          }
+        }
+      },
+      "3": {
+        "title": "Parent Communication and Food Service",
+        "form": {
+          "emergency-contact": {
+            "label": "Does the center offer emergency contact with parents?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "communication-methods": {
+            "label": "Children’s Communication Methods with Parents",
+            "options": {
+              "voice": "Voice",
+              "text": "Text",
+              "video": "Video"
+            }
+          },
+          "food-service": {
+            "label": "Does the center provide food service?",
+            "options": {
+              "yes": "Yes",
+              "no": "No"
+            }
+          },
+          "food-details": {
+            "name": "Food Name",
+            "ingredients": "Ingredients",
+            "drink": "Drink",
+            "add": "Add Meal"
+          }
+        }
+      },
+      "4": {
+        "title": "Licensing and Comments",
+        "form": {
+          "business-license": "Practice License",
+          "commercial-registration": "Commercial Registration",
+          "file-placeholder": "Choose File",
+          "description": "Required licenses to ensure and confirm the center’s credibility",
+          "comments": {
+            "label": "Do you have any comments or notes?",
+            "placeholder": ""
+          }
         }
       }
     },

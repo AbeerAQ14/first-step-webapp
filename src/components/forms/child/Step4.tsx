@@ -13,8 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Minus, Plus } from "lucide-react";
 import type { ChildStep4FormData } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
 
 export default function Step4AuthorizedPersons() {
+  const t = useTranslations("auth.add-child.4.form");
   const { control } = useFormContext<ChildStep4FormData>();
 
   const {
@@ -46,12 +48,13 @@ export default function Step4AuthorizedPersons() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      اسم الشخص المفوض{index > 0 ? ` ${index + 1}` : ""}
+                      {t("authorize.label")}
+                      {index > 0 ? ` ${index + 1}` : ""}
                       <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="الاسم بالكامل كما في الهوية"
+                        placeholder={t("authorize.placeholder")}
                         {...field}
                       />
                     </FormControl>
@@ -66,11 +69,15 @@ export default function Step4AuthorizedPersons() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      رقم هوية الشخص المفوض{index > 0 ? ` ${index + 1}` : ""}
+                      {t("identity.label")}
+                      {index > 0 ? ` ${index + 1}` : ""}
                       <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="رقم الهوية" {...field} />
+                      <Input
+                        placeholder={t("identity.placeholder")}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -86,10 +93,10 @@ export default function Step4AuthorizedPersons() {
         name="comments"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>هل لديك أي تعليق أو ملاحظة؟</FormLabel>
+            <FormLabel>{t("comment.label")}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="اكتب هنا..."
+                placeholder={t("comment.placeholder")}
                 {...field}
                 className="min-h-[100px]"
               />
@@ -108,7 +115,7 @@ export default function Step4AuthorizedPersons() {
           className="font-bold"
         >
           <Plus className="size-6" size={24} />
-          إضافة شخص مفوض
+          {t("add")}
         </Button>
 
         {authorizedPersons.length > 1 && (

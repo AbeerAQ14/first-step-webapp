@@ -3,26 +3,33 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
 
 import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
 import { Icons } from "@/components/general/icons";
 import { createSignUpCenterSchema, SignUpCenterFormData } from "@/lib/schemas";
 import { Step1BasicInfo } from "@/components/forms/center/Step1";
+import { Step2AgesAndHours } from "@/components/forms/center/Step2";
+import { Step3Communication } from "@/components/forms/center/Step3";
+import { Step4Permits } from "@/components/forms/center/Step4";
 
 export function SignUp() {
+  const t = useTranslations("auth.center-signup");
+  const locale = useLocale();
+
   const steps = [
-    { number: 1, label: "المعلومات الأساسية", icon: Icons.one },
-    { number: 2, label: "الأعمار المقبولة وساعات العمل", icon: Icons.two },
+    { number: 1, label: t("1.title"), icon: Icons.one },
+    { number: 2, label: t("2.title"), icon: Icons.two },
     {
       number: 3,
-      label: "التواصل مع أولياء الأمور وتقديم الطعام",
+      label: t("3.title"),
       icon: Icons.three,
     },
-    { number: 4, label: "التصريحات المطلوبة", icon: Icons.four },
+    { number: 4, label: t("4.title"), icon: Icons.four },
   ];
 
-  const signUpCenterSchema = createSignUpCenterSchema();
+  const signUpCenterSchema = createSignUpCenterSchema(locale as "ar" | "en");
 
   const methods = useForm<SignUpCenterFormData>({
     resolver: zodResolver(signUpCenterSchema),
@@ -49,12 +56,23 @@ export function SignUp() {
         from: "",
         to: "",
       },
-      emergencyContact: false,
+      emergencyContact: undefined,
       communicationMethods: [],
-      foodService: false,
-      meals: [],
-      businessLicense: null,
-      commercialRegistration: null,
+      foodService: "yes",
+      meals: [
+        {
+          name: "",
+          ingredients: "",
+          drink: "",
+        },
+        {
+          name: "",
+          ingredients: "",
+          drink: "",
+        },
+      ],
+      businessLicense: undefined,
+      commercialRegistration: undefined,
       comments: "",
     },
     mode: "onChange",
@@ -108,11 +126,11 @@ export function SignUp() {
       case 1:
         return <Step1BasicInfo />;
       case 2:
-        return <div></div>;
+        return <Step2AgesAndHours />;
       case 3:
-        return <div></div>;
+        return <Step3Communication />;
       case 4:
-        return <div></div>;
+        return <Step4Permits />;
       default:
         return null;
     }
@@ -130,7 +148,7 @@ export function SignUp() {
         <form className="w-full" onSubmit={methods.handleSubmit(onSubmit)}>
           {currentStep === 1 && (
             <h1 className="mb-10 heading-2 text-primary text-center">
-              إنشاء حساب مركز
+              {t("title")}
             </h1>
           )}
 
