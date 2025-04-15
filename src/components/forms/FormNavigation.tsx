@@ -21,14 +21,14 @@ export default function FormNavigation({
   const t = useTranslations("auth.buttons");
 
   return (
-    <div className="flex justify-between gap-x-9">
+    <div className="mt-8 flex flex-col sm:flex-row justify-center gap-x-9 gap-y-2.5">
       {currentStep > 1 ? (
         <Button
           type="button"
           size={"lg"}
           variant="outline"
           onClick={onPrevious}
-          className="!border-light-gray text-mid-gray"
+          className="!border-light-gray text-mid-gray w-full sm:w-auto"
           disabled={isLoading}
         >
           {t("previous")}
@@ -36,11 +36,22 @@ export default function FormNavigation({
       ) : null}
 
       {currentStep < totalSteps ? (
-        <Button type="button" size={"lg"} onClick={onNext} disabled={isLoading}>
+        <Button
+          className="w-full sm:w-auto"
+          type="button"
+          size={"lg"}
+          onClick={onNext}
+          disabled={isLoading}
+        >
           {t("next")}
         </Button>
       ) : (
-        <Button type="submit" size={"lg"} disabled={isLoading}>
+        <Button
+          className="w-full sm:w-auto"
+          type="submit"
+          size={"lg"}
+          disabled={isLoading}
+        >
           {t("sign-up")}
         </Button>
       )}
