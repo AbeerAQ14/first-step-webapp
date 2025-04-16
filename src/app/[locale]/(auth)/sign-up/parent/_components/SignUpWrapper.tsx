@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
@@ -7,6 +9,7 @@ import { transformParentDataToExpectedPayload } from "@/lib/utils";
 import { ParentRegisterFormDataInput, ParentRegisterPayload } from "@/types";
 import SignUp from "./SignUp";
 import { SignUpParentFormData } from "@/lib/schemas";
+import LoadingOverlay from "@/components/forms/LoadingOverlay";
 
 const SignUpWrapper = () => {
   const router = useRouter();
@@ -44,7 +47,15 @@ const SignUpWrapper = () => {
   };
 
   return (
-    <SignUp submitHandler={submitHandler} isLoading={mutation.isPending} />
+    <div>
+      {mutation.isSuccess && (
+        <LoadingOverlay
+          content={`Welcome aboard! Let\u2019s get you signed in.`}
+        />
+      )}
+
+      <SignUp submitHandler={submitHandler} isLoading={mutation.isPending} />
+    </div>
   );
 };
 

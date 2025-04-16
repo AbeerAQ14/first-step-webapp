@@ -10,6 +10,7 @@ import { authService } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";
+import LoadingOverlay from "@/components/forms/LoadingOverlay";
 
 const SignIn = () => {
   const router = useRouter();
@@ -51,6 +52,8 @@ const SignIn = () => {
 
   return (
     <div className="px-5 sm:px-10 py-20">
+      {mutation.isSuccess && <LoadingOverlay content="Signing you in..." />}
+
       <div className="flex flex-col items-center gap-y-12">
         <Image
           src="/assets/logos/logo.svg"
