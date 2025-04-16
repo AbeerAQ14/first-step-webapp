@@ -34,43 +34,36 @@ export function SignUp() {
   const methods = useForm<SignUpCenterFormData>({
     resolver: zodResolver(signUpCenterSchema),
     defaultValues: {
-      centerNameArabic: "",
-      centerNameEnglish: "",
+      // step1
+      name: "",
       email: "",
       phone: "",
+      neighborhood: "",
+      nursery_name: "",
+      nursery_type: [],
+      address: "",
       city: "",
-      district: "",
-      street: "",
-      locationLink: "",
-      branches: "",
-      centerType: [],
+      location: "",
       services: [],
-      additionalServices: "",
-      ageGroups: [],
-      additionalInfo: "",
-      workDays: {
-        from: "",
-        to: "",
+      additional_service: "",
+      // step2
+      accepted_ages: [],
+      // additionalInfo: "",
+      work_days_from: "",
+      work_days_to: "",
+      work_hours_from: "",
+      work_hours_to: "",
+      // step3
+      emergency_contact: undefined,
+      communication_methods: [],
+      meals_and_periods: {
+        provides_food: "yes",
+        first_meals: [{ meal_name: "", juice: "", components: "" }],
+        second_meals: [{ meal_name: "", juice: "", components: "" }],
+        time_of_first_period: "",
+        time_of_second_period: "",
       },
-      workHours: {
-        from: "",
-        to: "",
-      },
-      emergencyContact: undefined,
-      communicationMethods: [],
-      foodService: "yes",
-      meals: [
-        {
-          name: "",
-          ingredients: "",
-          drink: "",
-        },
-        {
-          name: "",
-          ingredients: "",
-          drink: "",
-        },
-      ],
+      // step4
       businessLicense: undefined,
       commercialRegistration: undefined,
       comments: "",
@@ -98,22 +91,32 @@ export function SignUp() {
     switch (step) {
       case 1:
         return [
-          "centerNameArabic",
-          "centerNameEnglish",
-          "email",
-          "phone",
-          "city",
-          "district",
-          "street",
-          "locationLink",
-          "branches",
-          "centerType",
-          "services",
+          // "name",
+          // "nursery_name",
+          // "email",
+          // "phone",
+          // "city",
+          // "neighborhood",
+          // "address",
+          // "location",
+          // "nursery_type",
+          // "services",
+          // "additional_service",
         ];
       case 2:
-        return ["ageGroups", "workDays", "workHours"];
+        return [
+          // "accepted_ages",
+          // "work_days_from",
+          // "work_days_to",
+          // "work_hours_from",
+          // "work_hours_to",
+        ];
       case 3:
-        return ["emergencyContact", "communicationMethods", "foodService"];
+        return [
+          // "emergency_contact",
+          // "communication_methods",
+          // "meals_and_periods",
+        ];
       case 4:
         return ["businessLicense", "commercialRegistration"];
       default:

@@ -44,15 +44,15 @@ export function Step1BasicInfo() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-10 md:gap-y-4">
         <FormField
           control={control}
-          name="centerNameArabic"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("arabic-name.label")}
+                {t("name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("arabic-name.placeholder")} {...field} />
+                <Input placeholder={t("name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -61,15 +61,15 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="centerNameEnglish"
+          name="nursery_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("english-name.label")}
+                {t("nursery-name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("english-name.placeholder")} {...field} />
+                <Input placeholder={t("nursery-name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,7 +137,7 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="district"
+          name="neighborhood"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -154,15 +154,15 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="street"
+          name="address"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("street.label")}
+                {t("address.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("street.placeholder")} {...field} />
+                <Input placeholder={t("address.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -171,7 +171,7 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="locationLink"
+          name="location"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -186,7 +186,7 @@ export function Step1BasicInfo() {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={control}
           name="branches"
           render={({ field }) => (
@@ -198,7 +198,7 @@ export function Step1BasicInfo() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
@@ -206,7 +206,7 @@ export function Step1BasicInfo() {
         <CheckboxGroup
           className="lg:w-3xl"
           items={centerTypes}
-          name="centerType"
+          name="nursery_type"
           control={control}
         />
       </div>
@@ -224,7 +224,7 @@ export function Step1BasicInfo() {
 
       <FormField
         control={control}
-        name="additionalServices"
+        name="additional_service"
         render={({ field }) => (
           <FormItem>
             <FormLabel className="flex justify-start items-start gap-x-1 flex-col sm:flex-row">

@@ -48,12 +48,12 @@ export function Step2AgesAndHours() {
         <CheckboxGroup
           control={control}
           items={ageGroups}
-          name="ageGroups"
+          name="accepted_ages"
           className=""
         />
       </div>
 
-      <FormField
+      {/* <FormField
         control={control}
         name="additionalInfo"
         render={({ field }) => (
@@ -65,13 +65,13 @@ export function Step2AgesAndHours() {
             <FormMessage />
           </FormItem>
         )}
-      />
+      /> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <FormField
             control={control}
-            name="workDays.from"
+            name="work_days_from"
             render={({ field }) => (
               <FormItem>
                 <Select
@@ -101,7 +101,7 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workDays.to"
+            name="work_days_to"
             render={({ field }) => (
               <FormItem>
                 <Select
@@ -131,7 +131,7 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workHours.from"
+            name="work_hours_from"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("from-hour.label")}</FormLabel>
@@ -157,7 +157,7 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workHours.to"
+            name="work_hours_to"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("to-hour.label")}</FormLabel>

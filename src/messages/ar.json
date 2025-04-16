@@ -7,8 +7,6 @@
     "links": {
       "home": { "title": "الرئيسية", "path": "/" },
       "services": { "title": "خدماتنا", "path": "/services" },
-      "nurseries": { "title": "الحضانات", "path": "/nurseries" },
-      "centers": { "title": "المراكز", "path": "/centers" },
       "blog": { "title": "المدونة", "path": "/blog" },
       "story": { "title": "قصتنا", "path": "/our-story" },
       "contact": { "title": "تواصل معنا", "path": "/contact" }
@@ -285,12 +283,12 @@
       "1": {
         "title": "المعلومات الأساسية",
         "form": {
-          "arabic-name": {
-            "label": "اسم المركز باللغة العربية",
+          "name": {
+            "label": "الاسم",
             "placeholder": ""
           },
-          "english-name": {
-            "label": "اسم المركز باللغة الإنجليزية",
+          "nursery-name": {
+            "label": "اسم المركز",
             "placeholder": ""
           },
           "phone": {
@@ -309,16 +307,12 @@
             "label": "الحي",
             "placeholder": ""
           },
-          "street": {
-            "label": "الشارع",
+          "address": {
+            "label": "ألعنوان",
             "placeholder": ""
           },
           "location": {
             "label": "رابط الموقع الجغرافي",
-            "placeholder": ""
-          },
-          "branches": {
-            "label": "أسماء الفروع",
             "placeholder": ""
           },
           "type": {
@@ -419,7 +413,7 @@
           "food-details": {
             "name": "اسم الطعام",
             "ingredients": "المكونات",
-            "drink": "المكونات",
+            "drink": "العصائر",
             "add": "إضافة وجبة"
           }
         }

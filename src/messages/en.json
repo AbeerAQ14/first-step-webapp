@@ -7,8 +7,6 @@
     "links": {
       "home": { "title": "Home", "path": "/" },
       "services": { "title": "Services", "path": "/services" },
-      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
-      "centers": { "title": "Centers", "path": "/centers" },
       "blog": { "title": "Blog", "path": "/blog" },
       "story": { "title": "Our story", "path": "/our-story" },
       "contact": { "title": "Contact us", "path": "/contact" }
@@ -51,8 +49,6 @@
     "links": {
       "home": { "title": "Home", "path": "/" },
       "services": { "title": "Our Services", "path": "/services" },
-      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
-      "centers": { "title": "Centers", "path": "/centers" },
       "blog": { "title": "Blog", "path": "/blog" },
       "story": { "title": "Our Story", "path": "/our-story" },
       "contact": { "title": "Contact Us", "path": "/contact" },
@@ -288,12 +284,12 @@
       "1": {
         "title": "Basic Information",
         "form": {
-          "arabic-name": {
-            "label": "Center Name in Arabic",
+          "name": {
+            "label": "Name",
             "placeholder": ""
           },
-          "english-name": {
-            "label": "Center Name in English",
+          "nursery-name": {
+            "label": "Center Name",
             "placeholder": ""
           },
           "phone": {
@@ -312,16 +308,12 @@
             "label": "Neighborhood",
             "placeholder": ""
           },
-          "street": {
-            "label": "Street",
+          "address": {
+            "label": "Address",
             "placeholder": ""
           },
           "location": {
             "label": "Location Link",
-            "placeholder": ""
-          },
-          "branches": {
-            "label": "Branch Names",
             "placeholder": ""
           },
           "type": {

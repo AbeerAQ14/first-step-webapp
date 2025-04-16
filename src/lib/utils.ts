@@ -51,6 +51,14 @@ const ERRORMESSAGES = {
     ar: "يرجى إدخال الكود بشكل صحيح",
     en: "Please enter the code correctly",
   },
+  "invalid-date": {
+    ar: "يرجى إدخال تاريخ صحيح",
+    en: "Please enter a valid date",
+  },
+  "invalid-time": {
+    ar: "يرجى إدخال وقت صحيح",
+    en: "Please enter a valid time",
+  },
   "disease-one-required": {
     ar: "يجب إدخال مرض واحد على الأقل",
     en: "At least one disease must be entered",
@@ -104,42 +112,20 @@ export const getErrorMessage = (
 
 // get meal title
 const getArabicOrdinal = (index: number) => {
-  const arabicOrdinals = [
-    "الأولى",
-    "الثانية",
-    "الثالثة",
-    "الرابعة",
-    "الخامسة",
-    "السادسة",
-    "السابعة",
-    "الثامنة",
-    "التاسعة",
-    "العاشرة",
-  ];
+  const arabicOrdinals = ["الأولى", "الثانية"];
   return arabicOrdinals[index] || `${index + 1}`;
 };
 
 const getEnglishOrdinal = (index: number) => {
-  const englishOrdinals = [
-    "First",
-    "Second",
-    "Third",
-    "Fourth",
-    "Fifth",
-    "Sixth",
-    "Seventh",
-    "Eighth",
-    "Ninth",
-    "Tenth",
-  ];
+  const englishOrdinals = ["first", "second"];
   return englishOrdinals[index] || `${index + 1}`;
 };
 
 export const getMealTitle = (index: number, lang: string) => {
   if (lang === "ar") {
-    return `الوجبة ${getArabicOrdinal(index)}`;
+    return `الفترة ${getArabicOrdinal(index)}`;
   }
-  return `${getEnglishOrdinal(index)} Meal`;
+  return `${getEnglishOrdinal(index)} Period`;
 };
 
 // Create a slug from a name
