@@ -44,6 +44,8 @@ export function SignUp({
       name: "",
       email: "",
       phone: "",
+      password: "",
+      confirmPassword: "",
       neighborhood: "",
       nursery_name: "",
       nursery_type: [],
