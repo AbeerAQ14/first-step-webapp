@@ -49,6 +49,8 @@
     "links": {
       "home": { "title": "Home", "path": "/" },
       "services": { "title": "Our Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
+      "centers": { "title": "Centers", "path": "/centers" },
       "blog": { "title": "Blog", "path": "/blog" },
       "story": { "title": "Our Story", "path": "/our-story" },
       "contact": { "title": "Contact Us", "path": "/contact" },
