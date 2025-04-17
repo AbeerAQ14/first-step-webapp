@@ -14,7 +14,13 @@ import { Step2AgesAndHours } from "@/components/forms/center/Step2";
 import { Step3Communication } from "@/components/forms/center/Step3";
 import { Step4Permits } from "@/components/forms/center/Step4";
 
-export function SignUp() {
+export function SignUp({
+  submitHandler,
+  isLoading,
+}: {
+  submitHandler: (data: SignUpCenterFormData) => void;
+  isLoading: boolean;
+}) {
   const t = useTranslations("auth.center-signup");
   const locale = useLocale();
 
@@ -64,8 +70,9 @@ export function SignUp() {
         time_of_second_period: "",
       },
       // step4
-      businessLicense: undefined,
-      commercialRegistration: undefined,
+      license_path: undefined,
+      commercial_record_path: undefined,
+      logo: undefined,
       comments: "",
     },
     mode: "onChange",
@@ -91,31 +98,31 @@ export function SignUp() {
     switch (step) {
       case 1:
         return [
-          // "name",
-          // "nursery_name",
-          // "email",
-          // "phone",
-          // "city",
-          // "neighborhood",
-          // "address",
-          // "location",
-          // "nursery_type",
-          // "services",
-          // "additional_service",
+          "name",
+          "nursery_name",
+          "email",
+          "phone",
+          "city",
+          "neighborhood",
+          "address",
+          "location",
+          "nursery_type",
+          "services",
+          "additional_service",
         ];
       case 2:
         return [
-          // "accepted_ages",
-          // "work_days_from",
-          // "work_days_to",
-          // "work_hours_from",
-          // "work_hours_to",
+          "accepted_ages",
+          "work_days_from",
+          "work_days_to",
+          "work_hours_from",
+          "work_hours_to",
         ];
       case 3:
         return [
-          // "emergency_contact",
-          // "communication_methods",
-          // "meals_and_periods",
+          "emergency_contact",
+          "communication_methods",
+          "meals_and_periods",
         ];
       case 4:
         return ["businessLicense", "commercialRegistration"];
@@ -142,7 +149,7 @@ export function SignUp() {
   const onSubmit = (data: SignUpCenterFormData) => {
     console.log("Form submitted:", data);
 
-    alert("Form submitted successfully!");
+    submitHandler(data);
   };
 
   return (
@@ -167,6 +174,7 @@ export function SignUp() {
               totalSteps={totalSteps}
               onPrevious={goToPreviousStep}
               onNext={goToNextStep}
+              isLoading={isLoading}
             />
           </div>
         </form>

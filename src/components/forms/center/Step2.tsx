@@ -28,7 +28,7 @@ export function Step2AgesAndHours() {
   const ageGroups = [
     { id: "0-3", label: t("ages.options.0-3") },
     { id: "3-6", label: t("ages.options.3-6") },
-    { id: "special-needs", label: t("ages.options.special-needs") },
+    { id: "disabled", label: t("ages.options.special-needs") },
   ];
 
   const days = [

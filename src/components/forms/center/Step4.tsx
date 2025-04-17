@@ -22,7 +22,7 @@ export function Step4Permits() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={control}
-          name="businessLicense"
+          name="license_path"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("business-license")}</FormLabel>
@@ -40,7 +40,7 @@ export function Step4Permits() {
 
         <FormField
           control={control}
-          name="commercialRegistration"
+          name="commercial_record_path"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("commercial-registration")}</FormLabel>
@@ -49,6 +49,24 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept=".pdf"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("logo")}</FormLabel>
+              <FormControl>
+                <FileUploader
+                  value={field.value}
+                  onChange={field.onChange}
+                  accept="image/png, image/jpeg, image/jpg"
                 />
               </FormControl>
               <FormMessage />

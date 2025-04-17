@@ -299,6 +299,14 @@
             "label": "البريد الإلكتروني",
             "placeholder": ""
           },
+          "password": {
+            "label": "كلمة السر",
+            "placeholder": ""
+          },
+          "password-confirm": {
+            "label": "تأكيد كلمة السر",
+            "placeholder": ""
+          },
           "city": {
             "label": "المدينة",
             "placeholder": ""
@@ -423,6 +431,7 @@
         "form": {
           "business-license": "رخصة المزاولة",
           "commercial-registration": "السجل التجاري",
+          "logo": "شعار المركز",
           "file-placeholder": "اختر ملف",
           "description": "التصريحات المطلوبة لضمان وتأكيد موثوقية المركز",
           "comments": {

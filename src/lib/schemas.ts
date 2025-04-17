@@ -334,6 +334,10 @@ const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
       .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
         message: getErrorMessage("invalid-phone", locale),
       }),
+    password: z.string().min(8, {
+      message: getErrorMessage("password-min", locale, { min: 8 }),
+    }),
+    confirmPassword: z.string(),
     city: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
@@ -361,7 +365,15 @@ export type CenterStep1FormData = z.infer<
 >;
 
 // Sign Up For Centers Step 2
-const createCenterStep2Schema = (locale: "ar" | "en" = "ar") =>
+const createCenterStep2Schema = (
+  locale: "ar" | "en" = "ar"
+): z.ZodObject<{
+  accepted_ages: z.ZodArray<z.ZodString>;
+  work_days_from: z.ZodString;
+  work_days_to: z.ZodString;
+  work_hours_from: z.ZodString;
+  work_hours_to: z.ZodString;
+}> =>
   z.object({
     // Step 2: Ages and Hours
     accepted_ages: z
@@ -531,7 +543,7 @@ const ACCEPTED_FILE_TYPES = ["application/pdf"];
 const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 4: Permits
-    businessLicense: z
+    license_path: z
       .instanceof(File, {
         message: getErrorMessage("general-field-required", locale),
       })
@@ -543,7 +555,8 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
         (file) => ACCEPTED_FILE_TYPES.includes(file.type),
         getErrorMessage("file-size", locale)
       ),
-    commercialRegistration: z
+
+    commercial_record_path: z
       .instanceof(File, {
         message: getErrorMessage("general-field-required", locale),
       })
@@ -555,6 +568,25 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
         (file) => ACCEPTED_FILE_TYPES.includes(file.type),
         getErrorMessage("pdf-type", locale)
       ),
+
+    logo: z
+      .instanceof(File, {
+        message: getErrorMessage("general-field-required", locale),
+      })
+      .refine(
+        (file) => file.size <= MAX_FILE_SIZE,
+        getErrorMessage("file-size", locale)
+      )
+      .refine(
+        (file) =>
+          ["image/png", "image/jpeg", "image/jpg", "image/svg+xml"].includes(
+            file.type
+          ),
+        {
+          message: getErrorMessage("image-type", locale),
+        }
+      ),
+
     comments: z.string().optional(),
   });
 
@@ -569,7 +601,14 @@ export const createSignUpCenterSchema = (locale: "ar" | "en" = "ar") => {
   const step3Schema = createCenterStep3Schema(locale);
   const step4Schema = createCenterStep4Schema(locale);
 
-  return step1Schema.merge(step2Schema).merge(step3Schema).merge(step4Schema);
+  return step1Schema
+    .merge(step2Schema)
+    .merge(step3Schema)
+    .merge(step4Schema)
+    .refine((data) => data.password === data.confirmPassword, {
+      message: getErrorMessage("password-match", locale),
+      path: ["confirmPassword"],
+    });
 };
 
 export type SignUpCenterFormData = z.infer<

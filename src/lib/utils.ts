@@ -91,6 +91,10 @@ const ERRORMESSAGES = {
     ar: "يُسمح فقط بملفات PDF",
     en: "Only PDF files are accepted",
   },
+  "image-type": {
+    ar: "يُسمح فقط بملفات JPG, JPEG, PNG",
+    en: "Only JPG, JPEG, PNG files are accepted",
+  },
 };
 
 // get error message helpre function
@@ -271,4 +275,17 @@ export function transformParentDataToExpectedPayload(
   };
 
   return expectedPayload;
+}
+
+// to 24-hour format
+export function formatTime(timeString: string) {
+  if (!timeString) return "";
+
+  // If it's already in HH:mm:ss, return it
+  if (/^\d{2}:\d{2}:\d{2}$/.test(timeString)) return timeString;
+
+  // If it's in HH:mm, add :00
+  if (/^\d{2}:\d{2}$/.test(timeString)) return `${timeString}:00`;
+
+  return ""; // fallback if format is unexpected
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,15 +14,20 @@ import PhoneInput from "../PhoneInput";
 import CheckboxGroup from "../CheckboxGroup";
 import type { CenterStep1FormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Step1BasicInfo() {
   const t = useTranslations("auth.center-signup.1.form");
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const { control } = useFormContext<CenterStep1FormData>();
 
   const centerTypes = [
-    { id: "care", label: t("type.options.care") },
-    { id: "education", label: t("type.options.education") },
-    { id: "support", label: t("type.options.support") },
+    { id: "nursing", label: t("type.options.care") },
+    { id: "educational", label: t("type.options.education") },
+    { id: "support and rehabilitation", label: t("type.options.support") },
   ];
 
   const services = [
@@ -112,6 +117,78 @@ export function Step1BasicInfo() {
                     );
                   }}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("password.label")}
+                <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <div className="relative w-full">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t("password.placeholder")}
+                    {...field}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-6 stroke-inherit" />
+                    ) : (
+                      <Eye className="size-6 stroke-inherit" />
+                    )}
+                  </Button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("password-confirm.label")}
+                <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <div className="relative w-full">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t("password-confirm.placeholder")}
+                    {...field}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-6 stroke-inherit" />
+                    ) : (
+                      <Eye className="size-6 stroke-inherit" />
+                    )}
+                  </Button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

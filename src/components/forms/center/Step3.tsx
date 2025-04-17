@@ -15,7 +15,6 @@ import CheckboxGroup from "../CheckboxGroup";
 import { Clock, Minus, Plus } from "lucide-react";
 import type { CenterStep3FormData } from "@/lib/schemas";
 import { getMealTitle } from "@/lib/utils";
-import { useEffect } from "react";
 
 export function Step3Communication() {
   const t = useTranslations("auth.center-signup.3.form");
@@ -61,8 +60,8 @@ export function Step3Communication() {
   };
 
   const communicationMethods = [
-    { id: "voice", label: t("communication-methods.options.voice") },
-    { id: "text", label: t("communication-methods.options.text") },
+    { id: "phone", label: t("communication-methods.options.voice") },
+    { id: "sms", label: t("communication-methods.options.text") },
     { id: "video", label: t("communication-methods.options.video") },
   ];
 

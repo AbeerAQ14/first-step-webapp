@@ -75,6 +75,52 @@ export interface ParentRegisterFormDataInput {
   comments?: string;
 }
 
+export interface CenterRegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  nursery_type: string[];
+  additional_service?: string;
+  work_days_from: string;
+  work_days_to: string;
+  work_hours_from: string;
+  work_hours_to: string;
+  time_of_first_period?: string;
+  time_of_second_period?: string;
+  first_meals?: Meal[];
+  second_meals?: Meal[];
+  emergency_contact: boolean;
+  special_needs: boolean;
+  nursery_name: string;
+  location: string;
+  city: string;
+  neighborhood: string;
+  services: string[];
+  communication_methods: string[];
+  provides_food: boolean;
+  accepted_ages: string[];
+  pricing: Pricing[];
+
+  logo: File;
+  license_path: File;
+  commercial_record_path: File;
+  // comments: string;
+}
+
+export interface Meal {
+  meal_name?: string;
+  juice?: string;
+  components?: string;
+}
+
+export interface Pricing {
+  enrollment_type: string;
+  response_speed: string;
+  price_amount: number;
+}
+
 export interface ChronicDisease {
   name?: string;
   medication?: string;

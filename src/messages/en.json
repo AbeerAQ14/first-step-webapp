@@ -302,6 +302,14 @@
             "label": "Email",
             "placeholder": ""
           },
+          "password": {
+            "label": "Password",
+            "placeholder": ""
+          },
+          "password-confirm": {
+            "label": "Confirm Password",
+            "placeholder": ""
+          },
           "city": {
             "label": "City",
             "placeholder": ""
@@ -426,6 +434,7 @@
         "form": {
           "business-license": "Practice License",
           "commercial-registration": "Commercial Registration",
+          "logo": "Center Logo",
           "file-placeholder": "Choose File",
           "description": "Required licenses to ensure and confirm the center’s credibility",
           "comments": {
