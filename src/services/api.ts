@@ -90,6 +90,36 @@ export const blogService = {
   }),
 };
 
+export const nurseryService = {
+  getNurseries: cache(
+    async (locale: string, params?: { key: string; value: string }[]) => {
+      // Convert array of params to an object
+      const queryParams = params?.reduce((acc, { key, value }) => {
+        acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>);
+
+      const response = await apiClient.get(`/center-filter`, {
+        headers: {
+          lang: locale,
+        },
+        params: queryParams,
+      });
+
+      return response.data.data as CenterRegisterPayload[];
+    }
+  ),
+
+  getLatestNurseries: cache(async (locale: string) => {
+    const response = await apiClient.get("/latest-search", {
+      headers: {
+        lang: locale,
+      },
+    });
+    return response.data.data as CenterRegisterPayload[];
+  }),
+};
+
 export const authService = {
   registerParent: async (payload: ParentRegisterPayload) => {
     try {
