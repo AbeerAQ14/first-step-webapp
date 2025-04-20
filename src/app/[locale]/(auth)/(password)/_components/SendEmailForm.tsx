@@ -18,12 +18,12 @@ import {
   createForgotPasswordSchema,
   ForgotPasswordFormData,
 } from "@/lib/schemas";
+import { useMutation } from "@tanstack/react-query";
+import { authService } from "@/services/api";
+import { useRouter } from "@/i18n/navigation";
+import { LoaderCircle } from "lucide-react";
 
-const SendEmailForm = ({
-  onSubmit,
-}: {
-  onSubmit: (data: ForgotPasswordFormData) => void;
-}) => {
+const SendEmailForm = ({}: {}) => {
   const t = useTranslations("auth.forgot-password.form");
   const tBtns = useTranslations("auth.buttons");
   const locale = useLocale();
@@ -34,6 +34,43 @@ const SendEmailForm = ({
       email: "",
     },
   });
+
+  const router = useRouter();
+
+  // --- Data Fetching & Mutation ---
+  const mutation = useMutation<
+    any, // Type of successful response from submitFormData
+    { errors?: { email?: string[] }; message?: string }, // Custom error type
+    string // Type of variable passed to mutate function (original form data)
+  >({
+    mutationFn: async (data: string) => {
+      return await authService.forgotPassword(data);
+    },
+    onSuccess: () => {
+      router.push(`/otp-verification`);
+    },
+    onError: (error) => {
+      // Field-specific error (email)
+      if (error?.errors?.email && error.errors.email.length > 0) {
+        form.setError("email", {
+          type: "server",
+          message: error.errors.email[0],
+        });
+      }
+
+      // Fallback/general error
+      if (!error?.errors?.email) {
+        form.setError("root", {
+          type: "server",
+          message: error.message || "خطأ غير متوقع",
+        });
+      }
+    },
+  });
+
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    mutation.mutate(data.email);
+  };
 
   return (
     <Form {...form}>
@@ -66,8 +103,17 @@ const SendEmailForm = ({
           <Button
             size={"long"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={
+              mutation.isPending ||
+              mutation.isSuccess ||
+              form.formState.isSubmitting
+            }
           >
+            {mutation.isSuccess && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle />
+              </span>
+            )}
             {tBtns("send-code")}
           </Button>
           <Button
@@ -75,7 +121,11 @@ const SendEmailForm = ({
             size={"long"}
             type="button"
             className="text-mid-gray !border-light-gray"
-            disabled={form.formState.isSubmitting}
+            disabled={
+              mutation.isPending ||
+              mutation.isSuccess ||
+              form.formState.isSubmitting
+            }
           >
             <span>{tBtns("sign-in-google")}</span>
             <Image
