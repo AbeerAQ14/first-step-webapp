@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,9 +23,11 @@ import { createSignInSchema, SignInFormData } from "@/lib/schemas";
 const SignInForm = ({
   onSubmit,
   isLoading,
+  formRef,
 }: {
   onSubmit: (data: SignInFormData) => void;
   isLoading: boolean;
+  formRef: React.RefObject<UseFormReturn<SignInFormData> | null>;
 }) => {
   const t = useTranslations("auth.sign-in");
   const tBtns = useTranslations("auth.buttons");
@@ -40,6 +42,12 @@ const SignInForm = ({
       password: "",
     },
   });
+
+  useEffect(() => {
+    if (formRef) {
+      formRef.current = form;
+    }
+  }, [form, formRef]);
 
   return (
     <Form {...form}>
@@ -111,6 +119,10 @@ const SignInForm = ({
             </FormItem>
           )}
         />
+
+        {form.formState.errors.root && (
+          <p className="text-action">{form.formState.errors.root.message}</p>
+        )}
 
         <div className="mt-12 flex flex-col items-center gap-y-4">
           <Button

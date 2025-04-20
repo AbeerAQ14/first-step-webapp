@@ -2,23 +2,53 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
+import { useEffect, useRef } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { authService } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
 import { SignInFormData } from "@/lib/schemas";
-import { useMutation } from "@tanstack/react-query";
-import { authService } from "@/services/api";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
-import { useEffect } from "react";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
 
 const SignIn = () => {
   const router = useRouter();
   const locale = useLocale();
+
+  const formRef = useRef<UseFormReturn<SignInFormData> | null>(null);
+
+  useEffect(() => {
+    console.log(formRef.current);
+  }, [formRef]);
+
+  const onError = (error: any) => {
+    console.error("Login failed:", error);
+
+    // Send field-specific errors to form
+    if (formRef.current && error.errors) {
+      Object.entries(error.errors).forEach(([field, messages]) => {
+        formRef.current?.setError(field as keyof SignInFormData, {
+          type: "server",
+          message: Array.isArray(messages) ? messages[0] : "Unknown error", // show first error
+        });
+      });
+    }
+
+    // Show general message if needed
+    if (formRef.current && error.message) {
+      formRef.current?.setError("root", {
+        type: "server",
+        message: error.message,
+      });
+    }
+  };
+
   // --- Data Fetching & Mutation ---
   const mutation = useMutation<
     any, // Type of successful response from submitFormData
-    Error, // Type of error thrown by submitFormData
+    { errors?: { email?: string[] }; message?: string }, // Custom error type
     SignInFormData // Type of variable passed to mutate function (original form data)
   >({
     mutationFn: async (originalData: SignInFormData) => {
@@ -34,10 +64,7 @@ const SignIn = () => {
 
       router.push(`/${locale}`);
     },
-    onError: (error) => {
-      console.error("Submission failed:", error);
-      alert(`Submission failed: ${error.message}`);
-    },
+    onError,
   });
 
   useEffect(() => {
@@ -68,7 +95,11 @@ const SignIn = () => {
           </h1>
 
           <div className="mt-9 flex flex-col gap-y-6">
-            <SignInForm onSubmit={onSubmit} isLoading={mutation.isPending} />
+            <SignInForm
+              onSubmit={onSubmit}
+              isLoading={mutation.isPending || mutation.isSuccess}
+              formRef={formRef}
+            />
           </div>
 
           <div className="mt-12 flex flex-col gap-y-4">
@@ -82,7 +113,7 @@ const SignIn = () => {
                 size={"lg"}
                 type="button"
                 className="w-full sm:w-fit font-bold text-mid-gray !border-light-gray"
-                // disabled={form.formState.isSubmitting}
+                disabled={mutation.isPending || mutation.isSuccess}
               >
                 {t("buttons.sign-up-center")}
               </Button>
@@ -91,7 +122,7 @@ const SignIn = () => {
                 size={"lg"}
                 type="button"
                 className="w-full sm:w-fit font-bold"
-                // disabled={form.formState.isSubmitting}
+                disabled={mutation.isPending || mutation.isSuccess}
               >
                 {t("buttons.sign-up-parent")}
               </Button>

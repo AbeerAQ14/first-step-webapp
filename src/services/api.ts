@@ -274,17 +274,23 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      // Handle different types of errors (network, server response)
       if (axios.isAxiosError(error)) {
-        console.error("API Error Response:", error.response?.data);
-        // Throw a more specific error or the error response data
-        throw new Error(
-          error.response?.data?.message ||
-            "Failed to submit data. Please try again."
-        );
+        const responseData = error.response?.data;
+
+        // Log the API response for debugging
+        console.error("Login API Error:", responseData);
+
+        // Normalize the error shape for the form handler
+        throw {
+          message: responseData?.message || "فشل تسجيل الدخول. حاول مرة أخرى.",
+          errors: responseData?.errors || {},
+        };
       } else {
-        console.error("Unexpected Error:", error);
-        throw new Error("An unexpected error occurred.");
+        console.error("Unexpected Login Error:", error);
+        throw {
+          message: "حدث خطأ غير متوقع.",
+          errors: {},
+        };
       }
     }
   },
