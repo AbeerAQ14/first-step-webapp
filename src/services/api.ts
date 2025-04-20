@@ -288,4 +288,26 @@ export const authService = {
       }
     }
   },
+  forgotPassword: async (email: string) => {
+    try {
+      const response = await apiClient.post("/password/email", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      // Handle different types of errors (network, server response)
+      if (axios.isAxiosError(error)) {
+        const responseData = error.response?.data;
+        console.error("API Error Response:", responseData);
+
+        throw {
+          message: responseData?.message || "Something went wrong.",
+          errors: responseData?.errors || {},
+        };
+      } else {
+        console.error("Unexpected Error:", error);
+        throw { message: "An unexpected error occurred.", errors: {} };
+      }
+    }
+  },
 };
