@@ -6,6 +6,7 @@ import SearchBar from "../search/SearchBar";
 import FilterButtons from "../search/FilterButtons";
 import NurseryCard from "./NurseryCard";
 import { CenterRegisterPayload } from "@/types";
+import useDebounce from "@/hooks/useDebounce";
 
 const mockNurseries = [
   { name: "روضة الأمل", type: "مركز" },
@@ -27,19 +28,21 @@ const Nurseries = ({
   const [searchQuery, setSearchQuery] = useState(query);
   const [selectedFilter, setSelectedFilter] = useState(filter);
 
+  const debouncedQuery = useDebounce(searchQuery, 500);
+
   // Update URL when search or filter changes
   useEffect(() => {
     const params = new URLSearchParams();
-    if (searchQuery) params.set("query", searchQuery);
+    if (debouncedQuery) params.set("query", debouncedQuery);
     if (selectedFilter) params.set("filter", selectedFilter);
     router.push(`/nurseries?${params.toString()}`, { scroll: false });
-  }, [searchQuery, selectedFilter]);
+  }, [debouncedQuery, selectedFilter]);
 
   // Filter data
   const filteredNurseries = nurseries.filter((nursery) => {
     const matchesQuery = nursery.nursery_name
       .toLocaleLowerCase()
-      .includes(searchQuery.toLocaleLowerCase());
+      .includes(debouncedQuery.toLocaleLowerCase());
     const matchesFilter = selectedFilter
       ? nursery.accepted_ages.includes(selectedFilter)
       : true;
