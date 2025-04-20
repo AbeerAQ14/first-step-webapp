@@ -99,6 +99,10 @@ const SendEmailForm = ({}: {}) => {
           )}
         />
 
+        {form.formState.errors.root && (
+          <p className="text-action">{form.formState.errors.root.message}</p>
+        )}
+
         <div className="mt-12 flex flex-col items-center gap-y-4">
           <Button
             size={"long"}
