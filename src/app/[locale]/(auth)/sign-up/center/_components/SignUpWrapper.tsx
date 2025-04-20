@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
@@ -9,10 +9,13 @@ import { SignUpCenterFormData } from "@/lib/schemas";
 import { CenterRegisterPayload } from "@/types";
 import { SignUp } from "./SignUp";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
+import { UseFormReturn } from "react-hook-form";
 
 const SignUpWrapper = () => {
   const router = useRouter();
   const locale = useLocale();
+
+  const formRef = useRef<UseFormReturn<SignUpCenterFormData> | null>(null);
 
   // --- Data Fetching & Mutation ---
   const mutation = useMutation<
@@ -28,9 +31,26 @@ const SignUpWrapper = () => {
 
       router.push(`/${locale}/sign-in`);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Submission failed:", error);
-      alert(`Submission failed: ${error.message}`);
+
+      // Send field-specific errors to form
+      if (formRef.current && error.errors) {
+        Object.entries(error.errors).forEach(([field, messages]) => {
+          formRef.current?.setError(field as keyof SignUpCenterFormData, {
+            type: "server",
+            message: Array.isArray(messages) ? messages[0] : "Unknown error", // Show first error
+          });
+        });
+      }
+
+      // Show general error message if needed
+      if (formRef.current && error.message) {
+        formRef.current?.setError("root", {
+          type: "server",
+          message: error.message || "An unexpected error occurred.",
+        });
+      }
     },
   });
 
@@ -123,7 +143,11 @@ const SignUpWrapper = () => {
         />
       )}
 
-      <SignUp submitHandler={submitHandler} isLoading={mutation.isPending} />
+      <SignUp
+        formRef={formRef}
+        submitHandler={submitHandler}
+        isLoading={mutation.isPending}
+      />
     </div>
   );
 };

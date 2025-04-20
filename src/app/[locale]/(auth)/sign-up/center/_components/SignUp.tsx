@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -17,9 +17,11 @@ import { Step4Permits } from "@/components/forms/center/Step4";
 export function SignUp({
   submitHandler,
   isLoading,
+  formRef,
 }: {
   submitHandler: (data: SignUpCenterFormData) => void;
   isLoading: boolean;
+  formRef: React.RefObject<UseFormReturn<SignUpCenterFormData> | null>;
 }) {
   const t = useTranslations("auth.center-signup");
   const locale = useLocale();
@@ -149,10 +151,15 @@ export function SignUp({
   };
 
   const onSubmit = (data: SignUpCenterFormData) => {
-    console.log("Form submitted:", data);
-
     submitHandler(data);
   };
+
+  // Attach the ref to the form provider
+  useEffect(() => {
+    if (formRef) {
+      formRef.current = methods;
+    }
+  }, [methods, formRef]);
 
   return (
     <div className="flex flex-col items-center container mx-auto px-4">
@@ -170,6 +177,12 @@ export function SignUp({
             </div>
 
             <div className="mt-40">{renderStep()}</div>
+
+            {methods.formState.errors.root && (
+              <div className="mt-4 text-center text-action">
+                {methods.formState.errors.root.message}
+              </div>
+            )}
 
             <FormNavigation
               currentStep={currentStep}
