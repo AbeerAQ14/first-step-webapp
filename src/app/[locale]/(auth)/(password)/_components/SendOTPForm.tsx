@@ -26,6 +26,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
 import { useRouter } from "@/i18n/navigation";
+import { LoaderCircle } from "lucide-react";
 
 const SendOTPForm = ({ email }: { email: string }) => {
   const t = useTranslations("auth.otp.form");
@@ -74,7 +75,7 @@ const SendOTPForm = ({ email }: { email: string }) => {
   };
 
   const { timeLeft, otpExpired } = useOTPTimer({
-    duration: 10,
+    duration: 60,
     onExpire: () => {
       console.log("OTP expired");
     },
@@ -118,8 +119,13 @@ const SendOTPForm = ({ email }: { email: string }) => {
           <Button
             size={"long"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending || mutation.isSuccess}
           >
+            {mutation.isSuccess && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle />
+              </span>
+            )}
             {tBtns("send-code")}
           </Button>
         </div>
