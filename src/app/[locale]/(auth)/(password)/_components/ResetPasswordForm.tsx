@@ -15,22 +15,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import {
   createResetPasswordSchema,
   ResetPasswordFormData,
 } from "@/lib/schemas";
+import { useMutation } from "@tanstack/react-query";
+import { authService } from "@/services/api";
+import { useRouter } from "@/i18n/navigation";
 
-const ResetPasswordForm = ({
-  onSubmit,
-}: {
-  onSubmit: (data: ResetPasswordFormData) => void;
-}) => {
+const ResetPasswordForm = ({ email }: { email: string }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const t = useTranslations("auth.reset-password.form");
   const tBtns = useTranslations("auth.buttons");
 
+  const router = useRouter();
   const locale = useLocale();
   const formSchema = createResetPasswordSchema(locale as "ar" | "en");
   const form = useForm<ResetPasswordFormData>({
@@ -40,6 +40,36 @@ const ResetPasswordForm = ({
       confirmPassword: "",
     },
   });
+
+  const mutation = useMutation<
+    any, // success response
+    { errors?: { password?: string[] }; message?: string }, // error type
+    { email: string; password: string } // input type
+  >({
+    mutationFn: async ({ email, password }) => {
+      return await authService.resetPassword(email, password);
+    },
+    onSuccess: () => {
+      router.push("/sign-in");
+    },
+    onError: (error) => {
+      if (error?.errors?.password?.length) {
+        form.setError("password", {
+          type: "server",
+          message: error.errors.password[0],
+        });
+      } else {
+        form.setError("root", {
+          type: "server",
+          message: error.message || "خطأ غير متوقع",
+        });
+      }
+    },
+  });
+
+  const onSubmit = (data: ResetPasswordFormData) => {
+    mutation.mutate({ email, password: data.password });
+  };
 
   return (
     <Form {...form}>
@@ -119,12 +149,23 @@ const ResetPasswordForm = ({
           )}
         />
 
+        {form.formState.errors.root && (
+          <p className="text-destructive text-sm font-medium text-center">
+            {form.formState.errors.root.message}
+          </p>
+        )}
+
         <div className="mt-12 flex flex-col items-center gap-y-4">
           <Button
             size={"long"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending || mutation.isSuccess}
           >
+            {mutation.isSuccess && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle />
+              </span>
+            )}
             {tBtns("sign-in")}
           </Button>
           <Button
@@ -132,7 +173,7 @@ const ResetPasswordForm = ({
             size={"long"}
             type="button"
             className="text-mid-gray !border-light-gray"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending || mutation.isSuccess}
           >
             <span>{tBtns("sign-in-google")}</span>
             <Image

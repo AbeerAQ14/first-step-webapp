@@ -5,7 +5,7 @@ import ResetPasswordForm from "./ResetPasswordForm";
 import { ResetPasswordFormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
 
-const ResetPassword = () => {
+const ResetPassword = ({ email }: { email: string }) => {
   const t = useTranslations("auth.reset-password");
 
   const onSubmit = async (data: ResetPasswordFormData) => {
@@ -26,7 +26,7 @@ const ResetPassword = () => {
           <h1 className="heading-3 text-center text-primary">{t("title")}</h1>
 
           <div className="mt-9 flex flex-col gap-y-6">
-            <ResetPasswordForm onSubmit={onSubmit} />
+            <ResetPasswordForm email={email} />
           </div>
         </div>
       </div>

@@ -5,10 +5,19 @@ export const metadata: Metadata = {
   title: "Reset Password",
 };
 
-export default function ResetPasswordPage() {
+export default async function ResetPasswordPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParameters = await searchParams;
+
+  const email =
+    typeof searchParameters.email === "string" ? searchParameters.email : "";
+
   return (
     <>
-      <ResetPassword />
+      <ResetPassword email={email} />
     </>
   );
 }
