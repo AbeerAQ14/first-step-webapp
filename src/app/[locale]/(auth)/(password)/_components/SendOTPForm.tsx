@@ -23,14 +23,14 @@ import {
   createOTPVerificationSchema,
   OTPVerificationFormData,
 } from "@/lib/schemas";
+import { useMutation } from "@tanstack/react-query";
+import { authService } from "@/services/api";
+import { useRouter } from "@/i18n/navigation";
 
-const SendOTPForm = ({
-  onSubmit,
-}: {
-  onSubmit: (data: OTPVerificationFormData) => void;
-}) => {
+const SendOTPForm = ({ email }: { email: string }) => {
   const t = useTranslations("auth.otp.form");
   const tBtns = useTranslations("auth.buttons");
+  const router = useRouter();
   const locale = useLocale();
   const formSchema = createOTPVerificationSchema(locale as "ar" | "en");
   const form = useForm<OTPVerificationFormData>({
@@ -39,6 +39,39 @@ const SendOTPForm = ({
       otp: "",
     },
   });
+
+  const mutation = useMutation<
+    any, // or a specific response type
+    { errors?: { otp?: string[] }; message?: string },
+    OTPVerificationFormData
+  >({
+    mutationFn: async (data) => {
+      if (!email) throw { message: "Email not found." };
+      return await authService.checkOTP(email, data.otp);
+    },
+    onSuccess: () => {
+      router.push(`/reset-password?email=${email}`);
+    },
+    onError: (error) => {
+      if (error?.errors?.otp?.[0]) {
+        form.setError("otp", {
+          type: "server",
+          message: error.errors.otp[0],
+        });
+      } else {
+        form.setError("root", {
+          type: "server",
+          message: error.message || "خطأ غير متوقع",
+        });
+      }
+    },
+  });
+
+  const onSubmit = async (data: OTPVerificationFormData) => {
+    console.log(data);
+
+    mutation.mutate(data);
+  };
 
   const { timeLeft, otpExpired } = useOTPTimer({
     duration: 10,

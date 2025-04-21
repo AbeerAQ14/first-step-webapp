@@ -47,7 +47,7 @@ const SendEmailForm = ({}: {}) => {
       return await authService.forgotPassword(data);
     },
     onSuccess: () => {
-      router.push(`/otp-verification`);
+      router.push(`/otp-verification?email=${form.getValues("email")}`);
     },
     onError: (error) => {
       // Field-specific error (email)

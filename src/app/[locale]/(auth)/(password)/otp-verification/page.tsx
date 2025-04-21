@@ -5,10 +5,19 @@ export const metadata: Metadata = {
   title: "OTP Verification",
 };
 
-export default function OTPVerificationPage() {
+export default async function OTPVerificationPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParameters = await searchParams;
+
+  const email =
+    typeof searchParameters.email === "string" ? searchParameters.email : "";
+
   return (
     <>
-      <SendOTP />
+      <SendOTP email={email} />
     </>
   );
 }

@@ -1,19 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "@/i18n/navigation";
 import SendOTPForm from "./SendOTPForm";
-import { OTPVerificationFormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
 
-const SendOTP = () => {
-  const router = useRouter();
+const SendOTP = ({ email }: { email: string }) => {
   const t = useTranslations("auth.otp");
-
-  const onSubmit = async (data: OTPVerificationFormData) => {
-    console.log(data);
-    router.push("/reset-password");
-  };
 
   return (
     <div className="px-5 sm:px-10 py-20">
@@ -29,7 +21,7 @@ const SendOTP = () => {
           <h1 className="heading-3 text-center text-primary">{t("title")}</h1>
 
           <div className="mt-9 flex flex-col gap-y-6">
-            <SendOTPForm onSubmit={onSubmit} />
+            <SendOTPForm email={email} />
           </div>
         </div>
       </div>
