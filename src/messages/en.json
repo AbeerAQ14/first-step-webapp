@@ -121,6 +121,15 @@
     "blog": "Blog",
     "subtitle": "Articles and resources on childcare and work-life balance"
   },
+  "nurseries": {
+    "search": "Search for a center or nursery",
+    "filters": {
+      "all": "All",
+      "0-3": "Nurseries for Ages 0-3",
+      "3-6": "Nurseries for Ages 3-6",
+      "disabled": "Special Needs Nurseries"
+    }
+  },
   "auth": {
     "buttons": {
       "sign-in": "Sign In",

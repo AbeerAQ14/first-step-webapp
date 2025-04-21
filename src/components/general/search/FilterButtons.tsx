@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface FilterButtonsProps {
   selected: string;
@@ -7,19 +8,19 @@ interface FilterButtonsProps {
 
 const filters: { title: string; value: string }[] = [
   {
-    title: "الكل",
+    title: "all",
     value: "",
   },
   {
-    title: "حضانات من 0 إلى 3 سنوات",
+    title: "0-3",
     value: "0-3",
   },
   {
-    title: "حضانات من 3 إلى 6 سنوات",
+    title: "3-6",
     value: "3-6",
   },
   {
-    title: "حضانات الاحتياجات الخاصة",
+    title: "disabled",
     value: "disabled",
   },
 ];
@@ -28,6 +29,8 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   selected,
   onSelect,
 }) => {
+  const t = useTranslations("nurseries.filters");
+
   return (
     <div className="flex flex-wrap justify-center gap-2 my-4">
       {filters.map((label) => (
@@ -42,7 +45,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
               : "!border-light-gray text-mid-gray"
           }`}
         >
-          {label.title}
+          {t(label.title)}
         </Button>
       ))}
     </div>

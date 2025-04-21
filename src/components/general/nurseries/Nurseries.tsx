@@ -7,13 +7,7 @@ import FilterButtons from "../search/FilterButtons";
 import NurseryCard from "./NurseryCard";
 import { CenterRegisterPayload } from "@/types";
 import useDebounce from "@/hooks/useDebounce";
-
-const mockNurseries = [
-  { name: "روضة الأمل", type: "مركز" },
-  { name: "حضانة السعادة", type: "حضانة" },
-  { name: "أكاديمية النجوم", type: "مركز" },
-  { name: "براعم الغد", type: "حضانة" },
-];
+import { useTranslations } from "next-intl";
 
 const Nurseries = ({
   nurseries,
@@ -24,6 +18,7 @@ const Nurseries = ({
   query: string;
   filter: string;
 }) => {
+  const t = useTranslations("nurseries");
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(query);
   const [selectedFilter, setSelectedFilter] = useState(filter);
@@ -53,7 +48,7 @@ const Nurseries = ({
     <section className="container mx-auto px-4">
       <div>
         <SearchBar
-          placeholder="ابحث عن المركز أو الحضانة"
+          placeholder={t("search")}
           value={searchQuery}
           onChange={setSearchQuery}
         />
