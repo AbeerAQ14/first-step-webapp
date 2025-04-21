@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -22,9 +24,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ContactFormData, createContactSchema } from "@/lib/schemas";
+import { websiteService } from "@/services/api";
 
 const ContactForm: React.FC = () => {
   const t = useTranslations("contact");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const locale = useLocale();
   const formSchema = createContactSchema(locale as "ar" | "en");
 
@@ -39,8 +44,41 @@ const ContactForm: React.FC = () => {
     },
   });
 
+  const mutation = useMutation<
+    any, // success response
+    {
+      errors?: Partial<Record<keyof ContactFormData, string[]>>;
+      message?: string;
+    },
+    ContactFormData
+  >({
+    mutationFn: (data) => websiteService.contactUs(data),
+    onSuccess: () => {
+      setSuccessMessage(t("form.success.message"));
+      form.reset();
+    },
+    onError: (error) => {
+      setSuccessMessage("");
+      // Field-level errors
+      Object.entries(error.errors || {}).forEach(([key, messages]) => {
+        form.setError(key as keyof ContactFormData, {
+          type: "server",
+          message: messages?.[0],
+        });
+      });
+
+      // Fallback general error
+      if (!error.errors) {
+        form.setError("root", {
+          type: "server",
+          message: error.message || "حدث خطأ ما",
+        });
+      }
+    },
+  });
+
   const onSubmit = async (data: ContactFormData) => {
-    console.log(data);
+    mutation.mutate(data);
   };
 
   return (
@@ -165,13 +203,25 @@ const ContactForm: React.FC = () => {
             )}
           />
 
+          {form.formState.errors.root && (
+            <p className="text-destructive text-sm font-medium text-center">
+              {form.formState.errors.root.message}
+            </p>
+          )}
+
+          {successMessage && (
+            <p className="text-green-600 text-sm font-medium text-center">
+              {successMessage}
+            </p>
+          )}
+
           <Button
             size={"sm"}
             type="submit"
             className="w-fit justify-self-end"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending}
           >
-            {form.formState.isSubmitting
+            {mutation.isPending
               ? t("form.button.loading")
               : t("form.button.label")}
           </Button>

@@ -1,3 +1,4 @@
+import { ContactFormData } from "@/lib/schemas";
 import { formatTime } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import {
@@ -68,6 +69,28 @@ export const websiteService = {
     });
     return response.data.data as Service[];
   }),
+  contactUs: async (payload: ContactFormData) => {
+    try {
+      const response = await apiClient.post("/contact-us", {
+        ...payload,
+      });
+      return response.data;
+    } catch (error) {
+      // Handle different types of errors (network, server response)
+      if (axios.isAxiosError(error)) {
+        const responseData = error.response?.data;
+        console.error("API Error Response:", responseData);
+
+        throw {
+          message: responseData?.message || "Something went wrong.",
+          errors: responseData?.errors || {},
+        };
+      } else {
+        console.error("Unexpected Error:", error);
+        throw { message: "An unexpected error occurred.", errors: {} };
+      }
+    }
+  },
 };
 
 export const blogService = {
