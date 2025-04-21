@@ -129,17 +129,17 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      // Handle different types of errors (network, server response)
       if (axios.isAxiosError(error)) {
+        const responseData = error.response?.data;
         console.error("API Error Response:", error.response?.data);
-        // Throw a more specific error or the error response data
-        throw new Error(
-          error.response?.data?.message ||
-            "Failed to submit data. Please try again."
-        );
+
+        throw {
+          message: responseData?.message || "Something went wrong.",
+          errors: responseData?.errors || {},
+        };
       } else {
         console.error("Unexpected Error:", error);
-        throw new Error("An unexpected error occurred.");
+        throw { message: "An unexpected error occurred.", errors: {} };
       }
     }
   },

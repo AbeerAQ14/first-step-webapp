@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
+import { UseFormReturn } from "react-hook-form";
 import { transformParentDataToExpectedPayload } from "@/lib/utils";
 import { ParentRegisterFormDataInput, ParentRegisterPayload } from "@/types";
 import SignUp from "./SignUp";
@@ -14,6 +15,8 @@ import LoadingOverlay from "@/components/forms/LoadingOverlay";
 const SignUpWrapper = () => {
   const router = useRouter();
   const locale = useLocale();
+
+  const formRef = useRef<UseFormReturn<SignUpParentFormData> | null>(null);
 
   // --- Data Fetching & Mutation ---
   const mutation = useMutation<
@@ -32,9 +35,35 @@ const SignUpWrapper = () => {
 
       router.push(`/${locale}/sign-in`);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Submission failed:", error);
-      alert(`Submission failed: ${error.message}`);
+
+      if (formRef.current && error.errors) {
+        const allMessages: string[] = [];
+
+        Object.entries(error.errors).forEach(([field, messages]) => {
+          if (Array.isArray(messages)) {
+            allMessages.push(...messages);
+          } else if (typeof messages === "string") {
+            allMessages.push(messages);
+          }
+        });
+
+        if (allMessages.length > 0) {
+          formRef.current?.setError("root", {
+            type: "server",
+            message: allMessages.join("/n"), // Or use "\n" if you're rendering them as a list
+          });
+        }
+      }
+
+      // Show a fallback message if there's no detailed error list
+      if (formRef.current && error.message && !error.errors) {
+        formRef.current?.setError("root", {
+          type: "server",
+          message: error.message || "An unexpected error occurred.",
+        });
+      }
     },
   });
 
@@ -54,7 +83,11 @@ const SignUpWrapper = () => {
         />
       )}
 
-      <SignUp submitHandler={submitHandler} isLoading={mutation.isPending} />
+      <SignUp
+        formRef={formRef}
+        submitHandler={submitHandler}
+        isLoading={mutation.isPending}
+      />
     </div>
   );
 };

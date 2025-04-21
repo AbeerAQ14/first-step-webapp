@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormNavigation from "@/components/forms/FormNavigation";
 import StepIndicator from "@/components/forms/StepIndicator";
@@ -17,9 +17,11 @@ import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 const SignUp = ({
   submitHandler,
   isLoading,
+  formRef,
 }: {
   submitHandler: (data: SignUpParentFormData) => void;
   isLoading: boolean;
+  formRef: React.RefObject<UseFormReturn<SignUpParentFormData> | null>;
 }) => {
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");
@@ -138,6 +140,13 @@ const SignUp = ({
     submitHandler(data);
   };
 
+  // Attach the ref to the form provider
+  useEffect(() => {
+    if (formRef) {
+      formRef.current = methods;
+    }
+  }, [methods, formRef]);
+
   return (
     <>
       <div className="flex flex-col items-center container mx-auto px-4">
@@ -158,6 +167,18 @@ const SignUp = ({
               </div>
 
               <div className="mt-40">{renderStep()}</div>
+
+              {methods.formState.errors.root?.message && (
+                <div className="text-red-600 bg-red-100 p-4 rounded-md mb-4">
+                  <ul className="list-disc pl-5 space-y-1">
+                    {methods.formState.errors.root.message
+                      .split("\n")
+                      .map((msg, idx) => (
+                        <li key={idx}>{msg}</li>
+                      ))}
+                  </ul>
+                </div>
+              )}
 
               <FormNavigation
                 currentStep={currentStep}
