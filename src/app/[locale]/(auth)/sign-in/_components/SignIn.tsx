@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
 import { SignInFormData } from "@/lib/schemas";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
+import { Link } from "@/i18n/navigation";
 
 const SignIn = () => {
   const router = useRouter();
@@ -115,7 +116,9 @@ const SignIn = () => {
                 className="w-full sm:w-fit font-bold text-mid-gray !border-light-gray"
                 disabled={mutation.isPending || mutation.isSuccess}
               >
-                {t("buttons.sign-up-center")}
+                <Link href={"/sign-up/center"}>
+                  {t("buttons.sign-up-center")}
+                </Link>
               </Button>
               <Button
                 variant={"outline"}
@@ -124,7 +127,9 @@ const SignIn = () => {
                 className="w-full sm:w-fit font-bold"
                 disabled={mutation.isPending || mutation.isSuccess}
               >
-                {t("buttons.sign-up-parent")}
+                <Link href={"/sign-up/parent"}>
+                  {t("buttons.sign-up-parent")}
+                </Link>
               </Button>
             </div>
           </div>
