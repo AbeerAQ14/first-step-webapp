@@ -280,7 +280,9 @@ const createChildStep4Schema = (locale: "ar" | "en" = "ar") =>
       )
       .min(1, { message: getErrorMessage("general-field-required", locale) }),
 
-    comments: z.string().optional(),
+    comments: z
+      .string()
+      .min(2, getErrorMessage("general-field-required", locale)),
   });
 
 export type ChildStep4FormData = z.infer<
