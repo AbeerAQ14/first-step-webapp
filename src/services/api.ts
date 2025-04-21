@@ -272,28 +272,44 @@ export const authService = {
         email,
         password,
       });
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
 
-        // Log the API response for debugging
-        console.error("Login API Error:", responseData);
+      // If the login is successful and contains a token
+      if (response.data.token) {
+        return response.data;
+      }
 
-        // Normalize the error shape for the form handler
+      // If the login failed and there is no token, handle the error
+      throw {
+        message: response.data.message || "Login failed, please try again",
+        errors: response.data.errors || {},
+      };
+    } catch (error: any) {
+      // If the error object contains a message, we can handle it here
+      if (error.message && error.errors) {
         throw {
-          message: responseData?.message || "فشل تسجيل الدخول. حاول مرة أخرى.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Login Error:", error);
-        throw {
-          message: "حدث خطأ غير متوقع.",
-          errors: {},
+          message: error.message || "Login failed, please try again",
+          errors: error.errors || {},
         };
       }
+
+      // If it's an AxiosError, check for response and handle accordingly
+      if (axios.isAxiosError(error) && error.response) {
+        const responseData = error.response.data;
+
+        throw {
+          message: responseData?.message || "Login failed, please try again",
+          errors: responseData?.errors || {},
+        };
+      }
+
+      // If it's neither, log the unexpected error
+      throw {
+        message: "Unexpected error happened",
+        errors: {},
+      };
     }
   },
+
   forgotPassword: async (email: string) => {
     try {
       const response = await apiClient.post("/forget-password", {
