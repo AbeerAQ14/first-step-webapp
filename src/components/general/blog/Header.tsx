@@ -1,4 +1,8 @@
+import { useTranslations } from "next-intl";
+
 const Header = () => {
+  const t = useTranslations("blog");
+
   return (
     <section className="2xl:container mx-auto p-0 bg-[#81CAA9]">
       <div
@@ -8,9 +12,7 @@ const Header = () => {
         }}
       >
         <div className="h-[30rem] px-4 flex items-center justify-center bg-white/20">
-          <h1 className="text-white/88 text-center">
-            كل منا لديه تجربة يشاركها
-          </h1>
+          <h1 className="text-white/88 text-center">{t("title")}</h1>
         </div>
       </div>
     </section>
