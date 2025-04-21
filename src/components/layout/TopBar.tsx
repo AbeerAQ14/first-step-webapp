@@ -19,32 +19,32 @@ const TopBar = () => {
     {
       title: "X",
       icon: Icons.twitter,
-      link: "/",
+      link: "https://x.com/first_stepsa",
     },
     {
       title: "Linkedin",
       icon: Icons.linkedin,
-      link: "/",
+      link: "https://www.linkedin.com/company/first-stepsa",
     },
     {
       title: "Facebook",
       icon: Icons.facebook,
-      link: "/",
+      link: "https://www.facebook.com/share/1Y8X5MapYR",
     },
     {
       title: "Snapchat",
       icon: Icons.snapchat,
-      link: "/",
+      link: "https://www.snapchat.com/add/first_stepsa",
     },
     {
       title: "Instagram",
       icon: Icons.instagram,
-      link: "/",
+      link: "https://www.instagram.com/first_stepsa",
     },
     {
       title: "Tiktok",
       icon: Icons.tiktok,
-      link: "/",
+      link: "https://www.tiktok.com/@first_stepsa",
     },
   ];
 
