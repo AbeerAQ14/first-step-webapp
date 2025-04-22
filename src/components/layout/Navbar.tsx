@@ -2,11 +2,10 @@
 
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import NavbarButton from "./NavbarButton";
 import { useAuthToken } from "@/store/authStore";
 
@@ -26,7 +25,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
     "home",
     "services",
     "nurseries",
-    "centers",
+    // "centers",
     "blog",
     "story",
     "contact",

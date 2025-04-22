@@ -7,6 +7,7 @@
     "links": {
       "home": { "title": "Home", "path": "/" },
       "services": { "title": "Services", "path": "/services" },
+      "nurseries": { "title": "Nurseries", "path": "/nurseries" },
       "blog": { "title": "Blog", "path": "/blog" },
       "story": { "title": "Our story", "path": "/our-story" },
       "contact": { "title": "Contact us", "path": "/contact" }
