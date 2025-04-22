@@ -1,3 +1,5 @@
+import Sidebar from "@/components/layout/dashboard/Sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import React from "react";
 
@@ -11,5 +13,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <React.Fragment>{children}</React.Fragment>;
+  return (
+    <SidebarProvider>
+      <Sidebar />
+      <main>{children}</main>
+    </SidebarProvider>
+  );
 }
