@@ -71,7 +71,7 @@ const SignUpWrapper = () => {
     router.prefetch(`/${locale}/sign-in`);
   }, []);
 
-  const submitHandler = (data: SignUpParentFormData) => {
+  const submitHandler = (data: any) => {
     mutation.mutate(data);
   };
 
