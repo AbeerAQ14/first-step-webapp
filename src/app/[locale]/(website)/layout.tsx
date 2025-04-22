@@ -6,7 +6,7 @@ import { Tajawal } from "next/font/google";
 import TopBar from "@/components/layout/TopBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import "../../styles/globals.css";
+import "@/styles/globals.css";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
