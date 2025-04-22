@@ -3,6 +3,8 @@ import AllBlogs from "@/components/general/blog/AllBlogs";
 import Contact from "@/components/general/contact/Contact";
 import { blogService } from "@/services/api";
 
+export const revalidate = 86400;
+
 export default async function BlogPage({
   params,
 }: {

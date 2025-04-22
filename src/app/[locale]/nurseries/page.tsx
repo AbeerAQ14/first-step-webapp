@@ -5,6 +5,8 @@ import Contact from "@/components/general/contact/Contact";
 import Nurseries from "@/components/general/nurseries/Nurseries";
 import { nurseryService } from "@/services/api";
 
+export const revalidate = 86400;
+
 export default async function NurseriesPage({
   params,
   searchParams,

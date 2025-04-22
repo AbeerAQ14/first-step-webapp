@@ -4,6 +4,8 @@ import Values from "@/components/general/Values";
 import WhyUs from "@/components/general/WhyUs";
 import SocialQR from "@/components/general/SocialQR";
 
+export const revalidate = 86400;
+
 export default async function StoryPage({
   params,
 }: {

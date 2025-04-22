@@ -3,6 +3,8 @@ import Headline from "@/components/general/Headline";
 import Services from "@/components/general/Services";
 import { websiteService } from "@/services/api";
 
+export const revalidate = 86400;
+
 export default async function ServicesPage({
   params,
 }: {

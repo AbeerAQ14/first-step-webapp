@@ -7,6 +7,8 @@ import FAQs from "@/components/general/FAQs";
 import Contact from "@/components/general/contact/Contact";
 import { websiteService } from "@/services/api";
 
+export const revalidate = 86400;
+
 export default async function HomePage({
   params,
 }: {
