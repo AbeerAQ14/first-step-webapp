@@ -4,8 +4,10 @@ import CircularProgressChart from "@/components/charts/CircularProgressChart";
 export default async function CenterDashboardHome() {
   return (
     <div>
-      <AreaComparison />
-      <CircularProgressChart totalValue={1000} currentValue={350} />
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <CircularProgressChart totalValue={1000} currentValue={350} />
+        <AreaComparison />
+      </div>
     </div>
   );
 }

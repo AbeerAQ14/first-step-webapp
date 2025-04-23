@@ -11,17 +11,20 @@ const CircularProgressChart: React.FC<CircularProgressChartProps> = ({
   totalValue,
 }) => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-lg font-bold mb-4">عدد الأطفال</div>{" "}
-      {/* Top Label */}
+    <div className="grow flex flex-col items-center gap-y-5 py-4">
+      <div className="font-bold text-primary">عدد الأطفال</div>
+
       <div className="relative">
+        <div className="z-10 absolute inset-0 flex flex-col items-center justify-center font-bold text-info">
+          <span className="-mb-1 text-3xl">{currentValue}</span>
+          <span>طفل</span>
+        </div>
+
         <CircularCut value={currentValue} max={totalValue} />
         <dashboardIcons.Circle />
       </div>
-      <div className="text-lg font-bold mt-4">
-        سعة الحضانة: {totalValue} طفل
-      </div>{" "}
-      {/* Bottom Label */}
+
+      <div className="font-medium text-gray">سعة الحضانة: {totalValue} طفل</div>
     </div>
   );
 };
