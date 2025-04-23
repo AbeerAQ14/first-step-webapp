@@ -3,32 +3,24 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
 
-// Demo data for the sparkline charts and months, Arabic
-const rows = [
-  {
-    month: "شهر إبريل",
-    value: 3620,
-    trend: "up",
-    data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
-  },
-  {
-    month: "شهر مارس",
-    value: 3620,
-    trend: "down",
-    data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
-  },
-  {
-    month: "شهر فبراير",
-    value: 3620,
-    trend: "up",
-    data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
-  },
-];
+interface Row {
+  month: string;
+  value: number;
+  valueName: string;
+  trend: string;
+  data: { v: number }[];
+}
 
-export default function AreaComparison() {
+export default function AreaComparison({
+  title,
+  rows,
+}: {
+  title: string;
+  rows: Row[];
+}) {
   return (
     <div className="grow flex flex-col items-center gap-y-2 bg-white py-4 px-2.5">
-      <p className="font-bold text-primary">مقارنة الحجوزات</p>
+      <p className="font-bold text-primary">{title}</p>
       <div className="flex flex-col items-center gap-2 w-full">
         {rows.map((row, idx) => (
           <div
@@ -58,7 +50,7 @@ export default function AreaComparison() {
             {/* Amount and Arrow */}
             <div className="flex items-center min-w-24 gap-1">
               <span className={`font-medium text-sm text-gray`}>
-                {row.value.toLocaleString()} ر.س
+                {row.value.toLocaleString()} {row.valueName}
               </span>
 
               {row.trend === "up" ? (
