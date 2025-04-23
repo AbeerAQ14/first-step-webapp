@@ -75,7 +75,7 @@ const DashboardSideBar = () => {
     <Sidebar
       className="h-screen py-10"
       side={locale === "ar" ? "right" : "left"}
-      collapsible="none"
+      collapsible="offcanvas"
     >
       <SidebarHeader className="mb-4 justify-center items-center">
         <Image
