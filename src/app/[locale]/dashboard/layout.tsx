@@ -1,8 +1,8 @@
-import Header from "@/components/layout/dashboard/Header";
-import Sidebar from "@/components/layout/dashboard/Sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import type { Metadata } from "next";
 import React from "react";
+import type { Metadata } from "next";
+import Header from "@/components/dashboard/Header";
+import Sidebar from "@/components/dashboard/Sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "Dashboard | First Step",

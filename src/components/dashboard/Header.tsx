@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bell, Settings, Search, Home, ChevronLeft } from "lucide-react";
+import { Bell, Settings, Search } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
 
