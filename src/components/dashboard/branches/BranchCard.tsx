@@ -62,7 +62,7 @@ const BranchCard = () => {
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
             {services.map((service) => (
-              <span>{service}</span>
+              <span key={service}>{service}</span>
             ))}
           </div>
         </div>
