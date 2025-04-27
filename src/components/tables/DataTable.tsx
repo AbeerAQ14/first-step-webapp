@@ -62,8 +62,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-sm w-full overflow-hidden">
-      <div className="w-[calc(100vw-2rem)] md:w-[calc(100vw-21rem)]">
-        <Table>
+      <div className="w-[calc(100vw-3rem)] md:w-[calc(100vw-22rem)] lg:w-[calc(100vw-24rem)]">
+        <Table className="mb-1">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

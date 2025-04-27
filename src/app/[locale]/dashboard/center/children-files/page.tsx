@@ -34,7 +34,7 @@ export default async function CenterDashboardHome() {
         <AreaComparison title={"مقارنة عدد الأطفال"} rows={rows} />
       </div>
 
-      <div>
+      <div className="mt-6">
         <Children />
       </div>
     </div>

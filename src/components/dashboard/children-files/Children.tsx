@@ -128,7 +128,11 @@ const Children = () => {
         </Button>
       </div>
 
-      <div>
+      <div className="mt-6 lg:p-4 space-y-1">
+        <p className="heading-4 font-medium text-primary text-center">
+          الأطفال
+        </p>
+
         <DataTable columns={columns} data={childrenData} />
       </div>
     </div>
