@@ -1,6 +1,6 @@
 "use client";
 
-import { Child, columns } from "@/components/tables/children";
+import { Child, columns } from "@/components/tables/data/children";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
