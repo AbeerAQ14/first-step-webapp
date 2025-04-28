@@ -24,9 +24,26 @@ export default function Header({
       url: "/dashboard/center",
     });
 
+    // Only add "الرئيسية" if we're on the home page
+    if (currentPath === "/dashboard/center") {
+      breadcrumbs.push({
+        title: "الرئيسية",
+        url: "/dashboard/center",
+      });
+    }
+
     // Find matching items from the navigation items
     items.forEach((item) => {
-      if (currentPath.includes(item.url) || currentPath === item.url) {
+      // Skip the home item ("الرئيسية") since we handled it above
+      if (item.title === "الرئيسية") {
+        return;
+      }
+
+      // Add item if path matches exactly or is a sub-path
+      if (
+        currentPath === item.url ||
+        (item.url !== "" && currentPath.startsWith(item.url))
+      ) {
         breadcrumbs.push(item);
       }
     });
@@ -43,7 +60,7 @@ export default function Header({
         <ol className="flex items-center gap-1">
           {breadcrumbs.map((item, index) => (
             <li
-              key={item.url}
+              key={`${item.url}-${item.title}`}
               className="whitespace-nowrap flex items-center gap-1"
             >
               {index > 0 && (
