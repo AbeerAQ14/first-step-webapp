@@ -21,17 +21,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTablePagination } from "./DataTablePagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  setSelected?: React.Dispatch<React.SetStateAction<TData[]>>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  setSelected,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -59,6 +61,14 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  useEffect(() => {
+    if (!setSelected) return;
+    const selectedRows = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original);
+    setSelected(selectedRows);
+  }, [rowSelection, table, setSelected]);
 
   return (
     <div className="rounded-sm w-full overflow-hidden">
