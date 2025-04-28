@@ -1,8 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
 import Header from "@/components/dashboard/Header";
-import Sidebar from "@/components/dashboard/Sidebar";
+import MainSidebar from "@/components/dashboard/Sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import SecondarySidebar from "@/components/dashboard/SecondarySidebar";
 
 export const metadata: Metadata = {
   title: "Dashboard | First Step",
@@ -55,13 +56,16 @@ export default async function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <Sidebar />
+      <MainSidebar />
       <main className="grow">
         <SidebarTrigger className="md:hidden" />
         <Header items={items} />
 
         <div className="px-4 md:px-10">{children}</div>
       </main>
+      <div className="hidden xl:block">
+        <SecondarySidebar />
+      </div>
     </SidebarProvider>
   );
 }
