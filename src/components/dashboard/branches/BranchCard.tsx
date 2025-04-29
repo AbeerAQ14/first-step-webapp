@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
 const BranchCard = () => {
@@ -33,9 +34,11 @@ const BranchCard = () => {
         </div>
 
         <div className="flex gap-5 lg:gap-x-10">
-          <Button size={"sm"}>عرض الفرع</Button>
-          <Button size={"sm"} variant={"outline"}>
-            تعديل الفرع
+          <Button asChild size={"sm"}>
+            <Link href={"branches/123"}>عرض الفرع</Link>
+          </Button>
+          <Button asChild size={"sm"} variant={"outline"}>
+            <Link href={"branches/123/edit"}>تعديل الفرع</Link>
           </Button>
         </div>
       </div>
