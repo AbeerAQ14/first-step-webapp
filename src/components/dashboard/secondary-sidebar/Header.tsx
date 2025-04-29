@@ -34,7 +34,7 @@ export default function SidebarHeader() {
   });
 
   return (
-    <div className="flex justify-between gap-x-4 p-4 text-primary font-semibold">
+    <div className="flex justify-between gap-x-4 text-primary font-semibold">
       <div className="grow">
         <div className="font-bold text-primary">{formattedDate}</div>
         <div className="font-medium text-primary">{formattedTime}</div>
