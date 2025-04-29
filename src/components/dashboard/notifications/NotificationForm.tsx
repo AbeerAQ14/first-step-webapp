@@ -39,9 +39,6 @@ const notificationSchema = z.object({
 type FormData = z.infer<typeof notificationSchema>;
 
 const NotificationForm = () => {
-  const { control } = useForm({
-    resolver: zodResolver(notificationSchema),
-  });
   const t = useTranslations("auth.center-signup.2.form.days");
 
   const days = [
@@ -76,7 +73,7 @@ const NotificationForm = () => {
       >
         <FormField
           name="type"
-          control={control}
+          control={methods.control}
           render={({ field }) => (
             <FormItem>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -101,7 +98,7 @@ const NotificationForm = () => {
 
         <FormField
           name="day"
-          control={control}
+          control={methods.control}
           render={({ field }) => (
             <FormItem>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -126,7 +123,7 @@ const NotificationForm = () => {
 
         <FormField
           name="time"
-          control={control}
+          control={methods.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>الوقت</FormLabel>
