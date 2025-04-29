@@ -120,7 +120,7 @@ const Parents = () => {
 
   return (
     <div>
-      <div className="mt-6 lg:p-4 space-y-1">
+      <div className="lg:p-4 space-y-1">
         <p className="heading-4 text-primary text-center">أولياء الأمور</p>
 
         <DataTable

@@ -87,9 +87,9 @@ const NotificationForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {days.map((day) => (
-                    <SelectItem key={day.value} value={day.value}>
-                      {day.label}
+                  {["إشعار النوم", "إشعار الإفطار"].map((day) => (
+                    <SelectItem key={day} value={day}>
+                      {day}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -136,7 +136,7 @@ const NotificationForm = () => {
                   <Input
                     {...field}
                     type="time"
-                    placeholder="13 : 25"
+                    placeholder=""
                     className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
             [&::-webkit-inner-spin-button]:hidden
             [&::-ms-clear]:hidden"

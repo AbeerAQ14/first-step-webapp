@@ -61,7 +61,7 @@ export default async function DashboardLayout({
         <SidebarTrigger className="md:hidden" />
         <Header items={items} />
 
-        <div className="px-4 md:px-10">{children}</div>
+        <div className="px-4 md:px-10 py-10">{children}</div>
       </main>
       <div className="hidden xl:block">
         <SecondarySidebar />
