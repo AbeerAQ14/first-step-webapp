@@ -65,8 +65,6 @@ const Branch = () => {
       name: "",
       email: "",
       phone: "",
-      password: "",
-      confirmPassword: "",
       neighborhood: "",
       nursery_name: "",
       address: "",
@@ -168,78 +166,6 @@ const Branch = () => {
                         );
                       }}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="password"
-              control={methods.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("password.label")}
-                    <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative w-full">
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder={t("password.placeholder")}
-                        {...field}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="size-6 stroke-inherit" />
-                        ) : (
-                          <Eye className="size-6 stroke-inherit" />
-                        )}
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="confirmPassword"
-              control={methods.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("password-confirm.label")}
-                    <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative w-full">
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder={t("password-confirm.placeholder")}
-                        {...field}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="size-6 stroke-inherit" />
-                        ) : (
-                          <Eye className="size-6 stroke-inherit" />
-                        )}
-                      </Button>
-                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
