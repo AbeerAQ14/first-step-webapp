@@ -6,10 +6,11 @@ import { Blog } from "@/types";
 const staticBlogs: Blog[] = [
   {
     id: 1,
-    title: "this is the title",
-    description: "this is the title",
+    title: "How Do We Prepare Children for School?",
+    description:
+      "The transition from nursery to school is a key stage in a child’s life. Through our educational programs, we aim to develop school-readiness skills, build confidence, and foster a love of early learning in a smooth and engaging way.",
     image:
-      "http://ef7a-196-128-72-243.ngrok-free.app/storage/Blog-images/530062108.jpg",
+      "https://images.unsplash.com/photo-1745276235358-8771fa7eafc5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     created_at: "2025-03-12T09:25:49.000000Z",
     published_at: "2025-03-12",
   },
@@ -19,7 +20,7 @@ const staticBlogs: Blog[] = [
     description:
       "We believe play is a child’s natural way to express themselves and explore the world. In our nursery, we provide a rich environment full of interactive activities that boost cognitive skills and support motor and social development.",
     image:
-      "http://ef7a-196-128-72-243.ngrok-free.app/storage/Blog-images/796728587.jpg",
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     created_at: "2025-04-13T13:23:30.000000Z",
     published_at: "2025-04-13",
   },
@@ -29,7 +30,7 @@ const staticBlogs: Blog[] = [
     description:
       "The transition from nursery to school is a key stage in a child’s life. Through our educational programs, we aim to develop school-readiness skills, build confidence, and foster a love of early learning in a smooth and engaging way.",
     image:
-      "http://ef7a-196-128-72-243.ngrok-free.app/storage/Blog-images/896211076.jpg",
+      "https://images.unsplash.com/photo-1460788150444-d9dc07fa9dba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     created_at: "2025-04-13T13:24:47.000000Z",
     published_at: "2025-04-13",
   },
@@ -40,7 +41,7 @@ export default function CenterDashboardRequest() {
     <div className="flex flex-col gap-y-10">
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <h1 className="heading-4 font-medium text-primary">الفروع</h1>
+          <h1 className="heading-4 font-medium text-primary">الإعلانات</h1>
 
           <Button size={"sm"} variant={"outline"}>
             طلب إعلان
