@@ -24,15 +24,14 @@ import {
 import PhoneInput from "../PhoneInput";
 import CheckboxGroup from "../CheckboxGroup";
 import { Button } from "@/components/ui/button";
-import { Clock, Eye, EyeOff } from "lucide-react";
+import { Clock } from "lucide-react";
 
-const Branch = () => {
+const Branch = ({ withValues = false }: { withValues?: boolean }) => {
   const router = useRouter();
   const locale = useLocale();
   const branchSchema = createBranchSchema(locale as "ar" | "en");
   const t = useTranslations("auth.center-signup.1.form");
   const tStep2 = useTranslations("auth.center-signup.2.form");
-  const [showPassword, setShowPassword] = useState(false);
 
   const services = [
     { id: "education", label: t("services.options.education") },
@@ -62,21 +61,21 @@ const Branch = () => {
     resolver: zodResolver(branchSchema),
     defaultValues: {
       // step1
-      name: "",
-      email: "",
-      phone: "",
-      neighborhood: "",
-      nursery_name: "",
-      address: "",
-      city: "",
-      location: "",
-      services: [],
-      additional_service: "",
+      name: withValues ? "خالد العبدالله" : "",
+      email: withValues ? "Khaled.Alabdullah@example.sa" : "",
+      phone: withValues ? "557891234" : "",
+      neighborhood: withValues ? "حي النخيل" : "",
+      nursery_name: withValues ? "روضة أجيال المستقبل" : "",
+      address: withValues ? "شارع الأمير سلطان" : "",
+      city: withValues ? "الرياض" : "",
+      location: withValues ? "https://maps.google.com/?q=24.7136,46.6753" : "",
+      services: withValues ? ["kindergarten", "care"] : [],
+      additional_service: withValues ? "دروس إضافية في اللغة الإنجليزية" : "",
       // step4
-      work_days_from: "",
-      work_days_to: "",
-      work_hours_from: "",
-      work_hours_to: "",
+      work_days_from: withValues ? "sunday" : "",
+      work_days_to: withValues ? "thursday" : "",
+      work_hours_from: withValues ? "07:00" : "",
+      work_hours_to: withValues ? "15:00" : "",
     },
     mode: "onChange",
   });
