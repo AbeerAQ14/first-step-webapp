@@ -115,12 +115,12 @@ const Children = () => {
         <div className="block relative w-full grow sm:w-auto max-w-[30.3125rem]">
           <Input
             type="text"
-            className="rounded-full px-4 pr-16 placeholder:text-mid-gray"
-            placeholder="البحث برقم الهاتف / اسم الحضانة / اسم طفل / ولي امر"
+            className="rounded-full px-4 pl-16 rtl:pl-4 rtl:pr-16 placeholder:text-mid-gray"
+            placeholder="البحث باسم الحضانة / اسم طفل / ولي امر"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Search className="absolute right-8 top-1/2 -translate-y-1/2 size-6 text-gray" />
+          <Search className="absolute left-8 rtl:left-auto rtl:right-8 top-1/2 -translate-y-1/2 size-6 text-gray" />
         </div>
 
         <Button size={"sm"} variant={"outline"}>
@@ -133,7 +133,12 @@ const Children = () => {
           الأطفال
         </p>
 
-        <DataTable columns={columns} data={childrenData} />
+        <DataTable
+          columns={columns}
+          data={childrenData}
+          globalFilterValue={searchQuery}
+          setGlobalFilterValue={setSearchQuery}
+        />
       </div>
     </div>
   );
