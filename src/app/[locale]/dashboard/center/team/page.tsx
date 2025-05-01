@@ -12,7 +12,7 @@ interface Branch {
   team: TeamMember[];
 }
 
-export const branches: Branch[] = [
+const branches: Branch[] = [
   {
     branchName: "فرع الرياض",
     team: [
