@@ -6,6 +6,7 @@ interface PhoneInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   locale?: string;
   className?: string;
+  readOnly?: boolean;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -13,6 +14,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   onChange,
   locale = "en",
   className,
+  readOnly = false,
   ...rest
 }) => {
   return (
@@ -26,6 +28,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         className={`ltr:pr-0 ltr:pl-14 rtl:pl-0 rtl:pr-14 ${className || ""}`}
         onChange={onChange}
         value={value}
+        disabled={readOnly}
         {...rest}
       />
     </div>

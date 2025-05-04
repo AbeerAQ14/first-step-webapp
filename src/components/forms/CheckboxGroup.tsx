@@ -13,6 +13,7 @@ interface CheckboxGroupProbs<T extends FieldValues> {
   control: Control<T>;
   name: FieldPath<T>;
   className?: string;
+  readOnly?: boolean;
 }
 
 const CheckboxGroup = <T extends FieldValues>({
@@ -20,6 +21,7 @@ const CheckboxGroup = <T extends FieldValues>({
   control,
   name,
   className,
+  readOnly = false,
 }: CheckboxGroupProbs<T>) => {
   return (
     <div
@@ -46,6 +48,7 @@ const CheckboxGroup = <T extends FieldValues>({
                         );
                     field.onChange(updatedValue);
                   }}
+                  disabled={readOnly}
                 />
               </FormControl>
               <FormLabel className="cursor-pointer min-w-[max-content]">

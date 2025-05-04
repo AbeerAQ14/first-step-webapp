@@ -1,6 +1,23 @@
-import Branch from "@/components/forms/dashboard/Branch";
+import BranchWrapper from "@/components/forms/dashboard/BranchWrapper";
 
 export default async function DashboardEditBranch() {
+  const initialValues = {
+    name: "خالد العبدالله",
+    email: "Khaled.Alabdullah@example.sa",
+    phone: "557891234",
+    neighborhood: "حي النخيل",
+    nursery_name: "روضة أجيال المستقبل",
+    address: "شارع الأمير سلطان",
+    city: "الرياض",
+    location: "https://maps.google.com/?q=24.7136,46.6753",
+    services: ["kindergarten", "care"],
+    additional_service: "دروس إضافية في اللغة الإنجليزية",
+    work_days_from: "sunday",
+    work_days_to: "thursday",
+    work_hours_from: "07:00",
+    work_hours_to: "15:00",
+  };
+
   return (
     <div>
       <div className="mb-3.5 flex items-center justify-between">
@@ -9,7 +26,7 @@ export default async function DashboardEditBranch() {
         </h1>
       </div>
 
-      <Branch withValues={true} />
+      <BranchWrapper initialValues={initialValues} mode="edit" />
     </div>
   );
 }

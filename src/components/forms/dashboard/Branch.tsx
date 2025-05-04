@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,12 +25,64 @@ import CheckboxGroup from "../CheckboxGroup";
 import { Button } from "@/components/ui/button";
 import { Clock } from "lucide-react";
 
-const Branch = ({ withValues = false }: { withValues?: boolean }) => {
+const Branch = ({
+  initialValues,
+  mode,
+  onSubmit,
+  branchId,
+}: {
+  initialValues: BranchFormData;
+  mode: "add" | "edit" | "show";
+  onSubmit: (data: BranchFormData) => void;
+  branchId?: string;
+}) => {
   const router = useRouter();
   const locale = useLocale();
   const branchSchema = createBranchSchema(locale as "ar" | "en");
   const t = useTranslations("auth.center-signup.1.form");
   const tStep2 = useTranslations("auth.center-signup.2.form");
+
+  const isReadOnly = mode === "show";
+
+  const buttons = (mode: string) => {
+    if (mode === "add") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            إضافة فرع
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else if (mode === "edit") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            تعديل الفرع
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else
+      return (
+        <>
+          <Button asChild size={"sm"}>
+            <Link href={`${branchId}/edit`}>تعديل الفرع</Link>
+          </Button>
+          {/* <Button
+            size={"sm"}
+            variant={"outline"}
+            className="!border-destructive text-destructive"
+          >
+            حذف الفرع
+          </Button> */}
+        </>
+      );
+  };
 
   const services = [
     { id: "education", label: t("services.options.education") },
@@ -61,28 +112,24 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
     resolver: zodResolver(branchSchema),
     defaultValues: {
       // step1
-      name: withValues ? "خالد العبدالله" : "",
-      email: withValues ? "Khaled.Alabdullah@example.sa" : "",
-      phone: withValues ? "557891234" : "",
-      neighborhood: withValues ? "حي النخيل" : "",
-      nursery_name: withValues ? "روضة أجيال المستقبل" : "",
-      address: withValues ? "شارع الأمير سلطان" : "",
-      city: withValues ? "الرياض" : "",
-      location: withValues ? "https://maps.google.com/?q=24.7136,46.6753" : "",
-      services: withValues ? ["kindergarten", "care"] : [],
-      additional_service: withValues ? "دروس إضافية في اللغة الإنجليزية" : "",
+      name: initialValues.name,
+      email: initialValues.email,
+      phone: initialValues.phone,
+      neighborhood: initialValues.neighborhood,
+      nursery_name: initialValues.nursery_name,
+      address: initialValues.address,
+      city: initialValues.city,
+      location: initialValues.location,
+      services: initialValues.services,
+      additional_service: initialValues.additional_service,
       // step4
-      work_days_from: withValues ? "sunday" : "",
-      work_days_to: withValues ? "thursday" : "",
-      work_hours_from: withValues ? "07:00" : "",
-      work_hours_to: withValues ? "15:00" : "",
+      work_days_from: initialValues.work_days_from,
+      work_days_to: initialValues.work_days_to,
+      work_hours_from: initialValues.work_hours_from,
+      work_hours_to: initialValues.work_hours_to,
     },
     mode: "onChange",
   });
-
-  const onSubmit = (data: BranchFormData) => {
-    console.log(data);
-  };
 
   return (
     <FormProvider {...methods}>
@@ -102,7 +149,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("name.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("name.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,6 +173,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <Input
                       placeholder={t("nursery-name.placeholder")}
                       {...field}
+                      disabled={isReadOnly}
                     />
                   </FormControl>
                   <FormMessage />
@@ -139,7 +191,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("email.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("email.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -158,6 +214,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                   <FormControl>
                     <PhoneInput
                       {...field}
+                      readOnly={isReadOnly}
                       value={field.value?.replace(/^\+966/, "")}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         field.onChange(
@@ -181,7 +238,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("city.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("city.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -201,6 +262,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <Input
                       placeholder={t("neighborhood.placeholder")}
                       {...field}
+                      disabled={isReadOnly}
                     />
                   </FormControl>
                   <FormMessage />
@@ -218,7 +280,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("address.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("address.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -235,7 +301,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("location.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("location.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -252,6 +322,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                 items={services}
                 name="services"
                 control={methods.control}
+                readOnly={isReadOnly}
               />
             </div>
 
@@ -267,7 +338,11 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                     </span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder={t("other.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("other.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -284,6 +359,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={isReadOnly}
                   >
                     <FormLabel>{tStep2("from-day.label")}</FormLabel>
                     <FormControl>
@@ -314,6 +390,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={isReadOnly}
                   >
                     <FormLabel>{tStep2("to-day.label")}</FormLabel>
                     <FormControl>
@@ -347,6 +424,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                       <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
                       <Input
                         {...field}
+                        disabled={isReadOnly}
                         type="time"
                         placeholder={tStep2("from-hour.placeholder")}
                         className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
@@ -371,6 +449,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
                       <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
                       <Input
                         {...field}
+                        disabled={isReadOnly}
                         type="time"
                         placeholder={tStep2("from-hour.placeholder")}
                         className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
@@ -387,10 +466,7 @@ const Branch = ({ withValues = false }: { withValues?: boolean }) => {
         </div>
 
         <div className="flex justify-center gap-5 lg:gap-x-10">
-          <Button size={"sm"}>إضافة فرع</Button>
-          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
-            إلغاء
-          </Button>
+          {buttons(mode)}
         </div>
       </form>
     </FormProvider>
