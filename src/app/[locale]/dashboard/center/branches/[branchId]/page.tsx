@@ -1,3 +1,4 @@
+import BranchShow from "@/components/forms/dashboard/BranchShow";
 import BranchWrapper from "@/components/forms/dashboard/BranchWrapper";
 
 export default async function DashboardBranchDetails({
@@ -26,17 +27,7 @@ export default async function DashboardBranchDetails({
 
   return (
     <div>
-      <div className="mb-3.5 flex items-center justify-between">
-        <h1 className="heading-4 font-bold text-primary max-w-[39.75rem] mx-auto">
-          تفاصيل الفرع
-        </h1>
-      </div>
-
-      <BranchWrapper
-        initialValues={initialValues}
-        mode="show"
-        branchId={branchId}
-      />
+      <BranchShow initialValues={initialValues} branchId={branchId} />
     </div>
   );
 
