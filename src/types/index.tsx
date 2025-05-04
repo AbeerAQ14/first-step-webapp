@@ -121,6 +121,8 @@ export interface Pricing {
   price_amount: number;
 }
 
+// child info types
+
 export interface ChronicDisease {
   name?: string;
   medication?: string;
@@ -131,6 +133,49 @@ export interface Allergy {
   allergyTypes?: string;
   allergyFoods?: string;
   allergyProcedures?: string;
+}
+
+export interface ParentData {
+  name: string;
+  phone: string;
+  email: string;
+  relation: string;
+}
+
+export interface ChildData {
+  childName: string;
+  birthDate: string;
+  fatherName: string;
+  motherName: string;
+  gender: string;
+}
+
+export interface DiseasesData {
+  diseases: ChronicDisease[];
+}
+
+export interface AllergiesData {
+  allergies: Allergy[];
+}
+
+export interface RecommedationsData {
+  childDescription: string;
+  favoriteThings: string;
+  recommendations: string;
+}
+
+export interface AuthorizedData {
+  authorizedPersons: AuthorizedPerson[];
+  comments: string;
+}
+
+export interface ChildInfoData {
+  parentData: ParentData;
+  childData: ChildData;
+  diseasesData: DiseasesData;
+  allergiesData: AllergiesData;
+  recommedationsData: RecommedationsData;
+  authorizedData: AuthorizedData;
 }
 
 export interface Blog {
