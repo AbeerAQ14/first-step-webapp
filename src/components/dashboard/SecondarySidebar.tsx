@@ -30,11 +30,11 @@ const SecondarySidebar = () => {
   const birthDays = [
     {
       title: "يوم ميلاد منة الله عماره",
-      date: new Date(2025, 10, 1),
+      date: new Date(2025, 7, 31),
     },
     {
       title: "يوم ميلاد عمرو طه",
-      date: new Date(2025, 8, 31),
+      date: new Date(2025, 9, 1),
     },
   ];
 
