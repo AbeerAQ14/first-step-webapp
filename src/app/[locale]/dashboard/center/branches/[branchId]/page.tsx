@@ -1,5 +1,4 @@
-import BranchShow from "@/components/forms/dashboard/BranchShow";
-import BranchWrapper from "@/components/forms/dashboard/BranchWrapper";
+import BranchShow from "@/components/forms/dashboard/branches/BranchShow";
 
 export default async function DashboardBranchDetails({
   params,

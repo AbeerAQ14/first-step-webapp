@@ -1,4 +1,4 @@
-import BranchWrapper from "@/components/forms/dashboard/BranchWrapper";
+import BranchWrapper from "@/components/forms/dashboard/branches/BranchWrapper";
 
 export default async function DashboardEditBranch() {
   const initialValues = {

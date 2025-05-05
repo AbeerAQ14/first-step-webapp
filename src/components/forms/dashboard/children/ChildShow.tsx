@@ -12,7 +12,7 @@ import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
 import { Control, FormProvider, useForm } from "react-hook-form";
-import PhoneInput from "../PhoneInput";
+import PhoneInput from "../../PhoneInput";
 import Image from "next/image";
 import DatePicker from "@/components/general/DatePicker";
 import { Textarea } from "@/components/ui/textarea";

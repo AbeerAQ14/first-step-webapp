@@ -6,11 +6,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BranchFormData, createBranchSchema } from "@/lib/schemas";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   FormField,
   FormItem,
   FormControl,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -20,24 +20,69 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import PhoneInput from "../PhoneInput";
-import CheckboxGroup from "../CheckboxGroup";
+import PhoneInput from "../../PhoneInput";
+import CheckboxGroup from "../../CheckboxGroup";
 import { Button } from "@/components/ui/button";
 import { Clock } from "lucide-react";
 
-const BranchShow = ({
+const Branch = ({
   initialValues,
+  mode,
+  onSubmit,
   branchId,
 }: {
   initialValues: BranchFormData;
-  branchId: string;
+  mode: "add" | "edit" | "show";
+  onSubmit: (data: BranchFormData) => void;
+  branchId?: string;
 }) => {
+  const router = useRouter();
   const locale = useLocale();
   const branchSchema = createBranchSchema(locale as "ar" | "en");
   const t = useTranslations("auth.center-signup.1.form");
   const tStep2 = useTranslations("auth.center-signup.2.form");
 
-  const isReadOnly = true;
+  const isReadOnly = mode === "show";
+
+  const buttons = (mode: string) => {
+    if (mode === "add") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            إضافة فرع
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else if (mode === "edit") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            تعديل الفرع
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else
+      return (
+        <>
+          <Button asChild size={"sm"}>
+            <Link href={`${branchId}/edit`}>تعديل الفرع</Link>
+          </Button>
+          {/* <Button
+            size={"sm"}
+            variant={"outline"}
+            className="!border-destructive text-destructive"
+          >
+            حذف الفرع
+          </Button> */}
+        </>
+      );
+  };
 
   const services = [
     { id: "education", label: t("services.options.education") },
@@ -88,20 +133,21 @@ const BranchShow = ({
 
   return (
     <FormProvider {...methods}>
-      <form className="flex flex-col items-center space-y-8 p-6">
-        <div className="w-full flex flex-col gap-y-4">
-          <h2 className="heading-4 font-medium text-primary">بيانات الفرع</h2>
-
-          <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col items-center space-y-8"
+      >
+        <div className="w-full max-w-[39.75rem] flex flex-col gap-y-10">
+          <div className="space-y-4">
             <FormField
               name="name"
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>
-                    <span className="text-base">{t("name.label")}</span>
+                  <FormLabel>
+                    {t("name.label")}
                     <span className="text-red-500">*</span>
-                  </Label>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t("name.placeholder")}
@@ -119,10 +165,10 @@ const BranchShow = ({
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>
-                    <span className="text-base">{t("nursery-name.label")}</span>
+                  <FormLabel>
+                    {t("nursery-name.label")}
                     <span className="text-red-500">*</span>
-                  </Label>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t("nursery-name.placeholder")}
@@ -140,10 +186,10 @@ const BranchShow = ({
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>
-                    <span className="text-base">{t("email.label")}</span>
+                  <FormLabel>
+                    {t("email.label")}
                     <span className="text-red-500">*</span>
-                  </Label>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t("email.placeholder")}
@@ -161,10 +207,10 @@ const BranchShow = ({
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>
-                    <span className="text-base">{t("phone.label")}</span>
+                  <FormLabel>
+                    {t("phone.label")}
                     <span className="text-red-500">*</span>
-                  </Label>
+                  </FormLabel>
                   <FormControl>
                     <PhoneInput
                       {...field}
@@ -181,110 +227,98 @@ const BranchShow = ({
                 </FormItem>
               )}
             />
+
+            <FormField
+              name="city"
+              control={methods.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("city.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("city.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="neighborhood"
+              control={methods.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("neighborhood.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("neighborhood.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="address"
+              control={methods.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("address.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("address.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="location"
+              control={methods.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("location.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("location.placeholder")}
+                      {...field}
+                      disabled={isReadOnly}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="w-full flex flex-col gap-y-4">
-            <h2 className="heading-4 font-medium text-primary">
-              تفاصيل العنوان
-            </h2>
+          <div className="space-y-6">
+            <div className="flex flex-col items-center gap-y-4">
+              <p className="form-label">{t("services.label")}</p>
 
-            <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
-              <FormField
-                name="city"
-                control={methods.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <Label>
-                      <span className="text-base">{t("city.label")}</span>
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input
-                        placeholder={t("city.placeholder")}
-                        {...field}
-                        disabled={isReadOnly}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="neighborhood"
-                control={methods.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <Label>
-                      <span className="text-base">
-                        {t("neighborhood.label")}
-                      </span>
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input
-                        placeholder={t("neighborhood.placeholder")}
-                        {...field}
-                        disabled={isReadOnly}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="address"
-                control={methods.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <Label>
-                      <span className="text-base">{t("address.label")}</span>
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input
-                        placeholder={t("address.placeholder")}
-                        {...field}
-                        disabled={isReadOnly}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="location"
-                control={methods.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <Label>
-                      <span className="text-base">{t("location.label")}</span>
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input
-                        placeholder={t("location.placeholder")}
-                        {...field}
-                        disabled={isReadOnly}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col gap-y-4">
-            <h2 className="heading-4 font-medium text-primary">
-              {t("services.label")}
-            </h2>
-
-            <div className="flex flex-col items-start gap-y-4 lg:p-4">
               <CheckboxGroup
-                className="lg:w-3xl justify-start"
+                className="lg:w-3xl"
                 items={services}
                 name="services"
                 control={methods.control}
@@ -292,17 +326,17 @@ const BranchShow = ({
               />
             </div>
 
-            {/* <FormField
+            <FormField
               name="additional_service"
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label className="flex justify-start items-start gap-x-1 flex-col sm:flex-row">
-                    <span >{t("other.label")}</span>
+                  <FormLabel className="flex justify-start items-start gap-x-1 flex-col sm:flex-row">
+                    <span>{t("other.label")}</span>
                     <span className="font-normal text-sm md:text-base text-light-gray">
                       {t("other.sublabel")}
                     </span>
-                  </Label>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t("other.placeholder")}
@@ -313,10 +347,10 @@ const BranchShow = ({
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
           </div>
 
-          {/* <div className="space-y-4">
+          <div className="space-y-4">
             <FormField
               name="work_days_from"
               control={methods.control}
@@ -327,7 +361,7 @@ const BranchShow = ({
                     defaultValue={field.value}
                     disabled={isReadOnly}
                   >
-                    <Label>{tStep2("from-day.label")}</Label>
+                    <FormLabel>{tStep2("from-day.label")}</FormLabel>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
@@ -358,7 +392,7 @@ const BranchShow = ({
                     defaultValue={field.value}
                     disabled={isReadOnly}
                   >
-                    <Label>{tStep2("to-day.label")}</Label>
+                    <FormLabel>{tStep2("to-day.label")}</FormLabel>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
@@ -384,7 +418,7 @@ const BranchShow = ({
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>{tStep2("from-hour.label")}</Label>
+                  <FormLabel>{tStep2("from-hour.label")}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
@@ -409,7 +443,7 @@ const BranchShow = ({
               control={methods.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>{tStep2("to-hour.label")}</Label>
+                  <FormLabel>{tStep2("to-hour.label")}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
@@ -428,17 +462,15 @@ const BranchShow = ({
                 </FormItem>
               )}
             />
-          </div> */}
+          </div>
         </div>
 
         <div className="flex justify-center gap-5 lg:gap-x-10">
-          <Button asChild size={"sm"}>
-            <Link href={`${branchId}/edit`}>تعديل الفرع</Link>
-          </Button>
+          {buttons(mode)}
         </div>
       </form>
     </FormProvider>
   );
 };
 
-export default BranchShow;
+export default Branch;

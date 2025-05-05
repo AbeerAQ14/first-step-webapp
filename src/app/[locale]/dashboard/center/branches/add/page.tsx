@@ -1,5 +1,4 @@
-import Branch from "@/components/forms/dashboard/Branch";
-import BranchWrapper from "@/components/forms/dashboard/BranchWrapper";
+import BranchWrapper from "@/components/forms/dashboard/branches/BranchWrapper";
 
 const initialValues = {
   name: "",

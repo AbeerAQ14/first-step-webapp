@@ -1,4 +1,4 @@
-import ChildShow from "@/components/forms/dashboard/ChildShow";
+import ChildShow from "@/components/forms/dashboard/children/ChildShow";
 
 // const initialValues = {
 //   name: "",
