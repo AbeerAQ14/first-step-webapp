@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getErrorMessage } from "./utils";
+import { getErrorMessage, getImageDimensions } from "./utils";
 
 // Sign In Form
 export const createSignInSchema = (locale: "ar" | "en" = "ar") =>
@@ -700,4 +700,63 @@ export const createAddBranchAdminSchema = (locale: "ar" | "en" = "ar") =>
 
 export type BranchAdminFormData = z.infer<
   ReturnType<typeof createAddBranchAdminSchema>
+>;
+
+export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
+  z
+    .object({
+      // Step 1: Basic Information
+      title: z
+        .string()
+        .min(5, { message: getErrorMessage("general-field-required", locale) }),
+      description: z
+        .string()
+        .min(10, {
+          message: getErrorMessage("general-field-required", locale),
+        }),
+      start_date: z.date({
+        required_error: getErrorMessage("general-field-required", locale),
+      }),
+      end_date: z.date({
+        required_error: getErrorMessage("general-field-required", locale),
+      }),
+      image: z
+        .any()
+        .refine(
+          (file) => file?.[0] && file[0].type.startsWith("image/"),
+          "يرجى رفع صورة صالحة"
+        )
+        .refine(async (file) => {
+          if (!file?.[0]) return false;
+          const image = await getImageDimensions(file[0]);
+          return image.width === 1440 && image.height === 680;
+        }, "يجب أن يكون مقاس الصورة 1440 × 680"),
+    })
+    .superRefine((data, ctx) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (data.start_date && data.start_date <= today) {
+        ctx.addIssue({
+          path: ["start_date"],
+          code: z.ZodIssueCode.custom,
+          message: getErrorMessage("invalid-date", locale),
+        });
+      }
+
+      if (
+        data.start_date &&
+        data.end_date &&
+        data.end_date <= data.start_date
+      ) {
+        ctx.addIssue({
+          path: ["end_date"],
+          code: z.ZodIssueCode.custom,
+          message: getErrorMessage("invalid-date", locale),
+        });
+      }
+    });
+
+export type AdRequestFormData = z.infer<
+  ReturnType<typeof createAdRequestSchema>
 >;

@@ -13,9 +13,10 @@ import { CalendarIcon } from "lucide-react";
 interface DatePickerProps {
   value: Date | undefined;
   onChange: (date: Date | undefined) => void;
+  disabled?: any;
 }
 
-const DatePicker = ({ value, onChange }: DatePickerProps) => {
+const DatePicker = ({ value, onChange, disabled }: DatePickerProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -35,8 +36,9 @@ const DatePicker = ({ value, onChange }: DatePickerProps) => {
           mode="single"
           selected={value}
           onSelect={onChange}
-          disabled={(date) =>
-            date > new Date() || date < new Date("1900-01-01")
+          disabled={
+            disabled ||
+            ((date) => date > new Date() || date < new Date("1900-01-01"))
           }
           initialFocus
         />

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Ads from "@/components/dashboard/ad-or-blog-request/Ads";
 import BlogCard from "@/components/general/blog/BlogCard";
 import { Blog } from "@/types";
+import { Link } from "@/i18n/navigation";
 
 const staticBlogs: Blog[] = [
   {
@@ -43,8 +44,8 @@ export default function CenterDashboardRequest() {
         <div className="mb-2 flex items-center justify-between">
           <h1 className="heading-4 font-medium text-primary">الإعلانات</h1>
 
-          <Button size={"sm"} variant={"outline"}>
-            طلب إعلان
+          <Button asChild size={"sm"} variant={"outline"}>
+            <Link href="ad-or-blog-request/ad-request">طلب إعلان</Link>
           </Button>
         </div>
 
@@ -57,8 +58,8 @@ export default function CenterDashboardRequest() {
         <div className="mb-2 flex items-center justify-between">
           <h1 className="heading-4 font-medium text-primary">المدونات</h1>
 
-          <Button size={"sm"} variant={"outline"}>
-            طلب مدونة
+          <Button asChild size={"sm"} variant={"outline"}>
+            <Link href="ad-or-blog-request/ad-request">طلب مدونة</Link>
           </Button>
         </div>
 
