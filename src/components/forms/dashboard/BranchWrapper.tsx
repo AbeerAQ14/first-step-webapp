@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Branch from "./Branch";
-import { BranchFormData } from "@/lib/schemas";
+import { BranchAdminFormData, BranchFormData } from "@/lib/schemas";
+import BranchAdminForm from "./BranchAdminForm";
 
 const BranchWrapper = ({
   initialValues,
@@ -13,9 +14,17 @@ const BranchWrapper = ({
   mode: "add" | "edit" | "show";
   branchId?: string;
 }) => {
-  // onSubmit function for each page (add - edit)
-  const onSubmit = (data: BranchFormData) => {
+  const [open, setOpen] = useState(false);
+
+  // onSubmitBranch function for each page (add - edit)
+  const onSubmitBranch = (data: BranchFormData) => {
     console.log(data);
+    setOpen(true);
+  };
+
+  const onSubmitAdmin = (data: BranchAdminFormData) => {
+    console.log(data);
+    setOpen(false);
   };
 
   return (
@@ -23,9 +32,11 @@ const BranchWrapper = ({
       <Branch
         initialValues={initialValues}
         mode={mode}
-        onSubmit={onSubmit}
+        onSubmit={onSubmitBranch}
         branchId={branchId}
       />
+
+      <BranchAdminForm open={open} setOpen={setOpen} onSubmit={onSubmitAdmin} />
     </React.Fragment>
   );
 };

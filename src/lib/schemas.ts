@@ -677,3 +677,27 @@ export const createBranchSchema = (locale: "ar" | "en" = "ar") =>
   });
 
 export type BranchFormData = z.infer<ReturnType<typeof createBranchSchema>>;
+
+// Sign In Form
+export const createAddBranchAdminSchema = (locale: "ar" | "en" = "ar") =>
+  z
+    .object({
+      name: z
+        .string()
+        .min(1, { message: getErrorMessage("general-field-required", locale) }),
+      email: z.string().email({
+        message: getErrorMessage("invalid-email", locale),
+      }),
+      password: z.string().min(8, {
+        message: getErrorMessage("password-min", locale, { min: 8 }),
+      }),
+      confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: getErrorMessage("password-match", locale),
+      path: ["confirmPassword"],
+    });
+
+export type BranchAdminFormData = z.infer<
+  ReturnType<typeof createAddBranchAdminSchema>
+>;

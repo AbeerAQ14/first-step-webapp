@@ -12,7 +12,7 @@ const Branches = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 xl:px-8">
+    <section className="my-10 container mx-auto px-4 xl:px-8">
       <h2 className="mb-6 heading-3 text-secondary-burgundy text-center">
         فروع الحضانة
       </h2>
@@ -29,14 +29,14 @@ const Branches = () => {
               {/* Branch circle with color based on index */}
               <div
                 className={
-                  "rounded-full flex items-center justify-center origin-[50%_80%] group-odd:rotate-180"
+                  "rounded-full flex items-center justify-center origin-[50%_80%] group-even:rotate-180"
                 }
               >
                 <Icons.location className="fill-inherit size-20" />
               </div>
 
               {/* Branch name */}
-              <p className="absolute left-1/2 -translate-x-1/2 group-odd:top-[20%] group-even:top-[100%] text-2xl text-center font-bold text-nowrap whitespace-nowrap">
+              <p className="absolute left-1/2 -translate-x-1/2 group-even:top-[20%] group-odd:top-[100%] text-2xl text-center font-bold text-nowrap whitespace-nowrap">
                 {branch}
               </p>
             </div>
