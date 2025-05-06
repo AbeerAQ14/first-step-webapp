@@ -15,7 +15,7 @@ const MemberFormWrapper = ({
   initialData,
   mode,
 }: {
-  memberId: string;
+  memberId?: string;
   initialData: InitialData;
   mode: "add" | "edit";
 }) => {
