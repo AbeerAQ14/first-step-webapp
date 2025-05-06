@@ -796,3 +796,40 @@ export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
 export type BlogRequestFormData = z.infer<
   ReturnType<typeof createBlogRequestSchema>
 >;
+
+export const createTeamMemberSchema = (locale: "ar" | "en" = "ar") =>
+  z.object({
+    // Step 1: Basic Information
+    name: z
+      .string()
+      .min(3, { message: getErrorMessage("general-field-required", locale) }),
+    branch: z.string().min(2, {
+      message: getErrorMessage("general-field-required", locale),
+    }),
+    job: z.string().min(2, {
+      message: getErrorMessage("general-field-required", locale),
+    }),
+    image: z.union([
+      z.string().url(),
+      z
+        .any()
+        .refine(
+          (fileList) =>
+            fileList &&
+            typeof fileList === "object" &&
+            "length" in fileList &&
+            fileList.length > 0 &&
+            fileList[0].type.startsWith("image/"),
+          "يرجى رفع صورة صالحة"
+        ),
+    ]),
+    // .refine(async (file) => {
+    //   if (!file?.[0]) return false;
+    //   const image = await getImageDimensions(file[0]);
+    //   return image.width === 1440 && image.height === 680;
+    // }, "يجب أن يكون مقاس الصورة 1440 × 680"),
+  });
+
+export type TeamMemberFormData = z.infer<
+  ReturnType<typeof createTeamMemberSchema>
+>;

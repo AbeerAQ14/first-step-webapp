@@ -1,19 +1,11 @@
+import { Link } from "@/i18n/navigation";
 import { TeamMember } from "@/app/[locale]/dashboard/center/team/page";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 
-interface TeamCardProps extends TeamMember {
-  onEdit?: () => void;
-  onDelete?: () => void;
-}
+interface TeamCardProps extends TeamMember {}
 
-export const TeamCard = ({
-  imageUrl,
-  role,
-  name,
-  onEdit,
-  onDelete,
-}: TeamCardProps) => {
+export const TeamCard = ({ id, imageUrl, role, name }: TeamCardProps) => {
   return (
     <div className="p-2 rounded-3xl border border-light-gray flex flex-col items-center gap-y-2">
       <div
@@ -27,11 +19,15 @@ export const TeamCard = ({
       <p className="text-sm text-mid-gray">{name}</p>
 
       <div className="flex items-center gap-1">
-        <Button variant="ghost" size="icon" onClick={onEdit}>
-          <Edit className="size-4 text-mid-gray" />
+        <Button asChild variant="ghost" size="icon">
+          <Link href={`team/${id}`}>
+            <Edit className="size-4 text-mid-gray" />
+          </Link>
         </Button>
-        <Button variant="ghost" size="icon" onClick={onDelete}>
-          <Trash2 className="size-4 text-mid-gray" />
+        <Button asChild variant="ghost" size="icon">
+          <Link href={`team/${id}`}>
+            <Trash2 className="size-4 text-mid-gray" />
+          </Link>
         </Button>
       </div>
     </div>
