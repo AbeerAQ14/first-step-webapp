@@ -59,7 +59,7 @@ export default function CenterDashboardRequest() {
           <h1 className="heading-4 font-medium text-primary">المدونات</h1>
 
           <Button asChild size={"sm"} variant={"outline"}>
-            <Link href="ad-or-blog-request/ad-request">طلب مدونة</Link>
+            <Link href="ad-or-blog-request/blog-request">طلب مدونة</Link>
           </Button>
         </div>
 

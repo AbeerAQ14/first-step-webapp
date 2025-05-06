@@ -709,11 +709,9 @@ export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
       title: z
         .string()
         .min(5, { message: getErrorMessage("general-field-required", locale) }),
-      description: z
-        .string()
-        .min(10, {
-          message: getErrorMessage("general-field-required", locale),
-        }),
+      description: z.string().min(10, {
+        message: getErrorMessage("general-field-required", locale),
+      }),
       start_date: z.date({
         required_error: getErrorMessage("general-field-required", locale),
       }),
@@ -759,4 +757,42 @@ export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
 
 export type AdRequestFormData = z.infer<
   ReturnType<typeof createAdRequestSchema>
+>;
+
+export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
+  z.object({
+    // Step 1: Basic Information
+    title: z
+      .string()
+      .min(5, { message: getErrorMessage("general-field-required", locale) }),
+    description: z.string().min(10, {
+      message: getErrorMessage("general-field-required", locale),
+    }),
+    content: z.string().min(30, "محتوى التدوينة مطلوب (نص MDX)"),
+    mainImage: z
+      .any()
+      .refine(
+        (file) => file?.[0] && file[0].type.startsWith("image/"),
+        "يرجى رفع صورة صالحة"
+      )
+      .refine(async (file) => {
+        if (!file?.[0]) return false;
+        const image = await getImageDimensions(file[0]);
+        return image.width === 1440 && image.height === 680;
+      }, "يجب أن يكون مقاس الصورة 1440 × 680"),
+    cardImage: z
+      .any()
+      .refine(
+        (file) => file?.[0] && file[0].type.startsWith("image/"),
+        "يرجى رفع صورة صالحة"
+      )
+      .refine(async (file) => {
+        if (!file?.[0]) return false;
+        const image = await getImageDimensions(file[0]);
+        return image.width === 264 && image.height === 160;
+      }, "يجب أن يكون مقاس الصورة 264 × 160"),
+  });
+
+export type BlogRequestFormData = z.infer<
+  ReturnType<typeof createBlogRequestSchema>
 >;
