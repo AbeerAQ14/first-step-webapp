@@ -68,7 +68,7 @@ export default async function EditChild({
         </h1>
       </div>
 
-      <ChildWrapper initialValues={initialValues} mode="add" />
+      <ChildWrapper initialValues={initialValues} mode="edit" />
     </div>
   );
 }

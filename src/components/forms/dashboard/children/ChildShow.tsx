@@ -1,5 +1,10 @@
 "use client";
 
+import Image from "next/image";
+import { Link, useRouter } from "@/i18n/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
+import { Control, FormProvider, useForm } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -8,15 +13,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocale, useTranslations } from "next-intl";
-import { Control, FormProvider, useForm } from "react-hook-form";
-import PhoneInput from "../../PhoneInput";
-import Image from "next/image";
-import DatePicker from "@/components/general/DatePicker";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import PhoneInput from "../../PhoneInput";
+import DatePicker from "@/components/general/DatePicker";
 import { Allergy, ChronicDisease } from "@/types";
+import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
 
 const ChildShow = ({
   initialValues,
@@ -27,6 +29,7 @@ const ChildShow = ({
   mode: "add" | "edit" | "show";
   childId?: string;
 }) => {
+  const router = useRouter();
   const locale = useLocale();
   const signUpParentSchema = createSignUpParentSchema(locale as "ar" | "en");
 
@@ -89,6 +92,15 @@ const ChildShow = ({
           authorizedPersons={authorizedPersons}
           readOnly={isReadOnly}
         />
+
+        <div className="flex justify-center gap-5 lg:gap-x-10">
+          <Button asChild size={"sm"}>
+            <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );

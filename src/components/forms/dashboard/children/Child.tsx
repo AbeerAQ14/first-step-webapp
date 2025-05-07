@@ -14,6 +14,8 @@ import Image from "next/image";
 import DatePicker from "@/components/general/DatePicker";
 import { Textarea } from "@/components/ui/textarea";
 import { Allergy, ChronicDisease } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Link, useRouter } from "@/i18n/navigation";
 
 const Child = ({
   initialValues,
@@ -27,9 +29,50 @@ const Child = ({
   childId?: string;
 }) => {
   const locale = useLocale();
+  const router = useRouter();
   const addChildSchema = createAddChildSchema(locale as "ar" | "en");
 
   const isReadOnly = mode === "show";
+
+  const buttons = (mode: string) => {
+    if (mode === "add") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            إضافة الطفل
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else if (mode === "edit") {
+      return (
+        <>
+          <Button size={"sm"} type="submit">
+            تعديل ملف الطفل
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </>
+      );
+    } else
+      return (
+        <>
+          <Button asChild size={"sm"}>
+            <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
+          </Button>
+          {/* <Button
+              size={"sm"}
+              variant={"outline"}
+              className="!border-destructive text-destructive"
+            >
+              حذف الفرع
+            </Button> */}
+        </>
+      );
+  };
 
   const methods = useForm<AddChildFormData>({
     resolver: zodResolver(addChildSchema),
@@ -91,6 +134,10 @@ const Child = ({
           authorizedPersons={authorizedPersons}
           readOnly={isReadOnly}
         />
+
+        <div className="flex justify-center gap-5 lg:gap-x-10">
+          {buttons(mode)}
+        </div>
       </form>
     </FormProvider>
   );

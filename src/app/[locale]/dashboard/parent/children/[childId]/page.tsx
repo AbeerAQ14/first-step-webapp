@@ -62,7 +62,7 @@ export default async function DashboardAddChild({
 
   return (
     <div>
-      <ChildShow initialValues={initialValues} mode="show" />
+      <ChildShow initialValues={initialValues} mode="show" childId={childId} />
     </div>
   );
 }
