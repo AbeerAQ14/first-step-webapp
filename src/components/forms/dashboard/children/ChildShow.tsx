@@ -93,14 +93,20 @@ const ChildShow = ({
           readOnly={isReadOnly}
         />
 
-        <div className="flex justify-center gap-5 lg:gap-x-10">
-          <Button asChild size={"sm"}>
-            <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
-          </Button>
-          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
-            إلغاء
-          </Button>
-        </div>
+        {childId && (
+          <div className="flex justify-center gap-5 lg:gap-x-10">
+            <Button asChild size={"sm"}>
+              <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
+            </Button>
+            <Button
+              size={"sm"}
+              variant={"outline"}
+              onClick={() => router.back()}
+            >
+              إلغاء
+            </Button>
+          </div>
+        )}
       </form>
     </FormProvider>
   );

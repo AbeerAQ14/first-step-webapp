@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -102,8 +103,10 @@ export const columns: ColumnDef<Child>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-1">
-          <Button variant={"ghost"} size={"icon"}>
-            <Eye className="size-4 text-mid-gray" />
+          <Button asChild variant={"ghost"} size={"icon"}>
+            <Link href={`children-files/${"123"}`}>
+              <Eye className="size-4 text-mid-gray" />
+            </Link>
           </Button>
           <Button variant={"ghost"} size={"icon"}>
             <Edit className="size-4 text-mid-gray" />
