@@ -347,10 +347,8 @@ export const dashboardIcons = {
       {...props}
     >
       <path
-        d="M1.333 3.333A1.333 1.333 0 0 1 2.667 2h4v12h-4a1.333 1.333 0 0 1-1.334-1.333zm8-1.333h4a1.333 1.333 0 0 1 1.334 1.333v3.334H9.333zm0 7.333h5.334v3.334A1.334 1.334 0 0 1 13.333 14h-4z"
-        stroke={"currentColor"}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M7 4V5H4V4H7ZM4 7V6H7V7H4ZM4 9V8H6V9H4ZM3 4V5H2V4H3ZM3 6V7H2V6H3ZM2 9V8H3V9H2ZM1 1V15H6V16H0V0H8.71094L13 4.28906V6H12V5H8V1H1ZM9 1.71094V4H11.2891L9 1.71094ZM14 8H16V16H7V8H9V7H10V8H13V7H14V8ZM15 15V11H8V15H15ZM15 10V9H8V10H15Z"
+        fill="currentColor"
       />
     </svg>
   ),

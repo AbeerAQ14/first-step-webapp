@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useLocale } from "next-intl";
 import { dashboardIcons } from "@/components/general/icons";
 
-const items = [
+const centerNavbar = [
   {
     title: "الرئيسية", // Home
     url: "/dashboard/center",
@@ -66,9 +66,67 @@ const items = [
   },
 ];
 
+const parentNavbar = [
+  {
+    title: "الرئيسية", // Home
+    url: "/dashboard/parent",
+    icon: dashboardIcons.home,
+  },
+  {
+    title: "أطفالي", // Children
+    url: "/dashboard/parent/children",
+    icon: dashboardIcons.files,
+  },
+  {
+    title: "الحجوزات", // Bookings
+    url: "/dashboard/parent/bookings",
+    icon: dashboardIcons.bookings,
+  },
+  {
+    title: "التقارير اليومية", // Daily Reports
+    url: "/dashboard/parent/daily-reports",
+    icon: dashboardIcons.reports,
+  },
+];
+
+const adminNavbar = [
+  {
+    title: "الرئيسية", // Home
+    url: "/dashboard/parent",
+    icon: dashboardIcons.home,
+  },
+  {
+    title: "أطفالي", // Children
+    url: "/dashboard/parent/children",
+    icon: dashboardIcons.files,
+  },
+  {
+    title: "الحجوزات", // Bookings
+    url: "/dashboard/parent/bookings",
+    icon: dashboardIcons.bookings,
+  },
+  {
+    title: "التقارير اليومية", // Daily Reports
+    url: "/dashboard/parent/daily-reports",
+    icon: dashboardIcons.reports,
+  },
+];
+
 const DashboardSideBar = () => {
   const pathname = usePathname();
   const locale = useLocale();
+
+  const navbar = pathname.includes("/center")
+    ? centerNavbar
+    : pathname.includes("/admin")
+    ? adminNavbar
+    : parentNavbar;
+
+  const basePathname = pathname.includes("/center")
+    ? "/dashboard/center"
+    : pathname.includes("/admin")
+    ? "/dashboard/admin"
+    : "/dashboard/parent";
 
   return (
     <Sidebar
@@ -90,12 +148,12 @@ const DashboardSideBar = () => {
           {/* <SidebarGroupLabel>app</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => {
+              {navbar.map((item) => {
                 const isActive =
-                  pathname === "/dashboard/center"
+                  pathname === basePathname
                     ? pathname === item.url
                     : pathname.startsWith(item.url) &&
-                      item.url !== "/dashboard/center";
+                      item.url !== basePathname;
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
