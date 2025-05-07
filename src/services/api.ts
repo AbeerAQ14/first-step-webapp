@@ -11,7 +11,6 @@ import {
   Value,
 } from "@/types";
 import axios from "axios";
-import { cache } from "react";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -34,113 +33,224 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export const websiteService = {
-  getAdSlides: cache(async (locale: string) => {
-    const response = await apiClient.get("/sliders", {
+  getAdSlides: async (locale: string): Promise<AdSlide[]> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/sliders`, {
       headers: {
+        "Content-Type": "application/json",
         lang: locale,
+        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+        "X-Authorization-Secret":
+          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+      },
+      next: {
+        revalidate: 86400,
       },
     });
-    return response.data.data as AdSlide[];
-  }),
 
-  getCommonQuestions: cache(async (locale: string) => {
-    const response = await apiClient.get("/common-question", {
-      headers: {
-        lang: locale,
-      },
-    });
-    return response.data.data as CommonQuestion[];
-  }),
+    if (!res.ok) throw new Error("Failed to fetch ad slides");
+    const data = await res.json();
+    return data.data as AdSlide[];
+  },
 
-  getOurValues: cache(async (locale: string) => {
-    const response = await apiClient.get("/our-value-keys", {
-      headers: {
-        lang: locale,
-      },
-    });
-    return response.data.data as Value[];
-  }),
+  getCommonQuestions: async (locale: string): Promise<CommonQuestion[]> => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/common-question`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      }
+    );
 
-  getOurServices: cache(async (locale: string) => {
-    const response = await apiClient.get("/services", {
-      headers: {
-        lang: locale,
-      },
-    });
-    return response.data.data as Service[];
-  }),
+    if (!res.ok) throw new Error("Failed to fetch common questions");
+    const data = await res.json();
+    return data.data as CommonQuestion[];
+  },
+
+  getOurValues: async (locale: string): Promise<Value[]> => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/our-value-keys`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      }
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch values");
+    const data = await res.json();
+    return data.data as Value[];
+  },
+
+  getOurServices: async (locale: string): Promise<Service[]> => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      }
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch services");
+    const data = await res.json();
+    return data.data as Service[];
+  },
+
   contactUs: async (payload: ContactFormData) => {
     try {
-      const response = await apiClient.post("/contact-us", {
-        ...payload,
-      });
-      return response.data;
-    } catch (error) {
-      // Handle different types of errors (network, server response)
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact-us`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!res.ok) {
+        const responseData = await res.json();
         console.error("API Error Response:", responseData);
 
         throw {
           message: responseData?.message || "Something went wrong.",
           errors: responseData?.errors || {},
         };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
       }
+
+      return await res.json();
+    } catch (error) {
+      console.error("Unexpected Error:", error);
+      throw { message: "An unexpected error occurred.", errors: {} };
     }
   },
 };
 
 export const blogService = {
-  getBlogs: cache(async (locale: string) => {
-    const response = await apiClient.get("/blogs", {
+  getBlogs: async (locale: string): Promise<Blog[]> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
       headers: {
+        "Content-Type": "application/json",
         lang: locale,
+        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+        "X-Authorization-Secret":
+          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+      },
+      next: {
+        revalidate: 86400,
       },
     });
-    return response.data.data as Blog[];
-  }),
 
-  getLatestBlogs: cache(async (locale: string) => {
-    const response = await apiClient.get("/blogs", {
+    if (!res.ok) throw new Error("Failed to fetch blogs");
+    const data = await res.json();
+    return data.data as Blog[];
+  },
+
+  getLatestBlogs: async (locale: string): Promise<Blog[]> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
       headers: {
+        "Content-Type": "application/json",
         lang: locale,
+        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+        "X-Authorization-Secret":
+          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+      },
+      next: {
+        revalidate: 86400,
       },
     });
-    return response.data.data as Blog[];
-  }),
+
+    if (!res.ok) throw new Error("Failed to fetch latest blogs");
+    const data = await res.json();
+    return data.data as Blog[];
+  },
 };
 
 export const nurseryService = {
-  getNurseries: cache(
-    async (locale: string, params?: { key: string; value: string }[]) => {
-      // Convert array of params to an object
-      const queryParams = params?.reduce((acc, { key, value }) => {
-        acc[key] = value;
-        return acc;
-      }, {} as Record<string, string>);
+  getNurseries: async (
+    locale: string,
+    params?: { key: string; value: string }[]
+  ): Promise<CenterRegisterPayload[]> => {
+    const query = params
+      ? "?" +
+        params
+          .map(
+            ({ key, value }) =>
+              `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+          )
+          .join("&")
+      : "";
 
-      const response = await apiClient.get(`/center-filter`, {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/center-filter${query}`,
+      {
         headers: {
+          "Content-Type": "application/json",
           lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
         },
-        params: queryParams,
-      });
+        next: {
+          revalidate: 86400,
+        },
+      }
+    );
 
-      return response.data.data as CenterRegisterPayload[];
-    }
-  ),
+    if (!res.ok) throw new Error("Failed to fetch nurseries");
+    const data = await res.json();
+    return data.data as CenterRegisterPayload[];
+  },
 
-  getLatestNurseries: cache(async (locale: string) => {
-    const response = await apiClient.get("/latest-search", {
-      headers: {
-        lang: locale,
-      },
-    });
-    return response.data.data as CenterRegisterPayload[];
-  }),
+  getLatestNurseries: async (
+    locale: string
+  ): Promise<CenterRegisterPayload[]> => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/latest-search`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      }
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch latest nurseries");
+    const data = await res.json();
+    return data.data as CenterRegisterPayload[];
+  },
 };
 
 export const authService = {
