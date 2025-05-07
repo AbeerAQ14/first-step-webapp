@@ -22,7 +22,8 @@ import BlogEditor from "../blog/BlogEditor";
 
 const BlogRequestForm = () => {
   const locale = useLocale();
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview1, setPreview1] = useState<string | null>(null);
+  const [preview2, setPreview2] = useState<string | null>(null);
   const router = useRouter();
 
   const blogRequestSchema = createBlogRequestSchema(locale as "ar" | "en");
@@ -55,7 +56,7 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="sm:col-span-3">
               <Label>
-                <span className="text-base">صورة الطلب</span>
+                <span className="text-base">صورة المدونة</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -64,25 +65,25 @@ const BlogRequestForm = () => {
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    id="image-upload"
+                    id="image-upload1"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        setPreview(URL.createObjectURL(file));
+                        setPreview1(URL.createObjectURL(file));
                         field.onChange(e.target.files);
                       }
                     }}
                   />
                   <label
-                    htmlFor="image-upload"
+                    htmlFor="image-upload1"
                     className={clsx(
                       "w-full aspect-[1440/680] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
-                      preview && "p-2"
+                      preview1 && "p-2"
                     )}
                   >
-                    {preview ? (
+                    {preview1 ? (
                       <Image
-                        src={preview}
+                        src={preview1}
                         alt="Preview"
                         width={1440}
                         height={600}
@@ -108,7 +109,7 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="">
               <Label>
-                <span className="text-base">صورة الطلب</span>
+                <span className="text-base">صورة الغلاف</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -117,25 +118,25 @@ const BlogRequestForm = () => {
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    id="image-upload"
+                    id="image-upload2"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        setPreview(URL.createObjectURL(file));
+                        setPreview2(URL.createObjectURL(file));
                         field.onChange(e.target.files);
                       }
                     }}
                   />
                   <label
-                    htmlFor="image-upload"
+                    htmlFor="image-upload2"
                     className={clsx(
                       "w-full aspect-[264/160] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
-                      preview && "p-2"
+                      preview2 && "p-2"
                     )}
                   >
-                    {preview ? (
+                    {preview2 ? (
                       <Image
-                        src={preview}
+                        src={preview2}
                         alt="Preview"
                         width={264}
                         height={160}
