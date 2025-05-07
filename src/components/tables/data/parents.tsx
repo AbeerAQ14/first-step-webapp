@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye, Trash2 } from "lucide-react";
+import { ReservationStatus } from "@/types";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -12,17 +13,13 @@ export type Parent = {
   id: number;
   parentName: string;
   phone: string;
-  childName: string;
+  childs: { id: string; name: string; reservationStatus: ReservationStatus }[];
   branch: string;
-  reservationStatus:
-    | "confirmed"
-    | "waitingForPayment"
-    | "waitingForConfirmation"
-    | "rejected";
+  // reservationStatus: ReservationStatus;
 };
 
 // Function to get the status text in Arabic
-function getStatusText(status: Parent["reservationStatus"]): string {
+function getStatusText(status: ReservationStatus): string {
   switch (status) {
     case "confirmed":
       return "تم الدفع";
@@ -38,7 +35,7 @@ function getStatusText(status: Parent["reservationStatus"]): string {
 }
 
 // Function to get the status color class
-function getStatusColorClass(status: Parent["reservationStatus"]): string {
+function getStatusColorClass(status: ReservationStatus): string {
   switch (status) {
     case "confirmed":
       return "bg-success text-white";
@@ -53,7 +50,12 @@ function getStatusColorClass(status: Parent["reservationStatus"]): string {
   }
 }
 
-export const columns: ColumnDef<Parent>[] = [
+export const getColumns = (
+  selectedChildMap: Record<number, string>,
+  setSelectedChildMap: React.Dispatch<
+    React.SetStateAction<Record<number, string>>
+  >
+): ColumnDef<Parent>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -86,15 +88,30 @@ export const columns: ColumnDef<Parent>[] = [
     header: "Phone Number",
   },
   {
-    accessorKey: "childName",
+    accessorKey: "childs",
     header: "Child",
     cell: ({ row }) => {
+      const parentId = row.original.id;
+      const childs = row.original.childs;
+
       return (
-        <div
-          className={`text-xs w-fit px-2 py-1 rounded-[4px] select-none bg-info text-white`}
+        <select
+          className="text-xs px-2 py-1 rounded bg-info text-white"
+          value={selectedChildMap[parentId] ?? "all"}
+          onChange={(e) =>
+            setSelectedChildMap((prev) => ({
+              ...prev,
+              [parentId]: e.target.value,
+            }))
+          }
         >
-          {row.getValue("childName")}
-        </div>
+          <option value="all">كل الأطفال</option>
+          {childs.map((child) => (
+            <option key={child.id} value={child.id}>
+              {child.name}
+            </option>
+          ))}
+        </select>
       );
     },
   },
@@ -103,20 +120,24 @@ export const columns: ColumnDef<Parent>[] = [
     header: "Branch",
   },
   {
-    accessorKey: "reservationStatus",
+    id: "reservationStatus",
     header: "Reservation Status",
     cell: ({ row }) => {
-      const value = row.getValue(
-        "reservationStatus"
-      ) as Parent["reservationStatus"];
-      const colorClasses = getStatusColorClass(value);
-      const text = getStatusText(value);
+      const parent = row.original;
+      const selectedChildId = selectedChildMap[parent.id];
+      const selectedChild = parent.childs.find(
+        (child) => child.id === selectedChildId
+      );
+
+      const status = selectedChild?.reservationStatus;
+      const colorClasses = getStatusColorClass(status ?? "confirmed");
+      const text = status ? getStatusText(status) : "اختر الطفل";
 
       return (
         <div
           className={`text-xs w-fit px-2 py-1 rounded-[4px] select-none ${colorClasses}`}
         >
-          {text}
+          {text || "اختر طفلًا"}
         </div>
       );
     },

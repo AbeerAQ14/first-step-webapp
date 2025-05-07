@@ -218,3 +218,9 @@ export interface Value {
   description: string;
   image: string;
 }
+
+export type ReservationStatus =
+  | "confirmed"
+  | "waitingForPayment"
+  | "waitingForConfirmation"
+  | "rejected";
