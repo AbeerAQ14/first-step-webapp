@@ -8,7 +8,7 @@ import { getErrorMessage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Parents from "@/components/dashboard/notifications/Parents";
 import type { Parent } from "@/components/tables/data/parents";
-import NotificationForm from "@/components/dashboard/notifications/NotificationForm";
+import NotificationForm from "@/components/forms/dashboard/notifications/NotificationForm";
 
 const notificationSchema = z.object({
   type: z
