@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "@/i18n/navigation";
 import { ReservationStatus } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -24,28 +23,6 @@ export const getColumns = (
     React.SetStateAction<Record<number, string>>
   >
 ): ColumnDef<Report>[] => [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "parentName",
     header: "Parent Name",
@@ -92,10 +69,8 @@ export const getColumns = (
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-1">
-          <Button asChild variant={"ghost"} size={"icon"}>
-            <Link href={`daily-reports/${"123"}`}>
-              <Eye className="size-4 text-mid-gray" />
-            </Link>
+          <Button variant={"ghost"} size={"icon"}>
+            <Eye className="size-4 text-mid-gray" />
           </Button>
           <Button variant={"ghost"} size={"icon"}>
             <Download className="size-4 text-mid-gray" />
