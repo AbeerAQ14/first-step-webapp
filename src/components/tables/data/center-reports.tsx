@@ -38,10 +38,12 @@ export const getColumns = (
       const parentId = row.original.id;
       const childs = row.original.childs;
 
+      const selectedValue = selectedChildMap[parentId] ?? childs[0]?.id ?? "";
+
       return (
         <select
           className="text-xs px-2 py-1 rounded bg-info text-white"
-          value={selectedChildMap[parentId] ?? "all"}
+          value={selectedValue}
           onChange={(e) =>
             setSelectedChildMap((prev) => ({
               ...prev,
@@ -49,7 +51,6 @@ export const getColumns = (
             }))
           }
         >
-          <option value="all">كل الأطفال</option>
           {childs.map((child) => (
             <option key={child.id} value={child.id}>
               {child.name}
@@ -67,10 +68,16 @@ export const getColumns = (
     accessorKey: "control",
     header: "Control",
     cell: ({ row }) => {
+      const parent = row.original;
+      const selectedChildId =
+        selectedChildMap[parent.id] ?? parent.childs[0]?.id;
+
       return (
         <div className="flex items-center gap-1">
-          <Button variant={"ghost"} size={"icon"}>
-            <Eye className="size-4 text-mid-gray" />
+          <Button asChild variant={"ghost"} size={"icon"}>
+            <Link href={`daily-reports/${selectedChildId}`}>
+              <Eye className="size-4 text-mid-gray" />
+            </Link>
           </Button>
           <Button variant={"ghost"} size={"icon"}>
             <Download className="size-4 text-mid-gray" />
