@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getErrorMessage } from "@/lib/utils";
@@ -21,22 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Clock } from "lucide-react";
-
-const notificationSchema = z.object({
-  type: z.string({
-    message: getErrorMessage("general-field-required", "ar"),
-  }),
-  day: z.string({
-    message: getErrorMessage("invalid-date", "ar"),
-  }),
-  time: z
-    .string({
-      message: getErrorMessage("invalid-time", "ar"),
-    })
-    .min(1, { message: getErrorMessage("general-field-required", "ar") }),
-});
-
-type FormData = z.infer<typeof notificationSchema>;
+import { NotificationsFormData } from "@/components/forms/dashboard/notifications/NotificationsForm";
 
 const NotificationForm = () => {
   const t = useTranslations("auth.center-signup.2.form.days");
@@ -51,101 +36,84 @@ const NotificationForm = () => {
     { value: "saturday", label: t("saturday") },
   ];
 
-  const methods = useForm<FormData>({
-    resolver: zodResolver(notificationSchema),
-    defaultValues: {
-      type: "",
-      day: "",
-      time: "",
-    },
-    mode: "onChange",
-  });
-
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  const { control } = useFormContext<NotificationsFormData>();
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="grid md:grid-cols-3 gap-4 lg:gap-6 xl:gap-9"
-      >
-        <FormField
-          name="type"
-          control={methods.control}
-          render={({ field }) => (
-            <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormLabel>اختر الإشعار</FormLabel>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="إشعار النوم" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {["إشعار النوم", "إشعار الإفطار"].map((day) => (
-                    <SelectItem key={day} value={day}>
-                      {day}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="day"
-          control={methods.control}
-          render={({ field }) => (
-            <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormLabel>اليوم</FormLabel>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="السبت" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {days.map((day) => (
-                    <SelectItem key={day.value} value={day.value}>
-                      {day.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="time"
-          control={methods.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>الوقت</FormLabel>
+    <div className="grid md:grid-cols-3 gap-4 lg:gap-6 xl:gap-9">
+      <FormField
+        name="type"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <Select onValueChange={field.onChange}>
+              <FormLabel>اختر الإشعار</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
-                  <Input
-                    {...field}
-                    type="time"
-                    placeholder=""
-                    className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
+                <SelectTrigger>
+                  <SelectValue placeholder="إشعار النوم" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {["إشعار النوم", "إشعار الإفطار"].map((day) => (
+                  <SelectItem key={day} value={day}>
+                    {day}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        name="day"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <Select onValueChange={field.onChange}>
+              <FormLabel>اليوم</FormLabel>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="السبت" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {days.map((day) => (
+                  <SelectItem key={day.value} value={day.value}>
+                    {day.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        name="time"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>الوقت</FormLabel>
+            <FormControl>
+              <div className="relative">
+                <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
+                <Input
+                  {...field}
+                  type="time"
+                  placeholder=""
+                  className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
             [&::-webkit-inner-spin-button]:hidden
             [&::-ms-clear]:hidden"
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </form>
-    </FormProvider>
+                />
+              </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
   );
 };
 

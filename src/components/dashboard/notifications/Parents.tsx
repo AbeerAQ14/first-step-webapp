@@ -2,7 +2,7 @@
 
 import { getColumns, Parent } from "@/components/tables/data/parents";
 import { DataTable } from "@/components/tables/DataTable";
-import React, { useState } from "react";
+import React from "react";
 
 // const parentsData: Parent[] = [
 //   {
@@ -236,46 +236,19 @@ const parentsData: Parent[] = [
   },
 ];
 
-// Function to get filtered parents based on selection
-const useFilteredParents = (
-  selectedParents: Parent[],
-  selectedChildMap: Record<number, string>
-): Parent[] => {
-  return React.useMemo(() => {
-    // If no parents are selected, return all parents with all children
-    if (selectedParents.length === 0) {
-      return selectedParents;
-    }
-
-    // Return selected parents with only the selected children (or all children if none selected for that parent)
-    return selectedParents.map((parent) => {
-      const selectedChildId = selectedChildMap[parent.id];
-
-      // If no child is selected for this parent, return parent with all children
-      if (!selectedChildId) {
-        return parent;
-      }
-
-      // Return parent with only the selected child
-      return {
-        ...parent,
-        childs: parent.childs.filter((child) => child.id === selectedChildId),
-      };
-    });
-  }, [selectedParents, selectedChildMap]);
-};
-
-const Parents = () => {
-  const [selected, setSelected] = useState<Parent[]>([]);
-  const [selectedChildMap, setSelectedChildMap] = useState<
-    Record<number, string>
-  >({});
-
-  const selectedWithOnlySelectedChild = useFilteredParents(
-    selected,
-    selectedChildMap
-  );
-
+const Parents = ({
+  selected,
+  setSelected,
+  selectedChildMap,
+  setSelectedChildMap,
+}: {
+  selected: Parent[];
+  setSelected: React.Dispatch<React.SetStateAction<any[]>>;
+  selectedChildMap: Record<number, string>;
+  setSelectedChildMap: React.Dispatch<
+    React.SetStateAction<Record<number, string>>
+  >;
+}) => {
   const columns = getColumns(selectedChildMap, setSelectedChildMap);
 
   return (
