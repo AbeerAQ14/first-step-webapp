@@ -2,12 +2,14 @@
 
 import { z } from "zod";
 import { useState } from "react";
+import { useRouter } from "@/i18n/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getErrorMessage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Parent } from "@/components/tables/data/parents";
 import Parents from "@/components/dashboard/notifications/Parents";
+import ReportFields from "./ReportFields";
 
 const reportsSchema = z.object({
   activities: z
@@ -65,6 +67,8 @@ const ReportsForm = () => {
     Record<number, string>
   >({});
 
+  const router = useRouter();
+
   const methods = useForm<ReportsFormData>({
     resolver: zodResolver(reportsSchema),
     defaultValues: {
@@ -104,16 +108,19 @@ const ReportsForm = () => {
           e.preventDefault(); // prevent default submission
           onSubmit(); // our custom function
         }}
-        className="flex flex-col items-center gap-y-6"
+        className="flex flex-col gap-y-6"
       >
-        <div>
-          <Parents
-            selected={selectedParents}
-            setSelected={setSelectedParents}
-            selectedChildMap={selectedChildMap}
-            setSelectedChildMap={setSelectedChildMap}
-          />
+        <div className="space-y-6 lg:p-4">
+          <p className="heading-4 text-primary text-center">تقرير يومي</p>
+          <ReportFields />
         </div>
+
+        <Parents
+          selected={selectedParents}
+          setSelected={setSelectedParents}
+          selectedChildMap={selectedChildMap}
+          setSelectedChildMap={setSelectedChildMap}
+        />
 
         <input type="hidden" {...methods.register("recipients")} />
         {methods.formState.errors.recipients && (
@@ -122,9 +129,14 @@ const ReportsForm = () => {
           </p>
         )}
 
-        <Button size={"sm"} type="submit">
-          إرسال الإشعار
-        </Button>
+        <div className="flex justify-center gap-5 lg:gap-x-10">
+          <Button size={"sm"} type="submit">
+            إرسال التقرير
+          </Button>
+          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+            إلغاء
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );
