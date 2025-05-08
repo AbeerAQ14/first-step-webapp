@@ -1,132 +1,164 @@
 "use client";
 
-import { Booking, columns } from "@/components/tables/data/bookings";
+import { Booking, getColumns } from "@/components/tables/data/bookings";
 import { DataTable } from "@/components/tables/DataTable";
+import { useState } from "react";
 
 const bookingsData: Booking[] = [
   {
     id: 1,
     parentName: "أحمد محمد",
-    childName: "فاطمة أحمد",
+    childs: [
+      { id: "c1", name: "سارة أحمد", reservationStatus: "confirmed" },
+      { id: "c2", name: "سعد أحمد", reservationStatus: "waitingForPayment" },
+    ],
     branch: "فرع الرياض",
     startDate: "10/05/2025",
     endDate: "12/05/2025",
     amount: 750.0,
-    reservationStatus: "confirmed",
   },
   {
     id: 2,
     parentName: "علي حسن",
-    childName: "يوسف علي",
+    childs: [
+      {
+        id: "c3",
+        name: "جنى حسن",
+        reservationStatus: "waitingForConfirmation",
+      },
+    ],
     branch: "فرع جدة",
     startDate: "15/05/2025",
     endDate: "17/05/2025",
     amount: 820.5,
-    reservationStatus: "waitingForPayment",
   },
   {
     id: 3,
     parentName: "سارة محمود",
-    childName: "ملك سارة",
+    childs: [
+      { id: "c4", name: "رنا محمود", reservationStatus: "confirmed" },
+      { id: "c5", name: "فهد محمود", reservationStatus: "rejected" },
+    ],
     branch: "فرع مكة",
     startDate: "20/05/2025",
     endDate: "22/05/2025",
     amount: 680.0,
-    reservationStatus: "confirmed",
   },
   {
     id: 4,
     parentName: "إبراهيم خليل",
-    childName: "آدم إبراهيم",
+    childs: [
+      { id: "c6", name: "ليلى خليل", reservationStatus: "waitingForPayment" },
+    ],
     branch: "فرع المدينة المنورة",
     startDate: "25/05/2025",
     endDate: "27/05/2025",
     amount: 900.25,
-    reservationStatus: "waitingForPayment",
   },
   {
     id: 5,
     parentName: "منى السيد",
-    childName: "نور منى",
+    childs: [{ id: "c7", name: "حسن منى", reservationStatus: "confirmed" }],
     branch: "فرع الدمام",
     startDate: "01/06/2025",
     endDate: "03/06/2025",
     amount: 795.0,
-    reservationStatus: "waitingForConfirmation",
   },
   {
     id: 6,
     parentName: "خالد عمر",
-    childName: "عمر خالد",
+    childs: [
+      { id: "c8", name: "خالد خالد", reservationStatus: "confirmed" },
+      {
+        id: "c9",
+        name: "نورة خالد",
+        reservationStatus: "waitingForConfirmation",
+      },
+    ],
     branch: "فرع تبوك",
     startDate: "05/06/2025",
     endDate: "07/06/2025",
     amount: 855.75,
-    reservationStatus: "rejected",
   },
   {
     id: 7,
     parentName: "ليلى عبد الله",
-    childName: "زينب ليلى",
+    childs: [
+      { id: "c10", name: "ريم عبد الله", reservationStatus: "rejected" },
+    ],
     branch: "فرع الأحساء",
     startDate: "10/06/2025",
     endDate: "12/06/2025",
     amount: 720.0,
-    reservationStatus: "confirmed",
   },
   {
     id: 8,
     parentName: "طارق حسين",
-    childName: "علي طارق",
+    childs: [
+      { id: "c11", name: "زياد طارق", reservationStatus: "confirmed" },
+      { id: "c12", name: "فرح طارق", reservationStatus: "waitingForPayment" },
+    ],
     branch: "فرع القطيف",
     startDate: "15/06/2025",
     endDate: "17/06/2025",
     amount: 880.5,
-    reservationStatus: "rejected",
   },
   {
     id: 9,
     parentName: "نهى جمال",
-    childName: "ياسمين نهى",
+    childs: [
+      { id: "c13", name: "عبدالله جمال", reservationStatus: "confirmed" },
+    ],
     branch: "فرع خميس مشيط",
     startDate: "20/06/2025",
     endDate: "22/06/2025",
     amount: 700.0,
-    reservationStatus: "waitingForPayment",
   },
   {
     id: 10,
     parentName: "محمود إبراهيم",
-    childName: "إياد محمود",
+    childs: [
+      {
+        id: "c14",
+        name: "أمل محمود",
+        reservationStatus: "waitingForConfirmation",
+      },
+      { id: "c15", name: "راشد محمود", reservationStatus: "confirmed" },
+    ],
     branch: "فرع الطائف",
     startDate: "25/06/2025",
     endDate: "27/06/2025",
     amount: 920.25,
-    reservationStatus: "waitingForConfirmation",
   },
   {
     id: 11,
     parentName: "سميرة علي",
-    childName: "مريم سميرة",
+    childs: [
+      { id: "c16", name: "مازن علي", reservationStatus: "waitingForPayment" },
+    ],
     branch: "فرع نجران",
     startDate: "01/07/2025",
     endDate: "03/07/2025",
     amount: 815.0,
-    reservationStatus: "confirmed",
   },
   {
     id: 12,
     parentName: "يوسف أحمد",
-    childName: "حمزة يوسف",
+    childs: [{ id: "c17", name: "نجوى يوسف", reservationStatus: "confirmed" }],
     branch: "فرع حائل",
     startDate: "05/07/2025",
     endDate: "07/07/2025",
     amount: 770.75,
-    reservationStatus: "waitingForPayment",
   },
 ];
 
 const Bookings = () => {
+  const [selectedChildMap, setSelectedChildMap] = useState<
+    Record<number, string>
+  >({});
+
+  const columns = getColumns(selectedChildMap, setSelectedChildMap);
+
   return (
     <div>
       <div className="mt-6 lg:p-4 space-y-1">
