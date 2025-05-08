@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import Reports from "@/components/dashboard/center-reports/Reports";
 
 export default function DailyReports() {
@@ -6,6 +8,12 @@ export default function DailyReports() {
       <p className="heading-4 text-primary text-center">التقارير</p>
 
       <Reports />
+
+      <div className="mt-4 flex justify-center">
+        <Button asChild size={"sm"}>
+          <Link href="daily-reports/send">إرسال تقرير</Link>
+        </Button>
+      </div>
     </div>
   );
 }
