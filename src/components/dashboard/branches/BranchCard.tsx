@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
-const BranchCard = () => {
+const BranchCard = ({
+  noEdit,
+  baseUrl,
+}: {
+  noEdit: boolean;
+  baseUrl: string;
+}) => {
   const acceptedAges = {
     "0-3": "من سن 0 إلى 3 سنوات",
     "3-6": "من سن 3 إلى 6  سنوات",
@@ -35,11 +41,15 @@ const BranchCard = () => {
 
         <div className="flex gap-5 lg:gap-x-10">
           <Button asChild size={"sm"}>
-            <Link href={"branches/123"}>عرض الفرع</Link>
+            <Link href={`${baseUrl || "branches"}/123`}>عرض الفرع</Link>
           </Button>
-          <Button asChild size={"sm"} variant={"outline"}>
-            <Link href={"branches/123/edit"}>تعديل الفرع</Link>
-          </Button>
+          {!noEdit && (
+            <Button asChild size={"sm"} variant={"outline"}>
+              <Link href={`${baseUrl || "branches"}/123/edit`}>
+                تعديل الفرع
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
 
