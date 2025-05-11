@@ -6,8 +6,8 @@ const BranchCard = ({
   noEdit,
   baseUrl,
 }: {
-  noEdit: boolean;
-  baseUrl: string;
+  noEdit?: boolean;
+  baseUrl?: string;
 }) => {
   const acceptedAges = {
     "0-3": "من سن 0 إلى 3 سنوات",

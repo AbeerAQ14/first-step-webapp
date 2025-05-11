@@ -4,8 +4,8 @@ const Branches = ({
   noEdit,
   baseUrl,
 }: {
-  noEdit: boolean;
-  baseUrl: string;
+  noEdit?: boolean;
+  baseUrl?: string;
 }) => {
   return (
     <div className="flex flex-col gap-4">
