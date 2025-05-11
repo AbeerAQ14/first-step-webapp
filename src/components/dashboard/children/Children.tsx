@@ -1,12 +1,18 @@
 import ChildCard from "./ChildCard";
 
-const Children = () => {
+const Children = ({
+  noEdit,
+  baseUrl,
+}: {
+  noEdit?: boolean;
+  baseUrl?: string;
+}) => {
   return (
     <div className="flex flex-col gap-4">
       {Array(2)
         .fill(1)
         .map((_, index) => (
-          <ChildCard key={index} />
+          <ChildCard noEdit={noEdit} baseUrl={baseUrl} key={index} />
         ))}
     </div>
   );

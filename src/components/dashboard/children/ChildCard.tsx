@@ -3,7 +3,13 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { AddChildFormData } from "@/lib/schemas";
 
-const ChildCard = () => {
+const ChildCard = ({
+  noEdit,
+  baseUrl,
+}: {
+  noEdit?: boolean;
+  baseUrl?: string;
+}) => {
   const childInfo: AddChildFormData = {
     childName: "حلا",
     birthDate: new Date("2020-12-06"),
@@ -92,11 +98,15 @@ const ChildCard = () => {
 
         <div className="flex gap-4">
           <Button asChild size={"sm"}>
-            <Link href={"children/123"}>عرض ملف الطفل</Link>
+            <Link href={`${baseUrl || "children"}/123`}>عرض ملف الطفل</Link>
           </Button>
-          <Button asChild size={"sm"} variant={"outline"}>
-            <Link href={"children/123/edit"}>تعديل ملف الطفل</Link>
-          </Button>
+          {!noEdit && (
+            <Button asChild size={"sm"} variant={"outline"}>
+              <Link href={`${baseUrl || "children"}/123/edit`}>
+                تعديل ملف الطفل
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
 
