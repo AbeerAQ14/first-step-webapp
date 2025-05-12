@@ -24,10 +24,12 @@ const ChildShow = ({
   initialValues,
   mode,
   childId,
+  noEdit,
 }: {
   initialValues: any;
   mode: "add" | "edit" | "show";
   childId?: string;
+  noEdit?: boolean;
 }) => {
   const router = useRouter();
   const locale = useLocale();
@@ -95,13 +97,18 @@ const ChildShow = ({
 
         {childId && (
           <div className="flex justify-center gap-5 lg:gap-x-10">
-            <Button asChild size={"sm"}>
-              <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
-            </Button>
+            {!noEdit && (
+              <Button asChild size={"sm"}>
+                <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
+              </Button>
+            )}
             <Button
               size={"sm"}
               variant={"outline"}
-              onClick={() => router.back()}
+              onClick={(e) => {
+                e.preventDefault();
+                router.back();
+              }}
             >
               إلغاء
             </Button>

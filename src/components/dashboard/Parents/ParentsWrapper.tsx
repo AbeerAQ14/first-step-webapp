@@ -21,7 +21,7 @@ const ParentsWrapper = () => {
       {activeTab === "parents" ? (
         <div></div>
       ) : (
-        <Children noEdit baseUrl="parents/children" />
+        <Children noEdit baseUrl="children" />
       )}
     </div>
   );
