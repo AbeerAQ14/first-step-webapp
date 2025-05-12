@@ -1,6 +1,6 @@
-import Numbers from "@/components/dashboard/bookings/Numbers";
+import Numbers from "@/components/dashboard/center-bookings/Numbers";
 import AreaComparison from "@/components/charts/AreaComparison";
-import Bookings from "@/components/dashboard/bookings/Bookings";
+import Bookings from "@/components/dashboard/center-bookings/Bookings";
 
 export default async function CenterDashboardBookings() {
   const rows = [
