@@ -1,13 +1,14 @@
 "use client";
 
-import { Booking, getColumns } from "@/components/tables/data/center-bookings";
-import { DataTable } from "@/components/tables/DataTable";
 import { useState } from "react";
+import { Booking, getColumns } from "@/components/tables/data/admin-bookings";
+import { DataTable } from "@/components/tables/DataTable";
 
 const bookingsData: Booking[] = [
   {
     id: 1,
     parentName: "أحمد محمد",
+    center: "مركز الرياض",
     childs: [
       { id: "c1", name: "سارة أحمد", reservationStatus: "confirmed" },
       { id: "c2", name: "سعد أحمد", reservationStatus: "waitingForPayment" },
@@ -20,6 +21,7 @@ const bookingsData: Booking[] = [
   {
     id: 2,
     parentName: "علي حسن",
+    center: "مركز الرياض",
     childs: [
       {
         id: "c3",
@@ -35,6 +37,7 @@ const bookingsData: Booking[] = [
   {
     id: 3,
     parentName: "سارة محمود",
+    center: "مركز الرياض",
     childs: [
       { id: "c4", name: "رنا محمود", reservationStatus: "confirmed" },
       { id: "c5", name: "فهد محمود", reservationStatus: "rejected" },
@@ -47,6 +50,7 @@ const bookingsData: Booking[] = [
   {
     id: 4,
     parentName: "إبراهيم خليل",
+    center: "مركز الرياض",
     childs: [
       { id: "c6", name: "ليلى خليل", reservationStatus: "waitingForPayment" },
     ],
@@ -58,6 +62,7 @@ const bookingsData: Booking[] = [
   {
     id: 5,
     parentName: "منى السيد",
+    center: "مركز الرياض",
     childs: [{ id: "c7", name: "حسن منى", reservationStatus: "confirmed" }],
     branch: "فرع الدمام",
     startDate: "01/06/2025",
@@ -67,6 +72,7 @@ const bookingsData: Booking[] = [
   {
     id: 6,
     parentName: "خالد عمر",
+    center: "مركز الرياض",
     childs: [
       { id: "c8", name: "خالد خالد", reservationStatus: "confirmed" },
       {
@@ -83,6 +89,7 @@ const bookingsData: Booking[] = [
   {
     id: 7,
     parentName: "ليلى عبد الله",
+    center: "مركز الرياض",
     childs: [
       { id: "c10", name: "ريم عبد الله", reservationStatus: "rejected" },
     ],
@@ -94,6 +101,7 @@ const bookingsData: Booking[] = [
   {
     id: 8,
     parentName: "طارق حسين",
+    center: "مركز الرياض",
     childs: [
       { id: "c11", name: "زياد طارق", reservationStatus: "confirmed" },
       { id: "c12", name: "فرح طارق", reservationStatus: "waitingForPayment" },
@@ -106,6 +114,7 @@ const bookingsData: Booking[] = [
   {
     id: 9,
     parentName: "نهى جمال",
+    center: "مركز الرياض",
     childs: [
       { id: "c13", name: "عبدالله جمال", reservationStatus: "confirmed" },
     ],
@@ -117,6 +126,7 @@ const bookingsData: Booking[] = [
   {
     id: 10,
     parentName: "محمود إبراهيم",
+    center: "مركز الرياض",
     childs: [
       {
         id: "c14",
@@ -133,6 +143,7 @@ const bookingsData: Booking[] = [
   {
     id: 11,
     parentName: "سميرة علي",
+    center: "مركز الرياض",
     childs: [
       { id: "c16", name: "مازن علي", reservationStatus: "waitingForPayment" },
     ],
@@ -144,6 +155,7 @@ const bookingsData: Booking[] = [
   {
     id: 12,
     parentName: "يوسف أحمد",
+    center: "مركز الرياض",
     childs: [{ id: "c17", name: "نجوى يوسف", reservationStatus: "confirmed" }],
     branch: "فرع حائل",
     startDate: "05/07/2025",
