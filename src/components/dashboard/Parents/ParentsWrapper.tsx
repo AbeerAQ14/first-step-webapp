@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tabs } from "@/components/general/Tabs";
 import Children from "../children/Children";
+import Parents from "./Parents";
 
 const ParentsWrapper = () => {
   const [activeTab, setActiveTab] = useState<"parents" | "children">("parents");
@@ -19,7 +20,7 @@ const ParentsWrapper = () => {
       />
 
       {activeTab === "parents" ? (
-        <div></div>
+        <Parents />
       ) : (
         <Children noEdit baseUrl="children" />
       )}
