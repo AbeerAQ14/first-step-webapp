@@ -1,5 +1,6 @@
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
 import AreaComparison from "@/components/charts/AreaComparison";
+import TopBookings from "@/components/dashboard/admin-bookings/TopBooking";
 import Bookings from "@/components/dashboard/admin-bookings/Bookings";
 
 export default async function BookingsPage() {
@@ -33,6 +34,10 @@ export default async function BookingsPage() {
         <Numbers />
 
         <AreaComparison title={"مقارنة الحجوزات"} rows={rows} />
+      </div>
+
+      <div className="mt-6">
+        <TopBookings />
       </div>
 
       <div className="mt-6">

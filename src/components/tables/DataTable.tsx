@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import React, { useEffect } from "react";
 import { DataTablePagination } from "./DataTablePagination";
-import { Input } from "../ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,6 +29,7 @@ interface DataTableProps<TData, TValue> {
   setSelected?: React.Dispatch<React.SetStateAction<TData[]>>;
   globalFilterValue?: string;
   setGlobalFilterValue?: React.Dispatch<React.SetStateAction<string>>;
+  pagination?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -38,6 +38,7 @@ export function DataTable<TData, TValue>({
   setSelected,
   globalFilterValue,
   setGlobalFilterValue,
+  pagination,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] =
@@ -123,7 +124,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <DataTablePagination table={table} />
+        {pagination && <DataTablePagination table={table} />}
       </div>
     </div>
   );
