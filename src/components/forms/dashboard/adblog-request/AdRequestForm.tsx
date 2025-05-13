@@ -1,7 +1,6 @@
 "use client";
 
 import DatePicker from "@/components/general/DatePicker";
-import { Button } from "@/components/ui/button";
 import {
   FormControl,
   FormField,
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from "@/i18n/navigation";
 import { AdRequestFormData, createAdRequestSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -23,16 +21,16 @@ import { FormProvider, useForm } from "react-hook-form";
 const AdRequestForm = ({
   initialData,
   mode,
+  children,
 }: {
   initialData?: AdRequestFormData;
   mode?: "add" | "show";
+  children: React.ReactNode;
 }) => {
   const locale = useLocale();
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData?.image === "string" && initialData?.image) || null
   );
-  const router = useRouter();
-
   const adRequestSchema = createAdRequestSchema(locale as "ar" | "en");
 
   const methods = useForm<AdRequestFormData>({
@@ -226,17 +224,7 @@ const AdRequestForm = ({
         />
 
         <div className="sm:col-span-2 flex justify-center gap-5 lg:gap-x-10">
-          <Button size={"sm"} type="submit">
-            إرسال طلب
-          </Button>
-          <Button
-            size={"sm"}
-            variant={"outline"}
-            className="!border-light-gray text-mid-gray"
-            onClick={() => router.back()}
-          >
-            إلغاء
-          </Button>
+          {children}
         </div>
       </form>
     </FormProvider>

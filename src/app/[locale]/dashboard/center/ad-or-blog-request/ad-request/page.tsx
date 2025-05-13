@@ -1,6 +1,6 @@
-import AdRequestForm from "@/components/forms/dashboard/adblog-request/AdRequestForm";
+import CenterAdRequest from "@/components/forms/dashboard/adblog-request/CenterAdRequest";
 
-export default function CenterAdRequest() {
+export default function CenterAdRequestPage() {
   return (
     <div>
       <div className="py-2.5 text-center bg-secondary-mint-green rounded-t-full font-medium">
@@ -16,7 +16,7 @@ export default function CenterAdRequest() {
           </p>
         </div>
 
-        <AdRequestForm />
+        <CenterAdRequest />
       </div>
     </div>
   );
