@@ -118,7 +118,11 @@ const AdRequestForm = ({
             <FormItem>
               <Label>
                 <span className="text-base">العنوان</span>
-                <span className={`text-red-500`}>*</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
               </Label>
               <FormControl>
                 <Input
