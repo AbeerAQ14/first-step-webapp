@@ -25,7 +25,7 @@ const AdRequestForm = ({
 }: {
   initialData?: AdRequestFormData;
   mode?: "add" | "show";
-  children: React.ReactNode;
+  children: (data: AdRequestFormData, isValid: boolean) => React.ReactNode;
 }) => {
   const locale = useLocale();
   const [preview, setPreview] = useState<string | null>(
@@ -48,6 +48,9 @@ const AdRequestForm = ({
   const onSubmit = (data: AdRequestFormData) => {
     console.log(data);
   };
+
+  const formData = methods.watch();
+  const isValid = methods.formState.isValid;
 
   return (
     <FormProvider {...methods}>
@@ -224,7 +227,7 @@ const AdRequestForm = ({
         />
 
         <div className="sm:col-span-2 flex justify-center gap-5 lg:gap-x-10">
-          {children}
+          {children(formData, isValid)}
         </div>
       </form>
     </FormProvider>
