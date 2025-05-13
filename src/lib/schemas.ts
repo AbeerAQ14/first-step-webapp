@@ -719,16 +719,39 @@ export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
         required_error: getErrorMessage("general-field-required", locale),
       }),
       image: z
-        .any()
-        .refine(
-          (file) => file?.[0] && file[0].type.startsWith("image/"),
-          "يرجى رفع صورة صالحة"
-        )
-        .refine(async (file) => {
-          if (!file?.[0]) return false;
-          const image = await getImageDimensions(file[0]);
-          return image.width === 1440 && image.height === 680;
-        }, "يجب أن يكون مقاس الصورة 1440 × 680"),
+        .union([
+          z.string().url(), // Accept valid image URL
+          z.any(), // Accept FileList (we'll validate this further)
+        ])
+        .superRefine(async (val, ctx) => {
+          // Case 1: If it's a URL, skip file validation
+          if (typeof val === "string") {
+            return;
+          }
+
+          // Case 2: Handle FileList validation
+          if (
+            !val ||
+            typeof val !== "object" ||
+            !("length" in val) ||
+            val.length === 0 ||
+            !val[0].type.startsWith("image/")
+          ) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "يرجى رفع صورة صالحة",
+            });
+            return;
+          }
+
+          const image = await getImageDimensions(val[0]);
+          if (image.width !== 1440 || image.height !== 680) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "يجب أن يكون مقاس الصورة 1440 × 680",
+            });
+          }
+        }),
     })
     .superRefine((data, ctx) => {
       const today = new Date();
@@ -759,6 +782,41 @@ export type AdRequestFormData = z.infer<
   ReturnType<typeof createAdRequestSchema>
 >;
 
+function createImageSchema(
+  expectedWidth: number,
+  expectedHeight: number,
+  sizeMessage: string,
+  locale: "ar" | "en"
+) {
+  return z.union([z.string().url(), z.any()]).superRefine(async (val, ctx) => {
+    // Case 1: It's a URL string — skip dimension check (optional: validate image extension)
+    if (typeof val === "string") {
+      return;
+    }
+
+    // Case 2: It's a FileList — check it's a valid image
+    if (!val?.[0] || !val[0].type?.startsWith("image/")) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "يرجى رفع صورة صالحة",
+      });
+      return;
+    }
+
+    // Check dimensions of uploaded file
+    const dimensions = await getImageDimensions(val[0]);
+    if (
+      dimensions.width !== expectedWidth ||
+      dimensions.height !== expectedHeight
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: sizeMessage,
+      });
+    }
+  });
+}
+
 export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
@@ -769,28 +827,18 @@ export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
       message: getErrorMessage("general-field-required", locale),
     }),
     content: z.string().min(30, "محتوى التدوينة مطلوب (نص MDX)"),
-    mainImage: z
-      .any()
-      .refine(
-        (file) => file?.[0] && file[0].type.startsWith("image/"),
-        "يرجى رفع صورة صالحة"
-      )
-      .refine(async (file) => {
-        if (!file?.[0]) return false;
-        const image = await getImageDimensions(file[0]);
-        return image.width === 1440 && image.height === 680;
-      }, "يجب أن يكون مقاس الصورة 1440 × 680"),
-    cardImage: z
-      .any()
-      .refine(
-        (file) => file?.[0] && file[0].type.startsWith("image/"),
-        "يرجى رفع صورة صالحة"
-      )
-      .refine(async (file) => {
-        if (!file?.[0]) return false;
-        const image = await getImageDimensions(file[0]);
-        return image.width === 264 && image.height === 160;
-      }, "يجب أن يكون مقاس الصورة 264 × 160"),
+    mainImage: createImageSchema(
+      1440,
+      680,
+      "يجب أن يكون مقاس الصورة 1440 × 680",
+      locale
+    ),
+    cardImage: createImageSchema(
+      264,
+      160,
+      "يجب أن يكون مقاس الصورة 264 × 160",
+      locale
+    ),
   });
 
 export type BlogRequestFormData = z.infer<
