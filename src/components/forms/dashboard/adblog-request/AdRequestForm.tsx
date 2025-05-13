@@ -85,7 +85,7 @@ const AdRequestForm = ({
                   <label
                     htmlFor="image-upload"
                     className={clsx(
-                      "w-full aspect-[1440/680] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
+                      "w-full aspect-[720/340] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
                       preview && "p-2"
                     )}
                   >
@@ -93,8 +93,8 @@ const AdRequestForm = ({
                       <Image
                         src={preview}
                         alt="Preview"
-                        width={1440}
-                        height={600}
+                        width={720}
+                        height={340}
                         className="rounded-md object-cover h-full w-full"
                       />
                     ) : (
