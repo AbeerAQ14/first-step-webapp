@@ -1,7 +1,7 @@
 import AdDetailsWrapper from "@/components/dashboard/advertisement/AdDetailsWrapper";
 import { AdRequestFormData } from "@/lib/schemas";
 
-export default async function AdvertisementDetails({
+export default async function AdvertisementEdit({
   params,
 }: {
   params: Promise<{ adId: string }>;
@@ -20,7 +20,13 @@ export default async function AdvertisementDetails({
 
   return (
     <div>
-      <AdDetailsWrapper adId={adId} initialValues={initialValues} mode="show" />
+      <div className="mb-3.5 flex items-center justify-between">
+        <h1 className="heading-4 font-bold text-primary max-w-[39.75rem] mx-auto">
+          تعديل الإعلان
+        </h1>
+      </div>
+
+      <AdDetailsWrapper adId={adId} initialValues={initialValues} mode="add" />
     </div>
   );
 }
