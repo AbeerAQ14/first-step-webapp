@@ -20,9 +20,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-const AdRequestForm = () => {
+const AdRequestForm = ({
+  initialData,
+  mode,
+}: {
+  initialData?: AdRequestFormData;
+  mode?: "add" | "show";
+}) => {
   const locale = useLocale();
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(
+    (typeof initialData?.image === "string" && initialData?.image) || null
+  );
   const router = useRouter();
 
   const adRequestSchema = createAdRequestSchema(locale as "ar" | "en");
@@ -30,11 +38,11 @@ const AdRequestForm = () => {
   const methods = useForm<AdRequestFormData>({
     resolver: zodResolver(adRequestSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      image: undefined,
-      start_date: undefined,
-      end_date: undefined,
+      title: initialData?.title || "",
+      description: initialData?.description || "",
+      image: initialData?.image || undefined,
+      start_date: initialData?.start_date || undefined,
+      end_date: initialData?.end_date || undefined,
     },
     mode: "onChange",
   });
@@ -54,13 +62,14 @@ const AdRequestForm = () => {
           name="image"
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
-              <Label>
+              <Label className={`${mode === "show" ? "hidden" : ""}`}>
                 <span className="text-base">صورة الطلب</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
                 <div>
                   <input
+                    disabled={mode === "show"}
                     type="file"
                     accept="image/*"
                     className="hidden"
@@ -109,10 +118,15 @@ const AdRequestForm = () => {
             <FormItem>
               <Label>
                 <span className="text-base">العنوان</span>
-                <span className="text-red-500">*</span>
+                <span className={`text-red-500`}>*</span>
               </Label>
               <FormControl>
-                <Input type="text" placeholder="العنوان" {...field} />
+                <Input
+                  type="text"
+                  placeholder="العنوان"
+                  {...field}
+                  disabled={mode === "show"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -126,10 +140,19 @@ const AdRequestForm = () => {
             <FormItem>
               <Label>
                 <span className="text-base">الوصف</span>
-                <span className="text-red-500">*</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
               </Label>
               <FormControl>
-                <Input type="text" placeholder="الوصف" {...field} />
+                <Input
+                  type="text"
+                  placeholder="الوصف"
+                  {...field}
+                  disabled={mode === "show"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,7 +167,11 @@ const AdRequestForm = () => {
             <FormItem>
               <Label>
                 <span className="text-base">بداية يوم</span>{" "}
-                <span className="text-red-500">*</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
               </Label>
               <FormControl>
                 <DatePicker
@@ -155,6 +182,7 @@ const AdRequestForm = () => {
                       new Date().setDate(new Date().getDate() + 1)
                     ),
                   }}
+                  inputDisabled={mode === "show"}
                 />
               </FormControl>
               <FormMessage />
@@ -170,7 +198,11 @@ const AdRequestForm = () => {
             <FormItem>
               <Label>
                 <span className="text-base">نهاية يوم</span>{" "}
-                <span className="text-red-500">*</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
               </Label>
               <FormControl>
                 <DatePicker
@@ -181,6 +213,7 @@ const AdRequestForm = () => {
                       new Date().setDate(new Date().getDate() + 1)
                     ),
                   }}
+                  inputDisabled={mode === "show"}
                 />
               </FormControl>
               <FormMessage />

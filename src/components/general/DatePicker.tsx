@@ -14,9 +14,15 @@ interface DatePickerProps {
   value: Date | undefined;
   onChange: (date: Date | undefined) => void;
   disabled?: any;
+  inputDisabled?: boolean;
 }
 
-const DatePicker = ({ value, onChange, disabled }: DatePickerProps) => {
+const DatePicker = ({
+  value,
+  onChange,
+  disabled,
+  inputDisabled,
+}: DatePickerProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -26,12 +32,20 @@ const DatePicker = ({ value, onChange, disabled }: DatePickerProps) => {
               className={cn(!value && "text-mid-gray")}
               value={value ? format(value, "PPP") : "Pick a date"}
               readOnly
+              disabled={inputDisabled}
             />
-            <CalendarIcon className="cursor-pointer absolute left-3 ltr:left-auto ltr:right-3 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50" />
+            <CalendarIcon
+              className={`cursor-pointer absolute left-3 ltr:left-auto ltr:right-3 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50 ${
+                inputDisabled ? "hidden" : ""
+              }`}
+            />
           </div>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent
+        className={`w-auto p-0 ${inputDisabled ? "hidden" : ""}`}
+        align="start"
+      >
         <Calendar
           mode="single"
           selected={value}
