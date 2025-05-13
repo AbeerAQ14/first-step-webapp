@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tabs } from "@/components/general/Tabs";
 import AdminAds from "./AdminAds";
+import CentersAdvertisements from "./CentersAdvertisements";
 
 const AdvertisementWrapper = () => {
   const [activeTab, setActiveTab] = useState<"firstStep" | "centers">(
@@ -20,13 +21,7 @@ const AdvertisementWrapper = () => {
         setActiveTab={setActiveTab}
       />
 
-      {activeTab === "firstStep" ? (
-        <AdminAds />
-      ) : (
-        // <Parents />
-        <div></div>
-        // <Children noEdit baseUrl="children" />
-      )}
+      {activeTab === "firstStep" ? <AdminAds /> : <CentersAdvertisements />}
     </div>
   );
 };
