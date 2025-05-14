@@ -92,22 +92,37 @@ const parentNavbar = [
 const adminNavbar = [
   {
     title: "الرئيسية", // Home
-    url: "/dashboard/parent",
+    url: "/dashboard/admin",
     icon: dashboardIcons.home,
   },
   {
-    title: "أطفالي", // Children
-    url: "/dashboard/parent/children",
+    title: "الحضانات والمراكز", // Children
+    url: "/dashboard/admin/centers",
+    icon: dashboardIcons.files,
+  },
+  {
+    title: "أولياء الأمور", // Children
+    url: "/dashboard/admin/parents",
     icon: dashboardIcons.files,
   },
   {
     title: "الحجوزات", // Bookings
-    url: "/dashboard/parent/bookings",
+    url: "/dashboard/admin/bookings",
     icon: dashboardIcons.bookings,
   },
   {
-    title: "التقارير اليومية", // Daily Reports
-    url: "/dashboard/parent/daily-reports",
+    title: "إعلان", // Children
+    url: "/dashboard/admin/advertisement",
+    icon: dashboardIcons.files,
+  },
+  {
+    title: "مدونة", // Daily Reports
+    url: "/dashboard/admin/blog",
+    icon: dashboardIcons.reports,
+  },
+  {
+    title: "الإشعارات", // Daily Reports
+    url: "/dashboard/admin/notifications",
     icon: dashboardIcons.reports,
   },
 ];
@@ -116,15 +131,15 @@ const DashboardSideBar = () => {
   const pathname = usePathname();
   const locale = useLocale();
 
-  const navbar = pathname.includes("/center")
+  const navbar = pathname.includes("/dashboard/center")
     ? centerNavbar
-    : pathname.includes("/admin")
+    : pathname.includes("dashboard/admin")
     ? adminNavbar
     : parentNavbar;
 
-  const basePathname = pathname.includes("/center")
+  const basePathname = pathname.includes("/dashboard/center")
     ? "/dashboard/center"
-    : pathname.includes("/admin")
+    : pathname.includes("dashboard/admin")
     ? "/dashboard/admin"
     : "/dashboard/parent";
 
