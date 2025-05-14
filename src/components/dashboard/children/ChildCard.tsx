@@ -6,9 +6,11 @@ import { AddChildFormData } from "@/lib/schemas";
 const ChildCard = ({
   noEdit,
   baseUrl,
+  absoluteBaseUrl,
 }: {
   noEdit?: boolean;
   baseUrl?: string;
+  absoluteBaseUrl?: string;
 }) => {
   const childInfo: AddChildFormData = {
     childName: "حلا",
@@ -98,11 +100,15 @@ const ChildCard = ({
 
         <div className="flex gap-4">
           <Button asChild size={"sm"}>
-            <Link href={`${baseUrl || "children"}/123`}>عرض ملف الطفل</Link>
+            <Link href={`${absoluteBaseUrl || baseUrl || "children"}/123`}>
+              عرض ملف الطفل
+            </Link>
           </Button>
           {!noEdit && (
             <Button asChild size={"sm"} variant={"outline"}>
-              <Link href={`${baseUrl || "children"}/123/edit`}>
+              <Link
+                href={`${absoluteBaseUrl || baseUrl || "children"}/123/edit`}
+              >
                 تعديل ملف الطفل
               </Link>
             </Button>
