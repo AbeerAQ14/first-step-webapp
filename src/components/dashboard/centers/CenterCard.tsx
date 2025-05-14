@@ -23,7 +23,7 @@ const CenterCard = () => {
           />
 
           <div className="flex flex-col gap-2 lg:gap-4">
-            <p className="font-bold text-primary text-xl">اسم الفرع</p>
+            <p className="font-bold text-primary text-xl">اسم الحضانة</p>
             <span className="font-medium text-mid-gray flex gap-1">
               <span>العنوان:</span>
               <span>السعودية ،المدينة، الحي، الشارع، رقم البناية</span>
