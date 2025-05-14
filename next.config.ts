@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "http",
-        hostname: "c4e8-196-128-75-129.ngrok-free.app",
+        hostname: "ddc1-45-102-102-197.ngrok-free.app",
         port: "",
       },
     ],
