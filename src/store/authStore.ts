@@ -29,3 +29,4 @@ export const useAuthStore = create<AuthState>()(
 
 // Selector hook for convenience (optional but recommended)
 export const useAuthToken = () => useAuthStore((state) => state.token);
+export const useAuthUser = () => useAuthStore((state) => state.user);

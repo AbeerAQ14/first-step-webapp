@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect, useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -12,11 +11,10 @@ import { Button } from "@/components/ui/button";
 import SignInForm from "./SignInForm";
 import { SignInFormData } from "@/lib/schemas";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 
 const SignIn = () => {
   const router = useRouter();
-  const locale = useLocale();
 
   const formRef = useRef<UseFormReturn<SignInFormData> | null>(null);
 
@@ -57,20 +55,25 @@ const SignIn = () => {
       return await authService.login(payload.email, payload.password);
     },
     onSuccess: (data) => {
-      console.log("Submission successful:", data);
       useAuthStore.setState({
         token: data.token,
         user: data.user,
       });
 
-      router.push(`/${locale}`);
+      let dashboardPath = "/dashboard/center";
+
+      if (data.user.role === "center") {
+        dashboardPath = "/dashboard/center";
+      } else if (data.user.role === "parent") {
+        dashboardPath = "/dashboard/parent";
+      } else if (data.user.role === "admin") {
+        dashboardPath = "/dashboard/admin";
+      }
+
+      router.push(dashboardPath);
     },
     onError,
   });
-
-  useEffect(() => {
-    router.prefetch(`/${locale}`);
-  }, []);
 
   const t = useTranslations("auth");
 
