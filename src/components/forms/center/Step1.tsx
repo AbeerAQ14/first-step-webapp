@@ -16,9 +16,12 @@ import type { BranchStep1FormData, CenterStep1FormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { mapOptions } from "@/lib/utils";
+import { CENTER_TYPE_IDS, SERVICE_IDS } from "@/lib/options";
 
 export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
   const t = useTranslations("auth.center-signup.1.form");
+  const tOptions = useTranslations("options");
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,25 +29,8 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
 
   const { control } = useFormContext<Step1FormData>();
 
-  const centerTypes = [
-    { id: "nursing", label: t("type.options.care") },
-    { id: "educational", label: t("type.options.education") },
-    { id: "support and rehabilitation", label: t("type.options.support") },
-  ];
-
-  const services = [
-    { id: "education", label: t("services.options.education") },
-    { id: "kindergarten", label: t("services.options.kindergarten") },
-    { id: "after-school", label: t("services.options.after-school") },
-    { id: "special-needs", label: t("services.options.special-needs") },
-    { id: "therapy", label: t("services.options.therapy") },
-    { id: "speech-therapy", label: t("services.options.speech-therapy") },
-    {
-      id: "occupational-therapy",
-      label: t("services.options.occupational-therapy"),
-    },
-    { id: "care", label: t("services.options.care") },
-  ];
+  const centerTypes = mapOptions(CENTER_TYPE_IDS, "centerTypes", tOptions);
+  const services = mapOptions(SERVICE_IDS, "centerServices", tOptions);
 
   return (
     <div className="space-y-10">

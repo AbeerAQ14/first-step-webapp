@@ -494,5 +494,36 @@
       "have": "ليدك حساب بالفعل؟",
       "dont-have": "ليس لديك حساب؟"
     }
+  },
+  "options": {
+    "centerTypes": {
+      "nursing": "رعاية",
+      "educational": "تعليمي",
+      "support-and-rehabilitation": "الدعم والتأهيل"
+    },
+    "centerServices": {
+      "education": "تعليمي",
+      "kindergarten": "روضة",
+      "after-school": "بعد المدرسة",
+      "special-needs": "ذوي الاحتياجات الخاصة",
+      "therapy": "علاج طبيعي",
+      "speech-therapy": "علاج النطق",
+      "occupational-therapy": "علاج وظيفي",
+      "care": "رعاية"
+    },
+    "centerAges": {
+      "0-3": "من سن 0 إلى 3 سنوات",
+      "3-6": "من سن 3 إلى 6 سنوات",
+      "disabled": "ذوي الاحتياجات الخاصة"
+    },
+    "days": {
+      "saturday": "السبت",
+      "sunday": "الأحد",
+      "monday": "الاثنين",
+      "tuesday": "الثلاثاء",
+      "wednesday": "الأربعاء",
+      "thursday": "الخميس",
+      "friday": "الجمعة"
+    }
   }
 }

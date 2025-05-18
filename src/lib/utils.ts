@@ -300,3 +300,14 @@ export async function getImageDimensions(
     img.src = URL.createObjectURL(file);
   });
 }
+
+export function mapOptions<T extends readonly string[]>(
+  ids: T,
+  translationPrefix: string,
+  t: (key: string) => string
+): { id: T[number]; label: string }[] {
+  return ids.map((id) => ({
+    id,
+    label: t(`${translationPrefix}.${id}`),
+  }));
+}

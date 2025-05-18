@@ -20,26 +20,16 @@ import { Input } from "@/components/ui/input";
 import CheckboxGroup from "../CheckboxGroup";
 import { Clock } from "lucide-react";
 import type { CenterStep2FormData } from "@/lib/schemas";
+import { mapOptions } from "@/lib/utils";
+import { AGE_GROUP_IDS, WEEK_DAYS } from "@/lib/options";
 
 export function Step2AgesAndHours() {
   const t = useTranslations("auth.center-signup.2.form");
+  const tOptions = useTranslations("options");
   const { control } = useFormContext<CenterStep2FormData>();
 
-  const ageGroups = [
-    { id: "0-3", label: t("ages.options.0-3") },
-    { id: "3-6", label: t("ages.options.3-6") },
-    { id: "disabled", label: t("ages.options.special-needs") },
-  ];
-
-  const days = [
-    { value: "sunday", label: t("days.sunday") },
-    { value: "monday", label: t("days.monday") },
-    { value: "tuesday", label: t("days.tuesday") },
-    { value: "wednesday", label: t("days.wednesday") },
-    { value: "thursday", label: t("days.thursday") },
-    { value: "friday", label: t("days.friday") },
-    { value: "saturday", label: t("days.saturday") },
-  ];
+  const ageGroups = mapOptions(AGE_GROUP_IDS, "centerAges", tOptions);
+  const days = mapOptions(WEEK_DAYS, "days", tOptions);
 
   return (
     <div className="space-y-8">
@@ -86,7 +76,7 @@ export function Step2AgesAndHours() {
                   </FormControl>
                   <SelectContent>
                     {days.map((day) => (
-                      <SelectItem key={day.value} value={day.value}>
+                      <SelectItem key={day.id} value={day.id}>
                         {day.label}
                       </SelectItem>
                     ))}
@@ -116,7 +106,7 @@ export function Step2AgesAndHours() {
                   </FormControl>
                   <SelectContent>
                     {days.map((day) => (
-                      <SelectItem key={day.value} value={day.value}>
+                      <SelectItem key={day.id} value={day.id}>
                         {day.label}
                       </SelectItem>
                     ))}

@@ -497,5 +497,36 @@
       "have": "Already have an account?",
       "dont-have": "Don't have an account?"
     }
+  },
+  "options": {
+    "centerTypes": {
+      "nursing": "Care",
+      "educational": "Educational",
+      "support-and-rehabilitation": "Support and Rehabilitation"
+    },
+    "centerServices": {
+      "education": "Educational",
+      "kindergarten": "Kindergarten",
+      "after-school": "After School",
+      "special-needs": "Special Needs",
+      "therapy": "Physical Therapy",
+      "speech-therapy": "Speech Therapy",
+      "occupational-therapy": "Occupational Therapy",
+      "care": "Care"
+    },
+    "centerAges": {
+      "0-3": "0 to 3 years",
+      "3-6": "3 to 6 years",
+      "disabled": "Children with Special Needs"
+    },
+    "days": {
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday"
+    }
   }
 }
