@@ -12,17 +12,19 @@ import {
 } from "@/components/ui/form";
 import PhoneInput from "../PhoneInput";
 import CheckboxGroup from "../CheckboxGroup";
-import type { CenterStep1FormData } from "@/lib/schemas";
+import type { BranchStep1FormData, CenterStep1FormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function Step1BasicInfo() {
+export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
   const t = useTranslations("auth.center-signup.1.form");
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { control } = useFormContext<CenterStep1FormData>();
+  type Step1FormData = BranchStep1FormData | CenterStep1FormData;
+
+  const { control } = useFormContext<Step1FormData>();
 
   const centerTypes = [
     { id: "nursing", label: t("type.options.care") },
@@ -123,77 +125,81 @@ export function Step1BasicInfo() {
           )}
         />
 
-        <FormField
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                {t("password.label")}
-                <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <div className="relative w-full">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder={t("password.placeholder")}
-                    {...field}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="size-6 stroke-inherit" />
-                    ) : (
-                      <Eye className="size-6 stroke-inherit" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!isBranch && (
+          <>
+            <FormField
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("password.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative w-full">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("password.placeholder")}
+                        {...field}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="size-6 stroke-inherit" />
+                        ) : (
+                          <Eye className="size-6 stroke-inherit" />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                {t("password-confirm.label")}
-                <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <div className="relative w-full">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder={t("password-confirm.placeholder")}
-                    {...field}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="size-6 stroke-inherit" />
-                    ) : (
-                      <Eye className="size-6 stroke-inherit" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            <FormField
+              control={control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("password-confirm.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative w-full">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("password-confirm.placeholder")}
+                        {...field}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="size-6 stroke-inherit" />
+                        ) : (
+                          <Eye className="size-6 stroke-inherit" />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
 
         <FormField
           control={control}

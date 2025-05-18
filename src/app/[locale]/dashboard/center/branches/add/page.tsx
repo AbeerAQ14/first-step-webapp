@@ -1,22 +1,5 @@
 import BranchWrapper from "@/components/forms/dashboard/branches/BranchWrapper";
 
-const initialValues = {
-  name: "",
-  email: "",
-  phone: "",
-  neighborhood: "",
-  nursery_name: "",
-  address: "",
-  city: "",
-  location: "",
-  services: [],
-  additional_service: "",
-  work_days_from: "",
-  work_days_to: "",
-  work_hours_from: "",
-  work_hours_to: "",
-};
-
 export default async function DashboardAddBranch() {
   return (
     <div>
@@ -26,7 +9,7 @@ export default async function DashboardAddBranch() {
         </h1>
       </div>
 
-      <BranchWrapper initialValues={initialValues} mode="add" />
+      <BranchWrapper mode="add" />
     </div>
   );
 }

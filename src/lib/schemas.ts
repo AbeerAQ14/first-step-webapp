@@ -318,6 +318,49 @@ export type SignUpParentFormData = z.infer<
   ReturnType<typeof createSignUpParentSchema>
 >;
 
+const createBranchStep1Schema = (locale: "ar" | "en" = "ar") =>
+  z.object({
+    // Step 1: Basic Information
+    name: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    nursery_name: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    email: z
+      .string()
+      .email({ message: getErrorMessage("invalid-email", locale) }),
+    phone: z
+      .string()
+      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
+        message: getErrorMessage("invalid-phone", locale),
+      }),
+    city: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    neighborhood: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    address: z
+      .string()
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+    location: z
+      .string()
+      .min(5, { message: getErrorMessage("general-field-required", locale) }),
+    // Consider adding z.string().url() if it must be a valid URL
+    nursery_type: z
+      .array(z.string())
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    services: z
+      .array(z.string())
+      .min(1, { message: getErrorMessage("services-one-required", locale) }),
+    additional_service: z.string().optional(),
+  });
+
+export type BranchStep1FormData = z.infer<
+  ReturnType<typeof createBranchStep1Schema>
+>;
+
 // Sign Up For Centers Step 1
 const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
@@ -618,63 +661,72 @@ export type SignUpCenterFormData = z.infer<
 >;
 
 // Create Center Branch
-export const createBranchSchema = (locale: "ar" | "en" = "ar") =>
-  z.object({
-    // Step 1: Basic Information
-    name: z
-      .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    nursery_name: z
-      .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    email: z
-      .string()
-      .email({ message: getErrorMessage("invalid-email", locale) }),
-    phone: z
-      .string()
-      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
-        message: getErrorMessage("invalid-phone", locale),
-      }),
-    city: z
-      .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    neighborhood: z
-      .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    address: z
-      .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    location: z
-      .string()
-      .min(5, { message: getErrorMessage("general-field-required", locale) }),
-    // Consider adding z.string().url() if it must be a valid URL
-    services: z
-      .array(z.string())
-      .min(1, { message: getErrorMessage("services-one-required", locale) }),
-    additional_service: z.string().optional(),
+export const createBranchSchema = (locale: "ar" | "en" = "ar") => {
+  const step1Schema = createBranchStep1Schema(locale);
+  const step2Schema = createCenterStep2Schema(locale);
+  const step3Schema = createCenterStep3Schema(locale);
+  const step4Schema = createCenterStep4Schema(locale);
 
-    // step 4
-    work_days_from: z
-      .string({
-        message: getErrorMessage("invalid-date", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_days_to: z
-      .string({
-        message: getErrorMessage("invalid-date", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_hours_from: z
-      .string({
-        message: getErrorMessage("invalid-time", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_hours_to: z
-      .string({
-        message: getErrorMessage("invalid-time", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-  });
+  return step1Schema.merge(step2Schema).merge(step3Schema).merge(step4Schema);
+};
+
+// export const createBranchSchema = (locale: "ar" | "en" = "ar") =>
+//   z.object({
+//     // Step 1: Basic Information
+//     name: z
+//       .string()
+//       .min(2, { message: getErrorMessage("general-field-required", locale) }),
+//     nursery_name: z
+//       .string()
+//       .min(2, { message: getErrorMessage("general-field-required", locale) }),
+//     email: z
+//       .string()
+//       .email({ message: getErrorMessage("invalid-email", locale) }),
+//     phone: z
+//       .string()
+//       .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
+//         message: getErrorMessage("invalid-phone", locale),
+//       }),
+//     city: z
+//       .string()
+//       .min(2, { message: getErrorMessage("general-field-required", locale) }),
+//     neighborhood: z
+//       .string()
+//       .min(2, { message: getErrorMessage("general-field-required", locale) }),
+//     address: z
+//       .string()
+//       .min(2, { message: getErrorMessage("general-field-required", locale) }),
+//     location: z
+//       .string()
+//       .min(5, { message: getErrorMessage("general-field-required", locale) }),
+//     // Consider adding z.string().url() if it must be a valid URL
+//     services: z
+//       .array(z.string())
+//       .min(1, { message: getErrorMessage("services-one-required", locale) }),
+//     additional_service: z.string().optional(),
+
+//     // step 4
+//     work_days_from: z
+//       .string({
+//         message: getErrorMessage("invalid-date", locale),
+//       })
+//       .min(1, { message: getErrorMessage("general-field-required", locale) }),
+//     work_days_to: z
+//       .string({
+//         message: getErrorMessage("invalid-date", locale),
+//       })
+//       .min(1, { message: getErrorMessage("general-field-required", locale) }),
+//     work_hours_from: z
+//       .string({
+//         message: getErrorMessage("invalid-time", locale),
+//       })
+//       .min(1, { message: getErrorMessage("general-field-required", locale) }),
+//     work_hours_to: z
+//       .string({
+//         message: getErrorMessage("invalid-time", locale),
+//       })
+//       .min(1, { message: getErrorMessage("general-field-required", locale) }),
+//   });
 
 export type BranchFormData = z.infer<ReturnType<typeof createBranchSchema>>;
 
