@@ -1,6 +1,6 @@
 "use client";
 
-import { BranchFormData } from "@/lib/schemas";
+import { Loader2 } from "lucide-react";
 import { Step1BasicInfo } from "../../center/Step1";
 import { Step2AgesAndHours } from "../../center/Step2";
 import { Step3Communication } from "../../center/Step3";
@@ -11,38 +11,33 @@ import { useRouter } from "@/i18n/navigation";
 const Branch = ({
   // initialValues,
   mode,
-  branchId,
+  isSubmitting,
 }: {
   // initialValues: BranchFormData;
   mode: "add" | "edit";
-  branchId?: string;
+  isSubmitting: boolean;
 }) => {
   const router = useRouter();
 
   const buttons = (mode: string) => {
-    if (mode === "add") {
-      return (
-        <>
-          <Button size={"sm"} type="submit">
-            إضافة فرع
-          </Button>
-          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
-            إلغاء
-          </Button>
-        </>
-      );
-    } else if (mode === "edit") {
-      return (
-        <>
-          <Button size={"sm"} type="submit">
-            تعديل الفرع
-          </Button>
-          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
-            إلغاء
-          </Button>
-        </>
-      );
-    }
+    const label = mode === "add" ? "إضافة فرع" : "تعديل الفرع";
+
+    return (
+      <>
+        <Button size="sm" type="submit" disabled={isSubmitting}>
+          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {label}
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => router.back()}
+          disabled={isSubmitting}
+        >
+          إلغاء
+        </Button>
+      </>
+    );
   };
 
   return (

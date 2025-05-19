@@ -1,51 +1,57 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { BranchCardType } from "@/hooks/useBranches";
 
 const BranchCard = ({
+  branch,
   noEdit,
   baseUrl,
 }: {
+  branch: BranchCardType;
   noEdit?: boolean;
   baseUrl?: string;
 }) => {
-  const acceptedAges = {
-    "0-3": "من سن 0 إلى 3 سنوات",
-    "3-6": "من سن 3 إلى 6  سنوات",
-  };
-
-  const services = ["توفير وجبات ", "رعاية رضع", "تعليم الرسم", "دعم نفسي"];
-
   return (
     <div className="bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
       <div className="flex flex-col gap-y-6">
         <div className="flex items-start gap-4">
           <Image
-            src="/assets/logos/instagram-logo.png"
+            src={branch.imageUrl || "/assets/logos/instagram-logo.png"}
             width={81.66}
             height={80}
-            alt="Nersery Logo"
+            alt="Branch Logo"
           />
 
           <div className="flex flex-col gap-2 lg:gap-4">
-            <p className="font-bold text-primary text-xl">اسم الفرع</p>
+            <p className="font-bold text-primary text-xl">{branch.name}</p>
+
             <span className="font-medium text-mid-gray">
-              العنوان: السعودية ،المدينة، الحي، الشارع، رقم البناية
+              <span>العنوان: </span>
+              <span>{branch.address}</span>
             </span>
-            <span className="font-medium text-mid-gray">الأطفال: 50 طفل</span>
+
             <span className="font-medium text-mid-gray">
-              مجموع الحجوزات: 70 حجز
+              <span>الأطفال: </span>
+              <span>{branch.childrenCount} طفل</span>
+            </span>
+
+            <span className="font-medium text-mid-gray">
+              <span>مجموع الحجوزات: </span>
+              <span>{branch.bookingsCount} حجز</span>
             </span>
           </div>
         </div>
 
         <div className="flex gap-5 lg:gap-x-10">
           <Button asChild size={"sm"}>
-            <Link href={`${baseUrl || "branches"}/123`}>عرض الفرع</Link>
+            <Link href={`${baseUrl || "branches"}/${branch.id}`}>
+              عرض الفرع
+            </Link>
           </Button>
           {!noEdit && (
             <Button asChild size={"sm"} variant={"outline"}>
-              <Link href={`${baseUrl || "branches"}/123/edit`}>
+              <Link href={`${baseUrl || "branches"}/${branch.id}/edit`}>
                 تعديل الفرع
               </Link>
             </Button>
@@ -60,10 +66,8 @@ const BranchCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {Object.keys(acceptedAges).map((item) => (
-              <span key={item}>
-                {acceptedAges[item as keyof typeof acceptedAges]}
-              </span>
+            {branch.acceptedAges.map((age) => (
+              <span key={age}>{age}</span>
             ))}
           </div>
         </div>
@@ -74,7 +78,7 @@ const BranchCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {services.map((service) => (
+            {branch.services.map((service) => (
               <span key={service}>{service}</span>
             ))}
           </div>

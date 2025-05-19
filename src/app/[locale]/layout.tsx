@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Tajawal } from "next/font/google";
 import "@/styles/globals.css";
+import { Providers } from "../providers";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -38,7 +39,9 @@ export default async function RootLayout({
         className={`${tajawal.className} min-h-screen flex flex-col antialiased`}
         suppressHydrationWarning
       >
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
