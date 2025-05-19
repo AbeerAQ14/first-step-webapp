@@ -22,6 +22,7 @@ import { Clock } from "lucide-react";
 import type { CenterStep2FormData } from "@/lib/schemas";
 import { mapOptions } from "@/lib/utils";
 import { AGE_GROUP_IDS, WEEK_DAYS } from "@/lib/options";
+import { usePathname } from "@/i18n/navigation";
 
 export function Step2AgesAndHours() {
   const t = useTranslations("auth.center-signup.2.form");
@@ -30,6 +31,9 @@ export function Step2AgesAndHours() {
 
   const ageGroups = mapOptions(AGE_GROUP_IDS, "centerAges", tOptions);
   const days = mapOptions(WEEK_DAYS, "days", tOptions);
+
+  const pathname = usePathname();
+  const isEdit = pathname.includes("edit");
 
   return (
     <div className="space-y-8">
@@ -71,7 +75,17 @@ export function Step2AgesAndHours() {
                   <FormLabel>{t("from-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("from-day.placeholder")} />
+                      {isEdit ? (
+                        <span
+                          data-slot="select-value"
+                          className="text-foreground"
+                        >
+                          {days.find((d) => d.id === field.value)?.label ||
+                            t("from-day.placeholder")}
+                        </span>
+                      ) : (
+                        <SelectValue placeholder={t("from-day.placeholder")} />
+                      )}
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -101,7 +115,17 @@ export function Step2AgesAndHours() {
                   <FormLabel>{t("to-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("to-day.placeholder")} />
+                      {isEdit ? (
+                        <span
+                          data-slot="select-value"
+                          className="text-foreground"
+                        >
+                          {days.find((d) => d.id === field.value)?.label ||
+                            t("to-day.placeholder")}
+                        </span>
+                      ) : (
+                        <SelectValue placeholder={t("to-day.placeholder")} />
+                      )}
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

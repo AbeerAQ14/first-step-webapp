@@ -499,7 +499,7 @@
     "centerTypes": {
       "nursing": "رعاية",
       "educational": "تعليمي",
-      "support-and-rehabilitation": "الدعم والتأهيل"
+      "support and rehabilitation": "الدعم والتأهيل"
     },
     "centerServices": {
       "education": "تعليمي",

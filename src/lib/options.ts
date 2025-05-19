@@ -1,7 +1,7 @@
 export const CENTER_TYPE_IDS = [
   "nursing",
   "educational",
-  "support-and-rehabilitation",
+  "support and rehabilitation",
 ] as const;
 
 export const SERVICE_IDS = [

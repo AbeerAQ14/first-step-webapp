@@ -502,7 +502,7 @@
     "centerTypes": {
       "nursing": "Care",
       "educational": "Educational",
-      "support-and-rehabilitation": "Support and Rehabilitation"
+      "support and rehabilitation": "Support and Rehabilitation"
     },
     "centerServices": {
       "education": "Educational",

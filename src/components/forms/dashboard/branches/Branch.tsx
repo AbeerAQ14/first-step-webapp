@@ -12,10 +12,12 @@ const Branch = ({
   // initialValues,
   mode,
   isSubmitting,
+  disabled,
 }: {
   // initialValues: BranchFormData;
   mode: "add" | "edit";
   isSubmitting: boolean;
+  disabled?: boolean;
 }) => {
   const router = useRouter();
 
@@ -24,7 +26,11 @@ const Branch = ({
 
     return (
       <>
-        <Button size="sm" type="submit" disabled={isSubmitting}>
+        <Button
+          size="sm"
+          type="submit"
+          disabled={isSubmitting || mode === "edit" ? disabled : false}
+        >
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {label}
         </Button>

@@ -1,6 +1,12 @@
 import BranchWrapper from "@/components/forms/dashboard/branches/BranchWrapper";
 
-export default async function DashboardEditBranch() {
+export default async function DashboardEditBranch({
+  params,
+}: {
+  params: Promise<{ branchId: string }>;
+}) {
+  const { branchId } = await params;
+
   const initialValues = {
     name: "خالد العبدالله",
     email: "Khaled.Alabdullah@example.sa",
@@ -26,7 +32,7 @@ export default async function DashboardEditBranch() {
         </h1>
       </div>
 
-      <BranchWrapper initialValues={initialValues} mode="edit" />
+      <BranchWrapper editBranchId={branchId} mode="edit" />
     </div>
   );
 }
