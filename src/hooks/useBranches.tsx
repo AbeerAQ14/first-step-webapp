@@ -1,4 +1,3 @@
-import { apiClient } from "@/services/api";
 import { centerService } from "@/services/dashboardApi";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -42,11 +41,7 @@ export const useBranches = () => {
     queryFn: async () => {
       const response = await centerService.getBranches();
 
-      const branches = response.data.map((branch: any) =>
-        mapBranchData(branch, t)
-      );
-
-      console.log(branches);
+      const branches = response.map((branch: any) => mapBranchData(branch, t));
 
       return branches;
     },
