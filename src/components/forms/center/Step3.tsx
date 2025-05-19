@@ -14,10 +14,12 @@ import { RadioGroup } from "@/components/general/RadioGroup";
 import CheckboxGroup from "../CheckboxGroup";
 import { Clock, Minus, Plus } from "lucide-react";
 import type { CenterStep3FormData } from "@/lib/schemas";
-import { getMealTitle } from "@/lib/utils";
+import { getMealTitle, mapOptions } from "@/lib/utils";
+import { COMMUNICATION_METHODS_IDS } from "@/lib/options";
 
 export function Step3Communication() {
   const t = useTranslations("auth.center-signup.3.form");
+  const tOptions = useTranslations("options");
   const { control, watch } = useFormContext<CenterStep3FormData>();
   const hasMeals = watch("meals_and_periods.provides_food");
 
@@ -59,11 +61,11 @@ export function Step3Communication() {
     }
   };
 
-  const communicationMethods = [
-    { id: "phone", label: t("communication-methods.options.voice") },
-    { id: "sms", label: t("communication-methods.options.text") },
-    { id: "video", label: t("communication-methods.options.video") },
-  ];
+  const communicationMethods = mapOptions(
+    COMMUNICATION_METHODS_IDS,
+    "centerCommunicationMethods",
+    tOptions
+  );
 
   return (
     <div className="space-y-8">

@@ -26,3 +26,5 @@ export const WEEK_DAYS = [
   "friday",
   "saturday",
 ] as const;
+
+export const COMMUNICATION_METHODS_IDS = ["phone", "sms", "video"] as const;
