@@ -14,6 +14,7 @@ import BranchAdminForm from "./BranchAdminForm";
 import { useMutation } from "@tanstack/react-query";
 import { useBranch } from "@/hooks/useBranches";
 import { centerService } from "@/services/dashboardApi";
+import BranchFormSkeleton from "./BranchFormSkeleton";
 
 const BranchWrapper = ({
   editBranchId,
@@ -289,7 +290,7 @@ const BranchWrapper = ({
   };
 
   if (mode === "edit" && isFetchingBranch) {
-    return <div>Loading branch data...</div>; // Or your skeleton loader
+    return <BranchFormSkeleton />;
   }
 
   return (
