@@ -19,7 +19,13 @@ import { Button } from "@/components/ui/button";
 import { mapOptions } from "@/lib/utils";
 import { CENTER_TYPE_IDS, SERVICE_IDS } from "@/lib/options";
 
-export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
+export function Step1BasicInfo({
+  isBranch = false,
+  disabled = false,
+}: {
+  isBranch?: boolean;
+  disabled?: boolean;
+}) {
   const t = useTranslations("auth.center-signup.1.form");
   const tOptions = useTranslations("options");
 
@@ -45,7 +51,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("name.placeholder")} {...field} />
+                <Input
+                  placeholder={t("name.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,7 +72,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("nursery-name.placeholder")} {...field} />
+                <Input
+                  placeholder={t("nursery-name.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,7 +93,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("email.placeholder")} {...field} />
+                <Input
+                  placeholder={t("email.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -104,6 +122,7 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                       `+966${e.target.value.replace(/^(\+966)?/, "")}`
                     );
                   }}
+                  readOnly={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -197,7 +216,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("city.placeholder")} {...field} />
+                <Input
+                  placeholder={t("city.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -214,7 +237,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("neighborhood.placeholder")} {...field} />
+                <Input
+                  placeholder={t("neighborhood.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -231,7 +258,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("address.placeholder")} {...field} />
+                <Input
+                  placeholder={t("address.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -248,7 +279,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("location.placeholder")} {...field} />
+                <Input
+                  placeholder={t("location.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -277,6 +312,7 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
           items={centerTypes}
           name="nursery_type"
           control={control}
+          readOnly={disabled}
         />
       </div>
 
@@ -288,6 +324,7 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
           items={services}
           name="services"
           control={control}
+          readOnly={disabled}
         />
       </div>
 
@@ -303,7 +340,11 @@ export function Step1BasicInfo({ isBranch = false }: { isBranch?: boolean }) {
               </span>
             </FormLabel>
             <FormControl>
-              <Input placeholder={t("other.placeholder")} {...field} />
+              <Input
+                placeholder={t("other.placeholder")}
+                {...field}
+                disabled={disabled}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

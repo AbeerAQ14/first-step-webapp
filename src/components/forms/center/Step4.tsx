@@ -13,7 +13,7 @@ import {
 import { FileUploader } from "../FileUploader";
 import type { CenterStep4FormData } from "@/lib/schemas";
 
-export function Step4Permits() {
+export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
   const t = useTranslations("auth.center-signup.4.form");
   const { control } = useFormContext<CenterStep4FormData>();
 
@@ -31,6 +31,7 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept=".pdf"
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -49,6 +50,7 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept=".pdf"
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -67,6 +69,7 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept="image/png, image/jpeg, image/jpg"
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -90,6 +93,7 @@ export function Step4Permits() {
                 placeholder={t("comments.placeholder")}
                 className="min-h-[100px]"
                 {...field}
+                disabled={disabled}
               />
             </FormControl>
             <FormMessage />

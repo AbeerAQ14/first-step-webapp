@@ -17,6 +17,7 @@ interface RadioGroupProps {
   onChange: (val: string) => void;
   options: RadioOption[];
   className?: string;
+  disabled?: boolean;
 }
 
 export function RadioGroup({
@@ -24,6 +25,7 @@ export function RadioGroup({
   onChange,
   options,
   className,
+  disabled,
 }: RadioGroupProps) {
   return (
     <ShRadioGroup
@@ -33,6 +35,7 @@ export function RadioGroup({
         "flex gap-8 justify-center rtl:flex-row-reverse",
         className
       )}
+      disabled={disabled}
     >
       {options.map((option) => (
         <Label

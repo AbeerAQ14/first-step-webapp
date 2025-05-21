@@ -37,7 +37,10 @@ const Branch = ({
         <Button
           size="sm"
           variant="outline"
-          onClick={() => router.back()}
+          onClick={(e) => {
+            e.preventDefault();
+            router.back();
+          }}
           disabled={isSubmitting}
         >
           إلغاء

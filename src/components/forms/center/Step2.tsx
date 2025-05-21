@@ -24,7 +24,11 @@ import { mapOptions } from "@/lib/utils";
 import { AGE_GROUP_IDS, WEEK_DAYS } from "@/lib/options";
 import { usePathname } from "@/i18n/navigation";
 
-export function Step2AgesAndHours() {
+export function Step2AgesAndHours({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
   const t = useTranslations("auth.center-signup.2.form");
   const tOptions = useTranslations("options");
   const { control } = useFormContext<CenterStep2FormData>();
@@ -33,7 +37,7 @@ export function Step2AgesAndHours() {
   const days = mapOptions(WEEK_DAYS, "days", tOptions);
 
   const pathname = usePathname();
-  const isEdit = pathname.includes("edit");
+  const isAdd = pathname.includes("add");
 
   return (
     <div className="space-y-8">
@@ -43,7 +47,7 @@ export function Step2AgesAndHours() {
           control={control}
           items={ageGroups}
           name="accepted_ages"
-          className=""
+          readOnly={disabled}
         />
       </div>
 
@@ -71,11 +75,12 @@ export function Step2AgesAndHours() {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={disabled}
                 >
                   <FormLabel>{t("from-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      {isEdit ? (
+                      {!isAdd ? (
                         <span
                           data-slot="select-value"
                           className="text-foreground"
@@ -111,11 +116,12 @@ export function Step2AgesAndHours() {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={disabled}
                 >
                   <FormLabel>{t("to-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      {isEdit ? (
+                      {!isAdd ? (
                         <span
                           data-slot="select-value"
                           className="text-foreground"
@@ -159,6 +165,7 @@ export function Step2AgesAndHours() {
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
+                      disabled={disabled}
                     />
                   </div>
                 </FormControl>
@@ -185,6 +192,7 @@ export function Step2AgesAndHours() {
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
+                      disabled={disabled}
                     />
                   </div>
                 </FormControl>

@@ -17,7 +17,11 @@ import type { CenterStep3FormData } from "@/lib/schemas";
 import { getMealTitle, mapOptions } from "@/lib/utils";
 import { COMMUNICATION_METHODS_IDS } from "@/lib/options";
 
-export function Step3Communication() {
+export function Step3Communication({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
   const t = useTranslations("auth.center-signup.3.form");
   const tOptions = useTranslations("options");
   const { control, watch } = useFormContext<CenterStep3FormData>();
@@ -78,6 +82,7 @@ export function Step3Communication() {
             <FormItem>
               <FormControl>
                 <RadioGroup
+                  disabled={disabled}
                   className="gap-14.5"
                   value={field.value}
                   onChange={field.onChange}
@@ -105,6 +110,7 @@ export function Step3Communication() {
           control={control}
           items={communicationMethods}
           name="communication_methods"
+          readOnly={disabled}
         />
       </div>
 
@@ -118,6 +124,7 @@ export function Step3Communication() {
             <FormItem>
               <FormControl>
                 <RadioGroup
+                  disabled={disabled}
                   className="gap-14.5"
                   value={field.value}
                   onChange={field.onChange}
@@ -167,6 +174,7 @@ export function Step3Communication() {
                           className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
                           [&::-webkit-inner-spin-button]:hidden
                           [&::-ms-clear]:hidden"
+                          disabled={disabled}
                         />
                       </div>
                     </FormControl>
@@ -191,6 +199,7 @@ export function Step3Communication() {
                             <Input
                               placeholder={t("food-details.name")}
                               {...field}
+                              disabled={disabled}
                             />
                           </FormControl>
                           <FormMessage />
@@ -210,6 +219,7 @@ export function Step3Communication() {
                             <Input
                               placeholder={t("food-details.ingredients")}
                               {...field}
+                              disabled={disabled}
                             />
                           </FormControl>
                           <FormMessage />
@@ -229,6 +239,7 @@ export function Step3Communication() {
                             <Input
                               placeholder={t("food-details.drink")}
                               {...field}
+                              disabled={disabled}
                             />
                           </FormControl>
                           <FormMessage />
@@ -249,6 +260,7 @@ export function Step3Communication() {
                       index === 0 ? () => addFirstMeal() : () => addSecondMeal()
                     }
                     className="font-bold"
+                    disabled={disabled}
                   >
                     <Plus className="size-6" />
                     {t("food-details.add")}
@@ -262,6 +274,7 @@ export function Step3Communication() {
                     variant="outline"
                     onClick={() => removeLastFirstMeal()}
                     className="font-bold aspect-square"
+                    disabled={disabled}
                   >
                     <Minus className="size-6" />
                   </Button>
@@ -274,6 +287,7 @@ export function Step3Communication() {
                       variant="outline"
                       onClick={() => removeLastSecondMeal()}
                       className="font-bold aspect-square"
+                      disabled={disabled}
                     >
                       <Minus className="size-6" />
                     </Button>
