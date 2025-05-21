@@ -4,13 +4,12 @@ import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useBranch } from "@/hooks/useBranches";
 import { BranchFormData, createBranchSchema } from "@/lib/schemas";
 import { Step1BasicInfo } from "../../center/Step1";
 import { Step2AgesAndHours } from "../../center/Step2";
 import { Step3Communication } from "../../center/Step3";
 import { Step4Permits } from "../../center/Step4";
-import { useQuery } from "@tanstack/react-query";
-import { centerService } from "@/services/dashboardApi";
 import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import BranchFormSkeleton from "./BranchFormSkeleton";
@@ -19,11 +18,8 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
   const locale = useLocale();
   const branchSchema = createBranchSchema(locale as "ar" | "en");
 
-  const { data: fetchedBranch, isLoading: isFetchingBranch } = useQuery({
-    enabled: !!branchId,
-    queryKey: ["branch", branchId],
-    queryFn: () => centerService.getBranch(branchId!),
-  });
+  const { data: fetchedBranch, isLoading: isFetchingBranch } =
+    useBranch(branchId);
 
   const transformedInitialValues: BranchFormData | undefined = useMemo(() => {
     if (!fetchedBranch) return undefined;

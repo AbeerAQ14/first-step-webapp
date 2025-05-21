@@ -11,7 +11,8 @@ import {
 } from "@/lib/schemas";
 import Branch from "./Branch";
 import BranchAdminForm from "./BranchAdminForm";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useBranch } from "@/hooks/useBranches";
 import { centerService } from "@/services/dashboardApi";
 
 const BranchWrapper = ({
@@ -25,11 +26,8 @@ const BranchWrapper = ({
   const [open, setOpen] = useState(false);
   const locale = useLocale();
 
-  const { data: fetchedBranch, isLoading: isFetchingBranch } = useQuery({
-    enabled: mode === "edit" && !!editBranchId,
-    queryKey: ["branch", editBranchId],
-    queryFn: () => centerService.getBranch(editBranchId!),
-  });
+  const { data: fetchedBranch, isLoading: isFetchingBranch } =
+    useBranch(editBranchId);
 
   const transformedInitialValues: BranchFormData | undefined = useMemo(() => {
     if (!fetchedBranch) return undefined;

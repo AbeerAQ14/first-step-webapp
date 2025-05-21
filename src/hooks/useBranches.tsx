@@ -40,10 +40,15 @@ export const useBranches = () => {
     queryKey: ["branches"],
     queryFn: async () => {
       const response = await centerService.getBranches();
-
-      const branches = response.map((branch: any) => mapBranchData(branch, t));
-
-      return branches;
+      return response.map((branch: any) => mapBranchData(branch, t));
     },
+  });
+};
+
+export const useBranch = (branchId?: string) => {
+  return useQuery({
+    enabled: !!branchId,
+    queryKey: ["branch", branchId],
+    queryFn: () => centerService.getBranch(branchId!),
   });
 };
