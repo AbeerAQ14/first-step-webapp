@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { Link, useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BranchFormData, createBranchSchema } from "@/lib/schemas";
@@ -13,10 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import BranchFormSkeleton from "./BranchFormSkeleton";
 
 const BranchShow = ({ branchId }: { branchId: string }) => {
   const locale = useLocale();
-  const router = useRouter();
   const branchSchema = createBranchSchema(locale as "ar" | "en");
 
   const { data: fetchedBranch, isLoading: isFetchingBranch } = useQuery({
@@ -108,7 +108,7 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
   }, [transformedInitialValues, methods]);
 
   if (isFetchingBranch) {
-    return <div>Loading branch data...</div>; // Or your skeleton loader
+    return <BranchFormSkeleton />;
   }
 
   return (
