@@ -183,6 +183,7 @@ export interface Blog {
   title: string;
   description: string;
   image: string;
+  author?: string;
   created_at: string;
   published_at: string;
 }

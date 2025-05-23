@@ -18,21 +18,25 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
 
       <p className="text-gray text-sm line-clamp-3">{blog.description}</p>
 
-      <span className="text-secondary-orange font-medium text-sm">
-        مدة القراءة 3 دقائق
-      </span>
+      <div className="w-full flex items-end justify-between text-sm">
+        <div className="flex flex-col gap-y-2">
+          <span className="text-secondary-orange font-medium text-sm">
+            مدة القراءة 3 دقائق
+          </span>
 
-      <div className="w-full flex items-center justify-between text-sm">
-        <div className="flex items-center gap-x-1">
-          <div className="w-3 h-3 rounded-full overflow-hidden relative">
-            <Image
-              className="object-cover object-center"
-              src="https://images.unsplash.com/photo-1716908932235-d865878b12a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-              fill
-            />
-          </div>
-          <span>د. محمود الحسيني</span>
+          {blog.author && (
+            <div className="flex items-center gap-x-1">
+              <div className="w-3 h-3 rounded-full overflow-hidden relative">
+                <Image
+                  className="object-cover object-center"
+                  src="https://images.unsplash.com/photo-1716908932235-d865878b12a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt=""
+                  fill
+                />
+              </div>
+              <span>د. محمود الحسيني</span>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-x-0.5">

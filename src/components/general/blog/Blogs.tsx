@@ -6,7 +6,7 @@ import BlogCard from "./BlogCard";
 import { Blog } from "@/types";
 import { Link } from "@/i18n/navigation";
 
-const Blogs = async ({ blogs }: { blogs: Blog[] }) => {
+const Blogs = ({ blogs }: { blogs: Blog[] }) => {
   const t = useTranslations("blogsection");
 
   return (
