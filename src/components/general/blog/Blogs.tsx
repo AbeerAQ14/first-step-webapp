@@ -10,10 +10,11 @@ const Blogs = ({ blogs }: { blogs: Blog[] }) => {
   const t = useTranslations("blogsection");
 
   return (
-    <section
-      className="my-20 bg-center bg-cover xl:bg-[size-120%] xl:bg-center 2xl:bg-contain bg-no-repeat"
-      style={{ backgroundImage: `url(/assets/backgrounds/bubbles-bg.svg)` }}
-    >
+    <section className="mt-40 my-20 relative">
+      <div
+        className="-z-50 absolute inset-0 bg-center bg-cover scale-130 2xl:bg-contain bg-no-repeat"
+        style={{ backgroundImage: `url(/assets/backgrounds/bubbles-bg.svg)` }}
+      />
       <div className="container mx-auto px-4">
         <div className="text-center flex flex-col items-center gap-y-6">
           <div className="space-y-4">
