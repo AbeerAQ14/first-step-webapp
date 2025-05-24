@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 const VisionMission = () => {
@@ -24,17 +24,13 @@ const VisionMission = () => {
 export default VisionMission;
 
 const VisionContent = () => {
+  const t = useTranslations("vision-mission.vision");
+
   return (
     <>
       <div className="w-[90%] px-4 pt-4 pb-[60%] sm:pb-4 sm:pl-[38%] ltr:sm:pl-4 ltr:sm:pr-[38%]  sm:w-[85%] space-y-6 shadow-subtle lg:py-6 md:pr-16 ltr:md:pl-16">
-        <h2>رؤيتنا</h2>
-        <p className="font-medium">
-          نؤمن بأن رعاية الأطفال ليست مجرد خدمة، بل تجربة تصنع فارقًا في حياة
-          كل‌‌ أسرة. لهذا، نسعى إلى إعادة تعريف مفهوم رعاية الأطفال من خلال دمج
-          التكنولوجيا‌‌ بالقيم الإنسانية، لنمنح العائلات حلولًا ذكية ومبتكرة،
-          تُحدث تأثيرًا إيجابيًا يعزز‌‌ راحة بالهم ويضمن لطفلهم بداية قوية
-          ومتميزة.
-        </p>
+        <h2>{t("title")}</h2>
+        <p className="font-medium">{t("content")}</p>
       </div>
 
       <Image
@@ -49,6 +45,8 @@ const VisionContent = () => {
 };
 
 const MissionContent = () => {
+  const t = useTranslations("vision-mission.mission");
+
   return (
     <>
       <Image
@@ -60,13 +58,8 @@ const MissionContent = () => {
       />
 
       <div className="w-[90%] px-4 pb-4 pt-[60%] sm:pt-4 sm:pr-[38%] ltr:sm:pr-4 ltr:sm:pl-[38%] sm:w-[85%] space-y-6 shadow-subtle lg:py-6 md:pl-16 ltr:md:pr-16">
-        <h2>رسالتنا</h2>
-        <p className="font-medium">
-          نطمح لأن نكون أكثر من مجرد منصة، بل رفيقًا موثوقًا لكل أسرة تبحث عن
-          أفضل‌‌ رعاية لأطفالها. نحن الجسر الذي يربط العائلات بأفضل الحضانات
-          والمراكز‌‌ التأهيلية، مقدمين تجربة سلسة وسهلة تجعل كل خطوة في رحلة
-          البحث عن البيئة‌‌ الأنسب لنمو أطفالهم أكثر راحة، أمانًا، واطمئنانًا.
-        </p>
+        <h2>{t("title")}</h2>
+        <p className="font-medium">{t("content")}</p>
       </div>
     </>
   );

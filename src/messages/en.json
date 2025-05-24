@@ -537,5 +537,15 @@
   "headline": {
     "slogan": "Because their first step... is your biggest decision!",
     "brandStatement": "We chose <brandName>First Step</brandName> as our name."
+  },
+  "vision-mission": {
+    "vision": {
+      "title": "Our Vision",
+      "content": "We believe childcare is more than a service — it's an experience that shapes families’ lives. That’s why we’re redefining it by combining technology with human values, offering smart solutions that bring peace of mind and give every child a strong, confident start."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "We aim to be more than a platform — a trusted companion for every family seeking the best care. We connect families with top nurseries and rehab centers, offering a smooth, reassuring experience that makes finding the right environment easier, safer, and more comforting."
+    }
   }
 }
