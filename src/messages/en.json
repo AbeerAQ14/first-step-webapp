@@ -575,6 +575,20 @@
       "dashboard": "Dashboard",
       "home": "Home",
       "search": "Search"
+    },
+    "secondary-sidebar": {
+      "upcoming-occasions": "Upcoming Occasions",
+      "birthdays": "Birthdays",
+      "tasks": "Tasks",
+      "tasks-progress": "{completed} of {total}",
+      "add": {
+        "occasion": "New Occasion",
+        "birthday": "New Birthday",
+        "task": "New Task"
+      },
+      "empty": {
+        "add-now": "Add Now"
+      }
     }
   }
 }

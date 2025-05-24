@@ -572,6 +572,20 @@
       "dashboard": "لوحة التحكم",
       "home": "الرئيسية",
       "search": "بحث"
+    },
+    "secondary-sidebar": {
+      "upcoming-occasions": "مناسبات قادمة",
+      "birthdays": "أعياد الميلاد",
+      "tasks": "المهمات",
+      "tasks-progress": "{completed} من {total}",
+      "add": {
+        "occasion": "مناسبة جديدة",
+        "birthday": "عيد ميلاد جديد",
+        "task": "مهمة جديدة"
+      },
+      "empty": {
+        "add-now": "أضف الآن"
+      }
     }
   }
 }

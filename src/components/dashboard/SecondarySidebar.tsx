@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PlusCircle } from "lucide-react";
 import {
   Sidebar,
@@ -16,6 +16,7 @@ import EmptyState from "./secondary-sidebar/EmptyState";
 
 const SecondarySidebar = () => {
   const locale = useLocale();
+  const t = useTranslations("dashboard.secondary-sidebar");
 
   const { occasions, birthdays, tasks, addOccasion, addBirthday, addTask } =
     useEventsStore();
@@ -33,10 +34,10 @@ const SecondarySidebar = () => {
       <SidebarContent>
         <SidebarGroup className="px-0">
           <div className="flex items-center justify-between">
-            <p className="font-medium text-xl text-primary">مناسبات قادمة</p>
+            <p className="font-medium text-xl text-primary">{t("upcoming-occasions")}</p>
             <PlusCircle
               onClick={() =>
-                addOccasion({ title: "مناسبة جديدة", date: new Date() })
+                addOccasion({ title: t("add.occasion"), date: new Date() })
               }
               className="size-4 text-light-gray hover:text-primary cursor-pointer"
             />
@@ -45,7 +46,7 @@ const SecondarySidebar = () => {
           {occasions.length === 0 ? (
             <EmptyState
               onAdd={() =>
-                addOccasion({ title: "مناسبة جديدة", date: new Date() })
+                addOccasion({ title: t("add.occasion"), date: new Date() })
               }
             />
           ) : (
@@ -57,7 +58,7 @@ const SecondarySidebar = () => {
                   type="occasion"
                   title={item.title}
                   rawDate={item.date}
-                  date={item.date.toLocaleDateString("en-US", {
+                  date={item.date.toLocaleDateString(locale, {
                     weekday: "short",
                     day: "numeric",
                     month: "short",
@@ -71,10 +72,10 @@ const SecondarySidebar = () => {
 
         <SidebarGroup className="px-0">
           <div className="flex items-center justify-between">
-            <p className="font-medium text-xl text-primary">أعياد الميلاد</p>
+            <p className="font-medium text-xl text-primary">{t("birthdays")}</p>
             <PlusCircle
               onClick={() =>
-                addBirthday({ title: "عيد ميلاد جديد", date: new Date() })
+                addBirthday({ title: t("add.birthday"), date: new Date() })
               }
               className="size-4 text-light-gray hover:text-primary cursor-pointer"
             />
@@ -83,7 +84,7 @@ const SecondarySidebar = () => {
           {birthdays.length === 0 ? (
             <EmptyState
               onAdd={() =>
-                addBirthday({ title: "عيد ميلاد جديد", date: new Date() })
+                addBirthday({ title: t("add.birthday"), date: new Date() })
               }
             />
           ) : (
@@ -95,7 +96,7 @@ const SecondarySidebar = () => {
                   type="birthday"
                   title={item.title}
                   rawDate={item.date}
-                  date={item.date.toLocaleDateString("en-US", {
+                  date={item.date.toLocaleDateString(locale, {
                     weekday: "short",
                     day: "numeric",
                     month: "short",
@@ -108,16 +109,19 @@ const SecondarySidebar = () => {
         </SidebarGroup>
         <SidebarGroup>
           <div className="flex items-center justify-between">
-            <p className="font-medium text-xl text-primary">المهمات</p>
+            <p className="font-medium text-xl text-primary">{t("tasks")}</p>
 
             <div className="flex items-center gap-x-2">
               <p className="text-xs text-success">
-                {tasks.filter((t) => t.done).length}/{tasks.length}
+                {t("tasks-progress", {
+                  completed: tasks.filter((t) => t.done).length,
+                  total: tasks.length,
+                })}
               </p>
               <PlusCircle
                 onClick={() =>
                   addTask({
-                    title: "مهمة جديدة",
+                    title: t("add.task"),
                     date: new Date(),
                     done: false,
                   })
@@ -130,7 +134,7 @@ const SecondarySidebar = () => {
           {tasks.length === 0 ? (
             <EmptyState
               onAdd={() =>
-                addTask({ title: "مهمة جديدة", date: new Date(), done: false })
+                addTask({ title: t("add.task"), date: new Date(), done: false })
               }
             />
           ) : (
@@ -143,7 +147,7 @@ const SecondarySidebar = () => {
                     id={item.id}
                     title={item.title}
                     rawDate={item.date}
-                    date={item.date.toLocaleDateString("en-US", {
+                    date={item.date.toLocaleDateString(locale, {
                       day: "numeric",
                       month: "numeric",
                       year: "numeric",
