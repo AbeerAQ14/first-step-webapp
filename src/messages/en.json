@@ -549,5 +549,12 @@
       "title": "Our Mission",
       "content": "We aim to be more than a platform — a trusted companion for every family seeking the best care. We connect families with top nurseries and rehab centers, offering a smooth, reassuring experience that makes finding the right environment easier, safer, and more comforting."
     }
+  },
+  "error": {
+    "title": "Oops! Something went wrong.",
+    "default-message": "We couldn't process your request.",
+    "description": "Please try refreshing the page or return to the home screen.",
+    "refresh": "Refresh Page",
+    "home": "Go to Homepage"
   }
 }
