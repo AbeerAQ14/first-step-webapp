@@ -322,6 +322,7 @@ const BranchWrapper = ({
           open={open}
           setOpen={setOpen}
           onSubmit={onSubmitAdmin}
+          branchName={methods.getValues().nursery_name}
         />
       )}
     </React.Fragment>

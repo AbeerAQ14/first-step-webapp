@@ -23,19 +23,22 @@ const BranchAdminForm = ({
   open,
   setOpen,
   onSubmit,
+  branchName,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (data: BranchAdminFormData) => void;
+  branchName: string;
 }) => {
+  const t = useTranslations("dashboard.center.branches.admin");
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTitle className="sr-only">إنشاء حساب مسئول الفرع</DialogTitle>
+        <DialogTitle className="sr-only">{t("title")}</DialogTitle>
         <DialogContent className="sm:max-w-[716px] lg:px-10">
-          <Form onSubmit={onSubmit} />
+          <Form onSubmit={onSubmit} branchName={branchName} />
         </DialogContent>
       </Dialog>
     );
@@ -44,8 +47,8 @@ const BranchAdminForm = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="pb-10">
-        <DrawerTitle className="sr-only">إنشاء حساب مسئول الفرع</DrawerTitle>
-        <Form onSubmit={onSubmit} className="px-4" />
+        <DrawerTitle className="sr-only">{t("title")}</DrawerTitle>
+        <Form onSubmit={onSubmit} className="px-4" branchName={branchName} />
       </DrawerContent>
     </Drawer>
   );
@@ -56,11 +59,13 @@ export default BranchAdminForm;
 const Form = ({
   className,
   onSubmit,
+  branchName,
 }: {
   className?: string;
   onSubmit: (data: BranchAdminFormData) => void;
+  branchName: string;
 }) => {
-  const t = useTranslations("auth.parent-signup.form");
+  const t = useTranslations("dashboard.center.branches.admin");
   const [showPassword, setShowPassword] = useState(false);
   const locale = useLocale();
 
@@ -90,11 +95,9 @@ const Form = ({
           className="select-none"
         />
         <p className="mt-4 font-medium text-success">
-          تم إنشاء فرع القصيم بنجاح
+          {t("success", { branchName })}
         </p>
-        <p className="mb-6 heading-4 font-bold text-primary">
-          إنشاء حساب مسئول الفرع
-        </p>
+        <p className="mb-6 heading-4 font-bold text-primary">{t("title")}</p>
       </div>
 
       <FormProvider {...methods}>
@@ -108,13 +111,13 @@ const Form = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("name.label")}
+                  {t("form.name.label")}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder={t("name.placeholder")}
+                    placeholder={t("form.name.placeholder")}
                     {...field}
                   />
                 </FormControl>
@@ -129,13 +132,13 @@ const Form = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("email.label")}
+                  {t("form.email.label")}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder={t("name.placeholder")}
+                    placeholder={t("form.email.placeholder")}
                     {...field}
                   />
                 </FormControl>
@@ -150,14 +153,14 @@ const Form = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("password.label")}
+                  {t("form.password.label")}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full">
                     <Input
                       type={showPassword ? "text" : "password"}
-                      placeholder={t("name.placeholder")}
+                      placeholder={t("form.password.placeholder")}
                       {...field}
                     />
                     <Button
@@ -186,14 +189,14 @@ const Form = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("password-confirm.label")}
+                  {t("form.password-confirm.label")}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full">
                     <Input
                       type={showPassword ? "text" : "password"}
-                      placeholder={t("name.placeholder")}
+                      placeholder={t("form.password-confirm.placeholder")}
                       {...field}
                     />
                     <Button
@@ -222,7 +225,7 @@ const Form = ({
             type="submit"
             className="mx-auto sm:col-span-2"
           >
-            إنشاء حساب مسئول الفرع
+            {t("form.submit")}
           </Button>
         </form>
       </FormProvider>

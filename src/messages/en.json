@@ -589,6 +589,29 @@
           "title": "Could not load branches",
           "description": "An unexpected error occurred while loading the data. Check your internet connection, or try again later.",
           "retry": "Try Again"
+        },
+        "admin": {
+          "title": "Create Branch Admin Account",
+          "success": "{branchName} branch has been created successfully",
+          "form": {
+            "name": {
+              "label": "Name",
+              "placeholder": "Enter name"
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Enter email"
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Enter password"
+            },
+            "password-confirm": {
+              "label": "Confirm Password",
+              "placeholder": "Enter password confirmation"
+            },
+            "submit": "Create Branch Admin Account"
+          }
         }
       }
     },

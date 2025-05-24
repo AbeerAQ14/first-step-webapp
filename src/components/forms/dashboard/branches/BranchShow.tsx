@@ -118,7 +118,9 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
 
           <div className="flex justify-center gap-5 lg:gap-x-10">
             <Button asChild size="sm" variant="default">
-              <Link href={`${branchId}/edit`}>تعديل الفرع</Link>
+              <Link href={`${branchId}/edit`}>
+                {locale === "ar" ? "تعديل الفرع" : "Edit Branch"}
+              </Link>
             </Button>
           </div>
         </div>
