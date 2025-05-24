@@ -553,5 +553,25 @@
     "description": "يرجى تحديث الصفحة أو العودة إلى الصفحة الرئيسية.",
     "refresh": "تحديث الصفحة",
     "home": "الذهاب للصفحة الرئيسية"
+  },
+  "dashboard": {
+    "center": {
+      "sidebar": {
+        "home": "الرئيسية",
+        "branches": "فروعي",
+        "children-files": "ملفات الأطفال",
+        "bookings": "الحجوزات",
+        "daily-reports": "التقارير اليومية",
+        "site-edit": "تعديل الموقع",
+        "ad-or-blog-request": "طلب إعلان أو مدونة",
+        "notifications": "الإشعارات",
+        "team": "فريق العمل"
+      }
+    },
+    "header": {
+      "dashboard": "لوحة التحكم",
+      "home": "الرئيسية",
+      "search": "بحث"
+    }
   }
 }

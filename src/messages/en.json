@@ -556,5 +556,25 @@
     "description": "Please try refreshing the page or return to the home screen.",
     "refresh": "Refresh Page",
     "home": "Go to Homepage"
+  },
+  "dashboard": {
+    "center": {
+      "sidebar": {
+        "home": "Home",
+        "branches": "My Branches",
+        "children-files": "Children Files",
+        "bookings": "Bookings",
+        "daily-reports": "Daily Reports",
+        "site-edit": "Edit Website",
+        "ad-or-blog-request": "Request Ad or Blog",
+        "notifications": "Notifications",
+        "team": "Team"
+      }
+    },
+    "header": {
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "search": "Search"
+    }
   }
 }

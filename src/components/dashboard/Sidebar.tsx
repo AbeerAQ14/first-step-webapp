@@ -15,52 +15,52 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { dashboardIcons } from "@/components/general/icons";
 
-const centerNavbar = [
+const getCenterNavbar = (t: any) => [
   {
-    title: "الرئيسية", // Home
+    title: t("home"),
     url: "/dashboard/center",
     icon: dashboardIcons.home,
   },
   {
-    title: "فروعي", // My Branches
+    title: t("branches"),
     url: "/dashboard/center/branches",
     icon: dashboardIcons.branches,
   },
   {
-    title: "ملفات الأطفال", // Children Files
+    title: t("children-files"),
     url: "/dashboard/center/children-files",
     icon: dashboardIcons.files,
   },
   {
-    title: "الحجوزات", // Appointments
+    title: t("bookings"),
     url: "/dashboard/center/bookings",
     icon: dashboardIcons.bookings,
   },
   {
-    title: "التقارير اليومية", // Daily Reports
+    title: t("daily-reports"),
     url: "/dashboard/center/daily-reports",
     icon: dashboardIcons.reports,
   },
   {
-    title: "تعديل الموقع", // Edit Website
+    title: t("site-edit"),
     url: "/dashboard/center/site-edit",
     icon: dashboardIcons.site,
   },
   {
-    title: "طلب إعلان أو مدونة", // Request Ad or Blog
+    title: t("ad-or-blog-request"),
     url: "/dashboard/center/ad-or-blog-request",
     icon: dashboardIcons.request,
   },
   {
-    title: "الإشعارات", // Notifications
+    title: t("notifications"),
     url: "/dashboard/center/notifications",
     icon: dashboardIcons.notifications,
   },
   {
-    title: "فريق العمل", // Team
+    title: t("team"),
     url: "/dashboard/center/team",
     icon: dashboardIcons.team,
   },
@@ -130,9 +130,10 @@ const adminNavbar = [
 const DashboardSideBar = () => {
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("dashboard.center.sidebar");
 
   const navbar = pathname.includes("/dashboard/center")
-    ? centerNavbar
+    ? getCenterNavbar(t)
     : pathname.includes("dashboard/admin")
     ? adminNavbar
     : parentNavbar;

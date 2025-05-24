@@ -4,14 +4,52 @@ import { useState } from "react";
 import { Bell, Settings, Search } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
 
-export default function Header({
-  items,
-}: {
-  items: { title: string; url: string }[];
-}) {
+export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
+  const t = useTranslations("dashboard.header");
+  const sidebarT = useTranslations("dashboard.center.sidebar");
+
+  const items = [
+    {
+      title: sidebarT("home"),
+      url: "",
+    },
+    {
+      title: sidebarT("branches"),
+      url: "/dashboard/center/branches",
+    },
+    {
+      title: sidebarT("children-files"),
+      url: "/dashboard/center/children-files",
+    },
+    {
+      title: sidebarT("bookings"),
+      url: "/dashboard/center/bookings",
+    },
+    {
+      title: sidebarT("daily-reports"),
+      url: "/dashboard/center/daily-reports",
+    },
+    {
+      title: sidebarT("site-edit"),
+      url: "/dashboard/center/site-edit",
+    },
+    {
+      title: sidebarT("ad-or-blog-request"),
+      url: "/dashboard/center/ad-or-blog-request",
+    },
+    {
+      title: sidebarT("notifications"),
+      url: "/dashboard/center/notifications",
+    },
+    {
+      title: sidebarT("team"),
+      url: "/dashboard/center/team",
+    },
+  ];
 
   // Function to generate breadcrumbs based on current path
   const generateBreadcrumbs = () => {
@@ -20,22 +58,22 @@ export default function Header({
 
     // Always add dashboard as first item
     breadcrumbs.push({
-      title: "لوحة التحكم",
+      title: t("dashboard"),
       url: "/dashboard/center",
     });
 
-    // Only add "الرئيسية" if we're on the home page
+    // Only add "Home" if we're on the home page
     if (currentPath === "/dashboard/center") {
       breadcrumbs.push({
-        title: "الرئيسية",
+        title: t("home"),
         url: "/dashboard/center",
       });
     }
 
     // Find matching items from the navigation items
     items.forEach((item) => {
-      // Skip the home item ("الرئيسية") since we handled it above
-      if (item.title === "الرئيسية") {
+      // Skip the home item since we handled it above
+      if (item.title === sidebarT("home")) {
         return;
       }
 
@@ -101,7 +139,7 @@ export default function Header({
           <Input
             type="text"
             className="rounded-full py-1.5 px-2.5 pr-11 placeholder:text-mid-gray"
-            placeholder="بحث"
+            placeholder={t("search")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
