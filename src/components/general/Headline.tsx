@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const Headline = () => {
+  const t = useTranslations("headline");
+
   return (
     <section className="flex items-center justify-center gap-x-2 md:gap-x-14">
       <Image
@@ -12,13 +15,15 @@ const Headline = () => {
       />
 
       <p className="ltr:order-2 font-medium text-lg md:text-2xl lg:text-3xl xl:text-4xl text-secondary-orange text-center">
-        <span>"لأن أول خطوة لطفلك.. أهم قرار لك!</span>
+        <span>{t("slogan")}</span>
         <span className="block">
-          اختارنا{" "}
-          <span className="font-extrabold text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
-            First Step
-          </span>{" "}
-          اسمًا لنا"
+          {t.rich("brandStatement", {
+            brandName: (chunks) => (
+              <span className="font-extrabold text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+                {chunks}
+              </span>
+            )
+          })}
         </span>
       </p>
 

@@ -530,5 +530,9 @@
       "sms": "تواصل نصي",
       "video": "تواصل فيديو"
     }
+  },
+  "headline": {
+    "slogan": "لأن أول خطوة لطفلك.. أهم قرار لك!",
+    "brandStatement": "اخترنا <brandName>First Step</brandName> اسمًا لنا"
   }
 }

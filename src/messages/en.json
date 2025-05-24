@@ -425,7 +425,7 @@
             }
           },
           "communication-methods": {
-            "label": "Children’s Communication Methods with Parents",
+            "label": "Children's Communication Methods with Parents",
             "options": {
               "voice": "Voice",
               "text": "Text",
@@ -454,7 +454,7 @@
           "commercial-registration": "Commercial Registration",
           "logo": "Center Logo",
           "file-placeholder": "Choose File",
-          "description": "Required licenses to ensure and confirm the center’s credibility",
+          "description": "Required licenses to ensure and confirm the center's credibility",
           "comments": {
             "label": "Do you have any comments or notes?",
             "placeholder": ""
@@ -533,5 +533,9 @@
       "sms": "Text",
       "video": "Video"
     }
+  },
+  "headline": {
+    "slogan": "your child's first step... is your most important decision!",
+    "brandStatement": "We chose <brandName>First Step</brandName> as our name."
   }
 }
