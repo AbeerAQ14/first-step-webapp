@@ -19,7 +19,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const t = useTranslations("navbar.links");
+  const t = useTranslations("navbar");
 
   const keys = [
     "home",
@@ -33,8 +33,8 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const links = keys.map((key, index) => {
     return {
       id: index,
-      title: t(`${key}.title`),
-      path: t(`${key}.path`),
+      title: t(`links.${key}.title`),
+      path: t(`links.${key}.path`),
     };
   });
 
@@ -44,20 +44,20 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div className="relative container mx-auto px-4 py-2.5">
       {!token && (
-        <div className="z-10 fixed top-56 -left-[90px] -rotate-90 flex items-center gap-x-4">
+        <div className="z-10 fixed top-64 -left-[90px] -rotate-90 flex items-center gap-x-4">
           <Button
             asChild
             size={"sm"}
             className="bg-secondary-mint-green rounded-[8px]"
           >
-            <Link href={"/sign-up/parent"}>انضم كولي أمر</Link>
+            <Link href={"/sign-up/parent"}>{t("buttons.join-parent")}</Link>
           </Button>
           <Button
             asChild
             size={"sm"}
             className="bg-secondary-burgundy rounded-[8px]"
           >
-            <Link href={"/sign-up/center"}>انضم كمركز</Link>
+            <Link href={"/sign-up/center"}>{t("buttons.join-center")}</Link>
           </Button>
         </div>
       )}

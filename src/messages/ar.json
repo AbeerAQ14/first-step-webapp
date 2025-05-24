@@ -15,7 +15,9 @@
     "buttons": {
       "sign-up": "إنشاء حساب",
       "sign-in": "سجل دخولك",
-      "already-have-account": "لديك حساب بالفعل؟"
+      "already-have-account": "لديك حساب بالفعل؟",
+      "join-parent": "انضم كولي أمر",
+      "join-center": "انضم كمركز"
     }
   },
   "faqs": {
