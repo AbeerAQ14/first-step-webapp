@@ -566,6 +566,27 @@
         "ad-or-blog-request": "طلب إعلان أو مدونة",
         "notifications": "الإشعارات",
         "team": "فريق العمل"
+      },
+      "branches": {
+        "title": "الفروع",
+        "add": "إضافة فرع",
+        "view": "عرض الفرع",
+        "edit": "تعديل الفرع",
+        "delete": "حذف الفرع",
+        "card": {
+          "address": "العنوان",
+          "children": "الأطفال",
+          "bookings": "الحجوزات",
+          "accepted_ages": "الأعمار المقبولة",
+          "available_services": "الخدمات المتاحة في الفرع",
+          "child_count": "{count} طفل",
+          "booking_count": "{count} حجز"
+        },
+        "error": {
+          "title": "لم نتمكن من تحميل الفروع",
+          "description": "حدث خطأ غير متوقع أثناء تحميل البيانات. تحقق من اتصالك بالإنترنت، أو حاول مرة أخرى لاحقًا.",
+          "retry": "إعادة المحاولة"
+        }
       }
     },
     "header": {

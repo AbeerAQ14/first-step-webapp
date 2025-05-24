@@ -1,6 +1,7 @@
 "use client";
 
 import { useBranches } from "@/hooks/useBranches";
+import { useTranslations } from "next-intl";
 import BranchCard from "./BranchCard";
 import BranchCardSkeleton from "./BranchCardSkeleton";
 import { AlertTriangle } from "lucide-react";
@@ -13,6 +14,7 @@ const Branches = ({
   noEdit?: boolean;
   baseUrl?: string;
 }) => {
+  const t = useTranslations("dashboard.center.branches");
   const { data: branches, isLoading, error, refetch } = useBranches();
 
   if (isLoading) {
@@ -32,14 +34,11 @@ const Branches = ({
           <AlertTriangle className="h-8 w-8" />
         </div>
         <h2 className="text-2xl font-medium text-foreground mb-2">
-          لم نتمكن من تحميل الفروع
+          {t("error.title")}
         </h2>
-        <p className="text-mid-gray max-w-md mb-6">
-          حدث خطأ غير متوقع أثناء تحميل البيانات. تحقق من اتصالك بالإنترنت، أو
-          حاول مرة أخرى لاحقًا.
-        </p>
+        <p className="text-mid-gray max-w-md mb-6">{t("error.description")}</p>
         <Button size={"sm"} onClick={() => refetch()}>
-          إعادة المحاولة
+          {t("error.retry")}
         </Button>
       </div>
     );

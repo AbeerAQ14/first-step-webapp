@@ -565,10 +565,31 @@
         "children-files": "Children Files",
         "bookings": "Bookings",
         "daily-reports": "Daily Reports",
-        "site-edit": "Edit Website",
-        "ad-or-blog-request": "Request Ad or Blog",
+        "site-edit": "Edit Site",
+        "ad-or-blog-request": "Ad/Blog Request",
         "notifications": "Notifications",
         "team": "Team"
+      },
+      "branches": {
+        "title": "Branches",
+        "add": "Add Branch",
+        "view": "View Branch",
+        "edit": "Edit Branch",
+        "delete": "Delete Branch",
+        "card": {
+          "address": "Address",
+          "children": "Children",
+          "bookings": "Bookings",
+          "accepted_ages": "Accepted Ages",
+          "available_services": "Available Services",
+          "child_count": "{count} children",
+          "booking_count": "{count} bookings"
+        },
+        "error": {
+          "title": "Could not load branches",
+          "description": "An unexpected error occurred while loading the data. Check your internet connection, or try again later.",
+          "retry": "Try Again"
+        }
       }
     },
     "header": {
