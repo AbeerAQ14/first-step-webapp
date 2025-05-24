@@ -18,7 +18,7 @@ export default async function StoryPage({
       <Headline />
       <VisionMisson />
       <Values locale={locale} />
-      <WhyUs />
+      <WhyUs locale={locale} />
       <SocialQR />
     </div>
   );

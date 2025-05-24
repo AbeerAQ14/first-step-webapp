@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { useLocale } from "next-intl";
 
-const WhyUs = () => {
+const WhyUs = ({ locale }: { locale: "ar" | "en" }) => {
   const items = [
     {
       title: "سهولة البحث والاختيار",
@@ -28,7 +29,9 @@ const WhyUs = () => {
     <section className="xl:container mx-auto px-4 overflow-hidden">
       <div className="relative flex flex-col md:flex-row items-center justify-between gap-x-4 2xl:gap-x-24">
         <div className="order-2 md:order-1 rtl:md:pl-72 rtl:xl:pl-0 ltr:md:pr-72 ltr:xl:pr-0">
-          <h2 className="text-primary">لماذا First Step؟</h2>
+          <h2 className="text-primary">
+            {locale === "ar" ? "لماذا First Step؟" : "Why First Step?"}
+          </h2>
 
           <div className="mt-9 flex flex-col gap-y-6">
             {items.map((item) => (
@@ -40,13 +43,23 @@ const WhyUs = () => {
           </div>
         </div>
 
-        <Image
-          className="order-1 md:order-2 grow md:absolute inset-y-0 rtl:-left-40 ltr:-right-40 -z-50 xl:relative rtl:xl:left-0 ltr:xl:right-0 shrink-0"
-          src="/assets/general/mother-and-daughter.png"
-          alt="Mother And Daughter"
-          width={508}
-          height={499.33}
-        />
+        <div className="max-h-[500px] relative order-1 inset-x-0 md:inset-x-auto md:order-2 grow md:absolute inset-y-0 rtl:-left-40 ltr:-right-40 -z-50 xl:relative rtl:xl:left-0 ltr:xl:right-0">
+          <Image
+            className="shrink-0"
+            src="/assets/backgrounds/whyus-bg.svg"
+            alt="Mother And Daughter Background"
+            width={508}
+            height={499.33}
+          />
+
+          <Image
+            className="absolute left-1/2 -translate-x-1/2 bottom-10"
+            src="/assets/general/mother-and-daughter.png"
+            alt="Mother And Daughter"
+            width={424}
+            height={283}
+          />
+        </div>
       </div>
     </section>
   );
