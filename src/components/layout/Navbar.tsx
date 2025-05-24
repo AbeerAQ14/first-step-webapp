@@ -65,12 +65,14 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
       <div className="flex justify-between items-center gap-x-8">
         {/* Left */}
         <div className="flex-1">
-          <Image
-            src="/assets/logos/complete_logo.svg"
-            alt="logo"
-            width={236}
-            height={59.9}
-          />
+          <Link className="inline-block w-fit" href={"/"}>
+            <Image
+              src="/assets/logos/complete_logo.svg"
+              alt="logo"
+              width={236}
+              height={59.9}
+            />
+          </Link>
         </div>
 
         {/* Mobile menu overlay */}
@@ -156,7 +158,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
           <div className="flex-1 text-right flex items-center justify-end">
             {/* Menu Icon */}
             <Button
-              className="xl:hidden mr-8 p-2 rounded-full bg-gradient-to-t from-white from-30 to-emerald-50 text-gray-700"
+              className="xl:hidden p-2 rounded-full bg-gradient-to-t from-white from-30 to-emerald-50 text-gray-700"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
               onClick={toggleMenu}
@@ -164,7 +166,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
               <Menu size={24} />
             </Button>
 
-            <div className="hidden sm:block">
+            <div className="ml-8 hidden sm:block">
               {children ? children : <NavbarButton />}
             </div>
           </div>
