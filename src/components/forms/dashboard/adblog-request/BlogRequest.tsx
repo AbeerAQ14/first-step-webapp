@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,6 +22,7 @@ import BlogEditor from "../blog/BlogEditor";
 
 const BlogRequestForm = () => {
   const locale = useLocale();
+  const t = useTranslations("dashboard.center.ad-or-blog-request.blog.form");
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
   const router = useRouter();
@@ -56,7 +57,7 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="sm:col-span-3">
               <Label>
-                <span className="text-base">صورة المدونة</span>
+                <span className="text-base">{t("mainImage.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -92,7 +93,7 @@ const BlogRequestForm = () => {
                     ) : (
                       <div className="text-center text-gray-500 flex flex-col items-center gap-2">
                         <ImageIcon className="w-6 h-6" />
-                        <p className="text-sm">ارفع صورة النشاط</p>
+                        <p className="text-sm">{t("mainImage.placeholder")}</p>
                       </div>
                     )}
                   </label>
@@ -109,7 +110,7 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="">
               <Label>
-                <span className="text-base">صورة الغلاف</span>
+                <span className="text-base">{t("cardImage.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -145,7 +146,7 @@ const BlogRequestForm = () => {
                     ) : (
                       <div className="text-center text-gray-500 flex flex-col items-center gap-2">
                         <ImageIcon className="w-6 h-6" />
-                        <p className="text-sm">ارفع صورة النشاط</p>
+                        <p className="text-sm">{t("cardImage.placeholder")}</p>
                       </div>
                     )}
                   </label>
@@ -162,11 +163,15 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
               <Label>
-                <span className="text-base">العنوان</span>
+                <span className="text-base">{t("title.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
-                <Input type="text" placeholder="العنوان" {...field} />
+                <Input
+                  type="text"
+                  placeholder={t("title.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -179,11 +184,15 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
               <Label>
-                <span className="text-base">الوصف</span>
+                <span className="text-base">{t("description.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
-                <Input type="text" placeholder="الوصف" {...field} />
+                <Input
+                  type="text"
+                  placeholder={t("description.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -196,7 +205,7 @@ const BlogRequestForm = () => {
           render={({ field }) => (
             <FormItem className="sm:col-span-4">
               <Label>
-                <span className="text-base">المدونة</span>
+                <span className="text-base">{t("content.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -207,9 +216,9 @@ const BlogRequestForm = () => {
           )}
         />
 
-        <div className="sm:col-span-4 flex justify-center gap-5 lg:gap-x-10">
+        <div className="sm:col-span-4 flex gap-2 justify-end">
           <Button size={"sm"} type="submit">
-            إرسال طلب
+            {t("submit")}
           </Button>
           <Button
             size={"sm"}
@@ -217,7 +226,7 @@ const BlogRequestForm = () => {
             className="!border-light-gray text-mid-gray"
             onClick={() => router.back()}
           >
-            إلغاء
+            {t("cancel")}
           </Button>
         </div>
       </form>

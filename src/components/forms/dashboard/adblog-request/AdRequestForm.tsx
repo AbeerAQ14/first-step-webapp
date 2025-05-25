@@ -13,7 +13,7 @@ import { AdRequestFormData, createAdRequestSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { ImageIcon } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -28,6 +28,7 @@ const AdRequestForm = ({
   children: (data: AdRequestFormData, isValid: boolean) => React.ReactNode;
 }) => {
   const locale = useLocale();
+  const t = useTranslations("dashboard.center.ad-or-blog-request.ad.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData?.image === "string" && initialData?.image) || null
   );
@@ -64,7 +65,7 @@ const AdRequestForm = ({
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
               <Label className={`${mode === "show" ? "hidden" : ""}`}>
-                <span className="text-base">صورة الطلب</span>
+                <span className="text-base">{t("image.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
@@ -101,7 +102,7 @@ const AdRequestForm = ({
                     ) : (
                       <div className="text-center text-gray-500 flex flex-col items-center gap-2">
                         <ImageIcon className="w-6 h-6" />
-                        <p className="text-sm">ارفع صورة النشاط</p>
+                        <p className="text-sm">{t("image.placeholder")}</p>
                       </div>
                     )}
                   </label>
@@ -118,7 +119,7 @@ const AdRequestForm = ({
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">العنوان</span>
+                <span className="text-base">{t("title.label")}</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -128,7 +129,7 @@ const AdRequestForm = ({
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="العنوان"
+                  placeholder={t("title.placeholder")}
                   {...field}
                   disabled={mode === "show"}
                 />
@@ -144,7 +145,7 @@ const AdRequestForm = ({
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">الوصف</span>
+                <span className="text-base">{t("description.label")}</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -154,7 +155,7 @@ const AdRequestForm = ({
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="الوصف"
+                  placeholder={t("description.placeholder")}
                   {...field}
                   disabled={mode === "show"}
                 />
@@ -171,7 +172,7 @@ const AdRequestForm = ({
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">بداية يوم</span>{" "}
+                <span className="text-base">{t("start_date.label")}</span>{" "}
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -202,7 +203,7 @@ const AdRequestForm = ({
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">نهاية يوم</span>{" "}
+                <span className="text-base">{t("end_date.label")}</span>{" "}
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -226,7 +227,7 @@ const AdRequestForm = ({
           )}
         />
 
-        <div className="sm:col-span-2 flex justify-center gap-5 lg:gap-x-10">
+        <div className="sm:col-span-2 flex gap-2 justify-end">
           {children(formData, isValid)}
         </div>
       </form>

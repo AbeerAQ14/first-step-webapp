@@ -582,7 +582,61 @@
         "title": "Advertisements",
         "request-ad": "Request Ad",
         "request-blog": "Request Blog",
-        "blogs": "Blogs"
+        "blogs": "Blogs",
+        "ad": {
+          "title": "Request Advertisement",
+          "free-notice": "Your first advertisement for your nursery/center is 100% free on the homepage for one day",
+          "description": "Attract parents with an advertisement that appears at the top of the homepage. You can specify the number of days the advertisement will appear",
+          "form": {
+            "image": {
+              "label": "Request Image",
+              "placeholder": "Upload activity image"
+            },
+            "title": {
+              "label": "Title",
+              "placeholder": "Title"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Description"
+            },
+            "start_date": {
+              "label": "Start Date"
+            },
+            "end_date": {
+              "label": "End Date"
+            },
+            "submit": "Send Request",
+            "cancel": "Cancel"
+          }
+        },
+        "blog": {
+          "title": "Request Blog",
+          "description": "Write your blog completely free",
+          "form": {
+            "mainImage": {
+              "label": "Blog Image",
+              "placeholder": "Upload activity image"
+            },
+            "cardImage": {
+              "label": "Cover Image",
+              "placeholder": "Upload activity image"
+            },
+            "title": {
+              "label": "Title",
+              "placeholder": "Title"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Description"
+            },
+            "content": {
+              "label": "Blog"
+            },
+            "submit": "Send Request",
+            "cancel": "Cancel"
+          }
+        }
       },
       "branches": {
         "title": "Branches",

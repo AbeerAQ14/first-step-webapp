@@ -623,7 +623,61 @@
         "title": "الإعلانات",
         "request-ad": "طلب إعلان",
         "request-blog": "طلب مدونة",
-        "blogs": "المدونات"
+        "blogs": "المدونات",
+        "ad": {
+          "title": "طلب إعلان",
+          "free-notice": "الإعلان الأول لحضانتك/ مركزك مجاني 100% في الصفحة الرئيسية لمدة يوم واحد",
+          "description": "اجذب أولياء الأمور بإعلان يظهر في بداية الصفحة الرئيسية، يمكنك تحديد عدد أيام ظهور الإعلان",
+          "form": {
+            "image": {
+              "label": "صورة الطلب",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "title": {
+              "label": "العنوان",
+              "placeholder": "العنوان"
+            },
+            "description": {
+              "label": "الوصف",
+              "placeholder": "الوصف"
+            },
+            "start_date": {
+              "label": "بداية يوم"
+            },
+            "end_date": {
+              "label": "نهاية يوم"
+            },
+            "submit": "إرسال طلب",
+            "cancel": "إلغاء"
+          }
+        },
+        "blog": {
+          "title": "طلب مدونة",
+          "description": "اكتب مدونتك بشكل مجاني تمامًا",
+          "form": {
+            "mainImage": {
+              "label": "صورة المدونة",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "cardImage": {
+              "label": "صورة الغلاف",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "title": {
+              "label": "العنوان",
+              "placeholder": "العنوان"
+            },
+            "description": {
+              "label": "الوصف",
+              "placeholder": "الوصف"
+            },
+            "content": {
+              "label": "المدونة"
+            },
+            "submit": "إرسال طلب",
+            "cancel": "إلغاء"
+          }
+        }
       }
     },
     "header": {
