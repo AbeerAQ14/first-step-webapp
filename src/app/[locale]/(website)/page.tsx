@@ -11,10 +11,12 @@ import { websiteService } from "@/services/api";
 export const revalidate = 86400;
 
 export async function generateMetadata({
-  params,
+  params: paramsPromise,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await paramsPromise;
+
   return {
     title:
       params.locale === "ar"
@@ -34,19 +36,19 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
 
-  // const [adSlides, commonQuestions] = await Promise.all([
-  //   websiteService.getAdSlides(locale),
-  //   websiteService.getCommonQuestions(locale),
-  // ]);
+  const [adSlides, commonQuestions] = await Promise.all([
+    websiteService.getAdSlides(locale),
+    websiteService.getCommonQuestions(locale),
+  ]);
 
   return (
     <main>
-      {/* <Advertisment slides={adSlides} /> */}
+      <Advertisment slides={adSlides} />
       <Headline />
       <VisionMission />
-      {/* <Values locale={locale} /> */}
-      {/* <BlogsWrapper locale={locale} number={4} />
-      <FAQs commonQuestions={commonQuestions} /> */}
+      <Values locale={locale} />
+      <BlogsWrapper locale={locale} number={4} />
+      <FAQs commonQuestions={commonQuestions} />
       <Contact />
     </main>
   );

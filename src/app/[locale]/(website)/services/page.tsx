@@ -7,10 +7,11 @@ import { websiteService } from "@/services/api";
 export const revalidate = 86400;
 
 export async function generateMetadata({
-  params,
+  params: paramsPromise,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await paramsPromise;
   return {
     title:
       params.locale === "ar"
