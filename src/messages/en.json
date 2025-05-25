@@ -644,6 +644,13 @@
         "view": "View Branch",
         "edit": "Edit Branch",
         "delete": "Delete Branch",
+        "form": {
+          "buttons": {
+            "add": "Add Branch",
+            "edit": "Edit Branch",
+            "cancel": "Cancel"
+          }
+        },
         "card": {
           "address": "Address",
           "children": "Children",

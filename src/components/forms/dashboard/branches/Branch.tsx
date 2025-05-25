@@ -7,6 +7,7 @@ import { Step3Communication } from "../../center/Step3";
 import { Step4Permits } from "../../center/Step4";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 const Branch = ({
   // initialValues,
@@ -20,9 +21,10 @@ const Branch = ({
   disabled?: boolean;
 }) => {
   const router = useRouter();
+  const t = useTranslations("dashboard.center.branches.form.buttons");
 
   const buttons = (mode: string) => {
-    const label = mode === "add" ? "إضافة فرع" : "تعديل الفرع";
+    const label = mode === "add" ? t("add") : t("edit");
 
     return (
       <>
@@ -43,7 +45,7 @@ const Branch = ({
           }}
           disabled={isSubmitting}
         >
-          إلغاء
+          {t("cancel")}
         </Button>
       </>
     );
