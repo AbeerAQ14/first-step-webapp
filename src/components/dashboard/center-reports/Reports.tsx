@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { getColumns, Report } from "@/components/tables/data/center-reports";
+import {
+  Report,
+  useCenterReportsColumns,
+} from "@/components/tables/data/center-reports";
 import { DataTable } from "@/components/tables/DataTable";
+import { useTranslations } from "next-intl";
 
 export const reports: Report[] = [
   {
@@ -221,12 +225,22 @@ const Reports = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
     Record<number, string>
   >({});
+  const t = useTranslations("dashboard.tables.center-reports");
 
-  const columns = getColumns(selectedChildMap, setSelectedChildMap);
+  const columns = useCenterReportsColumns(
+    selectedChildMap,
+    setSelectedChildMap
+  );
 
   return (
     <div>
-      <DataTable columns={columns} data={reports} />
+      <div className="mt-6 lg:p-4 space-y-1">
+        <p className="heading-4 font-medium text-primary text-center">
+          {t("title")}
+        </p>
+
+        <DataTable columns={columns} data={reports} />
+      </div>
     </div>
   );
 };

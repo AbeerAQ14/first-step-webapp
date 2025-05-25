@@ -610,6 +610,12 @@
             "submit": "إنشاء حساب مسئول الفرع"
           }
         }
+      },
+      "ad-or-blog-request": {
+        "title": "الإعلانات",
+        "request-ad": "طلب إعلان",
+        "request-blog": "طلب مدونة",
+        "blogs": "المدونات"
       }
     },
     "header": {
@@ -679,6 +685,33 @@
           "reservationStatus": "حالة الحجز"
         },
         "currency": "ر.س"
+      },
+      "center-reports": {
+        "headers": {
+          "parentName": "اسم ولي الأمر",
+          "phone": "رقم الجوال",
+          "child": "الطفل",
+          "reportDate": "تاريخ التقرير",
+          "control": "التحكم"
+        },
+        "title": "التقارير اليومية"
+      },
+      "ads": {
+        "headers": {
+          "adNumber": "رقم الإعلان",
+          "type": "نوع الإعلان",
+          "startDate": "تاريخ بداية الإعلان",
+          "endDate": "تاريخ نهاية الإعلان",
+          "branch": "اسم الفرع",
+          "amount": "المبلغ",
+          "reservationStatus": "حالة الحجز"
+        },
+        "types": {
+          "free": "مجاني",
+          "paid": "مدفوع"
+        },
+        "currency": "ر.س",
+        "title": "الإعلانات"
       }
     },
     "children": {

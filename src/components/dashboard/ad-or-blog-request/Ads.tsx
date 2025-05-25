@@ -1,7 +1,8 @@
 "use client";
 
-import { Ad, columns } from "@/components/tables/data/ads";
+import { Ad, useAdsColumns } from "@/components/tables/data/ads";
 import { DataTable } from "@/components/tables/DataTable";
+import { useTranslations } from "next-intl";
 
 const adsData: Ad[] = [
   {
@@ -70,8 +71,11 @@ const adsData: Ad[] = [
 ];
 
 const Ads = () => {
+  const tableT = useTranslations("dashboard.tables.ads");
+  const columns = useAdsColumns();
+
   return (
-    <div>
+    <div className="mt-6">
       <DataTable columns={columns} data={adsData} />
     </div>
   );
