@@ -44,11 +44,11 @@ const getCenterNavbar = (t: any) => [
     url: "/dashboard/center/daily-reports",
     icon: dashboardIcons.reports,
   },
-  {
-    title: t("site-edit"),
-    url: "/dashboard/center/site-edit",
-    icon: dashboardIcons.site,
-  },
+  // {
+  //   title: t("site-edit"),
+  //   url: "/dashboard/center/site-edit",
+  //   icon: dashboardIcons.site,
+  // },
   {
     title: t("ad-or-blog-request"),
     url: "/dashboard/center/ad-or-blog-request",
