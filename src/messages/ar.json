@@ -662,6 +662,19 @@
           "selectChild": "اختر الطفل"
         }
       },
+      "parents": {
+        "headers": {
+          "parentName": "اسم ولي الأمر",
+          "phone": "رقم الجوال",
+          "child": "الطفل",
+          "branch": "الفرع",
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
+        },
+        "selectChild": "اختر الطفل",
+        "allChildren": "كل الأطفال",
+        "title": "أولياء الأمور"
+      },
       "children": {
         "headers": {
           "childNumber": "رقم الطفل",

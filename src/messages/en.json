@@ -665,6 +665,19 @@
           "selectChild": "Select Child"
         }
       },
+      "parents": {
+        "headers": {
+          "parentName": "Parent Name",
+          "phone": "Phone Number",
+          "child": "Child",
+          "branch": "Branch",
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
+        },
+        "selectChild": "Select Child",
+        "allChildren": "All Children",
+        "title": "Parents"
+      },
       "ads": {
         "headers": {
           "adNumber": "Ad Number",

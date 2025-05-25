@@ -4,7 +4,8 @@ export type ReservationStatus =
   | "confirmed"
   | "waitingForPayment"
   | "waitingForConfirmation"
-  | "rejected";
+  | "rejected"
+  | "selectChild";
 
 export function useReservationStatus() {
   const t = useTranslations("dashboard.tables.shared.status");
@@ -23,6 +24,8 @@ export function useReservationStatus() {
         return "bg-light-gray text-white";
       case "rejected":
         return "bg-danger text-white";
+      case "selectChild":
+        return "bg-info text-white";
       default:
         return "";
     }
