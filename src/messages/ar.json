@@ -630,6 +630,21 @@
       "empty": {
         "add-now": "أضف الآن"
       }
+    },
+    "charts": {
+      "children": {
+        "title": "عدد الأطفال",
+        "valueLabel": "طفل",
+        "capacityLabel": "سعة الحضانة",
+        "comparison": {
+          "title": "مقارنة عدد الأطفال",
+          "months": {
+            "april": "شهر إبريل",
+            "march": "شهر مارس",
+            "february": "شهر فبراير"
+          }
+        }
+      }
     }
   }
 }

@@ -4,20 +4,19 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
 
 interface Row {
-  month: string;
+  label: string;
   value: number;
-  valueName: string;
-  trend: string;
+  valueLabel: string;
+  trend: "up" | "down";
   data: { v: number }[];
 }
 
-export default function AreaComparison({
-  title,
-  rows,
-}: {
+interface AreaComparisonProps {
   title: string;
   rows: Row[];
-}) {
+}
+
+export default function AreaComparison({ title, rows }: AreaComparisonProps) {
   return (
     <div className="grow flex flex-col items-center gap-y-2 bg-white py-4 px-2.5">
       <p className="font-bold text-primary">{title}</p>
@@ -27,8 +26,8 @@ export default function AreaComparison({
             className="grow flex items-center justify-between gap-4 py-2.5 w-full max-w-[20.75rem]"
             key={idx}
           >
-            {/* Month */}
-            <div className="font-medium text-gray">{row.month}</div>
+            {/* Label */}
+            <div className="font-medium text-gray">{row.label}</div>
 
             {/* Mini Area Chart */}
             <div className="w-20 h-8 flex items-center">
@@ -50,7 +49,7 @@ export default function AreaComparison({
             {/* Amount and Arrow */}
             <div className="flex items-center min-w-24 gap-1">
               <span className={`font-medium text-sm text-gray`}>
-                {row.value.toLocaleString()} {row.valueName}
+                {row.value.toLocaleString()} {row.valueLabel}
               </span>
 
               {row.trend === "up" ? (

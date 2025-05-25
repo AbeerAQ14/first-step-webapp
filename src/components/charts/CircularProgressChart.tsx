@@ -4,27 +4,35 @@ import { dashboardIcons } from "@/components/general/icons";
 interface CircularProgressChartProps {
   currentValue: number;
   totalValue: number;
+  title?: string;
+  valueLabel?: string;
+  capacityLabel?: string;
 }
 
 const CircularProgressChart: React.FC<CircularProgressChartProps> = ({
   currentValue,
   totalValue,
+  title = "Number of Children",
+  valueLabel = "child",
+  capacityLabel = "Nursery Capacity",
 }) => {
   return (
     <div className="grow flex flex-col items-center gap-y-5 py-4">
-      <div className="font-bold text-primary">عدد الأطفال</div>
+      <div className="font-bold text-primary">{title}</div>
 
       <div className="relative">
         <div className="z-10 absolute inset-0 flex flex-col items-center justify-center font-bold text-info">
           <span className="-mb-1 text-3xl">{currentValue}</span>
-          <span>طفل</span>
+          <span>{valueLabel}</span>
         </div>
 
         <CircularCut value={currentValue} max={totalValue} />
         <dashboardIcons.Circle />
       </div>
 
-      <div className="font-medium text-gray">سعة الحضانة: {totalValue} طفل</div>
+      <div className="font-medium text-gray">
+        {capacityLabel}: {totalValue} {valueLabel}
+      </div>
     </div>
   );
 };

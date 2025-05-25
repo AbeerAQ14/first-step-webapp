@@ -633,6 +633,21 @@
       "empty": {
         "add-now": "Add Now"
       }
+    },
+    "charts": {
+      "children": {
+        "title": "Number of Children",
+        "valueLabel": "child",
+        "capacityLabel": "Nursery Capacity",
+        "comparison": {
+          "title": "Children Count Comparison",
+          "months": {
+            "april": "April",
+            "march": "March",
+            "february": "February"
+          }
+        }
+      }
     }
   }
 }
