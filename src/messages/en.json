@@ -681,6 +681,31 @@
             "submit": "Create Branch Admin Account"
           }
         }
+      },
+      "notifications": {
+        "title": "Schedule Notifications",
+        "form": {
+          "type": {
+            "label": "Choose Notification",
+            "placeholder": "Sleep Notification",
+            "options": {
+              "sleep": "Sleep Notification",
+              "breakfast": "Breakfast Notification"
+            }
+          },
+          "day": {
+            "label": "Day",
+            "placeholder": "Saturday"
+          },
+          "time": {
+            "label": "Time",
+            "placeholder": ""
+          },
+          "recipients": {
+            "error": "Recipients are required"
+          },
+          "submit": "Send Notification"
+        }
       }
     },
     "header": {

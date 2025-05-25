@@ -21,16 +21,22 @@ import { Clock } from "lucide-react";
 import { NotificationsFormData } from "@/components/forms/dashboard/notifications/NotificationsForm";
 
 const NotificationForm = () => {
-  const t = useTranslations("auth.center-signup.2.form.days");
+  const t = useTranslations("dashboard.center.notifications.form");
+  const daysT = useTranslations("auth.center-signup.2.form.days");
 
   const days = [
-    { value: "sunday", label: t("sunday") },
-    { value: "monday", label: t("monday") },
-    { value: "tuesday", label: t("tuesday") },
-    { value: "wednesday", label: t("wednesday") },
-    { value: "thursday", label: t("thursday") },
-    { value: "friday", label: t("friday") },
-    { value: "saturday", label: t("saturday") },
+    { value: "sunday", label: daysT("sunday") },
+    { value: "monday", label: daysT("monday") },
+    { value: "tuesday", label: daysT("tuesday") },
+    { value: "wednesday", label: daysT("wednesday") },
+    { value: "thursday", label: daysT("thursday") },
+    { value: "friday", label: daysT("friday") },
+    { value: "saturday", label: daysT("saturday") },
+  ];
+
+  const notificationTypes = [
+    { value: "sleep", label: t("type.options.sleep") },
+    { value: "breakfast", label: t("type.options.breakfast") },
   ];
 
   const { control } = useFormContext<NotificationsFormData>();
@@ -43,16 +49,16 @@ const NotificationForm = () => {
         render={({ field }) => (
           <FormItem>
             <Select onValueChange={field.onChange}>
-              <FormLabel>اختر الإشعار</FormLabel>
+              <FormLabel>{t("type.label")}</FormLabel>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="إشعار النوم" />
+                  <SelectValue placeholder={t("type.placeholder")} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {["إشعار النوم", "إشعار الإفطار"].map((day) => (
-                  <SelectItem key={day} value={day}>
-                    {day}
+                {notificationTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -68,10 +74,10 @@ const NotificationForm = () => {
         render={({ field }) => (
           <FormItem>
             <Select onValueChange={field.onChange}>
-              <FormLabel>اليوم</FormLabel>
+              <FormLabel>{t("day.label")}</FormLabel>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="السبت" />
+                  <SelectValue placeholder={t("day.placeholder")} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -92,14 +98,14 @@ const NotificationForm = () => {
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>الوقت</FormLabel>
+            <FormLabel>{t("time.label")}</FormLabel>
             <FormControl>
               <div className="relative">
                 <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-light-gray size-5" />
                 <Input
                   {...field}
                   type="time"
-                  placeholder=""
+                  placeholder={t("time.placeholder")}
                   className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
             [&::-webkit-inner-spin-button]:hidden
             [&::-ms-clear]:hidden"

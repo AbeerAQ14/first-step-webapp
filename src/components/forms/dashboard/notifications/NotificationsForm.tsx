@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import Parents from "@/components/dashboard/notifications/Parents";
 import type { Parent } from "@/components/tables/data/parents";
 import NotificationForm from "@/components/forms/dashboard/notifications/NotificationForm";
+import { useTranslations } from "next-intl";
 
 const notificationSchema = z.object({
   type: z
@@ -57,6 +58,7 @@ const useFilteredParents = (
 };
 
 const NotificationsForm = () => {
+  const t = useTranslations("dashboard.center.notifications");
   const [selectedParents, setSelectedParents] = useState<Parent[]>([]);
   const [selectedChildMap, setSelectedChildMap] = useState<
     Record<number, string>
@@ -102,9 +104,7 @@ const NotificationsForm = () => {
         className="flex flex-col items-center gap-y-6"
       >
         <div className="mb-2 w-full flex flex-col gap-y-6">
-          <h1 className="heading-4 font-medium text-primary">
-            جدولة الإشعارات
-          </h1>
+          <h1 className="heading-4 font-medium text-primary">{t("title")}</h1>
 
           <NotificationForm />
         </div>
@@ -121,12 +121,12 @@ const NotificationsForm = () => {
         <input type="hidden" {...methods.register("recipients")} />
         {methods.formState.errors.recipients && (
           <p className="text-sm text-red-500 text-center mt-2">
-            {methods.formState.errors.recipients.message}
+            {t("form.recipients.error")}
           </p>
         )}
 
         <Button size={"sm"} type="submit">
-          إرسال الإشعار
+          {t("form.submit")}
         </Button>
       </form>
     </FormProvider>

@@ -678,6 +678,31 @@
             "cancel": "إلغاء"
           }
         }
+      },
+      "notifications": {
+        "title": "جدولة الإشعارات",
+        "form": {
+          "type": {
+            "label": "اختر الإشعار",
+            "placeholder": "إشعار النوم",
+            "options": {
+              "sleep": "إشعار النوم",
+              "breakfast": "إشعار الإفطار"
+            }
+          },
+          "day": {
+            "label": "اليوم",
+            "placeholder": "السبت"
+          },
+          "time": {
+            "label": "الوقت",
+            "placeholder": ""
+          },
+          "recipients": {
+            "error": "يجب اختيار المستلمين"
+          },
+          "submit": "إرسال الإشعار"
+        }
       }
     },
     "header": {
