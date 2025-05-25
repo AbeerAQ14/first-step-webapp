@@ -1,26 +1,26 @@
 import { useTranslations } from "next-intl";
-import AreaComparison from "@/components/charts/AreaComparison";
+import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
 import Children from "@/components/dashboard/children-files/Children";
 
 export default function CenterDashboardHome() {
   const rows = [
     {
-      label: "شهر إبريل",
+      month: 4, // April
       value: 3620,
       valueLabel: "طفل",
       trend: "up" as const,
       data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
     },
     {
-      label: "شهر مارس",
+      month: 3, // March
       value: 3620,
       valueLabel: "طفل",
       trend: "down" as const,
       data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      label: "شهر فبراير",
+      month: 2, // February
       value: 3620,
       valueLabel: "طفل",
       trend: "up" as const,
@@ -40,7 +40,7 @@ export default function CenterDashboardHome() {
           valueLabel={t("valueLabel")}
           capacityLabel={t("capacityLabel")}
         />
-        <AreaComparison title={t("comparison.title")} rows={rows} />
+        <MonthlyAreaComparison title={t("comparison.title")} rows={rows} />
       </div>
 
       <div className="mt-6">

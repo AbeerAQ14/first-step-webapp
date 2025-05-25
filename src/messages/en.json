@@ -557,6 +557,14 @@
     "refresh": "Refresh Page",
     "home": "Go to Homepage"
   },
+  "shared": {
+    "status": {
+      "rejected": "Rejected",
+      "waitingForConfirmation": "Waiting for Confirmation",
+      "waitingForPayment": "Waiting for Payment",
+      "confirmed": "Payment Confirmed"
+    }
+  },
   "dashboard": {
     "center": {
       "sidebar": {
@@ -653,6 +661,10 @@
             "february": "February"
           }
         }
+      },
+      "bookings": {
+        "title": "Bookings Comparison",
+        "valueLabel": "SAR"
       }
     },
     "tables": {
