@@ -648,6 +648,51 @@
           }
         }
       }
+    },
+    "tables": {
+      "shared": {
+        "status": {
+          "confirmed": "Payment Confirmed",
+          "waitingForPayment": "Waiting for Payment",
+          "waitingForConfirmation": "Waiting for Confirmation",
+          "rejected": "Rejected",
+          "selectChild": "Select Child"
+        }
+      },
+      "children": {
+        "headers": {
+          "childNumber": "Child Number",
+          "childName": "Child Name",
+          "dateOfBirth": "Date of Birth",
+          "parentName": "Parent Name",
+          "branch": "Branch",
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
+        }
+      },
+      "center-bookings": {
+        "headers": {
+          "childNumber": "Child Number",
+          "parentName": "Parent Name",
+          "startDate": "Booking Start Date",
+          "endDate": "Booking End Date",
+          "child": "Child",
+          "branch": "Branch",
+          "amount": "Amount",
+          "reservationStatus": "Reservation Status"
+        },
+        "currency": "SAR"
+      }
+    },
+    "children": {
+      "search": {
+        "placeholder": "Search by nursery / child name / parent"
+      },
+      "invite": "Invite Parent",
+      "title": "Children"
+    },
+    "center-bookings": {
+      "title": "Bookings"
     }
   }
 }

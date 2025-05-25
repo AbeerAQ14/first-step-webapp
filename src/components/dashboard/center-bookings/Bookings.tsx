@@ -1,8 +1,12 @@
 "use client";
 
-import { Booking, getColumns } from "@/components/tables/data/center-bookings";
+import {
+  Booking,
+  useCenterBookingsColumns,
+} from "@/components/tables/data/center-bookings";
 import { DataTable } from "@/components/tables/DataTable";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const bookingsData: Booking[] = [
   {
@@ -156,14 +160,17 @@ const Bookings = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
     Record<number, string>
   >({});
-
-  const columns = getColumns(selectedChildMap, setSelectedChildMap);
+  const t = useTranslations("dashboard.center-bookings");
+  const columns = useCenterBookingsColumns(
+    selectedChildMap,
+    setSelectedChildMap
+  );
 
   return (
     <div>
       <div className="mt-6 lg:p-4 space-y-1">
         <p className="heading-4 font-medium text-primary text-center">
-          الحجوزات
+          {t("title")}
         </p>
 
         <DataTable columns={columns} data={bookingsData} />

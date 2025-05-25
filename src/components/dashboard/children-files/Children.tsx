@@ -1,11 +1,12 @@
 "use client";
 
-import { Child, columns } from "@/components/tables/data/children";
+import { Child, useChildrenColumns } from "@/components/tables/data/children";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const childrenData: Child[] = [
   {
@@ -108,6 +109,8 @@ const childrenData: Child[] = [
 
 const Children = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const t = useTranslations("dashboard.children");
+  const columns = useChildrenColumns();
 
   return (
     <div>
@@ -116,7 +119,7 @@ const Children = () => {
           <Input
             type="text"
             className="rounded-full px-4 pl-16 rtl:pl-4 rtl:pr-16 placeholder:text-mid-gray"
-            placeholder="البحث باسم الحضانة / اسم طفل / ولي امر"
+            placeholder={t("search.placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -124,13 +127,13 @@ const Children = () => {
         </div>
 
         <Button size={"sm"} variant={"outline"}>
-          دعوة ولي أمر
+          {t("invite")}
         </Button>
       </div>
 
       <div className="mt-6 lg:p-4 space-y-1">
         <p className="heading-4 font-medium text-primary text-center">
-          الأطفال
+          {t("title")}
         </p>
 
         <DataTable

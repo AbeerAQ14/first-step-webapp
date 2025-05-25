@@ -645,6 +645,51 @@
           }
         }
       }
+    },
+    "tables": {
+      "shared": {
+        "status": {
+          "confirmed": "تم الدفع",
+          "waitingForPayment": "في انتظار الدفع",
+          "waitingForConfirmation": "في انتظار التأكيد",
+          "rejected": "مرفوض",
+          "selectChild": "اختر الطفل"
+        }
+      },
+      "children": {
+        "headers": {
+          "childNumber": "رقم الطفل",
+          "childName": "اسم الطفل",
+          "dateOfBirth": "تاريخ الميلاد",
+          "parentName": "اسم ولي الأمر",
+          "branch": "الفرع",
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
+        }
+      },
+      "center-bookings": {
+        "headers": {
+          "childNumber": "رقم الطفل",
+          "parentName": "اسم ولي الأمر",
+          "startDate": "تاريخ بداية الحجز",
+          "endDate": "تاريخ نهاية الحجز",
+          "child": "الطفل",
+          "branch": "الفرع",
+          "amount": "المبلغ",
+          "reservationStatus": "حالة الحجز"
+        },
+        "currency": "ر.س"
+      }
+    },
+    "children": {
+      "search": {
+        "placeholder": "البحث باسم الحضانة / اسم طفل / ولي امر"
+      },
+      "invite": "دعوة ولي أمر",
+      "title": "الأطفال"
+    },
+    "center-bookings": {
+      "title": "الحجوزات"
     }
   }
 }
