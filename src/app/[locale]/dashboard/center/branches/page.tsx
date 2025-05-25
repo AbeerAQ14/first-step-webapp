@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Branches from "@/components/dashboard/branches/Branches";
 
-export default async function CenterDashboardHome() {
+export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.center.branches");
 
   return (
