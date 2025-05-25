@@ -1,6 +1,7 @@
 import Team from "@/components/dashboard/team/Team";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export interface TeamMember {
   id: string;
@@ -139,7 +140,9 @@ const branches: Branch[] = [
   },
 ];
 
-export default async function CenterDashboardTeam() {
+export default function CenterDashboardTeam() {
+  const t = useTranslations("dashboard.center.team");
+
   return (
     <div className="flex flex-col gap-y-10">
       {branches.map((branch) => (
@@ -150,7 +153,7 @@ export default async function CenterDashboardTeam() {
             </h1>
 
             <Button asChild size={"sm"} variant={"outline"}>
-              <Link href="team/add">إضافة فرد</Link>
+              <Link href="team/add">{t("add.button")}</Link>
             </Button>
           </div>
 

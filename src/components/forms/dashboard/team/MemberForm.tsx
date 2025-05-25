@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -33,6 +33,7 @@ const MemberForm = ({
 }) => {
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("dashboard.center.team.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData.image === "string" && initialData.image) || null
   );
@@ -52,7 +53,7 @@ const MemberForm = ({
       return (
         <>
           <Button size={"sm"} type="submit">
-            إضافة فرد
+            {t("buttons.add")}
           </Button>
           <Button
             size={"sm"}
@@ -60,7 +61,7 @@ const MemberForm = ({
             className="!border-light-gray text-mid-gray"
             onClick={() => router.back()}
           >
-            إلغاء
+            {t("buttons.cancel")}
           </Button>
         </>
       );
@@ -72,7 +73,7 @@ const MemberForm = ({
             type="submit"
             disabled={!methods.formState.isDirty}
           >
-            حفظ التعديل
+            {t("buttons.save")}
           </Button>
           <Button
             size={"sm"}
@@ -81,7 +82,7 @@ const MemberForm = ({
               onDelete && onDelete();
             }}
           >
-            حذف
+            {t("buttons.delete")}
           </Button>
         </>
       );
@@ -101,11 +102,15 @@ const MemberForm = ({
             render={({ field }) => (
               <FormItem>
                 <Label>
-                  <span className="text-base">اسم الفرد</span>
+                  <span className="text-base">{t("name.label")}</span>
                   <span className="text-red-500">*</span>
                 </Label>
                 <FormControl>
-                  <Input type="text" placeholder="الاسم ثنائي" {...field} />
+                  <Input
+                    type="text"
+                    placeholder={t("name.placeholder")}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,11 +123,15 @@ const MemberForm = ({
             render={({ field }) => (
               <FormItem>
                 <Label>
-                  <span className="text-base">الفرع التابع له</span>
+                  <span className="text-base">{t("branch.label")}</span>
                   <span className="text-red-500">*</span>
                 </Label>
                 <FormControl>
-                  <Input type="text" placeholder="اسم الفرع" {...field} />
+                  <Input
+                    type="text"
+                    placeholder={t("branch.placeholder")}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -135,11 +144,15 @@ const MemberForm = ({
             render={({ field }) => (
               <FormItem>
                 <Label>
-                  <span className="text-base">مهنة الفرد</span>
+                  <span className="text-base">{t("job.label")}</span>
                   <span className="text-red-500">*</span>
                 </Label>
                 <FormControl>
-                  <Input type="text" placeholder="مثال: مدرس" {...field} />
+                  <Input
+                    type="text"
+                    placeholder={t("job.placeholder")}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,7 +198,7 @@ const MemberForm = ({
                     ) : (
                       <div className="text-center text-gray-500 flex flex-col items-center gap-2">
                         <ImageIcon className="w-6 h-6" />
-                        <p className="text-sm">ارفع صورة النشاط</p>
+                        <p className="text-sm">{t("image.placeholder")}</p>
                       </div>
                     )}
                   </label>

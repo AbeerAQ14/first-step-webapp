@@ -1,4 +1,5 @@
 import MemberFormWrapper from "@/components/forms/dashboard/team/MemberFormWrapper";
+import { getTranslations } from "next-intl/server";
 
 export default async function AddTeamMember({
   params,
@@ -6,11 +7,12 @@ export default async function AddTeamMember({
   params: Promise<{ memberId: string }>;
 }) {
   const { memberId } = await params;
+  const t = await getTranslations("dashboard.center.team");
 
   return (
     <div className="p-10 flex flex-col gap-y-6">
       <p className="heading-4 font-medium text-primary text-center">
-        تعديل معلومات الفرد
+        {t("edit.title")}
       </p>
 
       <MemberFormWrapper

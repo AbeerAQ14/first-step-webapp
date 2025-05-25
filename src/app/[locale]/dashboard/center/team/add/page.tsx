@@ -1,10 +1,13 @@
 import MemberFormWrapper from "@/components/forms/dashboard/team/MemberFormWrapper";
+import { useTranslations } from "next-intl";
 
-export default async function AddTeamMember() {
+export default function AddTeamMember() {
+  const t = useTranslations("dashboard.center.team");
+
   return (
     <div className="p-10 flex flex-col gap-y-6">
       <p className="heading-4 font-medium text-primary text-center">
-        إضافة فرد للفريق
+        {t("add.title")}
       </p>
 
       <MemberFormWrapper

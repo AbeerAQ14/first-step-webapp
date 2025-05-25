@@ -706,6 +706,39 @@
           },
           "submit": "Send Notification"
         }
+      },
+      "team": {
+        "title": "Team",
+        "add": {
+          "button": "Add Member",
+          "title": "Add Team Member"
+        },
+        "edit": {
+          "title": "Edit Member Information"
+        },
+        "form": {
+          "name": {
+            "label": "Member Name",
+            "placeholder": "Full Name"
+          },
+          "branch": {
+            "label": "Branch",
+            "placeholder": "Branch Name"
+          },
+          "job": {
+            "label": "Job Title",
+            "placeholder": "Example: Teacher"
+          },
+          "image": {
+            "placeholder": "Upload member photo"
+          },
+          "buttons": {
+            "add": "Add Member",
+            "cancel": "Cancel",
+            "save": "Save Changes",
+            "delete": "Delete"
+          }
+        }
       }
     },
     "header": {
