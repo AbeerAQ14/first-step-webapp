@@ -214,7 +214,8 @@
           "gender": {
             "title": "Child's Gender",
             "male": "Boy",
-            "female": "Girl"
+            "female": "Girl",
+            "label": "Child's Gender"
           }
         }
       },
@@ -744,6 +745,23 @@
             "cancel": "Cancel",
             "save": "Save Changes",
             "delete": "Delete"
+          }
+        }
+      },
+      "children": {
+        "title": "Children",
+        "form": {
+          "sections": {
+            "parent": "Parent Information",
+            "child": "Child Information",
+            "diseases": "Chronic Diseases",
+            "allergies": "Allergies",
+            "recommendations": "Child-Specific Recommendations",
+            "authorized": "Authorized Persons"
+          },
+          "buttons": {
+            "edit": "Edit Child File",
+            "cancel": "Cancel"
           }
         }
       }

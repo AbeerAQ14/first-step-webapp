@@ -33,6 +33,7 @@ const ChildShow = ({
 }) => {
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("dashboard.center.children.form");
   const signUpParentSchema = createSignUpParentSchema(locale as "ar" | "en");
 
   const isReadOnly = mode === "show";
@@ -99,7 +100,7 @@ const ChildShow = ({
           <div className="flex justify-center gap-5 lg:gap-x-10">
             {!noEdit && (
               <Button asChild size={"sm"}>
-                <Link href={`${childId}/edit`}>تعديل ملف الطفل</Link>
+                <Link href={`${childId}/edit`}>{t("buttons.edit")}</Link>
               </Button>
             )}
             <Button
@@ -110,7 +111,7 @@ const ChildShow = ({
                 router.back();
               }}
             >
-              إلغاء
+              {t("buttons.cancel")}
             </Button>
           </div>
         )}
@@ -131,10 +132,13 @@ const ParentPart = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.parent-signup.form");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">بيانات ولي الأمر</h2>
+      <h2 className="heading-4 font-medium text-primary">
+        {sectionT("parent")}
+      </h2>
 
       <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
         <FormField
@@ -244,10 +248,13 @@ const ChildPart = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.add-child.1.form");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">بيانات الطفل</h2>
+      <h2 className="heading-4 font-medium text-primary">
+        {sectionT("child")}
+      </h2>
 
       <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
         <FormField
@@ -339,7 +346,7 @@ const ChildPart = ({
 
         <div>
           <p className="form-label-sm mb-4 text-left rtl:text-right">
-            جنس الطفل
+            {t("gender.label")}
           </p>
           <div className="flex justify-start gap-8">
             <FormField
@@ -433,10 +440,13 @@ const DiseasesPart = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.add-child.2.form.diseases");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">الأمراض المزمنة</h2>
+      <h2 className="heading-4 font-medium text-primary">
+        {sectionT("diseases")}
+      </h2>
 
       {hasDiseases === "yes" &&
         diseases!.map((_, index) => (
@@ -535,10 +545,13 @@ const AllergiesPart = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.add-child.2.form.allergies");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">الحساسية</h2>
+      <h2 className="heading-4 font-medium text-primary">
+        {sectionT("allergies")}
+      </h2>
 
       {hasAllergies === "yes" &&
         allergies!.map((_, index) => (
@@ -627,11 +640,12 @@ const Recommendations = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.add-child.3.form");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
       <h2 className="heading-4 font-medium text-primary">
-        توصيات تتعلق بالطفل
+        {sectionT("recommendations")}
       </h2>
 
       <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
@@ -712,10 +726,13 @@ const AuthorizationPart = ({
   readOnly: boolean;
 }) => {
   const t = useTranslations("auth.add-child.4.form");
+  const sectionT = useTranslations("dashboard.center.children.form.sections");
 
   return (
     <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">الأشخاص المفوضة</h2>
+      <h2 className="heading-4 font-medium text-primary">
+        {sectionT("authorized")}
+      </h2>
       <div className="space-y-6 lg:p-6 lg:pb-0">
         {authorizedPersons.map((_, index) => (
           <div key={index} className="space-y-6">

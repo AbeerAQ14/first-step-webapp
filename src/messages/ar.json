@@ -211,7 +211,8 @@
           "gender": {
             "title": "جنس الطفل",
             "male": "ولد",
-            "female": "بنت"
+            "female": "بنت",
+            "label": "جنس الطفل"
           }
         }
       },
@@ -741,6 +742,23 @@
             "cancel": "إلغاء",
             "save": "حفظ التعديل",
             "delete": "حذف"
+          }
+        }
+      },
+      "children": {
+        "title": "الأطفال",
+        "form": {
+          "sections": {
+            "parent": "بيانات ولي الأمر",
+            "child": "بيانات الطفل",
+            "diseases": "الأمراض المزمنة",
+            "allergies": "الحساسية",
+            "recommendations": "توصيات تتعلق بالطفل",
+            "authorized": "الأشخاص المفوضة"
+          },
+          "buttons": {
+            "edit": "تعديل ملف الطفل",
+            "cancel": "إلغاء"
           }
         }
       }

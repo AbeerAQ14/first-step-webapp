@@ -1,37 +1,5 @@
 import ChildShow from "@/components/forms/dashboard/children/ChildShow";
 
-// const initialValues = {
-//   name: "",
-//   phone: "",
-//   email: "",
-//   relation: "",
-//   password: "",
-//   confirmPassword: "",
-//   childName: "",
-//   birthDate: new Date(),
-//   fatherName: "",
-//   motherName: "",
-//   gender: undefined,
-//   chronicDiseases: {
-//     hasDiseases: "yes",
-//     diseases: [{ name: "", medication: "", procedures: "" }],
-//   },
-//   childDescription: "",
-//   favoriteThings: "",
-//   recommendations: "",
-//   allergies: {
-//     hasAllergies: "yes",
-//     allergies: [{ allergyTypes: "", allergyFoods: "", allergyProcedures: "" }],
-//   },
-//   authorizedPersons: [
-//     {
-//       name: "",
-//       idNumber: "",
-//     },
-//   ],
-//   comments: "",
-// };
-
 const initialValues = {
   name: "عمرو",
   phone: "رقم الجوال",
