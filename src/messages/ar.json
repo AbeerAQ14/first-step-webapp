@@ -712,14 +712,46 @@
         "currency": "ر.س"
       },
       "center-reports": {
+        "title": "التقارير اليومية",
         "headers": {
           "parentName": "اسم ولي الأمر",
-          "phone": "رقم الجوال",
+          "phone": "رقم الهاتف",
           "child": "الطفل",
           "reportDate": "تاريخ التقرير",
-          "control": "التحكم"
+          "control": "الإجراءات"
         },
-        "title": "التقارير اليومية"
+        "send": "إرسال تقرير",
+        "report": {
+          "title": "تقرير يومي",
+          "send": "إرسال التقرير",
+          "cancel": "إلغاء",
+          "form": {
+            "activities": {
+              "label": "الأنشطة",
+              "placeholder": "أدخل الأنشطة"
+            },
+            "behavior": {
+              "label": "السلوك",
+              "placeholder": "أدخل السلوك"
+            },
+            "meals": {
+              "label": "الوجبات",
+              "placeholder": "أدخل الوجبات"
+            },
+            "napTime": {
+              "label": "وقت القيلولة",
+              "placeholder": "أدخل وقت القيلولة"
+            },
+            "additionalNotes": {
+              "label": "ملاحظات إضافية",
+              "placeholder": "أدخل ملاحظات إضافية"
+            },
+            "recipients": {
+              "label": "المستلمون",
+              "placeholder": "اختر المستلمين"
+            }
+          }
+        }
       },
       "ads": {
         "headers": {
@@ -748,6 +780,41 @@
     },
     "center-bookings": {
       "title": "الحجوزات"
+    },
+    "center-reports": {
+      "title": "التقارير اليومية",
+      "send": "إرسال تقرير",
+      "report": {
+        "title": "تقرير يومي",
+        "send": "إرسال التقرير",
+        "cancel": "إلغاء",
+        "form": {
+          "activities": {
+            "label": "الأنشطة",
+            "placeholder": "أدخل الأنشطة"
+          },
+          "behavior": {
+            "label": "السلوك",
+            "placeholder": "أدخل السلوك"
+          },
+          "meals": {
+            "label": "الوجبات",
+            "placeholder": "أدخل الوجبات"
+          },
+          "napTime": {
+            "label": "وقت القيلولة",
+            "placeholder": "أدخل وقت القيلولة"
+          },
+          "additionalNotes": {
+            "label": "ملاحظات إضافية",
+            "placeholder": "أدخل ملاحظات إضافية"
+          },
+          "recipients": {
+            "label": "المستلمون",
+            "placeholder": "اختر المستلمين"
+          }
+        }
+      }
     }
   }
 }

@@ -9,11 +9,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { ReportsFormData } from "./ReportsForm";
 import { useForm, FormProvider } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
   const methods = useForm<ReportsFormData>({
     defaultValues: initialValues,
   });
+
+  const t = useTranslations("dashboard.center-reports.report.form");
 
   return (
     <FormProvider {...methods}>
@@ -23,11 +26,11 @@ const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
           name="activities"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>الأنشطة اليومية</FormLabel>
+              <FormLabel>{t("activities.label")}</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="مثال: تدريب بيانو ولعب كورة"
+                  placeholder={t("activities.placeholder")}
                   {...field}
                   disabled
                 />
@@ -41,11 +44,11 @@ const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
           name="behavior"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>سلوك الطفل خلال اليوم</FormLabel>
+              <FormLabel>{t("behavior.label")}</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="كان مشاغب مع أصدقائه"
+                  placeholder={t("behavior.placeholder")}
                   {...field}
                   disabled
                 />
@@ -59,11 +62,11 @@ const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
           name="meals"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>الوجبات</FormLabel>
+              <FormLabel>{t("meals.label")}</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="مثال: وجبة الغداء"
+                  placeholder={t("meals.placeholder")}
                   {...field}
                   disabled
                 />
@@ -77,11 +80,11 @@ const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
           name="napTime"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>القيلولة اليومية</FormLabel>
+              <FormLabel>{t("napTime.label")}</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="قيلولة نصف ساعة"
+                  placeholder={t("napTime.placeholder")}
                   {...field}
                   disabled
                 />
@@ -95,9 +98,14 @@ const ReportShow = ({ initialValues }: { initialValues: ReportsFormData }) => {
           name="additionalNotes"
           render={({ field }) => (
             <FormItem className="md:col-span-2">
-              <FormLabel>ملاحظات إضافية</FormLabel>
+              <FormLabel>{t("additionalNotes.label")}</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="ملاحظات" {...field} disabled />
+                <Input
+                  type="text"
+                  placeholder={t("additionalNotes.placeholder")}
+                  {...field}
+                  disabled
+                />
               </FormControl>
             </FormItem>
           )}

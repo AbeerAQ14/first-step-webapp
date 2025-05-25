@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ReportsFormData } from "./ReportsForm";
+import { useTranslations } from "next-intl";
 
 const ReportFields = () => {
   const { control } = useFormContext<ReportsFormData>();
+  const t = useTranslations("dashboard.center-reports.report.form");
 
   return (
     <div className="grid md:grid-cols-2 gap-4 lg:gap-6 xl:gap-9">
@@ -21,11 +23,11 @@ const ReportFields = () => {
         name="activities"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>الأنشطة اليومية</FormLabel>
+            <FormLabel>{t("activities.label")}</FormLabel>
             <FormControl>
               <Input
                 type="text"
-                placeholder="مثال: تدريب بيانو ولعب كورة"
+                placeholder={t("activities.placeholder")}
                 {...field}
               />
             </FormControl>
@@ -39,11 +41,11 @@ const ReportFields = () => {
         name="behavior"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>سلوك الطفل خلال اليوم</FormLabel>
+            <FormLabel>{t("behavior.label")}</FormLabel>
             <FormControl>
               <Input
                 type="text"
-                placeholder="كان مشاغب مع أصدقائه"
+                placeholder={t("behavior.placeholder")}
                 {...field}
               />
             </FormControl>
@@ -57,9 +59,13 @@ const ReportFields = () => {
         name="meals"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>الوجبات</FormLabel>
+            <FormLabel>{t("meals.label")}</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="مثال: وجبة الغداء" {...field} />
+              <Input
+                type="text"
+                placeholder={t("meals.placeholder")}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -71,9 +77,13 @@ const ReportFields = () => {
         name="napTime"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>القيلولة اليومية</FormLabel>
+            <FormLabel>{t("napTime.label")}</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="قيلولة نصف ساعة" {...field} />
+              <Input
+                type="text"
+                placeholder={t("napTime.placeholder")}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -85,9 +95,13 @@ const ReportFields = () => {
         name="additionalNotes"
         render={({ field }) => (
           <FormItem className="md:col-span-2">
-            <FormLabel>ملاحظات إضافية</FormLabel>
+            <FormLabel>{t("additionalNotes.label")}</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="ملاحظات" {...field} />
+              <Input
+                type="text"
+                placeholder={t("additionalNotes.placeholder")}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

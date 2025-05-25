@@ -734,10 +734,10 @@
       "center-reports": {
         "headers": {
           "parentName": "Parent Name",
-          "phone": "Phone Number",
+          "phone": "Phone",
           "child": "Child",
           "reportDate": "Report Date",
-          "control": "Control"
+          "control": "Actions"
         },
         "title": "Daily Reports"
       }
@@ -751,6 +751,41 @@
     },
     "center-bookings": {
       "title": "Bookings"
+    },
+    "center-reports": {
+      "title": "Daily Reports",
+      "send": "Send Report",
+      "report": {
+        "title": "Daily Report",
+        "send": "Send Report",
+        "cancel": "Cancel",
+        "form": {
+          "activities": {
+            "label": "Activities",
+            "placeholder": "Enter activities"
+          },
+          "behavior": {
+            "label": "Behavior",
+            "placeholder": "Enter behavior"
+          },
+          "meals": {
+            "label": "Meals",
+            "placeholder": "Enter meals"
+          },
+          "napTime": {
+            "label": "Nap Time",
+            "placeholder": "Enter nap time"
+          },
+          "additionalNotes": {
+            "label": "Additional Notes",
+            "placeholder": "Enter additional notes"
+          },
+          "recipients": {
+            "label": "Recipients",
+            "placeholder": "Select recipients"
+          }
+        }
+      }
     }
   }
 }

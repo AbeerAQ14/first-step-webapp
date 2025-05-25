@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Parent } from "@/components/tables/data/parents";
 import Parents from "@/components/dashboard/notifications/Parents";
 import ReportFields from "./ReportFields";
+import { useTranslations } from "next-intl";
 
 const reportsSchema = z.object({
   activities: z
@@ -68,6 +69,7 @@ const ReportsForm = () => {
   >({});
 
   const router = useRouter();
+  const t = useTranslations("dashboard.center-reports.report");
 
   const methods = useForm<ReportsFormData>({
     resolver: zodResolver(reportsSchema),
@@ -111,7 +113,7 @@ const ReportsForm = () => {
         className="flex flex-col gap-y-6"
       >
         <div className="space-y-6 lg:p-4">
-          <p className="heading-4 text-primary text-center">تقرير يومي</p>
+          <p className="heading-4 text-primary text-center">{t("title")}</p>
           <ReportFields />
         </div>
 
@@ -131,10 +133,10 @@ const ReportsForm = () => {
 
         <div className="flex justify-center gap-5 lg:gap-x-10">
           <Button size={"sm"} type="submit">
-            إرسال التقرير
+            {t("send")}
           </Button>
           <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
-            إلغاء
+            {t("cancel")}
           </Button>
         </div>
       </form>
