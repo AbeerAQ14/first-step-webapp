@@ -246,7 +246,10 @@
         }
       },
       "error": {
-        "validation": "Please check these required fields:"
+        "validation": "Please check these required fields:",
+        "general": {
+          "field-required": "This field is required"
+        }
       }
     },
     "add-child": {
@@ -985,58 +988,6 @@
           }
         }
       }
-    }
-  },
-  "fields": {
-    "name": "Name",
-    "email": "Email",
-    "phone": "Phone Number",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "relation": "Relationship",
-    "childName": "Child's Name",
-    "birthDate": "Birth Date",
-    "fatherName": "Father's Name",
-    "motherName": "Mother's Name",
-    "gender": "Gender",
-    "chronicDiseases": "Chronic Diseases",
-    "diseases": "Diseases",
-    "allergies": "Allergies",
-    "childDescription": "Child Description",
-    "favoriteThings": "Favorite Things",
-    "recommendations": "Recommendations",
-    "authorizedPersons": "Authorized Persons",
-    "national_number": "National Number",
-    "kinship": "Relationship",
-    "comments": "Comments",
-    "nursery_name": "Nursery Name",
-    "location": "Location",
-    "city": "City",
-    "neighborhood": "Neighborhood",
-    "address": "Address",
-    "logo": "Logo",
-    "license_path": "License",
-    "commercial_record_path": "Commercial Record",
-    "nursery_type": "Nursery Type",
-    "additional_service": "Additional Services",
-    "work_days_from": "Work Days From",
-    "work_days_to": "Work Days To",
-    "work_hours_from": "Work Hours From",
-    "work_hours_to": "Work Hours To",
-    "time_of_first_period": "First Period Time",
-    "time_of_second_period": "Second Period Time",
-    "emergency_contact": "Emergency Contact",
-    "special_needs": "Special Needs",
-    "services": "Services",
-    "communication_methods": "Communication Methods",
-    "provides_food": "Provides Food",
-    "accepted_ages": "Accepted Ages",
-    "pricing": "Pricing",
-    "subject": "Subject",
-    "message": "Message",
-    "children": {
-      "kinship": "Child Relationship",
-      "national_number": "National Number"
     }
   }
 }

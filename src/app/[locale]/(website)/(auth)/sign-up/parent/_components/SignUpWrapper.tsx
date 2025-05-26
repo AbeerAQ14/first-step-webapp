@@ -22,6 +22,9 @@ const SignUpWrapper = () => {
   const onError = (error: ApiError) => {
     if (!formRef.current) return;
 
+    // Clear any existing errors first
+    formRef.current.clearErrors();
+
     // Handle field-specific validation errors
     if (error.errors && Object.keys(error.errors).length > 0) {
       Object.entries(error.errors).forEach(([field, messages]) => {
@@ -43,13 +46,13 @@ const SignUpWrapper = () => {
           message: Array.isArray(messages) ? messages[0] : messages,
         });
       });
+    } else if (error.message) {
+      // If there's a general error message, show it at the root level
+      formRef.current.setError("root", {
+        type: "server",
+        message: error.message,
+      });
     }
-
-    // Don't show the raw API message, instead show our translated validation message
-    formRef.current.setError("root", {
-      type: "server",
-      message: t("error.validation"),
-    });
   };
 
   // --- Data Fetching & Mutation ---

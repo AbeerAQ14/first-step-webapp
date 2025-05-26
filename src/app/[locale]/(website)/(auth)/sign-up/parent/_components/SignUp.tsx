@@ -26,6 +26,7 @@ const SignUp = ({
 }) => {
   const t = useTranslations("auth.parent-signup");
   const tSteps = useTranslations("auth.add-child");
+  const tFields = useTranslations("auth.parent-signup.fields");
   const locale = useLocale();
 
   const steps = [
@@ -179,27 +180,49 @@ const SignUp = ({
                   <ul className="space-y-1.5 text-sm text-red-700">
                     {Object.entries(methods.formState.errors).map(
                       ([field, error]) => {
+                        // Skip root level errors as they are handled separately
+                        if (field === "root") return null;
+
                         // Handle nested fields (e.g., children.0.kinship)
-                        const translationKey = field.includes(".")
-                          ? `children.${field.split(".").pop()}`
-                          : field;
+                        let translationKey = field;
+                        if (field.includes(".")) {
+                          const parts = field.split(".");
+                          // If it's a children array field (e.g. children.0.kinship)
+                          if (
+                            parts[0] === "children" &&
+                            !isNaN(Number(parts[1]))
+                          ) {
+                            translationKey = `children.${parts[2]}`;
+                          } else if (
+                            parts[0] === "authorizedPersons" &&
+                            !isNaN(Number(parts[1]))
+                          ) {
+                            translationKey = `authorizedPersons.${parts[2]}`;
+                          } else {
+                            // For other nested fields, just use the last part
+                            translationKey = parts[parts.length - 1];
+                          }
+                        }
+
+                        // Get the field label from translations
+                        const fieldLabel = tFields(translationKey, {
+                          default:
+                            translationKey.charAt(0).toUpperCase() +
+                            translationKey.slice(1).replace(/([A-Z])/g, " $1"),
+                        });
+
+                        // Get the error message
+                        const errorMessage =
+                          error?.message || t("error.general.field-required");
 
                         return (
                           <li key={field} className="flex items-start gap-2">
                             <span className="mt-1">•</span>
                             <span>
-                              <span className="font-medium">
-                                {t(`fields.${translationKey}`, {
-                                  default:
-                                    field.charAt(0).toUpperCase() +
-                                    field.slice(1).replace(/([A-Z])/g, " $1"),
-                                })}
+                              <span className="font-medium">{fieldLabel}</span>
+                              <span className="text-red-600 ms-1">
+                                ({errorMessage})
                               </span>
-                              {error?.message && (
-                                <span className="text-red-600 ms-1">
-                                  ({error.message})
-                                </span>
-                              )}
                             </span>
                           </li>
                         );
