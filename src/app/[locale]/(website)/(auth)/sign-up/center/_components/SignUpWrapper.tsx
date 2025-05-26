@@ -10,55 +10,61 @@ import { CenterRegisterPayload } from "@/types";
 import { SignUp } from "./SignUp";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
 import { UseFormReturn } from "react-hook-form";
+import { ApiError } from "@/lib/error-handling";
 
 const SignUpWrapper = () => {
   const router = useRouter();
   const locale = useLocale();
-
   const formRef = useRef<UseFormReturn<SignUpCenterFormData> | null>(null);
+
+  const onError = (error: ApiError) => {
+    if (!formRef.current) return;
+
+    // Handle field-specific validation errors
+    if (error.errors && Object.keys(error.errors).length > 0) {
+      Object.entries(error.errors).forEach(([field, messages]) => {
+        // Only set errors for fields that exist in the form
+        if (field in formRef.current!.getValues()) {
+          formRef.current?.setError(field as keyof SignUpCenterFormData, {
+            type: "server",
+            message: Array.isArray(messages) ? messages[0] : messages,
+          });
+        }
+      });
+    }
+
+    // Always show the main error message
+    formRef.current.setError("root", {
+      type: "server",
+      message: error.message,
+    });
+  };
 
   // --- Data Fetching & Mutation ---
   const mutation = useMutation<
-    any, // Type of successful response from submitFormData
-    Error, // Type of error thrown by submitFormData
-    CenterRegisterPayload // Type of variable passed to mutate function (original form data)
+    any, // Success response type (update this based on your API response)
+    ApiError,
+    CenterRegisterPayload
   >({
     mutationFn: async (data: CenterRegisterPayload) => {
       return await authService.registerCenter(data);
     },
     onSuccess: (data) => {
-      console.log("Submission successful:", data);
-
       router.push(`/${locale}/sign-in`);
     },
-    onError: (error: any) => {
-      console.error("Submission failed:", error);
-
-      // Send field-specific errors to form
-      if (formRef.current && error.errors) {
-        Object.entries(error.errors).forEach(([field, messages]) => {
-          formRef.current?.setError(field as keyof SignUpCenterFormData, {
-            type: "server",
-            message: Array.isArray(messages) ? messages[0] : "Unknown error", // Show first error
-          });
-        });
-      }
-
-      // Show general error message if needed
-      if (formRef.current && error.message) {
-        formRef.current?.setError("root", {
-          type: "server",
-          message: error.message || "An unexpected error occurred.",
-        });
-      }
-    },
+    onError,
   });
 
   useEffect(() => {
     router.prefetch(`/${locale}/sign-in`);
-  }, []);
+  }, [locale, router]);
 
   const submitHandler = (data: SignUpCenterFormData) => {
+    // Clear any existing errors before submitting
+    if (formRef.current) {
+      formRef.current.clearErrors();
+    }
+
     const expectedData = {
       logo: data.logo,
       license_path: data.license_path,
@@ -138,9 +144,7 @@ const SignUpWrapper = () => {
   return (
     <div>
       {mutation.isSuccess && (
-        <LoadingOverlay
-          content={`Welcome aboard! Let\u2019s get you signed in.`}
-        />
+        <LoadingOverlay content="Welcome aboard! Let's get you signed in." />
       )}
 
       <SignUp

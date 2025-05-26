@@ -27,6 +27,7 @@ import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
 import { useRouter } from "@/i18n/navigation";
 import { LoaderCircle } from "lucide-react";
+import { ApiError } from "@/lib/error-handling";
 
 const SendOTPForm = ({ email }: { email: string }) => {
   const t = useTranslations("auth.otp.form");
@@ -42,42 +43,60 @@ const SendOTPForm = ({ email }: { email: string }) => {
   });
 
   const mutation = useMutation<
-    any, // or a specific response type
-    { errors?: { otp?: string[] }; message?: string },
+    any, // Success response type (update this based on your API response)
+    ApiError,
     OTPVerificationFormData
   >({
     mutationFn: async (data) => {
-      if (!email) throw { message: "Email not found." };
+      if (!email) {
+        throw {
+          message: "Email not found.",
+          errors: {},
+          status: 400,
+        };
+      }
       return await authService.checkOTP(email, data.otp);
     },
     onSuccess: () => {
       router.push(`/reset-password?email=${email}`);
     },
     onError: (error) => {
-      if (error?.errors?.otp?.[0]) {
-        form.setError("otp", {
-          type: "server",
-          message: error.errors.otp[0],
-        });
-      } else {
-        form.setError("root", {
-          type: "server",
-          message: error.message || "خطأ غير متوقع",
+      // Clear any existing errors
+      form.clearErrors();
+
+      // Handle field-specific validation errors
+      if (error.errors && Object.keys(error.errors).length > 0) {
+        Object.entries(error.errors).forEach(([field, messages]) => {
+          if (field === "otp") {
+            form.setError("otp", {
+              type: "server",
+              message: Array.isArray(messages) ? messages[0] : messages,
+            });
+          }
         });
       }
+
+      // Always show the main error message
+      form.setError("root", {
+        type: "server",
+        message: error.message,
+      });
     },
   });
 
   const onSubmit = async (data: OTPVerificationFormData) => {
-    console.log(data);
-
+    // Clear any existing errors before submitting
+    form.clearErrors();
     mutation.mutate(data);
   };
 
   const { timeLeft, otpExpired } = useOTPTimer({
     duration: 60,
     onExpire: () => {
-      console.log("OTP expired");
+      form.setError("root", {
+        type: "expired",
+        message: t("timer-expired"),
+      });
     },
   });
 
@@ -115,13 +134,19 @@ const SendOTPForm = ({ email }: { email: string }) => {
           )}
         />
 
+        {form.formState.errors.root && (
+          <p className="text-action text-center">
+            {form.formState.errors.root.message}
+          </p>
+        )}
+
         <div className="mt-9 flex flex-col items-center gap-y-4">
           <Button
             size={"long"}
             type="submit"
-            disabled={mutation.isPending || mutation.isSuccess}
+            disabled={mutation.isPending || mutation.isSuccess || otpExpired}
           >
-            {mutation.isSuccess && (
+            {mutation.isPending && (
               <span className="animate-spin mr-2.5">
                 <LoaderCircle />
               </span>

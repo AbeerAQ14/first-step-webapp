@@ -144,14 +144,17 @@
     },
     "sign-in": {
       "title": "مرحبًا مرة أخرى، سجل دخولك",
+      "loading": "جارى تسجيل دخولك...",
       "form": {
         "email": {
           "label": "البريد الإلكترومي",
-          "placeholder": ""
+          "placeholder": "",
+          "error": "البريد الإلكتروني مطلوب"
         },
         "password": {
           "label": "كلمة السر",
-          "placeholder": ""
+          "placeholder": "",
+          "error": "كلمة المرور مطلوبة"
         },
         "forgot-password": {
           "label": "هل نسيت كلمة المرور؟",
@@ -186,6 +189,61 @@
           "label": "تأكيد كلمة السر",
           "placeholder": ""
         }
+      },
+      "fields": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الجوال",
+        "password": "كلمة المرور",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "relation": "صلة القرابة",
+        "childName": "اسم الطفل",
+        "birthDate": "تاريخ الميلاد",
+        "fatherName": "اسم الأب",
+        "motherName": "اسم الأم",
+        "gender": "الجنس",
+        "chronicDiseases": "الأمراض المزمنة",
+        "diseases": "الأمراض",
+        "allergies": "الحساسية",
+        "childDescription": "وصف الطفل",
+        "favoriteThings": "الأشياء المفضلة",
+        "recommendations": "التوصيات",
+        "authorizedPersons": "الأشخاص المصرح لهم",
+        "national_number": "رقم الهوية",
+        "kinship": "صلة القرابة",
+        "comments": "ملاحظات",
+        "nursery_name": "اسم الحضانة",
+        "location": "الموقع",
+        "city": "المدينة",
+        "neighborhood": "الحي",
+        "address": "العنوان",
+        "logo": "الشعار",
+        "license_path": "الرخصة",
+        "commercial_record_path": "السجل التجاري",
+        "nursery_type": "نوع الحضانة",
+        "additional_service": "الخدمات الإضافية",
+        "work_days_from": "أيام العمل من",
+        "work_days_to": "أيام العمل إلى",
+        "work_hours_from": "ساعات العمل من",
+        "work_hours_to": "ساعات العمل إلى",
+        "time_of_first_period": "وقت الفترة الأولى",
+        "time_of_second_period": "وقت الفترة الثانية",
+        "emergency_contact": "الاتصال في حالات الطوارئ",
+        "special_needs": "الاحتياجات الخاصة",
+        "services": "الخدمات",
+        "communication_methods": "وسائل التواصل",
+        "provides_food": "توفير الطعام",
+        "accepted_ages": "الأعمار المقبولة",
+        "pricing": "الأسعار",
+        "subject": "الموضوع",
+        "message": "الرسالة",
+        "children": {
+          "kinship": "صلة القرابة بالطفل",
+          "national_number": "رقم الهوية"
+        }
+      },
+      "error": {
+        "validation": "يرجى التحقق من هذه الحقول المطلوبة:"
       }
     },
     "add-child": {
@@ -952,6 +1010,58 @@
           }
         }
       }
+    }
+  },
+  "fields": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الجوال",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "relation": "صلة القرابة",
+    "childName": "اسم الطفل",
+    "birthDate": "تاريخ الميلاد",
+    "fatherName": "اسم الأب",
+    "motherName": "اسم الأم",
+    "gender": "الجنس",
+    "chronicDiseases": "الأمراض المزمنة",
+    "diseases": "الأمراض",
+    "allergies": "الحساسية",
+    "childDescription": "وصف الطفل",
+    "favoriteThings": "الأشياء المفضلة",
+    "recommendations": "التوصيات",
+    "authorizedPersons": "الأشخاص المصرح لهم",
+    "national_number": "رقم الهوية",
+    "kinship": "صلة القرابة",
+    "comments": "ملاحظات",
+    "nursery_name": "اسم الحضانة",
+    "location": "الموقع",
+    "city": "المدينة",
+    "neighborhood": "الحي",
+    "address": "العنوان",
+    "logo": "الشعار",
+    "license_path": "الرخصة",
+    "commercial_record_path": "السجل التجاري",
+    "nursery_type": "نوع الحضانة",
+    "additional_service": "الخدمات الإضافية",
+    "work_days_from": "أيام العمل من",
+    "work_days_to": "أيام العمل إلى",
+    "work_hours_from": "ساعات العمل من",
+    "work_hours_to": "ساعات العمل إلى",
+    "time_of_first_period": "وقت الفترة الأولى",
+    "time_of_second_period": "وقت الفترة الثانية",
+    "emergency_contact": "الاتصال في حالات الطوارئ",
+    "special_needs": "الاحتياجات الخاصة",
+    "services": "الخدمات",
+    "communication_methods": "وسائل التواصل",
+    "provides_food": "توفير الطعام",
+    "accepted_ages": "الأعمار المقبولة",
+    "pricing": "الأسعار",
+    "subject": "الموضوع",
+    "message": "الرسالة",
+    "children": {
+      "kinship": "صلة القرابة بالطفل",
+      "national_number": "رقم الهوية"
     }
   }
 }

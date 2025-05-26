@@ -1,4 +1,5 @@
 import { ContactFormData } from "@/lib/schemas";
+import { ApiErrorHandler } from "@/lib/error-handling";
 import { formatTime } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import {
@@ -34,88 +35,135 @@ apiClient.interceptors.request.use((config) => {
 
 export const websiteService = {
   getAdSlides: async (locale: string): Promise<AdSlide[]> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/sliders`, {
-      headers: {
-        "Content-Type": "application/json",
-        lang: locale,
-        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-        "X-Authorization-Secret":
-          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-      },
-      next: {
-        revalidate: 86400,
-      },
-    });
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/sliders`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
 
-    if (!res.ok) throw new Error("Failed to fetch ad slides");
-    const data = await res.json();
-    return data.data as AdSlide[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch ad slides",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as AdSlide[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   getCommonQuestions: async (locale: string): Promise<CommonQuestion[]> => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/common-question`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          lang: locale,
-          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-          "X-Authorization-Secret":
-            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-        },
-        next: {
-          revalidate: 86400,
-        },
-      }
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/common-question`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
 
-    if (!res.ok) throw new Error("Failed to fetch common questions");
-    const data = await res.json();
-    return data.data as CommonQuestion[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch common questions",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as CommonQuestion[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   getOurValues: async (locale: string): Promise<Value[]> => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/our-value-keys`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          lang: locale,
-          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-          "X-Authorization-Secret":
-            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-        },
-        next: {
-          revalidate: 86400,
-        },
-      }
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/our-value-keys`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
 
-    if (!res.ok) throw new Error("Failed to fetch values");
-    const data = await res.json();
-    return data.data as Value[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch values",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as Value[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   getOurServices: async (locale: string): Promise<Service[]> => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          lang: locale,
-          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-          "X-Authorization-Secret":
-            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-        },
-        next: {
-          revalidate: 86400,
-        },
-      }
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
 
-    if (!res.ok) throw new Error("Failed to fetch services");
-    const data = await res.json();
-    return data.data as Service[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch services",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as Service[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   contactUs: async (payload: ContactFormData) => {
@@ -136,59 +184,79 @@ export const websiteService = {
 
       if (!res.ok) {
         const responseData = await res.json();
-        console.error("API Error Response:", responseData);
-
         throw {
-          message: responseData?.message || "Something went wrong.",
+          message: responseData?.message || "Failed to submit contact form",
           errors: responseData?.errors || {},
+          status: res.status,
         };
       }
 
       return await res.json();
     } catch (error) {
-      console.error("Unexpected Error:", error);
-      throw { message: "An unexpected error occurred.", errors: {} };
+      throw ApiErrorHandler.handle(error);
     }
   },
 };
 
 export const blogService = {
   getBlogs: async (locale: string): Promise<Blog[]> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
-      headers: {
-        "Content-Type": "application/json",
-        lang: locale,
-        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-        "X-Authorization-Secret":
-          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-      },
-      next: {
-        revalidate: 86400,
-      },
-    });
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      });
 
-    if (!res.ok) throw new Error("Failed to fetch blogs");
-    const data = await res.json();
-    return data.data as Blog[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch blogs",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as Blog[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   getLatestBlogs: async (locale: string): Promise<Blog[]> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
-      headers: {
-        "Content-Type": "application/json",
-        lang: locale,
-        "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-        "X-Authorization-Secret":
-          process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-      },
-      next: {
-        revalidate: 86400,
-      },
-    });
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blogs`, {
+        headers: {
+          "Content-Type": "application/json",
+          lang: locale,
+          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+          "X-Authorization-Secret":
+            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+        },
+        next: {
+          revalidate: 86400,
+        },
+      });
 
-    if (!res.ok) throw new Error("Failed to fetch latest blogs");
-    const data = await res.json();
-    return data.data as Blog[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch latest blogs",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as Blog[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 };
 
@@ -197,89 +265,98 @@ export const nurseryService = {
     locale: string,
     params?: { key: string; value: string }[]
   ): Promise<CenterRegisterPayload[]> => {
-    const query = params
-      ? "?" +
-        params
-          .map(
-            ({ key, value }) =>
-              `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-          )
-          .join("&")
-      : "";
+    try {
+      const query = params
+        ? "?" +
+          params
+            .map(
+              ({ key, value }) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+            )
+            .join("&")
+        : "";
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/center-filter${query}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          lang: locale,
-          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-          "X-Authorization-Secret":
-            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-        },
-        next: {
-          revalidate: 86400,
-        },
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/center-filter${query}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch nurseries",
+          errors: {},
+          status: res.status,
+        };
       }
-    );
 
-    if (!res.ok) throw new Error("Failed to fetch nurseries");
-    const data = await res.json();
-    return data.data as CenterRegisterPayload[];
+      const data = await res.json();
+      return data.data as CenterRegisterPayload[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   getLatestNurseries: async (
     locale: string
   ): Promise<CenterRegisterPayload[]> => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/latest-search`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          lang: locale,
-          "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
-          "X-Authorization-Secret":
-            process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
-        },
-        next: {
-          revalidate: 86400,
-        },
-      }
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/latest-search`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            lang: locale,
+            "X-Authorization": process.env.NEXT_PUBLIC_X_AUTHORIZATION || "",
+            "X-Authorization-Secret":
+              process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
+          },
+          next: {
+            revalidate: 86400,
+          },
+        }
+      );
 
-    if (!res.ok) throw new Error("Failed to fetch latest nurseries");
-    const data = await res.json();
-    return data.data as CenterRegisterPayload[];
+      if (!res.ok) {
+        throw {
+          message: "Failed to fetch latest nurseries",
+          errors: {},
+          status: res.status,
+        };
+      }
+
+      const data = await res.json();
+      return data.data as CenterRegisterPayload[];
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 };
 
 export const authService = {
   registerParent: async (payload: ParentRegisterPayload) => {
     try {
-      console.log(payload);
       const response = await apiClient.post("/register-parent", {
         ...payload,
       });
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", error.response?.data);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
 
   registerCenter: async (payload: CenterRegisterPayload) => {
     try {
-      console.log(payload);
       const formData = new FormData();
 
       // Append text fields
@@ -384,18 +461,7 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", error.response?.data);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
 
@@ -406,40 +472,17 @@ export const authService = {
         password,
       });
 
-      // If the login is successful and contains a token
-      if (response.data.token) {
-        return response.data;
-      }
-
-      // If the login failed and there is no token, handle the error
-      throw {
-        message: response.data.message || "Login failed, please try again",
-        errors: response.data.errors || {},
-      };
-    } catch (error: any) {
-      // If the error object contains a message, we can handle it here
-      if (error.message && error.errors) {
+      if (!response.data.token) {
         throw {
-          message: error.message || "Login failed, please try again",
-          errors: error.errors || {},
+          message: "Login failed: No authentication token received",
+          errors: {},
+          status: 401,
         };
       }
 
-      // If it's an AxiosError, check for response and handle accordingly
-      if (axios.isAxiosError(error) && error.response) {
-        const responseData = error.response.data;
-
-        throw {
-          message: responseData?.message || "Login failed, please try again",
-          errors: responseData?.errors || {},
-        };
-      }
-
-      // If it's neither, log the unexpected error
-      throw {
-        message: "Unexpected error happened",
-        errors: {},
-      };
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
     }
   },
 
@@ -450,21 +493,10 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      // Handle different types of errors (network, server response)
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", responseData);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
+
   checkOTP: async (email: string, otp: string) => {
     try {
       const response = await apiClient.post("/check-otp", {
@@ -476,39 +508,20 @@ export const authService = {
 
       if (!result.status) {
         throw {
-          message: result.error || "Invalid OTP",
+          message: result.error || "Invalid OTP code",
           errors: {
-            otp: [result.error || "Invalid OTP"],
+            otp: [result.error || "Please check your OTP code and try again"],
           },
+          status: 400,
         };
       }
 
       return result;
-    } catch (error: any) {
-      // 1. Axios error
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", responseData);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      }
-
-      // 2. Custom error (like invalid OTP) — preserve its structure
-      if (error?.errors) {
-        throw error;
-      }
-
-      // 3. Unexpected error
-      console.error("Unexpected Error:", error);
-      throw {
-        message: error.message || "An unexpected error occurred.",
-        errors: {},
-      };
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
     }
   },
+
   resetPassword: async (email: string, password: string) => {
     try {
       const response = await apiClient.post("/rest-password", {
@@ -517,19 +530,7 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      // Handle different types of errors (network, server response)
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", responseData);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
 };

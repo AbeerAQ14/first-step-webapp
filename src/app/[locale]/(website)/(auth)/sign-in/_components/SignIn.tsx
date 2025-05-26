@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useAuthStore } from "@/store/authStore";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/api";
@@ -12,47 +12,43 @@ import SignInForm from "./SignInForm";
 import { SignInFormData } from "@/lib/schemas";
 import LoadingOverlay from "@/components/forms/LoadingOverlay";
 import { Link, useRouter } from "@/i18n/navigation";
+import { ApiError } from "@/lib/error-handling";
 
 const SignIn = () => {
   const router = useRouter();
-
   const formRef = useRef<UseFormReturn<SignInFormData> | null>(null);
+  const t = useTranslations("auth");
 
-  useEffect(() => {
-    console.log(formRef.current);
-  }, [formRef]);
+  const onError = (error: ApiError) => {
+    if (!formRef.current) return;
 
-  const onError = (error: any) => {
-    console.error("Login failed:", error);
-
-    // Send field-specific errors to form
-    if (formRef.current && error.errors) {
+    // Handle field-specific validation errors
+    if (error.errors && Object.keys(error.errors).length > 0) {
       Object.entries(error.errors).forEach(([field, messages]) => {
-        formRef.current?.setError(field as keyof SignInFormData, {
-          type: "server",
-          message: Array.isArray(messages) ? messages[0] : "Unknown error", // show first error
-        });
+        if (field === "email" || field === "password") {
+          formRef.current?.setError(field, {
+            type: "server",
+            message: Array.isArray(messages) ? messages[0] : messages,
+          });
+        }
       });
     }
 
-    // Show general message if needed
-    if (formRef.current && error.message) {
-      formRef.current?.setError("root", {
-        type: "server",
-        message: error.message,
-      });
-    }
+    // Always show the main error message
+    formRef.current.setError("root", {
+      type: "server",
+      message: error.message,
+    });
   };
 
   // --- Data Fetching & Mutation ---
   const mutation = useMutation<
-    any, // Type of successful response from submitFormData
-    { errors?: { email?: string[] }; message?: string }, // Custom error type
-    SignInFormData // Type of variable passed to mutate function (original form data)
+    { token: string; user: any }, // Success response type
+    ApiError, // Error type
+    SignInFormData // Input type
   >({
-    mutationFn: async (originalData: SignInFormData) => {
-      const payload: { email: string; password: string } = originalData;
-      return await authService.login(payload.email, payload.password);
+    mutationFn: async (data: SignInFormData) => {
+      return await authService.login(data.email, data.password);
     },
     onSuccess: (data) => {
       useAuthStore.setState({
@@ -75,15 +71,17 @@ const SignIn = () => {
     onError,
   });
 
-  const t = useTranslations("auth");
-
   const onSubmit = async (data: SignInFormData) => {
+    // Clear any existing errors before submitting
+    if (formRef.current) {
+      formRef.current.clearErrors();
+    }
     mutation.mutate(data);
   };
 
   return (
     <div className="px-5 sm:px-10 py-20">
-      {mutation.isSuccess && <LoadingOverlay content="Signing you in..." />}
+      {mutation.isSuccess && <LoadingOverlay content={t("sign-in.loading")} />}
 
       <div className="flex flex-col items-center gap-y-12">
         <Image

@@ -13,6 +13,7 @@ import Step2ChronicDiseases from "@/components/forms/child/Step2";
 import Step3Recommendations from "@/components/forms/child/Step3";
 import Step4AuthorizedPersons from "@/components/forms/child/Step4";
 import { createSignUpParentSchema, SignUpParentFormData } from "@/lib/schemas";
+import { AlertCircle } from "lucide-react";
 
 const SignUp = ({
   submitHandler,
@@ -168,14 +169,42 @@ const SignUp = ({
 
               <div className="mt-40">{renderStep()}</div>
 
-              {methods.formState.errors.root?.message && (
-                <div className="text-red-600 bg-red-100 p-4 rounded-md mb-4">
-                  <ul className="list-disc pl-5 space-y-1">
-                    {methods.formState.errors.root.message
-                      .split("\n")
-                      .map((msg, idx) => (
-                        <li key={idx}>{msg}</li>
-                      ))}
+              {/* Localized validation errors summary */}
+              {Object.keys(methods.formState.errors).length > 0 && (
+                <div className="bg-red-50 border border-red-100 p-4 rounded-lg my-6">
+                  <div className="flex items-center gap-2 mb-3 text-red-600">
+                    <AlertCircle className="h-5 w-5" />
+                    <p className="font-medium">{t("error.validation")}</p>
+                  </div>
+                  <ul className="space-y-1.5 text-sm text-red-700">
+                    {Object.entries(methods.formState.errors).map(
+                      ([field, error]) => {
+                        // Handle nested fields (e.g., children.0.kinship)
+                        const translationKey = field.includes(".")
+                          ? `children.${field.split(".").pop()}`
+                          : field;
+
+                        return (
+                          <li key={field} className="flex items-start gap-2">
+                            <span className="mt-1">•</span>
+                            <span>
+                              <span className="font-medium">
+                                {t(`fields.${translationKey}`, {
+                                  default:
+                                    field.charAt(0).toUpperCase() +
+                                    field.slice(1).replace(/([A-Z])/g, " $1"),
+                                })}
+                              </span>
+                              {error?.message && (
+                                <span className="text-red-600 ms-1">
+                                  ({error.message})
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      }
+                    )}
                   </ul>
                 </div>
               )}
