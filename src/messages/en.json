@@ -269,6 +269,10 @@
             "label": "Mother's Name",
             "placeholder": ""
           },
+          "kinship": {
+            "label": "Child Relationship",
+            "placeholder": ""
+          },
           "gender": {
             "title": "Child's Gender",
             "male": "Boy",

@@ -24,6 +24,7 @@ export interface Child {
   allergy_name: string | null; // Name of the primary allergy, if applicable
   parent_name: string; // Father's name in the source example
   mother_name: string;
+  kinship: string;
   recommendations?: string; // General recommendations or important notes
   description_3_words: string;
   things_child_likes: string;
@@ -53,6 +54,7 @@ export interface ParentRegisterFormDataInput {
   birthDate: string; // Expecting ISO String like "YYYY-MM-DDTHH:mm:ss.sssZ"
   fatherName: string;
   motherName: string;
+  kinship: string;
   gender: "male" | "female" | string;
   chronicDiseases?: {
     // Use optional properties for safety

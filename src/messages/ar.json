@@ -266,6 +266,10 @@
             "label": "اسم الأم",
             "placeholder": ""
           },
+          "kinship": {
+            "label": "صلة القرابة",
+            "placeholder": ""
+          },
           "gender": {
             "title": "جنس الطفل",
             "male": "ولد",

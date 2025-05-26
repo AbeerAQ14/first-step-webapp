@@ -76,27 +76,6 @@ export default function ParentSignUp() {
 
         <FormField
           control={control}
-          name="relation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                {t("relation.label")}
-                <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder={t("name.placeholder")}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
           name="email"
           render={({ field }) => (
             <FormItem>

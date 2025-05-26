@@ -47,7 +47,6 @@ const SignUp = ({
       name: "",
       phone: "",
       email: "",
-      relation: "",
       password: "",
       confirmPassword: "",
       childName: "",
@@ -55,6 +54,7 @@ const SignUp = ({
       fatherName: "",
       motherName: "",
       gender: undefined,
+      kinship: "",
       chronicDiseases: {
         hasDiseases: "yes",
         diseases: [{ name: "", medication: "", procedures: "" }],
@@ -102,7 +102,6 @@ const SignUp = ({
           "name",
           "phone",
           "email",
-          "relation",
           "password",
           "confirmPassword",
           "childName",
@@ -110,6 +109,7 @@ const SignUp = ({
           "fatherName",
           "motherName",
           "gender",
+          "kinship",
         ];
       case 2:
         return ["chronicDiseases", "allergies"];

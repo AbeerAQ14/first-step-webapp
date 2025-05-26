@@ -94,9 +94,6 @@ const createParentSchema = (locale: "ar" | "en" = "ar") =>
     email: z.string().email({
       message: getErrorMessage("invalid-email", locale),
     }),
-    relation: z
-      .string()
-      .min(1, getErrorMessage("general-field-required", locale)),
     password: z.string().min(8, {
       message: getErrorMessage("password-min", locale, { min: 8 }),
     }),
@@ -126,6 +123,9 @@ const createChildStep1Schema = (locale: "ar" | "en" = "ar") =>
     gender: z.enum(["male", "female"], {
       required_error: getErrorMessage("general-answer-required", locale),
     }),
+    kinship: z
+      .string()
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
   });
 
 export type ChildStep1FormData = z.infer<

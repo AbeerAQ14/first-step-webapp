@@ -86,6 +86,23 @@ export default function Step1ChildInfo() {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={control}
+          name="kinship"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("kinship.label")}
+                <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </div>
 
       <div>

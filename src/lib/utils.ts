@@ -257,6 +257,7 @@ export function transformParentDataToExpectedPayload(
     allergy_name: firstAllergySource ? firstAllergySource.allergyTypes : null,
     parent_name: formData.fatherName,
     mother_name: formData.motherName,
+    kinship: formData.kinship,
     recommendations,
     description_3_words,
     things_child_likes,
