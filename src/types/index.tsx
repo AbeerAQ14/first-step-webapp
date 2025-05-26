@@ -37,6 +37,8 @@ export interface Child {
 export interface ParentRegisterPayload {
   name: string; // User/Account name
   email: string;
+  national_number: string;
+  phone: string;
   password?: string; // Password might be optional depending on context (e.g., update vs create)
   address: string | null; // User's address
   children: Child[]; // Array of children associated with the user/account
@@ -48,6 +50,7 @@ export interface ParentRegisterFormDataInput {
   phone: string; // Not used in output, but part of input structure
   email: string;
   relation: string; // Not used in output
+  national_number: string;
   password: string;
   confirmPassword?: string; // Not used in output
   childName: string;

@@ -176,6 +176,10 @@
           "label": "Phone Number",
           "placeholder": ""
         },
+        "national-number": {
+          "label": "National ID",
+          "placeholder": ""
+        },
         "relation": {
           "label": "Relationship",
           "placeholder": ""
@@ -199,7 +203,7 @@
         "phone": "Phone Number",
         "password": "Password",
         "confirmPassword": "Confirm Password",
-        "relation": "Relationship",
+        "national-number": "National ID",
         "childName": "Child's Name",
         "birthDate": "Birth Date",
         "fatherName": "Father's Name",
