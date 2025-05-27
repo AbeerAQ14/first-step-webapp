@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { createSignInSchema, SignInFormData } from "@/lib/schemas";
 
 const SignInForm = ({
@@ -130,6 +130,11 @@ const SignInForm = ({
             type="submit"
             disabled={isLoading || form.formState.isSubmitting}
           >
+            {(isLoading || form.formState.isSubmitting) && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle />
+              </span>
+            )}
             {tBtns("sign-in")}
           </Button>
           <Button

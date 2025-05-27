@@ -146,7 +146,7 @@ const SendOTPForm = ({ email }: { email: string }) => {
             type="submit"
             disabled={mutation.isPending || mutation.isSuccess || otpExpired}
           >
-            {mutation.isPending && (
+            {(mutation.isPending || form.formState.isSubmitting) && (
               <span className="animate-spin mr-2.5">
                 <LoaderCircle />
               </span>

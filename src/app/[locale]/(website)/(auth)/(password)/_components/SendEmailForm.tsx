@@ -113,7 +113,7 @@ const SendEmailForm = ({}: {}) => {
               form.formState.isSubmitting
             }
           >
-            {mutation.isSuccess && (
+            {(mutation.isPending || form.formState.isSubmitting) && (
               <span className="animate-spin mr-2.5">
                 <LoaderCircle />
               </span>
