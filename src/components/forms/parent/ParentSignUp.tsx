@@ -84,7 +84,10 @@ export default function ParentSignUp() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input
+                  placeholder={t("national-number.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -124,7 +127,7 @@ export default function ParentSignUp() {
               <FormControl>
                 <Input
                   type="email"
-                  placeholder={t("name.placeholder")}
+                  placeholder={t("email.placeholder")}
                   {...field}
                 />
               </FormControl>
@@ -146,7 +149,7 @@ export default function ParentSignUp() {
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder={t("name.placeholder")}
+                    placeholder={t("password.placeholder")}
                     {...field}
                   />
                   <Button
@@ -182,7 +185,7 @@ export default function ParentSignUp() {
                 <div className="relative w-full">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder={t("name.placeholder")}
+                    placeholder={t("password-confirm.placeholder")}
                     {...field}
                   />
                   <Button

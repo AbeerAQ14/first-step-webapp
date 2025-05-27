@@ -69,36 +69,36 @@
     "form": {
       "name": {
         "label": "الاسم",
-        "placeholder": ""
+        "placeholder": "أدخل اسمك الكامل"
       },
       "email": {
-        "label": "الايميل",
-        "placeholder": ""
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
       },
       "phone": {
         "label": "رقم الجوال",
-        "placeholder": ""
+        "placeholder": "أدخل رقم جوالك"
       },
       "subject": {
-        "label": "موضوع الرسالة",
-        "placeholder": "",
+        "label": "الموضوع",
+        "placeholder": "أدخل موضوع الرسالة",
         "options": {
           "inquiry": "استفسار",
           "complaint": "شكوى",
           "suggestion": "اقتراح",
-          "other": "اخرى"
+          "other": "أخرى"
         }
       },
       "message": {
         "label": "الرسالة",
-        "placeholder": ""
+        "placeholder": "اكتب رسالتك هنا"
       },
       "button": {
         "label": "إرسال",
-        "loading": "جارى الإرسال"
+        "loading": "جاري الإرسال..."
       },
       "success": {
-        "message": "تم إرسال الرسالة!"
+        "message": "تم إرسال الرسالة بنجاح!"
       }
     }
   },
@@ -147,13 +147,13 @@
       "loading": "جارى تسجيل دخولك...",
       "form": {
         "email": {
-          "label": "البريد الإلكترومي",
-          "placeholder": "",
+          "label": "البريد الإلكتروني",
+          "placeholder": "أدخل بريدك الإلكتروني",
           "error": "البريد الإلكتروني مطلوب"
         },
         "password": {
-          "label": "كلمة السر",
-          "placeholder": "",
+          "label": "كلمة المرور",
+          "placeholder": "أدخل كلمة المرور",
           "error": "كلمة المرور مطلوبة"
         },
         "forgot-password": {
@@ -167,23 +167,23 @@
       "form": {
         "name": {
           "label": "الاسم",
-          "placeholder": ""
+          "placeholder": "أدخل اسمك الكامل"
         },
         "phone": {
           "label": "رقم الجوال",
-          "placeholder": ""
+          "placeholder": "أدخل رقم جوالك"
         },
         "national-number": {
           "label": "رقم الهوية",
-          "placeholder": ""
+          "placeholder": "أدخل رقم هويتك"
         },
         "relation": {
           "label": "صلة القرابة",
-          "placeholder": ""
+          "placeholder": "أدخل صلة قرابتك"
         },
         "email": {
           "label": "البريد الإلكتروني",
-          "placeholder": ""
+          "placeholder": "أدخل بريدك الإلكتروني"
         },
         "address": {
           "label": "العنوان",
@@ -191,11 +191,11 @@
         },
         "password": {
           "label": "كلمة السر",
-          "placeholder": ""
+          "placeholder": "أدخل كلمة السر"
         },
         "password-confirm": {
           "label": "تأكيد كلمة السر",
-          "placeholder": ""
+          "placeholder": "أعد إدخال كلمة السر"
         }
       },
       "fields": {
@@ -262,23 +262,23 @@
         "form": {
           "name": {
             "label": "اسم الطفل",
-            "placeholder": ""
+            "placeholder": "أدخل اسم طفلك الكامل"
           },
           "date-of-birth": {
             "label": "تاريخ الميلاد",
-            "placeholder": ""
+            "placeholder": "اختر تاريخ الميلاد"
           },
           "father-name": {
             "label": "اسم الأب",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الأب الكامل"
           },
           "mother-name": {
             "label": "اسم الأم",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الأم الكامل"
           },
           "kinship": {
             "label": "صلة القرابة",
-            "placeholder": ""
+            "placeholder": "أدخل صلة قرابتك"
           },
           "gender": {
             "title": "جنس الطفل",
@@ -299,16 +299,16 @@
             },
             "disease": {
               "label": "اسم المرض",
-              "placeholder": ""
+              "placeholder": "أدخل اسم المرض"
             },
             "medicine": {
               "label": "اسم الدواء",
-              "placeholder": ""
+              "placeholder": "أدخل اسم الدواء"
             },
             "procedures": {
               "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
               "sublabel": "(مثل أدوية معينة أو خطوات إسعافية)",
-              "placeholder": ""
+              "placeholder": "أدخل الإجراءات الطارئة"
             },
             "add": "إضافة مرض مزمن"
           },
@@ -321,15 +321,15 @@
             },
             "allergy": {
               "label": "نوع الحساسية",
-              "placeholder": ""
+              "placeholder": "أدخل نوع الحساسية"
             },
             "causes": {
               "label": "ما هي المواد أو الأطعمة المسببة للحساسية؟",
-              "placeholder": ""
+              "placeholder": "أدخل مسببات الحساسية"
             },
             "procedures": {
               "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
-              "placeholder": ""
+              "placeholder": "أدخل الإجراءات الطارئة"
             },
             "add": "إضافة نوع حساسية"
           }
@@ -340,15 +340,15 @@
         "form": {
           "description": {
             "label": "صف لنا طفلك في 3 كلمات",
-            "placeholder": ""
+            "placeholder": "أدخل 3 كلمات وصفية"
           },
           "likes": {
             "label": "أشياء يحبها طفلك",
-            "placeholder": ""
+            "placeholder": "أدخل الأشياء التي يستمتع بها طفلك"
           },
           "recommendations": {
             "label": "هل لديك أي توصيات تتعلق بطفلك؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي توصيات خاصة"
           }
         }
       },
@@ -357,15 +357,15 @@
         "form": {
           "authorize": {
             "label": "اسم الشخص المفوض",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الشخص المفوض الكامل"
           },
           "identity": {
             "label": "رقم هوية الشخص المفوض",
-            "placeholder": ""
+            "placeholder": "أدخل رقم الهوية"
           },
           "comment": {
             "label": "هل لديك أي تعليق أو ملاحظة",
-            "placeholder": ""
+            "placeholder": "أدخل أي ملاحظات إضافية"
           },
           "add": "إضافة شخص مفوض"
         }
@@ -378,43 +378,43 @@
         "form": {
           "name": {
             "label": "الاسم",
-            "placeholder": ""
+            "placeholder": "أدخل اسمك الكامل"
           },
           "nursery-name": {
             "label": "اسم المركز",
-            "placeholder": ""
+            "placeholder": "أدخل اسم المركز"
           },
           "phone": {
             "label": "رقم الجوال",
-            "placeholder": ""
+            "placeholder": "أدخل رقم الجوال"
           },
           "email": {
             "label": "البريد الإلكتروني",
-            "placeholder": ""
+            "placeholder": "أدخل البريد الإلكتروني"
           },
           "password": {
             "label": "كلمة السر",
-            "placeholder": ""
+            "placeholder": "أدخل كلمة السر"
           },
           "password-confirm": {
             "label": "تأكيد كلمة السر",
-            "placeholder": ""
+            "placeholder": "أعد إدخال كلمة السر"
           },
           "city": {
             "label": "المدينة",
-            "placeholder": ""
+            "placeholder": "أدخل اسم المدينة"
           },
           "neighborhood": {
             "label": "الحي",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الحي"
           },
           "address": {
-            "label": "ألعنوان",
-            "placeholder": ""
+            "label": "العنوان",
+            "placeholder": "أدخل العنوان الكامل"
           },
           "location": {
             "label": "رابط الموقع الجغرافي",
-            "placeholder": ""
+            "placeholder": "أدخل رابط خرائط جوجل"
           },
           "type": {
             "label": "نوع المركز",
@@ -440,7 +440,7 @@
           "other": {
             "label": "خدمات أخرى",
             "sublabel": "(مثل التدريب على دورات المياه)",
-            "placeholder": ""
+            "placeholder": "أدخل الخدمات الإضافية"
           }
         }
       },
@@ -457,23 +457,23 @@
           },
           "addition": {
             "label": "هل يوجد شئ تريد إضافته؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي معلومات إضافية"
           },
           "from-day": {
             "label": "من يوم",
-            "placeholder": ""
+            "placeholder": "اختر يوم البداية"
           },
           "to-day": {
             "label": "إلى يوم",
-            "placeholder": ""
+            "placeholder": "اختر يوم النهاية"
           },
           "from-hour": {
             "label": "من ساعة",
-            "placeholder": ""
+            "placeholder": "اختر وقت البداية"
           },
           "to-hour": {
             "label": "إلى ساعة",
-            "placeholder": ""
+            "placeholder": "اختر وقت النهاية"
           },
           "days": {
             "saturday": "السبت",
@@ -529,7 +529,7 @@
           "description": "التصريحات المطلوبة لضمان وتأكيد موثوقية المركز",
           "comments": {
             "label": "هل لديك أي تعليق أو ملاحظة؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي تعليقات إضافية"
           }
         }
       }
@@ -539,7 +539,7 @@
       "form": {
         "email": {
           "label": "البريد الإلكتروني",
-          "placeholder": ""
+          "placeholder": "أدخل بريدك الإلكتروني"
         }
       }
     },
@@ -556,12 +556,12 @@
       "title": "إنشاء كلمة سر جديدة",
       "form": {
         "password": {
-          "label": "كلمة السر الجديدة",
-          "placeholder": ""
+          "label": "كلمة المرور الجديدة",
+          "placeholder": "أدخل كلمة المرور الجديدة"
         },
         "password-confirm": {
-          "label": "تأكيد كلمة السر",
-          "placeholder": ""
+          "label": "تأكيد كلمة المرور",
+          "placeholder": "أعد إدخال كلمة المرور الجديدة"
         }
       }
     },
@@ -681,19 +681,19 @@
           "form": {
             "name": {
               "label": "الاسم",
-              "placeholder": "أدخل الاسم"
+              "placeholder": "أدخل اسم المشرف"
             },
             "email": {
               "label": "البريد الإلكتروني",
-              "placeholder": "أدخل البريد الإلكتروني"
+              "placeholder": "أدخل بريد المشرف الإلكتروني"
             },
             "password": {
-              "label": "كلمة السر",
-              "placeholder": "أدخل كلمة السر"
+              "label": "كلمة المرور",
+              "placeholder": "أدخل كلمة مرور المشرف"
             },
             "password-confirm": {
-              "label": "تأكيد كلمة السر",
-              "placeholder": "أدخل تأكيد كلمة السر"
+              "label": "تأكيد كلمة المرور",
+              "placeholder": "أعد إدخال كلمة مرور المشرف"
             },
             "submit": "إنشاء حساب مسئول الفرع"
           }
@@ -795,16 +795,16 @@
         },
         "form": {
           "name": {
-            "label": "اسم الفرد",
-            "placeholder": "الاسم ثنائي"
+            "label": "اسم العضو",
+            "placeholder": "أدخل اسم عضو الفريق"
           },
           "branch": {
-            "label": "الفرع التابع له",
-            "placeholder": "اسم الفرع"
+            "label": "الفرع",
+            "placeholder": "اختر الفرع"
           },
           "job": {
-            "label": "مهنة الفرد",
-            "placeholder": "مثال: مدرس"
+            "label": "المسمى الوظيفي",
+            "placeholder": "أدخل المسمى الوظيفي"
           },
           "image": {
             "placeholder": "ارفع صورة النشاط"
@@ -937,27 +937,27 @@
           "form": {
             "activities": {
               "label": "الأنشطة",
-              "placeholder": "أدخل الأنشطة"
+              "placeholder": "أدخل الأنشطة اليومية"
             },
             "behavior": {
               "label": "السلوك",
-              "placeholder": "أدخل السلوك"
+              "placeholder": "أدخل ملاحظات السلوك"
             },
             "meals": {
               "label": "الوجبات",
-              "placeholder": "أدخل الوجبات"
+              "placeholder": "أدخل تفاصيل الوجبات"
             },
             "napTime": {
               "label": "وقت القيلولة",
-              "placeholder": "أدخل وقت القيلولة"
+              "placeholder": "أدخل تفاصيل وقت القيلولة"
             },
             "additionalNotes": {
               "label": "ملاحظات إضافية",
-              "placeholder": "أدخل ملاحظات إضافية"
+              "placeholder": "أدخل أي ملاحظات إضافية"
             },
             "recipients": {
               "label": "المستلمون",
-              "placeholder": "اختر المستلمين"
+              "placeholder": "اختر مستلمي التقرير"
             }
           }
         }

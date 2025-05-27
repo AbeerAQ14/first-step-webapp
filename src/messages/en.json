@@ -72,19 +72,19 @@
     "form": {
       "name": {
         "label": "Name",
-        "placeholder": ""
+        "placeholder": "Enter your full name"
       },
       "email": {
         "label": "Email",
-        "placeholder": ""
+        "placeholder": "Enter your email address"
       },
       "phone": {
         "label": "Phone Number",
-        "placeholder": ""
+        "placeholder": "Enter your phone number"
       },
       "subject": {
         "label": "Subject",
-        "placeholder": "",
+        "placeholder": "Enter message subject",
         "options": {
           "inquiry": "Inquiry",
           "complaint": "Complaint",
@@ -94,7 +94,7 @@
       },
       "message": {
         "label": "Message",
-        "placeholder": ""
+        "placeholder": "Type your message here"
       },
       "button": {
         "label": "Send",
@@ -151,12 +151,12 @@
       "form": {
         "email": {
           "label": "Email",
-          "placeholder": "",
+          "placeholder": "Enter your email address",
           "error": "Email is required"
         },
         "password": {
           "label": "Password",
-          "placeholder": "",
+          "placeholder": "Enter your password",
           "error": "Password is required"
         },
         "forgot-password": {
@@ -170,23 +170,23 @@
       "form": {
         "name": {
           "label": "Name",
-          "placeholder": ""
+          "placeholder": "Enter your full name"
         },
         "phone": {
           "label": "Phone Number",
-          "placeholder": ""
+          "placeholder": "Enter your phone number"
         },
         "national-number": {
           "label": "National ID",
-          "placeholder": ""
+          "placeholder": "Enter your national ID"
         },
         "relation": {
           "label": "Relationship",
-          "placeholder": ""
+          "placeholder": "Enter your relationship"
         },
         "email": {
           "label": "Email Address",
-          "placeholder": ""
+          "placeholder": "Enter your email address"
         },
         "address": {
           "label": "Address",
@@ -194,11 +194,11 @@
         },
         "password": {
           "label": "Password",
-          "placeholder": ""
+          "placeholder": "Enter your password"
         },
         "password-confirm": {
           "label": "Confirm Password",
-          "placeholder": ""
+          "placeholder": "Re-enter your password"
         }
       },
       "fields": {
@@ -266,23 +266,23 @@
         "form": {
           "name": {
             "label": "Child's Name",
-            "placeholder": ""
+            "placeholder": "Enter your child's full name"
           },
           "date-of-birth": {
             "label": "Date of Birth",
-            "placeholder": ""
+            "placeholder": "Select date of birth"
           },
           "father-name": {
             "label": "Father's Name",
-            "placeholder": ""
+            "placeholder": "Enter father's full name"
           },
           "mother-name": {
             "label": "Mother's Name",
-            "placeholder": ""
+            "placeholder": "Enter mother's full name"
           },
           "kinship": {
             "label": "Child Relationship",
-            "placeholder": ""
+            "placeholder": "Enter your relationship to the child"
           },
           "gender": {
             "title": "Child's Gender",
@@ -303,16 +303,16 @@
             },
             "disease": {
               "label": "Illness Name",
-              "placeholder": ""
+              "placeholder": "Enter illness name"
             },
             "medicine": {
               "label": "Medication Name",
-              "placeholder": ""
+              "placeholder": "Enter medication name"
             },
             "procedures": {
               "label": "What actions should be taken during a sudden episode?",
               "sublabel": "(e.g., specific medications or first aid steps)",
-              "placeholder": ""
+              "placeholder": "Enter emergency procedures"
             },
             "add": "Add Chronic Illness"
           },
@@ -325,15 +325,15 @@
             },
             "allergy": {
               "label": "Type of Allergy",
-              "placeholder": ""
+              "placeholder": "Enter type of allergy"
             },
             "causes": {
               "label": "What substances or foods cause the allergy?",
-              "placeholder": ""
+              "placeholder": "Enter allergy triggers"
             },
             "procedures": {
               "label": "What actions should be taken during a sudden episode?",
-              "placeholder": ""
+              "placeholder": "Enter emergency procedures"
             },
             "add": "Add Allergy Type"
           }
@@ -344,15 +344,15 @@
         "form": {
           "description": {
             "label": "Describe your child in 3 words",
-            "placeholder": ""
+            "placeholder": "Enter 3 descriptive words"
           },
           "likes": {
             "label": "Things your child likes",
-            "placeholder": ""
+            "placeholder": "Enter things your child enjoys"
           },
           "recommendations": {
             "label": "Do you have any recommendations regarding your child?",
-            "placeholder": ""
+            "placeholder": "Enter any special recommendations"
           }
         }
       },
@@ -361,15 +361,15 @@
         "form": {
           "authorize": {
             "label": "Authorized Person's Name",
-            "placeholder": ""
+            "placeholder": "Enter authorized person's full name"
           },
           "identity": {
             "label": "Authorized Person's ID Number",
-            "placeholder": ""
+            "placeholder": "Enter ID number"
           },
           "comment": {
             "label": "Any comments or notes?",
-            "placeholder": ""
+            "placeholder": "Enter any additional notes"
           },
           "add": "Add Authorized Person"
         }
@@ -382,43 +382,43 @@
         "form": {
           "name": {
             "label": "Name",
-            "placeholder": ""
+            "placeholder": "Enter your full name"
           },
           "nursery-name": {
             "label": "Center Name",
-            "placeholder": ""
+            "placeholder": "Enter center name"
           },
           "phone": {
             "label": "Mobile Number",
-            "placeholder": ""
+            "placeholder": "Enter mobile number"
           },
           "email": {
             "label": "Email",
-            "placeholder": ""
+            "placeholder": "Enter email address"
           },
           "password": {
             "label": "Password",
-            "placeholder": ""
+            "placeholder": "Enter password"
           },
           "password-confirm": {
             "label": "Confirm Password",
-            "placeholder": ""
+            "placeholder": "Re-enter password"
           },
           "city": {
             "label": "City",
-            "placeholder": ""
+            "placeholder": "Enter city name"
           },
           "neighborhood": {
             "label": "Neighborhood",
-            "placeholder": ""
+            "placeholder": "Enter neighborhood name"
           },
           "address": {
             "label": "Address",
-            "placeholder": ""
+            "placeholder": "Enter full address"
           },
           "location": {
             "label": "Location Link",
-            "placeholder": ""
+            "placeholder": "Enter Google Maps link"
           },
           "type": {
             "label": "Center Type",
@@ -444,7 +444,7 @@
           "other": {
             "label": "Other Services",
             "sublabel": "(e.g., toilet training)",
-            "placeholder": ""
+            "placeholder": "Enter additional services"
           }
         }
       },
@@ -461,23 +461,23 @@
           },
           "addition": {
             "label": "Is there anything else you'd like to add?",
-            "placeholder": ""
+            "placeholder": "Enter any additional information"
           },
           "from-day": {
             "label": "From Day",
-            "placeholder": ""
+            "placeholder": "Select start day"
           },
           "to-day": {
             "label": "To Day",
-            "placeholder": ""
+            "placeholder": "Select end day"
           },
           "from-hour": {
             "label": "From Hour",
-            "placeholder": ""
+            "placeholder": "Select start time"
           },
           "to-hour": {
             "label": "To Hour",
-            "placeholder": ""
+            "placeholder": "Select end time"
           },
           "days": {
             "saturday": "Saturday",
@@ -533,7 +533,7 @@
           "description": "Required licenses to ensure and confirm the center's credibility",
           "comments": {
             "label": "Do you have any comments or notes?",
-            "placeholder": ""
+            "placeholder": "Enter any additional comments"
           }
         }
       }
@@ -543,7 +543,7 @@
       "form": {
         "email": {
           "label": "Email",
-          "placeholder": ""
+          "placeholder": "Enter your email address"
         }
       }
     },
@@ -561,11 +561,11 @@
       "form": {
         "password": {
           "label": "New Password",
-          "placeholder": ""
+          "placeholder": "Enter your new password"
         },
         "password-confirm": {
           "label": "Confirm Password",
-          "placeholder": ""
+          "placeholder": "Re-enter your new password"
         }
       }
     },
@@ -745,21 +745,20 @@
           "form": {
             "name": {
               "label": "Name",
-              "placeholder": "Enter name"
+              "placeholder": "Enter admin name"
             },
             "email": {
               "label": "Email",
-              "placeholder": "Enter email"
+              "placeholder": "Enter admin email"
             },
             "password": {
               "label": "Password",
-              "placeholder": "Enter password"
+              "placeholder": "Enter admin password"
             },
             "password-confirm": {
               "label": "Confirm Password",
-              "placeholder": "Enter password confirmation"
-            },
-            "submit": "Create Branch Admin Account"
+              "placeholder": "Re-enter admin password"
+            }
           }
         }
       },
@@ -800,15 +799,15 @@
         "form": {
           "name": {
             "label": "Member Name",
-            "placeholder": "Full Name"
+            "placeholder": "Enter team member name"
           },
           "branch": {
             "label": "Branch",
-            "placeholder": "Branch Name"
+            "placeholder": "Select branch"
           },
           "job": {
             "label": "Job Title",
-            "placeholder": "Example: Teacher"
+            "placeholder": "Enter job title"
           },
           "image": {
             "placeholder": "Upload member photo"
@@ -972,27 +971,27 @@
         "form": {
           "activities": {
             "label": "Activities",
-            "placeholder": "Enter activities"
+            "placeholder": "Enter daily activities"
           },
           "behavior": {
             "label": "Behavior",
-            "placeholder": "Enter behavior"
+            "placeholder": "Enter behavior notes"
           },
           "meals": {
             "label": "Meals",
-            "placeholder": "Enter meals"
+            "placeholder": "Enter meal details"
           },
           "napTime": {
             "label": "Nap Time",
-            "placeholder": "Enter nap time"
+            "placeholder": "Enter nap time details"
           },
           "additionalNotes": {
             "label": "Additional Notes",
-            "placeholder": "Enter additional notes"
+            "placeholder": "Enter any additional notes"
           },
           "recipients": {
             "label": "Recipients",
-            "placeholder": "Select recipients"
+            "placeholder": "Select report recipients"
           }
         }
       }
