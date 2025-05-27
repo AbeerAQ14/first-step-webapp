@@ -188,6 +188,10 @@
           "label": "Email Address",
           "placeholder": ""
         },
+        "address": {
+          "label": "Address",
+          "placeholder": "Enter your full address"
+        },
         "password": {
           "label": "Password",
           "placeholder": ""

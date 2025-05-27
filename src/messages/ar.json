@@ -185,6 +185,10 @@
           "label": "البريد الإلكتروني",
           "placeholder": ""
         },
+        "address": {
+          "label": "العنوان",
+          "placeholder": "أدخل عنوانك الكامل"
+        },
         "password": {
           "label": "كلمة السر",
           "placeholder": ""

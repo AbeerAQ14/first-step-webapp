@@ -51,6 +51,7 @@ export interface ParentRegisterFormDataInput {
   email: string;
   relation: string; // Not used in output
   national_number: string;
+  address: string;
   password: string;
   confirmPassword?: string; // Not used in output
   childName: string;

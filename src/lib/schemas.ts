@@ -97,6 +97,9 @@ const createParentSchema = (locale: "ar" | "en" = "ar") =>
     national_number: z
       .string()
       .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    address: z
+      .string()
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
     password: z.string().min(8, {
       message: getErrorMessage("password-min", locale, { min: 8 }),
     }),

@@ -271,7 +271,7 @@ export function transformParentDataToExpectedPayload(
     name: formData.name,
     email: formData.email,
     password: formData.password, // Directly mapped
-    address: "123 Main Street, Anytown, ST 12345", // Address is not present in the source formData
+    address: formData.address, // Address is not present in the source formData
     national_number: formData.national_number,
     phone: formData.phone,
     children: [childData], // Place the constructed child object into an array
