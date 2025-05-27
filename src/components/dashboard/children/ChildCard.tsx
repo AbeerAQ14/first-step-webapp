@@ -17,6 +17,7 @@ const ChildCard = ({
     birthDate: new Date("2020-12-06"),
     fatherName: "محمد",
     motherName: "هاجر",
+    kinship: "أبوه",
     gender: "female",
     chronicDiseases: {
       hasDiseases: "yes",
