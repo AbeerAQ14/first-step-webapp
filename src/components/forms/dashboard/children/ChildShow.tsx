@@ -192,17 +192,17 @@ const ParentPart = ({
 
         <FormField
           control={control}
-          name="relation"
+          name="kinship"
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">{t("relation.label")}</span>
+                <span className="text-base">{t("kinship.label")}</span>
                 <span className="text-red-500">*</span>
               </Label>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder={t("name.placeholder")}
+                  placeholder={t("kinship.placeholder")}
                   {...field}
                   disabled={readOnly}
                 />
