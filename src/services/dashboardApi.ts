@@ -3,6 +3,7 @@ import { apiClient } from "./api";
 import { formatTime } from "@/lib/utils";
 import { CenterRegisterPayload } from "@/types";
 import { BranchAdminFormData } from "@/lib/schemas";
+import { ApiErrorHandler } from "@/lib/error-handling";
 
 const prepareCenterFormData = (
   formData: FormData,
@@ -98,47 +99,42 @@ export const centerService = {
       const response = await apiClient.get("branches/");
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", error.response?.data);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
 
   getBranch: async (id: string) => {
-    const response = await apiClient.get(`/branches/${id}`);
-    return response.data;
+    try {
+      const response = await apiClient.get(`/branches/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   updateBranch: async (
     id: string,
     payload: Omit<CenterRegisterPayload, "password">
   ) => {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
+      prepareCenterFormData(formData, payload);
 
-    prepareCenterFormData(formData, payload);
+      const response = await apiClient.post(`/branches/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-    const response = await apiClient.post(`/branches/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return response.data;
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
   },
 
   createBranch: async (payload: Omit<CenterRegisterPayload, "password">) => {
     try {
       const formData = new FormData();
-
       prepareCenterFormData(formData, payload);
 
       const response = await apiClient.post("/branches", formData, {
@@ -148,18 +144,7 @@ export const centerService = {
       });
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", error.response?.data);
-
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+      throw ApiErrorHandler.handle(error);
     }
   },
 
@@ -177,18 +162,16 @@ export const centerService = {
 
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseData = error.response?.data;
-        console.error("API Error Response:", error.response?.data);
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 
-        throw {
-          message: responseData?.message || "Something went wrong.",
-          errors: responseData?.errors || {},
-        };
-      } else {
-        console.error("Unexpected Error:", error);
-        throw { message: "An unexpected error occurred.", errors: {} };
-      }
+  deleteBranch: async (id: string) => {
+    try {
+      const response = await apiClient.delete(`/branches/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
     }
   },
 };

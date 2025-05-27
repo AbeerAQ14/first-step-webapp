@@ -1,6 +1,7 @@
 import { centerService } from "@/services/dashboardApi";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { ApiError } from "@/lib/error-handling";
 
 export interface BranchCardType {
   id: number;
@@ -36,7 +37,7 @@ const mapBranchData = (apiData: any, t: any): BranchCardType => {
 export const useBranches = () => {
   const t = useTranslations("options");
 
-  return useQuery<BranchCardType[]>({
+  return useQuery<BranchCardType[], ApiError>({
     queryKey: ["branches"],
     queryFn: async () => {
       const response = await centerService.getBranches();
@@ -46,7 +47,7 @@ export const useBranches = () => {
 };
 
 export const useBranch = (branchId?: string) => {
-  return useQuery({
+  return useQuery<any, ApiError>({
     enabled: !!branchId,
     queryKey: ["branch", branchId],
     queryFn: () => centerService.getBranch(branchId!),

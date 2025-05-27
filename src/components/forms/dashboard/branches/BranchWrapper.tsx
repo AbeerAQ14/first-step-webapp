@@ -15,6 +15,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useBranch } from "@/hooks/useBranches";
 import { centerService } from "@/services/dashboardApi";
 import BranchFormSkeleton from "./BranchFormSkeleton";
+import { ApiError } from "@/lib/error-handling";
+import { toast } from "sonner";
 
 const BranchWrapper = ({
   editBranchId,
@@ -123,12 +125,12 @@ const BranchWrapper = ({
       return await centerService.updateBranch(editBranchId, data);
     },
     onSuccess: (data) => {
-      console.log("Branch updated successfully", data);
+      toast.success("Branch updated successfully");
       setBranchId(data.id);
       setOpen(true);
     },
-    onError: (error: any) => {
-      console.error("Branch update failed", error);
+    onError: (error: ApiError) => {
+      toast.error(error.message);
     },
   });
 
@@ -137,13 +139,12 @@ const BranchWrapper = ({
       return await centerService.createBranch(data);
     },
     onSuccess: (data) => {
-      console.log("Branch created successfully", data);
+      toast.success("Branch created successfully");
       setBranchId(data.id);
       setOpen(true);
     },
-    onError: (error: any) => {
-      console.error("Branch creation failed", error);
-      // You can show a toast or set form error here
+    onError: (error: ApiError) => {
+      toast.error(error.message);
     },
   });
 
@@ -152,12 +153,11 @@ const BranchWrapper = ({
       return await centerService.assignBranch(branchId!, data);
     },
     onSuccess: (data) => {
-      console.log("Branch created successfully", data);
+      toast.success("Branch admin assigned successfully");
       setOpen(true);
     },
-    onError: (error: any) => {
-      console.error("Branch creation failed", error);
-      // You can show a toast or set form error here
+    onError: (error: ApiError) => {
+      toast.error(error.message);
     },
   });
 
