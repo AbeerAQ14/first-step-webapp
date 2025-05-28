@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { BranchAdminFormData, createAddBranchAdminSchema } from "@/lib/schemas";
 import {
   FormControl,
@@ -24,11 +24,13 @@ const BranchAdminForm = ({
   setOpen,
   onSubmit,
   branchName,
+  disabled,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (data: BranchAdminFormData) => void;
   branchName: string;
+  disabled?: boolean;
 }) => {
   const t = useTranslations("dashboard.center.branches.admin");
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -48,7 +50,12 @@ const BranchAdminForm = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="pb-10">
         <DrawerTitle className="sr-only">{t("title")}</DrawerTitle>
-        <Form onSubmit={onSubmit} className="px-4" branchName={branchName} />
+        <Form
+          onSubmit={onSubmit}
+          className="px-4"
+          branchName={branchName}
+          disabled={disabled}
+        />
       </DrawerContent>
     </Drawer>
   );
@@ -60,10 +67,12 @@ const Form = ({
   className,
   onSubmit,
   branchName,
+  disabled,
 }: {
   className?: string;
   onSubmit: (data: BranchAdminFormData) => void;
   branchName: string;
+  disabled?: boolean;
 }) => {
   const t = useTranslations("dashboard.center.branches.admin");
   const [showPassword, setShowPassword] = useState(false);
@@ -224,7 +233,9 @@ const Form = ({
             size={"sm"}
             type="submit"
             className="mx-auto sm:col-span-2"
+            disabled={disabled}
           >
+            {disabled && <Loader2 className="size-4 animate-spin" />}
             {t("form.submit")}
           </Button>
         </form>

@@ -43,19 +43,19 @@ const prepareCenterFormData = (
   formData.append("provides_food", payload.provides_food ? "1" : "0");
 
   // Append arrays
-  payload.nursery_type.forEach((item) => {
+  payload.nursery_type?.forEach((item) => {
     formData.append("nursery_type[]", item);
   });
 
-  payload.communication_methods.forEach((item) => {
+  payload.communication_methods?.forEach((item) => {
     formData.append("communication_methods[]", item);
   });
 
-  payload.services.forEach((item) => {
+  payload.services?.forEach((item) => {
     formData.append("services[]", item);
   });
 
-  payload.accepted_ages.forEach((item) => {
+  payload.accepted_ages?.forEach((item) => {
     formData.append("accepted_ages[]", item);
   });
 
@@ -75,7 +75,7 @@ const prepareCenterFormData = (
       formData.append(`second_meals[${index}][components]`, meal.components);
   });
 
-  payload.pricing.forEach((price, index) => {
+  payload.pricing?.forEach((price, index) => {
     formData.append(
       `pricing[${index}][enrollment_type]`,
       price.enrollment_type

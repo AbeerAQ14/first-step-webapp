@@ -18,6 +18,7 @@ import BranchFormSkeleton from "./BranchFormSkeleton";
 import { ApiError } from "@/lib/error-handling";
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
+import { useRouter } from "@/i18n/navigation";
 
 const BranchWrapper = ({
   editBranchId,
@@ -30,6 +31,7 @@ const BranchWrapper = ({
   const [open, setOpen] = useState(false);
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const locale = useLocale();
+  const router = useRouter();
 
   const { data: fetchedBranch, isLoading: isFetchingBranch } =
     useBranch(editBranchId);
@@ -176,7 +178,8 @@ const BranchWrapper = ({
     },
     onSuccess: (data) => {
       toast.success("Branch admin assigned successfully");
-      setOpen(true);
+      setOpen(false);
+      router.back();
       setApiErrors({});
     },
     onError: handleApiError,
@@ -361,6 +364,7 @@ const BranchWrapper = ({
           setOpen={setOpen}
           onSubmit={onSubmitAdmin}
           branchName={methods.getValues().nursery_name}
+          disabled={branchMutation.isPending || branchMutation.isPending}
         />
       )}
     </React.Fragment>
