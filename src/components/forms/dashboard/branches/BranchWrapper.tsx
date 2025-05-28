@@ -191,10 +191,19 @@ const BranchWrapper = ({
 
     const getDirtyValues = (dirty: any, values: any): any => {
       if (!dirty) return {};
+
       return Object.entries(dirty).reduce((acc, [key, value]) => {
         if (typeof value === "object" && !Array.isArray(value)) {
-          acc[key] = getDirtyValues(value, values[key]);
-        } else {
+          // Special handling for meals_and_periods - include the whole object if any field is dirty
+          if (key === "meals_and_periods") {
+            acc[key] = values[key];
+          } else {
+            const nestedDirty = getDirtyValues(value, values[key]);
+            if (Object.keys(nestedDirty).length > 0) {
+              acc[key] = nestedDirty;
+            }
+          }
+        } else if (value === true) {
           acc[key] = values[key];
         }
         return acc;

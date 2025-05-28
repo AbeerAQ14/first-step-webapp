@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apiClient } from "./api";
 import { formatTime } from "@/lib/utils";
 import { CenterRegisterPayload } from "@/types";
@@ -9,88 +8,136 @@ const prepareCenterFormData = (
   formData: FormData,
   payload: Omit<CenterRegisterPayload, "password">
 ) => {
-  // Append text fields
-  formData.append("name", payload.name);
-  formData.append("email", payload.email);
-  formData.append("address", payload.address);
-  formData.append("phone", payload.phone);
+  // Append text fields only if they exist
+  if (payload.name) formData.append("name", payload.name);
+  if (payload.email) formData.append("email", payload.email);
+  if (payload.address) formData.append("address", payload.address);
+  if (payload.phone) formData.append("phone", payload.phone);
 
-  payload.additional_service &&
+  if (payload.additional_service) {
     formData.append("additional_service", payload.additional_service);
-  formData.append("work_days_from", payload.work_days_from);
-  formData.append("work_days_to", payload.work_days_to);
-  formData.append("work_hours_from", formatTime(payload.work_hours_from));
-  formData.append("work_hours_to", formatTime(payload.work_hours_to));
-  payload.time_of_first_period &&
+  }
+  if (payload.work_days_from)
+    formData.append("work_days_from", payload.work_days_from);
+  if (payload.work_days_to)
+    formData.append("work_days_to", payload.work_days_to);
+  if (payload.work_hours_from)
+    formData.append("work_hours_from", formatTime(payload.work_hours_from));
+  if (payload.work_hours_to)
+    formData.append("work_hours_to", formatTime(payload.work_hours_to));
+  if (payload.time_of_first_period) {
     formData.append(
       "time_of_first_period",
       formatTime(payload.time_of_first_period)
     );
-  payload.time_of_second_period &&
+  }
+  if (payload.time_of_second_period) {
     formData.append(
       "time_of_second_period",
       formatTime(payload.time_of_second_period)
     );
+  }
 
-  formData.append("emergency_contact", payload.emergency_contact ? "1" : "0");
-  formData.append("special_needs", payload.special_needs ? "1" : "0");
+  if (payload.emergency_contact !== undefined) {
+    formData.append("emergency_contact", payload.emergency_contact ? "1" : "0");
+  }
+  if (payload.special_needs !== undefined) {
+    formData.append("special_needs", payload.special_needs ? "1" : "0");
+  }
 
-  formData.append("nursery_name", payload.nursery_name);
-  formData.append("location", payload.location);
-  formData.append("city", payload.city);
-  formData.append("neighborhood", payload.neighborhood);
+  if (payload.nursery_name)
+    formData.append("nursery_name", payload.nursery_name);
+  if (payload.location) formData.append("location", payload.location);
+  if (payload.city) formData.append("city", payload.city);
+  if (payload.neighborhood)
+    formData.append("neighborhood", payload.neighborhood);
 
-  formData.append("provides_food", payload.provides_food ? "1" : "0");
+  if (payload.provides_food !== undefined) {
+    formData.append("provides_food", payload.provides_food ? "1" : "0");
+  }
 
-  // Append arrays
-  payload.nursery_type?.forEach((item) => {
-    formData.append("nursery_type[]", item);
-  });
+  // Append arrays only if they exist
+  if (payload.nursery_type?.length) {
+    payload.nursery_type.forEach((item) => {
+      formData.append("nursery_type[]", item);
+    });
+  }
 
-  payload.communication_methods?.forEach((item) => {
-    formData.append("communication_methods[]", item);
-  });
+  if (payload.communication_methods?.length) {
+    payload.communication_methods.forEach((item) => {
+      formData.append("communication_methods[]", item);
+    });
+  }
 
-  payload.services?.forEach((item) => {
-    formData.append("services[]", item);
-  });
+  if (payload.services?.length) {
+    payload.services.forEach((item) => {
+      formData.append("services[]", item);
+    });
+  }
 
-  payload.accepted_ages?.forEach((item) => {
-    formData.append("accepted_ages[]", item);
-  });
+  if (payload.accepted_ages?.length) {
+    payload.accepted_ages.forEach((item) => {
+      formData.append("accepted_ages[]", item);
+    });
+  }
 
-  payload.first_meals?.forEach((meal, index) => {
-    meal.meal_name &&
-      formData.append(`first_meals[${index}][meal_name]`, meal.meal_name);
-    meal.juice && formData.append(`first_meals[${index}][juice]`, meal.juice);
-    meal.components &&
-      formData.append(`first_meals[${index}][components]`, meal.components);
-  });
+  if (payload.first_meals?.length) {
+    payload.first_meals.forEach((meal, index) => {
+      if (meal.meal_name) {
+        formData.append(`first_meals[${index}][meal_name]`, meal.meal_name);
+      }
+      if (meal.juice) {
+        formData.append(`first_meals[${index}][juice]`, meal.juice);
+      }
+      if (meal.components) {
+        formData.append(`first_meals[${index}][components]`, meal.components);
+      }
+    });
+  }
 
-  payload.second_meals?.forEach((meal, index) => {
-    meal.meal_name &&
-      formData.append(`second_meals[${index}][meal_name]`, meal.meal_name);
-    meal.juice && formData.append(`second_meals[${index}][juice]`, meal.juice);
-    meal.components &&
-      formData.append(`second_meals[${index}][components]`, meal.components);
-  });
+  if (payload.second_meals?.length) {
+    payload.second_meals.forEach((meal, index) => {
+      if (meal.meal_name) {
+        formData.append(`second_meals[${index}][meal_name]`, meal.meal_name);
+      }
+      if (meal.juice) {
+        formData.append(`second_meals[${index}][juice]`, meal.juice);
+      }
+      if (meal.components) {
+        formData.append(`second_meals[${index}][components]`, meal.components);
+      }
+    });
+  }
 
-  payload.pricing?.forEach((price, index) => {
-    formData.append(
-      `pricing[${index}][enrollment_type]`,
-      price.enrollment_type
-    );
-    formData.append(`pricing[${index}][response_speed]`, price.response_speed);
-    formData.append(
-      `pricing[${index}][price_amount]`,
-      price.price_amount.toString()
-    );
-  });
+  if (payload.pricing?.length) {
+    payload.pricing.forEach((price, index) => {
+      if (price.enrollment_type) {
+        formData.append(
+          `pricing[${index}][enrollment_type]`,
+          price.enrollment_type
+        );
+      }
+      if (price.response_speed) {
+        formData.append(
+          `pricing[${index}][response_speed]`,
+          price.response_speed
+        );
+      }
+      if (price.price_amount) {
+        formData.append(
+          `pricing[${index}][price_amount]`,
+          price.price_amount.toString()
+        );
+      }
+    });
+  }
 
-  // ✅ Append files
-  formData.append("logo", payload.logo);
-  formData.append("license_path", payload.license_path);
-  formData.append("commercial_record_path", payload.commercial_record_path);
+  // Append files only if they exist
+  if (payload.logo) formData.append("logo", payload.logo);
+  if (payload.license_path)
+    formData.append("license_path", payload.license_path);
+  if (payload.commercial_record_path)
+    formData.append("commercial_record_path", payload.commercial_record_path);
 };
 
 export const centerService = {
