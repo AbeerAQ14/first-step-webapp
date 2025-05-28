@@ -213,7 +213,7 @@ export const centerService = {
     }
   },
 
-  deleteBranch: async (id: string) => {
+  deleteBranch: async (id: number) => {
     try {
       const response = await apiClient.delete(`/branches/${id}`);
       return response.data;

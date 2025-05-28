@@ -1,9 +1,14 @@
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Link } from "@/i18n/navigation";
+import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { BranchCardType } from "@/hooks/useBranches";
 import { Trash2 } from "lucide-react";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { centerService } from "@/services/dashboardApi";
 
 const BranchCard = ({
   branch,
@@ -15,6 +20,18 @@ const BranchCard = ({
   baseUrl?: string;
 }) => {
   const t = useTranslations("dashboard.center.branches");
+  const router = useRouter();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await centerService.deleteBranch(branch.id);
+      toast.success(t("delete_dialog.success"));
+      router.refresh();
+    } catch (error) {
+      toast.error(t("delete_dialog.error"));
+    }
+  };
 
   return (
     <div className="relative bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
@@ -97,9 +114,19 @@ const BranchCard = ({
         variant={"ghost"}
         size={"icon"}
         className="absolute p-5 top-4 right-4 rtl:right-auto rtl:left-4"
+        onClick={() => setIsDeleteDialogOpen(true)}
       >
         <Trash2 className="size-5 text-destructive" />
       </Button>
+
+      <ConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleDelete}
+        title={t("delete_dialog.title")}
+        description={t("delete_dialog.description", { name: branch.name })}
+        confirmText={t("delete_dialog.confirm")}
+      />
     </div>
   );
 };

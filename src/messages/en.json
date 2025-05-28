@@ -760,6 +760,13 @@
               "placeholder": "Re-enter admin password"
             }
           }
+        },
+        "delete_dialog": {
+          "title": "Delete Branch",
+          "description": "Are you sure you want to delete {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "success": "Branch deleted successfully",
+          "error": "Failed to delete branch"
         }
       },
       "notifications": {
@@ -996,5 +1003,9 @@
         }
       }
     }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }
