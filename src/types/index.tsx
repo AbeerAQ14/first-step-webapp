@@ -1,74 +1,91 @@
 import { RESERVATION_STATUS_IDS } from "@/lib/options";
 
-// Define the structure for an authorized person within a child's details
+// ===== Common Types =====
+export type ReservationStatus = (typeof RESERVATION_STATUS_IDS)[number];
+
+// ===== Child Related Types =====
 export interface AuthorizedPerson {
   name: string;
-  cin: string; // Corresponds to ID Number / CIN
+  cin: string; // ID Number / CIN
 }
 
-// Define the structure for a specific allergy detail within a child's details
 export interface ChildAllergyDetail {
-  name: string; // The name/type of the allergy (e.g., "Peanuts")
-  allergy_causes: string[]; // List of specific causes/triggers (e.g., ["Peanut butter", "Cookies"])
-  allergy_emergency: string; // Emergency procedures (e.g., "Administer EpiPen")
+  name: string;
+  allergy_causes: string[];
+  allergy_emergency: string;
 }
 
-// Define the structure for a single child
+export interface ChronicDisease {
+  name?: string;
+  medication?: string;
+  procedures?: string;
+}
+
+export interface Allergy {
+  allergyTypes?: string;
+  allergyFoods?: string;
+  allergyProcedures?: string;
+}
+
 export interface Child {
   child_name: string;
-  birthday_date: string | null; // Format: "YYYY-MM-DD"
-  gender: "girl" | "boy" | string; // Typically 'girl' or 'boy', allow string for flexibility
-  disease: boolean; // Does the child have a chronic disease?
-  disease_name: string | null; // Name of the disease if applicable
-  medicament_disease: string | null; // Medication/treatment for the disease if applicable
-  disease_emergency: string | null; // Emergency procedures for the disease if applicable
-  allergy: boolean; // Does the child have any allergies?
-  allergy_name: string | null; // Name of the primary allergy, if applicable
-  parent_name: string; // Father's name in the source example
+  birthday_date: string | null;
+  gender: "girl" | "boy" | string;
+  disease: boolean;
+  disease_name: string | null;
+  medicament_disease: string | null;
+  disease_emergency: string | null;
+  allergy: boolean;
+  allergy_name: string | null;
+  parent_name: string;
   mother_name: string;
   kinship: string;
-  recommendations?: string; // General recommendations or important notes
+  recommendations?: string;
   description_3_words: string;
   things_child_likes: string;
   notes?: string;
-  authorized_persons: AuthorizedPerson[]; // Array of people authorized to pick up/interact
-  allergies: ChildAllergyDetail[]; // Array detailing specific allergies
+  authorized_persons: AuthorizedPerson[];
+  allergies: ChildAllergyDetail[];
 }
 
-// Define the main structure for the expected form payload
+// ===== Parent Related Types =====
+export interface ParentData {
+  name: string;
+  phone: string;
+  email: string;
+  relation: string;
+}
+
 export interface ParentRegisterPayload {
-  name: string; // User/Account name
+  name: string;
   email: string;
   national_number: string;
   phone: string;
-  password?: string; // Password might be optional depending on context (e.g., update vs create)
-  address: string | null; // User's address
-  children: Child[]; // Array of children associated with the user/account
+  password?: string;
+  address: string | null;
+  children: Child[];
 }
 
-// Define an interface for the input object for better type checking
 export interface ParentRegisterFormDataInput {
   name: string;
-  phone: string; // Not used in output, but part of input structure
+  phone: string;
   email: string;
-  relation: string; // Not used in output
+  relation: string;
   national_number: string;
   address: string;
   password: string;
-  confirmPassword?: string; // Not used in output
+  confirmPassword?: string;
   childName: string;
-  birthDate: string; // Expecting ISO String like "YYYY-MM-DDTHH:mm:ss.sssZ"
+  birthDate: string;
   fatherName: string;
   motherName: string;
   kinship: string;
   gender: "male" | "female" | string;
   chronicDiseases?: {
-    // Use optional properties for safety
     hasDiseases: "yes" | "no";
     diseases?: Array<{ name: string; medication: string; procedures: string }>;
   };
   allergies?: {
-    // Use optional properties for safety
     hasAllergies: "yes" | "no";
     allergies?: Array<{
       allergyTypes: string;
@@ -76,11 +93,24 @@ export interface ParentRegisterFormDataInput {
       allergyProcedures: string;
     }>;
   };
-  childDescription?: string; // Optional text fields
+  childDescription?: string;
   favoriteThings?: string;
   recommendations?: string;
   authorizedPersons?: Array<{ name: string; idNumber: string }>;
   comments?: string;
+}
+
+// ===== Center Related Types =====
+export interface Meal {
+  meal_name?: string;
+  juice?: string;
+  components?: string;
+}
+
+export interface Pricing {
+  enrollment_type: string;
+  response_speed: string;
+  price_amount: number;
 }
 
 export interface CenterRegisterPayload {
@@ -110,46 +140,12 @@ export interface CenterRegisterPayload {
   provides_food: boolean;
   accepted_ages: string[];
   pricing: Pricing[];
-
   logo: File;
   license_path: File;
   commercial_record_path: File;
-  // comments: string;
 }
 
-export interface Meal {
-  meal_name?: string;
-  juice?: string;
-  components?: string;
-}
-
-export interface Pricing {
-  enrollment_type: string;
-  response_speed: string;
-  price_amount: number;
-}
-
-// child info types
-
-export interface ChronicDisease {
-  name?: string;
-  medication?: string;
-  procedures?: string;
-}
-
-export interface Allergy {
-  allergyTypes?: string;
-  allergyFoods?: string;
-  allergyProcedures?: string;
-}
-
-export interface ParentData {
-  name: string;
-  phone: string;
-  email: string;
-  relation: string;
-}
-
+// ===== Child Info Form Types =====
 export interface ChildData {
   childName: string;
   birthDate: string;
@@ -186,6 +182,7 @@ export interface ChildInfoData {
   authorizedData: AuthorizedData;
 }
 
+// ===== Content Types =====
 export interface Blog {
   id: number;
   title: string;
@@ -227,5 +224,3 @@ export interface Value {
   description: string;
   image: string;
 }
-
-export type ReservationStatus = (typeof RESERVATION_STATUS_IDS)[number];
