@@ -221,4 +221,13 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getEnrollments: async () => {
+    try {
+      const response = await apiClient.get(`/enrollments`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };

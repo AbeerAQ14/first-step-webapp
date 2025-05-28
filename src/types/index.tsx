@@ -1,3 +1,5 @@
+import { RESERVATION_STATUS_IDS } from "@/lib/options";
+
 // Define the structure for an authorized person within a child's details
 export interface AuthorizedPerson {
   name: string;
@@ -226,8 +228,4 @@ export interface Value {
   image: string;
 }
 
-export type ReservationStatus =
-  | "confirmed"
-  | "waitingForPayment"
-  | "waitingForConfirmation"
-  | "rejected";
+export type ReservationStatus = (typeof RESERVATION_STATUS_IDS)[number];

@@ -28,3 +28,10 @@ export const WEEK_DAYS = [
 ] as const;
 
 export const COMMUNICATION_METHODS_IDS = ["phone", "sms", "video"] as const;
+
+export const RESERVATION_STATUS_IDS = [
+  "confirmed",
+  "waitingForPayment",
+  "waitingForConfirmation",
+  "rejected",
+] as const;
