@@ -6,6 +6,7 @@ import { Tajawal } from "next/font/google";
 import "@/styles/globals.css";
 import { Providers } from "../providers";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { Toaster } from "@/components/ui/sonner";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -42,6 +43,7 @@ export default async function RootLayout({
         <GoogleAnalytics />
         <NextIntlClientProvider>
           <Providers>{children}</Providers>
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>

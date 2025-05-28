@@ -17,6 +17,7 @@ import { centerService } from "@/services/dashboardApi";
 import BranchFormSkeleton from "./BranchFormSkeleton";
 import { ApiError } from "@/lib/error-handling";
 import { toast } from "sonner";
+import { AlertCircle } from "lucide-react";
 
 const BranchWrapper = ({
   editBranchId,
@@ -27,6 +28,7 @@ const BranchWrapper = ({
 }) => {
   const [branchId, setBranchId] = useState(null);
   const [open, setOpen] = useState(false);
+  const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const locale = useLocale();
 
   const { data: fetchedBranch, isLoading: isFetchingBranch } =
@@ -119,6 +121,28 @@ const BranchWrapper = ({
     }
   }, [mode, transformedInitialValues, methods]);
 
+  const handleApiError = (error: ApiError) => {
+    toast.error(error.message);
+    const formattedErrors = Object.entries(error.errors || {}).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: Array.isArray(value) ? value : [value],
+      }),
+      {}
+    );
+    setApiErrors(formattedErrors);
+    // Set form errors from API response
+    if (error.errors) {
+      Object.entries(error.errors).forEach(([field, messages]) => {
+        const message = Array.isArray(messages) ? messages[0] : messages;
+        methods.setError(field as any, {
+          type: "server",
+          message: message,
+        });
+      });
+    }
+  };
+
   const updateBranchMutation = useMutation({
     mutationFn: async (data: any) => {
       if (!editBranchId) throw new Error("Missing editBranchId");
@@ -128,10 +152,9 @@ const BranchWrapper = ({
       toast.success("Branch updated successfully");
       setBranchId(data.id);
       setOpen(true);
+      setApiErrors({});
     },
-    onError: (error: ApiError) => {
-      toast.error(error.message);
-    },
+    onError: handleApiError,
   });
 
   const mutation = useMutation({
@@ -142,10 +165,9 @@ const BranchWrapper = ({
       toast.success("Branch created successfully");
       setBranchId(data.id);
       setOpen(true);
+      setApiErrors({});
     },
-    onError: (error: ApiError) => {
-      toast.error(error.message);
-    },
+    onError: handleApiError,
   });
 
   const branchMutation = useMutation({
@@ -155,10 +177,9 @@ const BranchWrapper = ({
     onSuccess: (data) => {
       toast.success("Branch admin assigned successfully");
       setOpen(true);
+      setApiErrors({});
     },
-    onError: (error: ApiError) => {
-      toast.error(error.message);
-    },
+    onError: handleApiError,
   });
 
   const onSubmitBranch = (data: BranchFormData) => {
@@ -314,6 +335,23 @@ const BranchWrapper = ({
               isDisabled || mutation.isPending || updateBranchMutation.isPending
             }
           />
+
+          {Object.keys(apiErrors).length > 0 && (
+            <div className="w-full max-w-2xl mt-4 p-4 bg-destructive/10 text-destructive rounded-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <AlertCircle className="h-5 w-5" />
+                <p className="font-medium">Please fix the following errors:</p>
+              </div>
+              <ul className="space-y-1.5 text-sm">
+                {Object.entries(apiErrors).map(([field, messages]) => (
+                  <li key={field} className="flex items-start gap-2">
+                    <span className="mt-1">•</span>
+                    <span>{messages[0]}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </form>
       </FormProvider>
 
