@@ -19,7 +19,11 @@ export default function DashboardLayout({
     <SidebarProvider>
       <MainSidebar />
       <main className="grow">
-        <SidebarTrigger className="md:hidden" />
+        <SidebarTrigger
+          className="md:hidden fixed top-4 left-4 rtl:left-auto 
+          rtl:right-4 z-50 bg-white/80 backdrop-blur-sm shadow-sm 
+          hover:bg-white/90 transition-colors rounded-lg size-10"
+        />
         <Header />
         <div className="px-4 md:px-10 py-10">{children}</div>
       </main>
