@@ -27,17 +27,20 @@ const BranchSkeleton = () => {
     <div className="mb-10">
       <div className="mb-3.5 flex items-center justify-between">
         <Skeleton className="h-8 w-[200px]" />
-        <Skeleton className="h-9 w-[100px]" />
+        <Skeleton className="h-9 w-[100px] rounded-md" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-x-4 gap-y-5.5">
         {Array.from({ length: 4 }).map((_, index) => (
-          <div key={index} className="bg-sidebar p-4 rounded-lg">
-            <div className="flex items-center gap-4">
-              <Skeleton className="h-16 w-16 rounded-full" />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-[120px]" />
-                <Skeleton className="h-4 w-[80px]" />
-              </div>
+          <div
+            key={index}
+            className="p-2 rounded-3xl flex flex-col items-center gap-y-2"
+          >
+            <Skeleton className="w-full min-w-[11.25rem] h-[12.5rem] rounded-2xl" />
+            <Skeleton className="h-5 w-32" />
+            <Skeleton className="h-4 w-24" />
+            <div className="flex items-center gap-1">
+              <Skeleton className="h-8 w-8 rounded-md" />
+              <Skeleton className="h-8 w-8 rounded-md" />
             </div>
           </div>
         ))}
