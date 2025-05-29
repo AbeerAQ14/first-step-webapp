@@ -92,7 +92,7 @@ const BranchCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {branch.acceptedAges.map((age) => (
+            {branch.acceptedAges?.map((age) => (
               <span key={age}>{age}</span>
             ))}
           </div>
@@ -104,7 +104,7 @@ const BranchCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {branch.services.map((service) => (
+            {branch.services?.map((service) => (
               <span key={service}>{service}</span>
             ))}
           </div>
