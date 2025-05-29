@@ -5,112 +5,31 @@ import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-
-const childrenData: Child[] = [
-  {
-    id: 1,
-    childName: "محمد أحمد",
-    dateOfBirth: "12/5/2020",
-    parentName: "أحمد عبدالله",
-    branch: "فرع الرياض",
-    reservationStatus: "confirmed",
-  },
-  {
-    id: 2,
-    childName: "فاطمة خالد",
-    dateOfBirth: "3/8/2019",
-    parentName: "خالد محمد",
-    branch: "فرع جدة",
-    reservationStatus: "waitingForPayment",
-  },
-  {
-    id: 3,
-    childName: "عمر سعيد",
-    dateOfBirth: "24/11/2021",
-    parentName: "سعيد العمري",
-    branch: "فرع الدمام",
-    reservationStatus: "confirmed",
-  },
-  {
-    id: 4,
-    childName: "ليلى عبدالرحمن",
-    dateOfBirth: "17/2/2019",
-    parentName: "عبدالرحمن السعيد",
-    branch: "فرع الرياض",
-    reservationStatus: "waitingForPayment",
-  },
-  {
-    id: 5,
-    childName: "يوسف علي",
-    dateOfBirth: "9/6/2022",
-    parentName: "علي يوسف",
-    branch: "فرع المدينة",
-    reservationStatus: "confirmed",
-  },
-  {
-    id: 6,
-    childName: "نورة ناصر",
-    dateOfBirth: "30/4/2020",
-    parentName: "ناصر الشمري",
-    branch: "فرع جدة",
-    reservationStatus: "waitingForPayment",
-  },
-  {
-    id: 7,
-    childName: "سلطان فهد",
-    dateOfBirth: "22/9/2021",
-    parentName: "فهد السلطان",
-    branch: "فرع الدمام",
-    reservationStatus: "confirmed",
-  },
-  {
-    id: 8,
-    childName: "سارة خالد",
-    dateOfBirth: "14/3/2022",
-    parentName: "خالد العنزي",
-    branch: "فرع الرياض",
-    reservationStatus: "waitingForConfirmation",
-  },
-  {
-    id: 9,
-    childName: "ريان عبدالله",
-    dateOfBirth: "5/10/2019",
-    parentName: "عبدالله الريان",
-    branch: "فرع جدة",
-    reservationStatus: "rejected",
-  },
-  {
-    id: 10,
-    childName: "منيرة سعد",
-    dateOfBirth: "28/7/2021",
-    parentName: "سعد المنصور",
-    branch: "فرع المدينة",
-    reservationStatus: "waitingForPayment",
-  },
-  {
-    id: 11,
-    childName: "طلال محمد",
-    dateOfBirth: "19/1/2020",
-    parentName: "محمد الطلال",
-    branch: "فرع الدمام",
-    reservationStatus: "confirmed",
-  },
-  {
-    id: 12,
-    childName: "جواهر عبدالعزيز",
-    dateOfBirth: "11/12/2022",
-    parentName: "عبدالعزيز الجوهر",
-    branch: "فرع الرياض",
-    reservationStatus: "waitingForPayment",
-  },
-];
+import { centerService } from "@/services/dashboardApi";
 
 const Children = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [children, setChildren] = useState<Child[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const t = useTranslations("dashboard.children");
   const columns = useChildrenColumns();
+
+  useEffect(() => {
+    const fetchChildren = async () => {
+      try {
+        const data = await centerService.getChildrenFiles();
+        setChildren(data);
+      } catch (error) {
+        console.error("Error fetching children:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchChildren();
+  }, []);
 
   return (
     <div>
@@ -138,9 +57,10 @@ const Children = () => {
 
         <DataTable
           columns={columns}
-          data={childrenData}
+          data={children}
           globalFilterValue={searchQuery}
           setGlobalFilterValue={setSearchQuery}
+          isLoading={isLoading}
         />
       </div>
     </div>

@@ -230,4 +230,13 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getChildrenFiles: async () => {
+    try {
+      const response = await apiClient.get(`/children`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };

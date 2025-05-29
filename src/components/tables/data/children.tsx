@@ -11,11 +11,13 @@ import { ReservationStatus, useReservationStatus } from "./shared/status";
 // You can use a Zod schema here if you want.
 export type Child = {
   id: number;
-  childName: string;
-  dateOfBirth: string;
-  parentName: string;
-  branch: string;
-  reservationStatus: ReservationStatus;
+  child_name: string;
+  birthday_date: string;
+  parent_name: string;
+  branch_name: string;
+  enrollments: Array<{
+    status: string;
+  }>;
 };
 
 export function useChildrenColumns() {
@@ -35,30 +37,34 @@ export function useChildrenColumns() {
       },
     },
     {
-      accessorKey: "childName",
+      accessorKey: "child_name",
       header: () => t("headers.childName"),
     },
     {
-      accessorKey: "dateOfBirth",
+      accessorKey: "birthday_date",
       header: () => t("headers.dateOfBirth"),
+      cell: ({ row }) => {
+        const date = new Date(row.getValue("birthday_date"));
+        return date.toLocaleDateString();
+      },
     },
     {
-      accessorKey: "parentName",
+      accessorKey: "parent_name",
       header: () => t("headers.parentName"),
     },
     {
-      accessorKey: "branch",
+      accessorKey: "branch_name",
       header: () => t("headers.branch"),
     },
     {
-      accessorKey: "reservationStatus",
+      accessorKey: "enrollments",
       header: () => t("headers.reservationStatus"),
       cell: ({ row }) => {
-        const value = row.getValue(
-          "reservationStatus"
-        ) as Child["reservationStatus"];
-        const colorClasses = getStatusColorClass(value);
-        const text = getStatusText(value);
+        const enrollments = row.getValue("enrollments") as Child["enrollments"];
+        const latestEnrollment = enrollments[0];
+        const status = latestEnrollment?.status || "pending";
+        const colorClasses = getStatusColorClass(status as any);
+        const text = getStatusText(status as any);
 
         return (
           <div
@@ -76,12 +82,14 @@ export function useChildrenColumns() {
         return (
           <div className="flex items-center gap-1">
             <Button asChild variant={"ghost"} size={"icon"}>
-              <Link href={`children-files/${"123"}`}>
+              <Link href={`children-files/${row.original.id}`}>
                 <Eye className="size-4 text-mid-gray" />
               </Link>
             </Button>
-            <Button variant={"ghost"} size={"icon"}>
-              <Edit className="size-4 text-mid-gray" />
+            <Button asChild variant={"ghost"} size={"icon"}>
+              <Link href={`children-files/${row.original.id}/edit`}>
+                <Edit className="size-4 text-mid-gray" />
+              </Link>
             </Button>
             <Button variant={"ghost"} size={"icon"}>
               <Trash2 className="size-4 text-mid-gray" />
