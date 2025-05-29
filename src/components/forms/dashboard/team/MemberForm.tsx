@@ -157,7 +157,8 @@ const MemberForm = ({
                     type="text"
                     placeholder={t("branch.placeholder")}
                     {...field}
-                    disabled={isLoading}
+                    disabled={true}
+                    className="bg-gray-50"
                   />
                 </FormControl>
                 <FormMessage />
