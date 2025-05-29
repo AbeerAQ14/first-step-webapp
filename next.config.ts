@@ -11,8 +11,8 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
-        protocol: "http",
-        hostname: "firststep-app.com",
+        protocol: "https",
+        hostname: "back.firststep-app.com",
         port: "",
       },
     ],
