@@ -1,35 +1,24 @@
 "use client";
 
-import { Child, useChildrenColumns } from "@/components/tables/data/children";
+import { useChildrenColumns } from "@/components/tables/data/children";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { centerService } from "@/services/dashboardApi";
+import { useQuery } from "@tanstack/react-query";
 
 const Children = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [children, setChildren] = useState<Child[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const t = useTranslations("dashboard.children");
   const columns = useChildrenColumns();
 
-  useEffect(() => {
-    const fetchChildren = async () => {
-      try {
-        const data = await centerService.getChildrenFiles();
-        setChildren(data);
-      } catch (error) {
-        console.error("Error fetching children:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchChildren();
-  }, []);
+  const { data: children = [], isLoading } = useQuery({
+    queryKey: ["children"],
+    queryFn: centerService.getChildrenFiles,
+  });
 
   return (
     <div>
