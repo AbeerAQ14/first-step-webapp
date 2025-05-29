@@ -86,14 +86,14 @@ export function useChildrenColumns() {
                 <Eye className="size-4 text-mid-gray" />
               </Link>
             </Button>
-            <Button asChild variant={"ghost"} size={"icon"}>
+            {/* <Button asChild variant={"ghost"} size={"icon"}>
               <Link href={`children-files/${row.original.id}/edit`}>
                 <Edit className="size-4 text-mid-gray" />
               </Link>
             </Button>
             <Button variant={"ghost"} size={"icon"}>
               <Trash2 className="size-4 text-mid-gray" />
-            </Button>
+            </Button> */}
           </div>
         );
       },
