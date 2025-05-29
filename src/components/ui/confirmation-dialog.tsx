@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -42,11 +43,14 @@ export function ConfirmationDialog({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+        <DialogClose />
+        <DialogHeader className="sm:rtl:text-right">
+          <DialogTitle className="text-xl">{title}</DialogTitle>
+          <DialogDescription className="text-mid-gray">
+            {description}
+          </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="flex-row justify-center">
           <Button variant="outline" onClick={onClose}>
             {cancelText || t("cancel")}
           </Button>

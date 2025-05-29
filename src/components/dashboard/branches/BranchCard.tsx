@@ -9,6 +9,7 @@ import { BranchCardType } from "@/hooks/useBranches";
 import { Trash2 } from "lucide-react";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { centerService } from "@/services/dashboardApi";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BranchCard = ({
   branch,
@@ -20,14 +21,14 @@ const BranchCard = ({
   baseUrl?: string;
 }) => {
   const t = useTranslations("dashboard.center.branches");
-  const router = useRouter();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleDelete = async () => {
     try {
       await centerService.deleteBranch(branch.id);
       toast.success(t("delete_dialog.success"));
-      router.refresh();
+      queryClient.invalidateQueries({ queryKey: ["branches"] });
     } catch (error) {
       toast.error(t("delete_dialog.error"));
     }
