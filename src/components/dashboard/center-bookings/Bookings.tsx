@@ -66,7 +66,11 @@ const Bookings = () => {
           {t("title")}
         </p>
 
-        <DataTable columns={columns} data={bookingsData} />
+        <DataTable
+          columns={columns}
+          data={bookingsData}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
