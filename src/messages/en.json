@@ -825,6 +825,12 @@
             "save": "Save Changes",
             "delete": "Delete"
           }
+        },
+        "delete": {
+          "title": "Delete Team Member",
+          "description": "Are you sure you want to delete this team member? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
         }
       },
       "children": {

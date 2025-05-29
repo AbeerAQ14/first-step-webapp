@@ -5,17 +5,22 @@ import { Edit, Trash2 } from "lucide-react";
 
 interface TeamCardProps extends TeamMember {}
 
-export const TeamCard = ({ id, imageUrl, role, name }: TeamCardProps) => {
+export const TeamCard = ({
+  id,
+  image_url,
+  profession,
+  name,
+}: TeamCardProps) => {
   return (
     <div className="p-2 rounded-3xl border border-light-gray flex flex-col items-center gap-y-2">
       <div
         className="w-full min-w-[11.25rem] h-[12.5rem] rounded-2xl bg-cover bg-left-top"
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${image_url})`,
         }}
       />
 
-      <p className="font-bold text-primary">{role}</p>
+      <p className="font-bold text-primary">{profession}</p>
       <p className="text-sm text-mid-gray">{name}</p>
 
       <div className="flex items-center gap-1">

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, LoaderCircle } from "lucide-react";
 import { createTeamMemberSchema, TeamMemberFormData } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
@@ -25,17 +25,22 @@ const MemberForm = ({
   mode,
   onSubmit,
   onDelete,
+  isLoading,
 }: {
   initialData: InitialData;
   mode: "add" | "edit";
   onSubmit: (data: TeamMemberFormData) => void;
   onDelete?: () => void;
+  isLoading?: boolean;
 }) => {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("dashboard.center.team.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData.image === "string" && initialData.image) || null
+  );
+  const [loadingButton, setLoadingButton] = useState<"save" | "delete" | null>(
+    null
   );
 
   const teamMemberSchema = createTeamMemberSchema(locale as "ar" | "en");
@@ -52,7 +57,12 @@ const MemberForm = ({
     if (mode === "add") {
       return (
         <>
-          <Button size={"sm"} type="submit">
+          <Button size={"sm"} type="submit" disabled={isLoading}>
+            {isLoading && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle className="h-4 w-4" />
+              </span>
+            )}
             {t("buttons.add")}
           </Button>
           <Button
@@ -60,6 +70,7 @@ const MemberForm = ({
             variant={"outline"}
             className="!border-light-gray text-mid-gray"
             onClick={() => router.back()}
+            disabled={isLoading}
           >
             {t("buttons.cancel")}
           </Button>
@@ -71,17 +82,31 @@ const MemberForm = ({
           <Button
             size={"sm"}
             type="submit"
-            disabled={!methods.formState.isDirty}
+            disabled={!methods.formState.isDirty || isLoading}
+            onClick={() => setLoadingButton("save")}
           >
+            {isLoading && loadingButton === "save" && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle className="h-4 w-4" />
+              </span>
+            )}
             {t("buttons.save")}
           </Button>
           <Button
             size={"sm"}
             variant="destructive"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+              setLoadingButton("delete");
               onDelete && onDelete();
             }}
+            disabled={isLoading}
           >
+            {isLoading && loadingButton === "delete" && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle className="h-4 w-4" />
+              </span>
+            )}
             {t("buttons.delete")}
           </Button>
         </>
@@ -110,6 +135,7 @@ const MemberForm = ({
                     type="text"
                     placeholder={t("name.placeholder")}
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -131,6 +157,7 @@ const MemberForm = ({
                     type="text"
                     placeholder={t("branch.placeholder")}
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -152,6 +179,7 @@ const MemberForm = ({
                     type="text"
                     placeholder={t("job.placeholder")}
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -179,12 +207,14 @@ const MemberForm = ({
                         field.onChange(e.target.files);
                       }
                     }}
+                    disabled={isLoading}
                   />
                   <label
                     htmlFor="image-upload"
                     className={clsx(
                       "min-w-60 md:max-w-60 aspect-[200/240] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
-                      preview && "p-2"
+                      preview && "p-2",
+                      isLoading && "opacity-50 cursor-not-allowed"
                     )}
                   >
                     {preview ? (

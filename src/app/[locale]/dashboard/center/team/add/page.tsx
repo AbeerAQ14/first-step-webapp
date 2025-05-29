@@ -1,8 +1,13 @@
+"use client";
+
 import MemberFormWrapper from "@/components/forms/dashboard/team/MemberFormWrapper";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 export default function AddTeamMember() {
   const t = useTranslations("dashboard.center.team");
+  const searchParams = useSearchParams();
+  const branchId = searchParams.get("branch_id");
 
   return (
     <div className="p-10 flex flex-col gap-y-6">
@@ -13,7 +18,7 @@ export default function AddTeamMember() {
       <MemberFormWrapper
         initialData={{
           name: "",
-          branch: "",
+          branch: branchId || "",
           job: "",
           image: undefined,
         }}
