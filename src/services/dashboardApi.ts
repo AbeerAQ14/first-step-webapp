@@ -239,4 +239,63 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getBranchTeam: async (id: string) => {
+    try {
+      const response = await apiClient.get(
+        `/branch-team-members?branch_id=${id}`
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranchTeamMember: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/branch-team-members/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createBranchTeamMember: async (payload: any) => {
+    try {
+      const response = await apiClient.post(`/branch-team-members`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateBranchTeamMember: async (id: string, payload: any) => {
+    try {
+      const response = await apiClient.post(
+        `/branch-team-members/${id}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteBranchTeamMember: async (id: string) => {
+    try {
+      const response = await apiClient.delete(`/branch-team-members/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
