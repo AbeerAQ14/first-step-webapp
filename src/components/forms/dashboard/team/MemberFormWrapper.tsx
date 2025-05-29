@@ -33,7 +33,6 @@ const MemberFormWrapper = ({
 
   const createMutation = useMutation({
     mutationFn: (data: TeamMemberFormData) => {
-      console.log("add", data.image[0]);
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("profession", data.job);
@@ -59,7 +58,7 @@ const MemberFormWrapper = ({
       formData.append("name", data.name);
       formData.append("profession", data.job);
       formData.append("branch_id", data.branch);
-      if (data.image?.[0]) {
+      if (data.image && typeof data.image !== "string" && data.image[0]) {
         formData.append("image", data.image[0]);
       }
       return centerService.updateBranchTeamMember(memberId!, formData);
