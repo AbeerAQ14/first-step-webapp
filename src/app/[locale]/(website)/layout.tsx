@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import TopBar from "@/components/layout/TopBar";
 import Footer from "@/components/layout/Footer";
+import WhatsAppButton from "@/components/shared/WhatsAppButton";
 
 export const metadata: Metadata = {
   title: "First Step",
@@ -19,6 +20,7 @@ export default async function WebsiteLayout({
       <TopBar />
       <Navbar />
       {children}
+      <WhatsAppButton />
       <Footer />
     </React.Fragment>
   );
