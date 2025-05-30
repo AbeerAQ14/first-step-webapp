@@ -21,7 +21,7 @@ const WhatsAppIcon = () => (
 );
 
 const WhatsAppButton = () => {
-  const phoneNumber = "+966539949732"; // Removed spaces for WhatsApp link
+  const phoneNumber = "966539949732";
   const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
   return (

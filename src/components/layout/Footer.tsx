@@ -159,29 +159,15 @@ const TopRightSection = () => {
 
           <div className="mt-9 flex flex-wrap justify-center md:justify-start gap-x-9 gap-y-2">
             <p className="text-white font-medium">{t("contactTitle")}:</p>
-            <div className="relative">
-              <a
-                href="mailto:info@firststep.com"
-                className={`text-white hover:text-secondary-mint-green hover:underline duration-150 trasition`}
-              >
-                info@firststep.com
-              </a>
-              <span className="relative -top-1/2 pointer-events-none flex items-center justify-center md:justify-start text-xl font-bold opacity-0">
-                info@firststep.com
-              </span>
-            </div>
 
-            <div className="relative">
+            <div className="flex items-center gap-2">
               <a
-                dir="ltr"
-                href="tel:+966539949732"
-                className={`text-white hover:text-secondary-mint-green hover:underline duration-150 trasition`}
+                href="https://wa.me/966539949732"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                +966 53 994 9732
+                <Icons.whatsapp className="size-6 text-gray/60 hover:text-secondary-mint-green transition-colors duration-150" />
               </a>
-              <span className="relative -top-1/2 pointer-events-none flex items-center justify-center md:justify-start text-xl font-bold opacity-0">
-                +966 53 994 9732
-              </span>
             </div>
           </div>
         </div>
