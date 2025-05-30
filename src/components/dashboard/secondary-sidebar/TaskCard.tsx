@@ -6,7 +6,7 @@ import { Pencil, Trash, Check, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { useEventsStore } from "@/store/eventsStore";
+import { useTasks } from "@/hooks/useTasks";
 
 type TaskCardProps = {
   id: string;
@@ -30,11 +30,22 @@ const TaskCard = ({
   const [newTitle, setNewTitle] = useState(title);
   const [newDate, setNewDate] = useState(rawDate.toISOString().split("T")[0]);
 
-  const { editTask, deleteTask, toggleTaskDone } = useEventsStore();
+  const { updateTask, deleteTask, toggleTaskDone } = useTasks();
 
   const handleSave = () => {
-    editTask(id, { title: newTitle, date: new Date(newDate), done });
-    setIsEditing(false);
+    updateTask.mutate(
+      {
+        id,
+        updates: {
+          title: newTitle,
+          date: new Date(newDate),
+          done,
+        },
+      },
+      {
+        onSuccess: () => setIsEditing(false),
+      }
+    );
   };
 
   const cardClasses = cn(
@@ -49,7 +60,7 @@ const TaskCard = ({
         className="hidden group-hover:block size-4 text-gray-400 hover:text-primary cursor-pointer"
       />
       <Trash
-        onClick={() => deleteTask(id)}
+        onClick={() => deleteTask.mutate(id)}
         className="hidden group-hover:block size-4 text-gray-400 hover:text-destructive cursor-pointer"
       />
     </div>
@@ -63,14 +74,20 @@ const TaskCard = ({
       />
       <X
         className="size-4 text-gray-400 hover:text-destructive cursor-pointer"
-        onClick={() => setIsEditing(false)}
+        onClick={() => {
+          setIsEditing(false);
+          setNewTitle(title);
+          setNewDate(rawDate.toISOString().split("T")[0]);
+        }}
       />
     </>
   );
 
   return (
     <div className={cardClasses}>
-      <div className={cn("flex items-center gap-2", !isRTL && "flex-row-reverse")}>
+      <div
+        className={cn("flex items-center gap-2", !isRTL && "flex-row-reverse")}
+      >
         {/* Action buttons - Start side in RTL, End side in LTR */}
         <div
           className={cn(
@@ -97,11 +114,12 @@ const TaskCard = ({
             />
           </div>
         ) : (
-          <div className={cn(
-            "flex justify-between items-center flex-1 mx-2 overflow-hidden",
-            
-            isRTL ? "mr-8" : "ml-8"
-          )}>
+          <div
+            className={cn(
+              "flex justify-between items-center flex-1 mx-2 overflow-hidden",
+              isRTL ? "mr-8" : "ml-8"
+            )}
+          >
             <p
               className={cn(
                 "font-medium overflow-hidden text-ellipsis truncate",
@@ -111,10 +129,7 @@ const TaskCard = ({
               {title}
             </p>
             <p
-              className={cn(
-                "text-xs",
-                done ? "text-success" : "text-warning"
-              )}
+              className={cn("text-xs", done ? "text-success" : "text-warning")}
             >
               {date}
             </p>
@@ -122,15 +137,20 @@ const TaskCard = ({
         )}
 
         {/* Checkbox - End side in RTL, Start side in LTR */}
-        <div className={cn(
-          "absolute inset-y-0 flex items-center",
-          !isRTL ? "left-2" : "right-2"
-        )}>
-          <Checkbox checked={done} onCheckedChange={() => toggleTaskDone(id)} />
+        <div
+          className={cn(
+            "absolute inset-y-0 flex items-center",
+            !isRTL ? "left-2" : "right-2"
+          )}
+        >
+          <Checkbox
+            checked={done}
+            onCheckedChange={() => toggleTaskDone.mutate({ id, done: !done })}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default TaskCard; 
+export default TaskCard;

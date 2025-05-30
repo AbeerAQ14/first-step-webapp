@@ -887,7 +887,8 @@
       },
       "empty": {
         "add-now": "Add Now"
-      }
+      },
+      "loading": "Loading Data..."
     },
     "charts": {
       "children": {

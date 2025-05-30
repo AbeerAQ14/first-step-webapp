@@ -13,13 +13,14 @@ import { useEventsStore } from "@/store/eventsStore";
 import TaskCard from "./secondary-sidebar/TaskCard";
 import Card from "./secondary-sidebar/Card";
 import EmptyState from "./secondary-sidebar/EmptyState";
+import { Task, useTasks } from "@/hooks/useTasks";
 
 const SecondarySidebar = () => {
   const locale = useLocale();
   const t = useTranslations("dashboard.secondary-sidebar");
 
-  const { occasions, birthdays, tasks, addOccasion, addBirthday, addTask } =
-    useEventsStore();
+  const { occasions, birthdays, addOccasion, addBirthday } = useEventsStore();
+  const { tasks, isLoading, error, addTask } = useTasks();
 
   return (
     <Sidebar
@@ -34,7 +35,9 @@ const SecondarySidebar = () => {
       <SidebarContent>
         <SidebarGroup className="px-0">
           <div className="flex items-center justify-between">
-            <p className="font-medium text-xl text-primary">{t("upcoming-occasions")}</p>
+            <p className="font-medium text-xl text-primary">
+              {t("upcoming-occasions")}
+            </p>
             <PlusCircle
               onClick={() =>
                 addOccasion({ title: t("add.occasion"), date: new Date() })
@@ -114,13 +117,13 @@ const SecondarySidebar = () => {
             <div className="flex items-center gap-x-2">
               <p className="text-xs text-success">
                 {t("tasks-progress", {
-                  completed: tasks.filter((t) => t.done).length,
+                  completed: tasks.filter((t: Task) => t.done).length,
                   total: tasks.length,
                 })}
               </p>
               <PlusCircle
                 onClick={() =>
-                  addTask({
+                  addTask.mutate({
                     title: t("add.task"),
                     date: new Date(),
                     done: false,
@@ -131,17 +134,29 @@ const SecondarySidebar = () => {
             </div>
           </div>
 
-          {tasks.length === 0 ? (
+          {isLoading && tasks.length === 0 ? (
+            <div className="mt-4 text-center text-light-gray">
+              {t("loading")}
+            </div>
+          ) : error ? (
+            <div className="mt-4 text-center text-error">
+              {error instanceof Error ? error.message : "An error occurred"}
+            </div>
+          ) : tasks.length === 0 ? (
             <EmptyState
               onAdd={() =>
-                addTask({ title: t("add.task"), date: new Date(), done: false })
+                addTask.mutate({
+                  title: t("add.task"),
+                  date: new Date(),
+                  done: false,
+                })
               }
             />
           ) : (
             <div className="mt-2 flex flex-col gap-y-2">
               {/* Tasks list */}
               <div className="flex flex-col items-center gap-y-2">
-                {tasks.map((item) => (
+                {tasks.map((item: Task) => (
                   <TaskCard
                     key={item.id}
                     id={item.id}
