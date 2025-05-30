@@ -247,7 +247,7 @@
   body {
     @apply bg-background text-foreground max-w-screen overflow-x-hidden;
   }
-  section {
+  section:not([aria-label="Notifications alt+T"]) {
     @apply py-10;
   }
 }
