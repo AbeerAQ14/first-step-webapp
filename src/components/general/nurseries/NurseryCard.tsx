@@ -22,8 +22,9 @@ const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
             src={
               "https://images.unsplash.com/photo-1578349035260-9f3d4042f1f7?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }
-            alt=""
+            alt={nursery.nursery_name}
             fill
+            unoptimized
           />
         </div>
 
