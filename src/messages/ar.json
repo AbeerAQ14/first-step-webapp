@@ -933,53 +933,6 @@
         },
         "currency": "ر.س"
       },
-      "center-reports": {
-        "title": "التقارير اليومية",
-        "headers": {
-          "parentName": "اسم ولي الأمر",
-          "phone": "رقم الهاتف",
-          "child": "الطفل",
-          "reportDate": "تاريخ التقرير",
-          "control": "الإجراءات"
-        },
-        "send": "إرسال تقرير",
-        "report": {
-          "title": "تقرير يومي",
-          "send": "إرسال التقرير",
-          "cancel": "إلغاء",
-          "error": "فشل في تحميل بيانات التقرير",
-          "retry": "إعادة المحاولة",
-          "form": {
-            "activities": {
-              "label": "الأنشطة",
-              "placeholder": "أدخل الأنشطة اليومية"
-            },
-            "behavior": {
-              "label": "السلوك",
-              "placeholder": "أدخل ملاحظات السلوك"
-            },
-            "meals": {
-              "label": "الوجبات",
-              "placeholder": "أدخل تفاصيل الوجبات"
-            },
-            "napTime": {
-              "label": "وقت القيلولة",
-              "placeholder": "أدخل تفاصيل وقت القيلولة"
-            },
-            "additionalNotes": {
-              "label": "ملاحظات إضافية",
-              "placeholder": "أدخل أي ملاحظات إضافية"
-            },
-            "recipients": {
-              "label": "المستلمون",
-              "placeholder": "اختر مستلمي التقرير"
-            }
-          },
-          "success": "تم إرسال التقرير بنجاح",
-          "sending": "جاري الإرسال...",
-          "noChildSelected": "الرجاء اختيار طفل واحد على الأقل"
-        }
-      },
       "ads": {
         "headers": {
           "adNumber": "رقم الإعلان",
@@ -996,6 +949,16 @@
         },
         "currency": "ر.س",
         "title": "الإعلانات"
+      },
+      "center-reports": {
+        "title": "التقارير اليومية",
+        "headers": {
+          "parentName": "اسم ولي الأمر",
+          "phone": "رقم الهاتف",
+          "child": "الطفل",
+          "reportDate": "تاريخ التقرير",
+          "control": "الإجراءات"
+        }
       }
     },
     "children": {
@@ -1017,6 +980,32 @@
         "cancel": "إلغاء",
         "error": "فشل في تحميل بيانات التقرير",
         "retry": "إعادة المحاولة",
+        "form": {
+          "activities": {
+            "label": "الأنشطة",
+            "placeholder": "أدخل الأنشطة اليومية"
+          },
+          "behavior": {
+            "label": "السلوك",
+            "placeholder": "أدخل ملاحظات السلوك"
+          },
+          "meals": {
+            "label": "الوجبات",
+            "placeholder": "أدخل تفاصيل الوجبات"
+          },
+          "napTime": {
+            "label": "وقت القيلولة",
+            "placeholder": "أدخل تفاصيل وقت القيلولة"
+          },
+          "additionalNotes": {
+            "label": "ملاحظات إضافية",
+            "placeholder": "أدخل أي ملاحظات إضافية"
+          },
+          "recipients": {
+            "label": "المستلمون",
+            "placeholder": "اختر مستلمي التقرير"
+          }
+        },
         "success": "تم إرسال التقرير بنجاح",
         "sending": "جاري الإرسال...",
         "noChildSelected": "الرجاء اختيار طفل واحد على الأقل"
