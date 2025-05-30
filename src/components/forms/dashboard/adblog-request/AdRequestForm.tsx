@@ -17,6 +17,8 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { centerService } from "@/services/dashboardApi";
+import { toast } from "sonner";
 
 const AdRequestForm = ({
   initialData,
@@ -25,13 +27,18 @@ const AdRequestForm = ({
 }: {
   initialData?: AdRequestFormData;
   mode?: "add" | "show";
-  children: (data: AdRequestFormData, isValid: boolean) => React.ReactNode;
+  children: (
+    data: AdRequestFormData,
+    isValid: boolean,
+    isSubmitting: boolean
+  ) => React.ReactNode;
 }) => {
   const locale = useLocale();
   const t = useTranslations("dashboard.center.ad-or-blog-request.ad.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData?.image === "string" && initialData?.image) || null
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const adRequestSchema = createAdRequestSchema(locale as "ar" | "en");
 
   const methods = useForm<AdRequestFormData>({
@@ -46,8 +53,36 @@ const AdRequestForm = ({
     mode: "onChange",
   });
 
-  const onSubmit = (data: AdRequestFormData) => {
-    console.log(data);
+  const onSubmit = async (data: AdRequestFormData) => {
+    try {
+      setIsSubmitting(true);
+
+      // Format dates to YYYY-MM-DD
+      const formatDate = (date: Date) => {
+        return date.toISOString().split("T")[0];
+      };
+
+      await centerService.requestAd({
+        title: data.title,
+        description: data.description,
+        image: data.image?.[0] as File,
+        publish_date: formatDate(data.start_date),
+        end_date: formatDate(data.end_date),
+      });
+
+      toast(t("success.title"), {
+        description: t("success.description"),
+      });
+      methods.reset();
+      setPreview(null);
+    } catch (error) {
+      toast(t("error.title"), {
+        description: t("error.description"),
+      });
+      console.error("Error submitting ad request:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formData = methods.watch();
@@ -228,7 +263,7 @@ const AdRequestForm = ({
         />
 
         <div className="sm:col-span-2 flex gap-2 justify-end">
-          {children(formData, isValid)}
+          {children(formData, isValid, isSubmitting)}
         </div>
       </form>
     </FormProvider>
