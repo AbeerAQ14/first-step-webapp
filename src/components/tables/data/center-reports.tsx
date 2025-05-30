@@ -5,7 +5,6 @@ import { Link } from "@/i18n/navigation";
 import { ColumnDef } from "@tanstack/react-table";
 import { Download, Eye, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ReservationStatus, useReservationStatus } from "./shared/status";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -14,9 +13,8 @@ export type Report = {
   id: number;
   parentName: string;
   phone: string;
-  childs: { id: string; name: string; reservationStatus: ReservationStatus }[];
+  childs: { id: string; name: string }[];
   reportDate: string;
-  reportId: number;
 };
 
 export function useCenterReportsColumns(
@@ -27,8 +25,6 @@ export function useCenterReportsColumns(
   reportIdMap: Record<string, number>
 ) {
   const t = useTranslations("dashboard.tables.center-reports");
-  const { getStatusText, getStatusColorClass } = useReservationStatus();
-  const sharedT = useTranslations("dashboard.tables.shared.status");
 
   const columns: ColumnDef<Report>[] = [
     {

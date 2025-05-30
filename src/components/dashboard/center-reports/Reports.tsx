@@ -9,99 +9,27 @@ import {
 } from "@/components/tables/data/center-reports";
 import { DataTable } from "@/components/tables/DataTable";
 import { centerService } from "@/services/dashboardApi";
-import { ReservationStatus } from "@/components/tables/data/shared/status";
 
 interface DailyReport {
   id: number;
-  activities: string;
-  meals: string | null;
-  nap_time: string | null;
-  behavior: string | null;
-  notes: string | null;
   created_at: string;
   child: {
     id: number;
     name: string;
-    gender: string;
-    birthday: string;
   };
-  center: {
-    id: number;
-    name: string;
-    location: string;
-    phone: string;
-    branch: {
-      id: number;
-      name: string;
-    };
-  };
-  pdf_url: string;
 }
 
 interface Parent {
   id: number;
   name: string;
-  email: string;
-  address: string;
-  email_verified_at: string | null;
-  role: string;
-  created_at: string;
-  updated_at: string;
-  national_number: string;
-  branch_id: number | null;
   children: Array<{
     id: number;
-    user_id: number;
     child_name: string;
-    birthday_date: string;
-    gender: string;
-    disease: number;
-    disease_name: string | null;
-    medicament_disease: string | null;
-    allergy: number;
-    parent_name: string;
-    mother_name: string;
-    recommendations: string;
-    created_at: string;
-    updated_at: string;
-    center_id: number;
-    description_3_words: string;
-    things_child_likes: string;
-    notes: string;
-    Kinship: string;
-    center_branch_id: number;
   }>;
   enrollments: Array<{
-    id: number;
-    center_id: number;
-    user_id: number;
-    center_branch_id: number;
-    reservation_number: string;
     parent_phone: string;
-    price_amount: string;
-    enrollment_type: string;
-    hours_per_day: string | null;
-    response_speed: string;
-    enrollment_date: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
   }>;
 }
-
-// Map enrollment status to ReservationStatus
-const mapEnrollmentStatus = (status: string): ReservationStatus => {
-  switch (status) {
-    case "accepted":
-      return "confirmed";
-    case "pending":
-      return "waitingForConfirmation";
-    case "rejected":
-      return "rejected";
-    default:
-      return "waitingForConfirmation";
-  }
-};
 
 const Reports = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
@@ -187,15 +115,10 @@ const Reports = () => {
           : latest;
       }, "");
 
-      const childs = childrenWithReports.map((child) => {
-        return {
-          id: child.id.toString(),
-          name: child.child_name,
-          reservationStatus: mapEnrollmentStatus(
-            parent.enrollments?.[0]?.status || "pending"
-          ),
-        };
-      });
+      const childs = childrenWithReports.map((child) => ({
+        id: child.id.toString(),
+        name: child.child_name,
+      }));
 
       reports.push({
         id: parent.id,
@@ -203,7 +126,6 @@ const Reports = () => {
         phone: parent.enrollments?.[0]?.parent_phone || "",
         childs,
         reportDate: latestReportDate || new Date().toISOString().split("T")[0],
-        reportId: 0, // This is no longer needed since we're using reportIdMap
       });
     });
 
