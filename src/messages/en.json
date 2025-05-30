@@ -936,7 +936,11 @@
           "paid": "Paid"
         },
         "currency": "SAR",
-        "title": "Advertisements"
+        "title": "Advertisements",
+        "error": {
+          "title": "Error Occurred",
+          "description": "We couldn't fetch the ads data. Please try again"
+        }
       },
       "children": {
         "headers": {
