@@ -35,7 +35,7 @@ const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
           <div className="flex items-center gap-1">
             <MapPin size={16} className="stroke-info" />
             <span className="text-sm text-mid-gray">
-              السعودية، الرياض، حي الأشجار، شارع الأمير
+              {nursery.city} - {nursery.neighborhood}
             </span>
           </div>
 
