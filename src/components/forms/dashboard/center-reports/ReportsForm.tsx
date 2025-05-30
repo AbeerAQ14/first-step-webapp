@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getErrorMessage } from "@/lib/utils";
@@ -10,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Parent } from "@/components/tables/data/parents";
 import Parents from "@/components/dashboard/notifications/Parents";
 import ReportFields from "./ReportFields";
-import { useTranslations } from "next-intl";
+import { centerService } from "@/services/dashboardApi";
+import { toast } from "sonner";
 
 const reportsSchema = z.object({
   activities: z
@@ -84,6 +87,19 @@ const ReportsForm = () => {
     mode: "onChange",
   });
 
+  const { mutate: sendReport, isPending } = useMutation({
+    mutationFn: ({ childId, payload }: { childId: string; payload: any }) =>
+      centerService.sendDailyReport(childId, payload),
+    onSuccess: () => {
+      toast.success(t("success"));
+      router.back();
+    },
+    onError: (error) => {
+      toast.error(t("error"));
+      console.error("Error sending report:", error);
+    },
+  });
+
   const onSubmit = async () => {
     const selectedWithOnlySelectedChild = useFilteredParents(
       selectedParents,
@@ -98,9 +114,23 @@ const ReportsForm = () => {
 
     const data = methods.getValues();
 
-    const finalPayload = data;
+    // Get the first selected child's ID
+    const firstChildId = data.recipients[0]?.childs[0]?.id;
+    if (!firstChildId) {
+      toast.error(t("noChildSelected"));
+      return;
+    }
 
-    console.log("Final Payload", finalPayload);
+    // Transform the data to match the API's expected format
+    const payload = {
+      activities: data.activities,
+      behavior: data.behavior,
+      meals: data.meals,
+      nap_time: data.napTime,
+      notes: data.additionalNotes,
+    };
+
+    sendReport({ childId: firstChildId, payload });
   };
 
   return (
@@ -132,10 +162,15 @@ const ReportsForm = () => {
         )}
 
         <div className="flex justify-center gap-5 lg:gap-x-10">
-          <Button size={"sm"} type="submit">
-            {t("send")}
+          <Button size={"sm"} type="submit" disabled={isPending}>
+            {isPending ? t("sending") : t("send")}
           </Button>
-          <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
+          <Button
+            size={"sm"}
+            variant={"outline"}
+            onClick={() => router.back()}
+            disabled={isPending}
+          >
             {t("cancel")}
           </Button>
         </div>

@@ -4,208 +4,39 @@ import { Parent, useParentsColumns } from "@/components/tables/data/parents";
 import { DataTable } from "@/components/tables/DataTable";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { centerService } from "@/services/dashboardApi";
+import { ReservationStatus } from "@/types";
 
-const parentsData: Parent[] = [
-  {
-    id: 1,
-    parentName: "أحمد محمد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "1",
-        name: "سارة أحمد",
-        reservationStatus: "confirmed",
-        branch: "الفرع الرئيسي",
-      },
-      {
-        id: "14",
-        name: "سعد أحمد",
-        reservationStatus: "waitingForPayment",
-        branch: "الفرع الرئيسي",
-      },
-    ],
-  },
-  {
-    id: 2,
-    parentName: "فاطمة علي",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "2",
-        name: "محمد علي",
-        reservationStatus: "waitingForPayment",
-        branch: "فرع الخالدية",
-      },
-    ],
-  },
-  {
-    id: 3,
-    parentName: "خالد عبدالله",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "3",
-        name: "نورة خالد",
-        reservationStatus: "confirmed",
-        branch: "فرع النزهة",
-      },
-      {
-        id: "15",
-        name: "خالد خالد",
-        reservationStatus: "rejected",
-        branch: "فرع النزهة",
-      },
-    ],
-  },
-  {
-    id: 4,
-    parentName: "نورة سعيد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "4",
-        name: "سلطان سعيد",
-        reservationStatus: "waitingForConfirmation",
-        branch: "فرع العليا",
-      },
-    ],
-  },
-  {
-    id: 5,
-    parentName: "عبدالرحمن يوسف",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "5",
-        name: "لينا عبدالرحمن",
-        reservationStatus: "confirmed",
-        branch: "فرع الروضة",
-      },
-      {
-        id: "16",
-        name: "ياسر عبدالرحمن",
-        reservationStatus: "confirmed",
-        branch: "فرع الروضة",
-      },
-    ],
-  },
-  {
-    id: 6,
-    parentName: "منيرة فهد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "6",
-        name: "فهد منصور",
-        reservationStatus: "waitingForPayment",
-        branch: "فرع الملز",
-      },
-    ],
-  },
-  {
-    id: 7,
-    parentName: "عمر حسن",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "7",
-        name: "ريم عمر",
-        reservationStatus: "confirmed",
-        branch: "فرع السلامة",
-      },
-    ],
-  },
-  {
-    id: 8,
-    parentName: "سلمان محمد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "8",
-        name: "دانة سلمان",
-        reservationStatus: "rejected",
-        branch: "فرع الحمراء",
-      },
-    ],
-  },
-  {
-    id: 9,
-    parentName: "هند عبدالعزيز",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "9",
-        name: "عبدالله هند",
-        reservationStatus: "rejected",
-        branch: "فرع الياسمين",
-      },
-      {
-        id: "17",
-        name: "جنى عبدالعزيز",
-        reservationStatus: "waitingForConfirmation",
-        branch: "فرع الياسمين",
-      },
-    ],
-  },
-  {
-    id: 10,
-    parentName: "بدر سالم",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "10",
-        name: "غادة بدر",
-        reservationStatus: "waitingForPayment",
-        branch: "فرع الشفا",
-      },
-    ],
-  },
-  {
-    id: 11,
-    parentName: "عائشة راشد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "11",
-        name: "راشد عامر",
-        reservationStatus: "confirmed",
-        branch: "فرع المروج",
-      },
-    ],
-  },
-  {
-    id: 12,
-    parentName: "طارق حامد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "12",
-        name: "حامد طارق",
-        reservationStatus: "rejected",
-        branch: "فرع العزيزية",
-      },
-    ],
-  },
-  {
-    id: 13,
-    parentName: "منال خالد",
-    phone: "2222222222",
-    childs: [
-      {
-        id: "13",
-        name: "رنا منال",
-        reservationStatus: "waitingForPayment",
-        branch: "فرع الربوة",
-      },
-      {
-        id: "18",
-        name: "نورة منال",
-        reservationStatus: "confirmed",
-        branch: "فرع الربوة",
-      },
-    ],
-  },
-];
+interface ApiChild {
+  id: number;
+  child_name: string;
+}
+
+interface ApiParent {
+  id: number;
+  name: string;
+  children: ApiChild[];
+  enrollments: Array<{
+    parent_phone: string;
+    status: string;
+    center_branch_id: number;
+  }>;
+}
+
+// Map enrollment status to ReservationStatus
+const mapEnrollmentStatus = (status: string): ReservationStatus => {
+  switch (status) {
+    case "accepted":
+      return "confirmed";
+    case "pending":
+      return "waitingForConfirmation";
+    case "rejected":
+      return "rejected";
+    default:
+      return "waitingForConfirmation";
+  }
+};
 
 const Parents = ({
   selected,
@@ -223,6 +54,30 @@ const Parents = ({
   const t = useTranslations("dashboard.tables.parents");
   const columns = useParentsColumns(selectedChildMap, setSelectedChildMap);
 
+  const { data: parentsData, isLoading } = useQuery<ApiParent[]>({
+    queryKey: ["parents"],
+    queryFn: centerService.getParents,
+  });
+
+  // Transform the data to match the required format
+  const transformedData: Parent[] = React.useMemo(() => {
+    if (!parentsData) return [];
+
+    return parentsData.map((parent: ApiParent) => ({
+      id: parent.id,
+      parentName: parent.name,
+      phone: parent.enrollments?.[0]?.parent_phone || "",
+      childs: parent.children.map((child: ApiChild) => ({
+        id: child.id.toString(),
+        name: child.child_name,
+        reservationStatus: mapEnrollmentStatus(
+          parent.enrollments?.[0]?.status || "pending"
+        ),
+        branch: parent.enrollments?.[0]?.center_branch_id?.toString() || "",
+      })),
+    }));
+  }, [parentsData]);
+
   return (
     <div>
       <div className="lg:p-4 space-y-1">
@@ -231,7 +86,8 @@ const Parents = ({
         <DataTable
           setSelected={setSelected}
           columns={columns}
-          data={parentsData}
+          data={transformedData}
+          isLoading={isLoading}
         />
       </div>
     </div>

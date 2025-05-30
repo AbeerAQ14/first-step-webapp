@@ -1008,7 +1008,10 @@
             "label": "Recipients",
             "placeholder": "Select report recipients"
           }
-        }
+        },
+        "success": "Report sent successfully",
+        "sending": "Sending...",
+        "noChildSelected": "Please select at least one child"
       }
     }
   },
