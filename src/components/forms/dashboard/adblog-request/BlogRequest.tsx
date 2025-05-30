@@ -19,12 +19,15 @@ import { Label } from "@/components/ui/label";
 import { ImageIcon } from "lucide-react";
 import { BlogRequestFormData, createBlogRequestSchema } from "@/lib/schemas";
 import BlogEditor from "../blog/BlogEditor";
+import { centerService } from "@/services/dashboardApi";
+import { toast } from "sonner";
 
 const BlogRequestForm = () => {
   const locale = useLocale();
   const t = useTranslations("dashboard.center.ad-or-blog-request.blog.form");
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const blogRequestSchema = createBlogRequestSchema(locale as "ar" | "en");
@@ -41,8 +44,36 @@ const BlogRequestForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: BlogRequestFormData) => {
-    console.log(data);
+  const onSubmit = async (data: BlogRequestFormData) => {
+    try {
+      setIsSubmitting(true);
+      await centerService.requestBlog({
+        title: data.title,
+        description: data.description,
+        content: data.content,
+        cover: data.mainImage?.[0] as File,
+        blog_image: data.cardImage?.[0] as File,
+      });
+
+      toast(t("success.title"), {
+        description: t("success.description"),
+      });
+
+      // Reset form and previews
+      methods.reset();
+      setPreview1(null);
+      setPreview2(null);
+
+      // Navigate back
+      router.back();
+    } catch (error) {
+      toast(t("error.title"), {
+        description: t("error.description"),
+      });
+      console.error("Error submitting blog request:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -217,14 +248,15 @@ const BlogRequestForm = () => {
         />
 
         <div className="sm:col-span-4 flex gap-2 justify-end">
-          <Button size={"sm"} type="submit">
-            {t("submit")}
+          <Button size={"sm"} type="submit" disabled={isSubmitting}>
+            {isSubmitting ? t("sending") : t("submit")}
           </Button>
           <Button
             size={"sm"}
             variant={"outline"}
             className="!border-light-gray text-mid-gray"
             onClick={() => router.back()}
+            disabled={isSubmitting}
           >
             {t("cancel")}
           </Button>

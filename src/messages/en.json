@@ -717,7 +717,16 @@
               "label": "Blog"
             },
             "submit": "Send Request",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "sending": "Sending...",
+            "success": {
+              "title": "Request Sent Successfully",
+              "description": "Your request will be reviewed shortly"
+            },
+            "error": {
+              "title": "Error Occurred",
+              "description": "We couldn't send your request. Please try again"
+            }
           }
         }
       },
