@@ -390,4 +390,39 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getBlogs: async () => {
+    try {
+      const response = await apiClient.get(`/blog-centers`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  requestBlog: async (payload: {
+    cover: File;
+    blog_image: File;
+    title: string;
+    description: string;
+    content: string;
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", payload.title);
+      formData.append("description", payload.description);
+      formData.append("cover", payload.cover);
+      formData.append("blog_image", payload.blog_image);
+      formData.append("content", payload.content);
+
+      const response = await apiClient.post(`/blog-centers`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
