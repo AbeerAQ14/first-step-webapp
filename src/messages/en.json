@@ -981,6 +981,8 @@
         "title": "Daily Report",
         "send": "Send Report",
         "cancel": "Cancel",
+        "error": "Failed to load report data",
+        "retry": "Retry",
         "form": {
           "activities": {
             "label": "Activities",

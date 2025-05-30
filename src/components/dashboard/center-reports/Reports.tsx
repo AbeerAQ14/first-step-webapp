@@ -123,9 +123,31 @@ const Reports = () => {
     queryFn: centerService.getDailyReports,
   });
 
+  // Create a map of child IDs to their latest report IDs
+  const reportIdMap = React.useMemo(() => {
+    if (!reportsData?.data) return {};
+
+    const map: Record<string, number> = {};
+    reportsData.data.forEach((report) => {
+      const childId = report.child.id.toString();
+      if (
+        !map[childId] ||
+        new Date(report.created_at) >
+          new Date(
+            reportsData.data.find((r) => r.id === map[childId])?.created_at ||
+              ""
+          )
+      ) {
+        map[childId] = report.id;
+      }
+    });
+    return map;
+  }, [reportsData]);
+
   const columns = useCenterReportsColumns(
     selectedChildMap,
-    setSelectedChildMap
+    setSelectedChildMap,
+    reportIdMap
   );
 
   // Transform the data to match the required format
@@ -181,6 +203,7 @@ const Reports = () => {
         phone: parent.enrollments?.[0]?.parent_phone || "",
         childs,
         reportDate: latestReportDate || new Date().toISOString().split("T")[0],
+        reportId: 0, // This is no longer needed since we're using reportIdMap
       });
     });
 

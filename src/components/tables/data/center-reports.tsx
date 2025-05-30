@@ -16,13 +16,15 @@ export type Report = {
   phone: string;
   childs: { id: string; name: string; reservationStatus: ReservationStatus }[];
   reportDate: string;
+  reportId: number;
 };
 
 export function useCenterReportsColumns(
   selectedChildMap: Record<number, string>,
   setSelectedChildMap: React.Dispatch<
     React.SetStateAction<Record<number, string>>
-  >
+  >,
+  reportIdMap: Record<string, number>
 ) {
   const t = useTranslations("dashboard.tables.center-reports");
   const { getStatusText, getStatusColorClass } = useReservationStatus();
@@ -77,20 +79,23 @@ export function useCenterReportsColumns(
         const parent = row.original;
         const selectedChildId =
           selectedChildMap[parent.id] ?? parent.childs[0]?.id;
+        const reportId = reportIdMap[selectedChildId];
 
         return (
           <div className="flex items-center gap-1">
             <Button asChild variant={"ghost"} size={"icon"}>
-              <Link href={`daily-reports/${selectedChildId}`}>
+              <Link href={`daily-reports/${reportId}`}>
                 <Eye className="size-4 text-mid-gray" />
               </Link>
             </Button>
-            <Button variant={"ghost"} size={"icon"}>
-              <Download className="size-4 text-mid-gray" />
+            <Button asChild variant={"ghost"} size={"icon"}>
+              <a target="_blank" href={`/api/daily-reports/${reportId}/pdf`}>
+                <Download className="size-4 text-mid-gray" />
+              </a>
             </Button>
-            <Button variant={"ghost"} size={"icon"}>
+            {/* <Button variant={"ghost"} size={"icon"}>
               <Trash2 className="size-4 text-mid-gray" />
-            </Button>
+            </Button> */}
           </div>
         );
       },
