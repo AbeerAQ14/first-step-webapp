@@ -307,4 +307,52 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getDailyReports: async () => {
+    try {
+      const response = await apiClient.get(`/daily-reports`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getDailyReport: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/get-daily-report/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  sendDailyReport: async (childId: string, payload: any) => {
+    try {
+      const response = await apiClient.post(
+        `/children/${childId}/daily-reports`,
+        payload
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParents: async () => {
+    try {
+      const response = await apiClient.get(`/center/parents`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParent: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/center/parent/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
