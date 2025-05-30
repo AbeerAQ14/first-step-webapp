@@ -425,4 +425,56 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getTasks: async () => {
+    try {
+      const response = await apiClient.get(`/to-do-centers`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.get(`/to-do-centers/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createTask: async (payload: {
+    title: string;
+    date: string;
+    done: boolean;
+  }) => {
+    try {
+      const response = await apiClient.post(`/to-do-centers`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateTask: async (
+    taskId: string,
+    payload: { title: string; date: string; done: boolean }
+  ) => {
+    try {
+      const response = await apiClient.put(`/to-do-centers/${taskId}`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.delete(`/to-do-centers/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
