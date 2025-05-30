@@ -725,7 +725,8 @@
             },
             "error": {
               "title": "Error Occurred",
-              "description": "We couldn't send your request. Please try again"
+              "description": "We couldn't fetch the blogs data. Please try again",
+              "retry": "Try Again"
             }
           }
         }

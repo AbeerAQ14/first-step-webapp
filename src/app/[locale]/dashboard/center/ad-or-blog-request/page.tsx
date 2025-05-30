@@ -1,45 +1,51 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Ads from "@/components/dashboard/ad-or-blog-request/Ads";
 import BlogCard from "@/components/general/blog/BlogCard";
 import { Blog } from "@/types";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import { centerService } from "@/services/dashboardApi";
+import { AlertCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const staticBlogs: Blog[] = [
-  {
-    id: 1,
-    title: "How Do We Prepare Children for School?",
-    description:
-      "The transition from nursery to school is a key stage in a child's life. Through our educational programs, we aim to develop school-readiness skills, build confidence, and foster a love of early learning in a smooth and engaging way.",
-    image:
-      "https://images.unsplash.com/photo-1745276235358-8771fa7eafc5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    created_at: "2025-03-12T09:25:49.000000Z",
-    published_at: "2025-03-12",
-  },
-  {
-    id: 2,
-    title: "The Importance of Play in Child Development",
-    description:
-      "We believe play is a child's natural way to express themselves and explore the world. In our nursery, we provide a rich environment full of interactive activities that boost cognitive skills and support motor and social development.",
-    image:
-      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    created_at: "2025-04-13T13:23:30.000000Z",
-    published_at: "2025-04-13",
-  },
-  {
-    id: 3,
-    title: "How Do We Prepare Children for School?",
-    description:
-      "The transition from nursery to school is a key stage in a child's life. Through our educational programs, we aim to develop school-readiness skills, build confidence, and foster a love of early learning in a smooth and engaging way.",
-    image:
-      "https://images.unsplash.com/photo-1460788150444-d9dc07fa9dba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    created_at: "2025-04-13T13:24:47.000000Z",
-    published_at: "2025-04-13",
-  },
-];
+const BlogCardSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <Skeleton className="aspect-[264/160] w-full rounded-lg" />
+      <div className="space-y-2">
+        <Skeleton className="h-6 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+      </div>
+    </div>
+  );
+};
 
 export default function CenterDashboardRequest() {
   const t = useTranslations("dashboard.center.ad-or-blog-request");
+
+  const {
+    data: blogsData,
+    error,
+    refetch,
+    isLoading,
+  } = useQuery<Blog[]>({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      const response = await centerService.getBlogs();
+      return response.data.map((blog: any) => ({
+        id: blog.id,
+        title: blog.center.name,
+        description: blog.description,
+        image: blog.blog_image_url,
+        created_at: blog.created_at,
+        published_at: blog.created_at.split(" ")[0],
+      }));
+    },
+  });
 
   return (
     <div className="flex flex-col gap-y-10">
@@ -69,9 +75,35 @@ export default function CenterDashboardRequest() {
         </div>
 
         <div className="grid md:grid-cols-3 items-start gap-10">
-          {staticBlogs.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
-          ))}
+          {isLoading ? (
+            <>
+              <BlogCardSkeleton />
+              <BlogCardSkeleton />
+              <BlogCardSkeleton />
+            </>
+          ) : error ? (
+            <div className="col-span-3 flex flex-col items-center justify-center gap-4 rounded-lg border border-destructive/50 bg-destructive/10 p-8 text-center">
+              <AlertCircle className="h-8 w-8 text-destructive" />
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-destructive">
+                  {t("blog.form.error.title")}
+                </h3>
+                <p className="text-sm text-mid-gray">
+                  {t("blog.form.error.description")}
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => refetch()}
+                className="mt-2"
+              >
+                {t("blog.form.error.retry")}
+              </Button>
+            </div>
+          ) : (
+            blogsData?.map((blog) => <BlogCard key={blog.id} blog={blog} />)
+          )}
         </div>
       </div>
     </div>
