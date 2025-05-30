@@ -15,9 +15,12 @@ export type Parent = {
   id: number;
   parentName: string;
   phone: string;
-  childs: { id: string; name: string; reservationStatus: ReservationStatus }[];
-  branch: string;
-  // reservationStatus: ReservationStatus;
+  childs: {
+    id: string;
+    name: string;
+    reservationStatus: ReservationStatus;
+    branch: string;
+  }[];
 };
 
 export function useParentsColumns(
@@ -89,8 +92,17 @@ export function useParentsColumns(
       },
     },
     {
-      accessorKey: "branch",
+      id: "branch",
       header: () => t("headers.branch"),
+      cell: ({ row }) => {
+        const parent = row.original;
+        const selectedChildId = selectedChildMap[parent.id];
+        const selectedChild = parent.childs.find(
+          (child) => child.id === selectedChildId
+        );
+
+        return selectedChild ? selectedChild.branch : t("selectChild");
+      },
     },
     {
       id: "reservationStatus",

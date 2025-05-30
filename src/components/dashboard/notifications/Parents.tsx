@@ -11,29 +11,51 @@ const parentsData: Parent[] = [
     parentName: "أحمد محمد",
     phone: "2222222222",
     childs: [
-      { id: "1", name: "سارة أحمد", reservationStatus: "confirmed" },
-      { id: "14", name: "سعد أحمد", reservationStatus: "waitingForPayment" },
+      {
+        id: "1",
+        name: "سارة أحمد",
+        reservationStatus: "confirmed",
+        branch: "الفرع الرئيسي",
+      },
+      {
+        id: "14",
+        name: "سعد أحمد",
+        reservationStatus: "waitingForPayment",
+        branch: "الفرع الرئيسي",
+      },
     ],
-    branch: "الفرع الرئيسي",
   },
   {
     id: 2,
     parentName: "فاطمة علي",
     phone: "2222222222",
     childs: [
-      { id: "2", name: "محمد علي", reservationStatus: "waitingForPayment" },
+      {
+        id: "2",
+        name: "محمد علي",
+        reservationStatus: "waitingForPayment",
+        branch: "فرع الخالدية",
+      },
     ],
-    branch: "فرع الخالدية",
   },
   {
     id: 3,
     parentName: "خالد عبدالله",
     phone: "2222222222",
     childs: [
-      { id: "3", name: "نورة خالد", reservationStatus: "confirmed" },
-      { id: "15", name: "خالد خالد", reservationStatus: "rejected" },
+      {
+        id: "3",
+        name: "نورة خالد",
+        reservationStatus: "confirmed",
+        branch: "فرع النزهة",
+      },
+      {
+        id: "15",
+        name: "خالد خالد",
+        reservationStatus: "rejected",
+        branch: "فرع النزهة",
+      },
     ],
-    branch: "فرع النزهة",
   },
   {
     id: 4,
@@ -44,89 +66,144 @@ const parentsData: Parent[] = [
         id: "4",
         name: "سلطان سعيد",
         reservationStatus: "waitingForConfirmation",
+        branch: "فرع العليا",
       },
     ],
-    branch: "فرع العليا",
   },
   {
     id: 5,
     parentName: "عبدالرحمن يوسف",
     phone: "2222222222",
     childs: [
-      { id: "5", name: "لينا عبدالرحمن", reservationStatus: "confirmed" },
-      { id: "16", name: "ياسر عبدالرحمن", reservationStatus: "confirmed" },
+      {
+        id: "5",
+        name: "لينا عبدالرحمن",
+        reservationStatus: "confirmed",
+        branch: "فرع الروضة",
+      },
+      {
+        id: "16",
+        name: "ياسر عبدالرحمن",
+        reservationStatus: "confirmed",
+        branch: "فرع الروضة",
+      },
     ],
-    branch: "فرع الروضة",
   },
   {
     id: 6,
     parentName: "منيرة فهد",
     phone: "2222222222",
     childs: [
-      { id: "6", name: "فهد منصور", reservationStatus: "waitingForPayment" },
+      {
+        id: "6",
+        name: "فهد منصور",
+        reservationStatus: "waitingForPayment",
+        branch: "فرع الملز",
+      },
     ],
-    branch: "فرع الملز",
   },
   {
     id: 7,
     parentName: "عمر حسن",
     phone: "2222222222",
-    childs: [{ id: "7", name: "ريم عمر", reservationStatus: "confirmed" }],
-    branch: "فرع السلامة",
+    childs: [
+      {
+        id: "7",
+        name: "ريم عمر",
+        reservationStatus: "confirmed",
+        branch: "فرع السلامة",
+      },
+    ],
   },
   {
     id: 8,
     parentName: "سلمان محمد",
     phone: "2222222222",
-    childs: [{ id: "8", name: "دانة سلمان", reservationStatus: "rejected" }],
-    branch: "فرع الحمراء",
+    childs: [
+      {
+        id: "8",
+        name: "دانة سلمان",
+        reservationStatus: "rejected",
+        branch: "فرع الحمراء",
+      },
+    ],
   },
   {
     id: 9,
     parentName: "هند عبدالعزيز",
     phone: "2222222222",
     childs: [
-      { id: "9", name: "عبدالله هند", reservationStatus: "rejected" },
+      {
+        id: "9",
+        name: "عبدالله هند",
+        reservationStatus: "rejected",
+        branch: "فرع الياسمين",
+      },
       {
         id: "17",
         name: "جنى عبدالعزيز",
         reservationStatus: "waitingForConfirmation",
+        branch: "فرع الياسمين",
       },
     ],
-    branch: "فرع الياسمين",
   },
   {
     id: 10,
     parentName: "بدر سالم",
     phone: "2222222222",
     childs: [
-      { id: "10", name: "غادة بدر", reservationStatus: "waitingForPayment" },
+      {
+        id: "10",
+        name: "غادة بدر",
+        reservationStatus: "waitingForPayment",
+        branch: "فرع الشفا",
+      },
     ],
-    branch: "فرع الشفا",
   },
   {
     id: 11,
     parentName: "عائشة راشد",
     phone: "2222222222",
-    childs: [{ id: "11", name: "راشد عامر", reservationStatus: "confirmed" }],
-    branch: "فرع المروج",
+    childs: [
+      {
+        id: "11",
+        name: "راشد عامر",
+        reservationStatus: "confirmed",
+        branch: "فرع المروج",
+      },
+    ],
   },
   {
     id: 12,
     parentName: "طارق حامد",
     phone: "2222222222",
-    childs: [{ id: "12", name: "حامد طارق", reservationStatus: "rejected" }],
-    branch: "فرع العزيزية",
+    childs: [
+      {
+        id: "12",
+        name: "حامد طارق",
+        reservationStatus: "rejected",
+        branch: "فرع العزيزية",
+      },
+    ],
   },
   {
     id: 13,
     parentName: "منال خالد",
     phone: "2222222222",
     childs: [
-      { id: "13", name: "رنا منال", reservationStatus: "waitingForPayment" },
-      { id: "18", name: "نورة منال", reservationStatus: "confirmed" },
+      {
+        id: "13",
+        name: "رنا منال",
+        reservationStatus: "waitingForPayment",
+        branch: "فرع الربوة",
+      },
+      {
+        id: "18",
+        name: "نورة منال",
+        reservationStatus: "confirmed",
+        branch: "فرع الربوة",
+      },
     ],
-    branch: "فرع الربوة",
   },
 ];
 
