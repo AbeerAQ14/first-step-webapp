@@ -177,7 +177,7 @@
           "label": "رقم الهوية",
           "placeholder": "أدخل رقم هويتك"
         },
-        "relation": {
+        "kinship": {
           "label": "صلة القرابة",
           "placeholder": "أدخل صلة قرابتك"
         },

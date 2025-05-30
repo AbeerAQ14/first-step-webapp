@@ -240,6 +240,15 @@ export const centerService = {
     }
   },
 
+  getChild: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/children/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   getBranchTeam: async (id: string) => {
     try {
       const response = await apiClient.get(
