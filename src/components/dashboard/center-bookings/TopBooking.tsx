@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Booking, getColumns } from "@/components/tables/data/top-bookings";
 import { DataTable } from "@/components/tables/DataTable";
 
@@ -37,14 +38,13 @@ const bookingsData: Booking[] = [
 ];
 
 const TopBookings = () => {
+  const t = useTranslations("dashboard.tables.top-bookings");
   const columns = getColumns({ nurseryName: false });
 
   return (
     <div>
       <div className="mt-6 lg:p-4 space-y-1">
-        <p className="font-bold text-primary text-center">
-          ترتيب الفروع من حيث عدد الحجوزات شهريًا
-        </p>
+        <p className="font-bold text-primary text-center">{t("title")}</p>
 
         <DataTable pagination={false} columns={columns} data={bookingsData} />
       </div>

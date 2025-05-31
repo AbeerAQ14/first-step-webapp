@@ -1007,6 +1007,17 @@
           "control": "Actions"
         },
         "title": "Daily Reports"
+      },
+      "top-bookings": {
+        "title": "Branch Ranking by Monthly Bookings",
+        "columns": {
+          "arrangement": "Arrangement",
+          "nursery": "Nursery Name",
+          "branch": "Branch",
+          "count": "Booking Count",
+          "income": "Income",
+          "currency": "SAR"
+        }
       }
     },
     "children": {

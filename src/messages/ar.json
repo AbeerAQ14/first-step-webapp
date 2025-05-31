@@ -1003,6 +1003,17 @@
           "reportDate": "تاريخ التقرير",
           "control": "الإجراءات"
         }
+      },
+      "top-bookings": {
+        "title": "ترتيب الفروع من حيث عدد الحجوزات شهريًا",
+        "columns": {
+          "arrangement": "الترتيب",
+          "nursery": "اسم الحضانة",
+          "branch": "الفرع",
+          "count": "عدد الحجوزات",
+          "income": "الدخل",
+          "currency": "ر.س"
+        }
       }
     },
     "children": {
