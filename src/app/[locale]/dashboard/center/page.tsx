@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
@@ -64,8 +67,103 @@ const CARDS = [
   },
 ];
 
+const NoDataView = () => {
+  const t = useTranslations("dashboard.charts");
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
+      <svg
+        width={120}
+        height={120}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-primary/20 mb-6"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+          fill="currentColor"
+        />
+      </svg>
+      <h3 className="text-2xl font-bold text-primary mb-2">
+        {t("noData.title")}
+      </h3>
+      <p className="text-gray-500 max-w-md mb-6">{t("noData.description")}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="text-primary/80 mb-2 flex justify-center">
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <h4 className="font-semibold text-gray-700 mb-2">
+            {t("noData.steps.addBranch.title")}
+          </h4>
+          <p className="text-sm text-gray-500">
+            {t("noData.steps.addBranch.description")}
+          </p>
+        </div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="text-primary/80 mb-2 flex justify-center">
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <h4 className="font-semibold text-gray-700 mb-2">
+            {t("noData.steps.addTeam.title")}
+          </h4>
+          <p className="text-sm text-gray-500">
+            {t("noData.steps.addTeam.description")}
+          </p>
+        </div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="text-primary/80 mb-2 flex justify-center">
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <h4 className="font-semibold text-gray-700 mb-2">
+            {t("noData.steps.startBooking.title")}
+          </h4>
+          <p className="text-sm text-gray-500">
+            {t("noData.steps.startBooking.description")}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.charts");
+  const [hasData] = useState(false); // This should be replaced with actual data check
 
   const bookingsRows = [
     {
@@ -108,6 +206,10 @@ export default function CenterDashboardHome() {
       data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
     },
   ];
+
+  if (!hasData) {
+    return <NoDataView />;
+  }
 
   return (
     <div className="grid gap-y-10">

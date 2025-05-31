@@ -928,6 +928,24 @@
           "title": "Children Comparison",
           "valueLabel": "child"
         }
+      },
+      "noData": {
+        "title": "Welcome to Your Dashboard",
+        "description": "Start your journey with us by following these steps to set up your center",
+        "steps": {
+          "addBranch": {
+            "title": "Add a Branch",
+            "description": "Add your center's branches and specify the services available at each branch"
+          },
+          "addTeam": {
+            "title": "Add Team Members",
+            "description": "Add your team members and assign their roles at each branch"
+          },
+          "startBooking": {
+            "title": "Start Taking Bookings",
+            "description": "Begin accepting children's bookings and organizing your center's schedule"
+          }
+        }
       }
     },
     "tables": {
