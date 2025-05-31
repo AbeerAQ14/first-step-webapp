@@ -910,7 +910,24 @@
       },
       "revenue": {
         "title": "Revenue for Month {month}",
-        "currency": "SAR"
+        "currency": "SAR",
+        "month": "Month {month}"
+      },
+      "center": {
+        "title": "Center Dashboard",
+        "cards": {
+          "branches": "Number of Branches",
+          "parents": "Number of Parents",
+          "team": "Number of Team Members"
+        },
+        "comparison": {
+          "title": "Monthly Comparison",
+          "valueLabel": "SAR"
+        },
+        "children": {
+          "title": "Children Comparison",
+          "valueLabel": "child"
+        }
       }
     },
     "tables": {

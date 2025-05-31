@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
@@ -7,7 +7,7 @@ import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
 
 const CARDS = [
   {
-    title: "عدد الفروع",
+    title: "center.cards.branches",
     icon: (
       <svg
         width={46}
@@ -29,7 +29,7 @@ const CARDS = [
     ),
   },
   {
-    title: "عدد أولياء الأمور",
+    title: "center.cards.parents",
     icon: (
       <svg
         width={49}
@@ -46,7 +46,7 @@ const CARDS = [
     ),
   },
   {
-    title: "عدد أعضاء الفريق",
+    title: "center.cards.team",
     icon: (
       <svg
         width={49}
@@ -64,25 +64,25 @@ const CARDS = [
   },
 ];
 
-export default async function CenterDashboardHome() {
-  const t = await getTranslations("dashboard.charts.bookings");
+export default function CenterDashboardHome() {
+  const t = useTranslations("dashboard.charts");
 
   const bookingsRows = [
     {
       value: 3620,
-      valueLabel: t("valueLabel"),
+      valueLabel: t("center.comparison.valueLabel"),
       trend: "up" as const,
       data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
     },
     {
       value: 3620,
-      valueLabel: t("valueLabel"),
+      valueLabel: t("center.comparison.valueLabel"),
       trend: "down" as const,
       data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
       value: 3620,
-      valueLabel: t("valueLabel"),
+      valueLabel: t("center.comparison.valueLabel"),
       trend: "up" as const,
       data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
     },
@@ -91,19 +91,19 @@ export default async function CenterDashboardHome() {
   const childrenRows = [
     {
       value: 3620,
-      valueLabel: "طفل",
+      valueLabel: t("center.children.valueLabel"),
       trend: "up" as const,
       data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
     },
     {
       value: 3620,
-      valueLabel: "طفل",
+      valueLabel: t("center.children.valueLabel"),
       trend: "down" as const,
       data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
       value: 3620,
-      valueLabel: "طفل",
+      valueLabel: t("center.children.valueLabel"),
       trend: "up" as const,
       data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
     },
@@ -122,7 +122,7 @@ export default async function CenterDashboardHome() {
               200
             </span>
             <span className="text-xl lg:text-2xl text-primary font-bold">
-              {card.title}
+              {t(card.title)}
             </span>
           </div>
         ))}
@@ -134,7 +134,10 @@ export default async function CenterDashboardHome() {
         </div>
 
         <div className="w-full flex-1">
-          <MonthlyAreaComparison title={t("title")} rows={bookingsRows} />
+          <MonthlyAreaComparison
+            title={t("center.comparison.title")}
+            rows={bookingsRows}
+          />
         </div>
       </div>
 
@@ -149,12 +152,18 @@ export default async function CenterDashboardHome() {
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
         <div className="w-full flex-1">
-          <CircularProgressChart totalValue={1000} currentValue={350} />
+          <CircularProgressChart
+            totalValue={1000}
+            currentValue={350}
+            title={t("children.title")}
+            valueLabel={t("children.valueLabel")}
+            capacityLabel={t("children.capacityLabel")}
+          />
         </div>
 
         <div className="w-full flex-1">
           <MonthlyAreaComparison
-            title={"مقارنة عدد الأطفال"}
+            title={t("center.children.title")}
             rows={childrenRows}
           />
         </div>

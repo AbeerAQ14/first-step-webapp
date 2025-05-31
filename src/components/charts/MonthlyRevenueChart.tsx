@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import {
   AreaChart,
   Area,
@@ -26,18 +27,17 @@ const data: RevenueData[] = [
 
 export default function RevenueChart() {
   const [selected, setSelected] = useState<RevenueData>(data[1]);
+  const t = useTranslations("dashboard.charts.revenue");
+  const locale = useLocale();
 
   return (
-    <div
-      className="p-4 rounded-xl bg-white shadow-[0_0_4px_rgba(34,34,34,.16)] w-full lg:max-w-md"
-      dir="rtl"
-    >
+    <div className="p-4 rounded-xl bg-white shadow-[0_0_4px_rgba(34,34,34,.16)] w-full lg:max-w-md">
       <div className="text-sm text-gray-500 mb-2">
         <span className="text-primary font-bold text-lg">
-          العائد لشهر {selected.month}
+          {t("title", { month: selected.month })}
         </span>
         <div className="text-mid-gray font-bold text-xl">
-          {selected.value} ر.س
+          {selected.value} {t("currency")}
         </div>
       </div>
 
@@ -65,6 +65,7 @@ export default function RevenueChart() {
             tickLine={false}
             tick={{ fill: "#2E2E30", fontSize: 12, fontWeight: 600 }}
             stroke="#E5E7EB"
+            reversed={locale === "ar"}
           />
 
           <YAxis hide domain={["dataMin - 10", "dataMax + 10"]} />
@@ -74,10 +75,9 @@ export default function RevenueChart() {
             contentStyle={{
               fontSize: "14px",
               borderRadius: "8px",
-              direction: "rtl",
             }}
-            formatter={(value: number) => [`${value} ر.س`, ""]}
-            labelFormatter={(label) => `الشهر ${label}`}
+            formatter={(value: number) => [`${value} ${t("currency")}`, ""]}
+            labelFormatter={(label) => t("month", { month: label })}
           />
 
           <Area

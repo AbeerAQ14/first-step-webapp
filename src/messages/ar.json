@@ -906,7 +906,24 @@
       },
       "revenue": {
         "title": "العائد لشهر {month}",
-        "currency": "ر.س"
+        "currency": "ر.س",
+        "month": "الشهر {month}"
+      },
+      "center": {
+        "title": "لوحة تحكم المركز",
+        "cards": {
+          "branches": "عدد الفروع",
+          "parents": "عدد أولياء الأمور",
+          "team": "عدد أعضاء الفريق"
+        },
+        "comparison": {
+          "title": "المقارنة الشهرية",
+          "valueLabel": "ر.س"
+        },
+        "children": {
+          "title": "مقارنة عدد الأطفال",
+          "valueLabel": "طفل"
+        }
       }
     },
     "tables": {
