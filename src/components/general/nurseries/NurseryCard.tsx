@@ -7,8 +7,8 @@ import { CenterRegisterPayload } from "@/types";
 const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
   return (
     <div className="px-2 py-1 shadow-[0px_4px_36px_rgba(0,0,0,0.08)] rounded-2xl">
-      <div className="flex flex-col gap-4 lg:flex-row rtl:lg:flex-row-reverse lg:justify-between">
-        <div className="relative grow max-w-[18.75rem] aspect-[300/200] rounded-[.75rem] overflow-hidden">
+      <div className="flex flex-col gap-4 lg:flex-row rtl:lg:flex-row-reverse lg:justify-between lg:h-full">
+        <div className="relative flex-1 grow lg:max-w-[18.75rem] aspect-[300/200] rounded-[.75rem] overflow-hidden">
           <Button
             variant="ghost"
             size={"icon"}
@@ -28,7 +28,7 @@ const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
           />
         </div>
 
-        <div className="py-8 lg:py-14 flex flex-col gap-y-1">
+        <div className="flex-1 py-8 lg:py-14 flex flex-col gap-y-1 items-start lg:justify-center">
           <span className="heading-4 font-bold text-gray">
             {nursery.nursery_name}
           </span>
