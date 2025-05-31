@@ -6,21 +6,18 @@ import Children from "@/components/dashboard/children-files/Children";
 export default function CenterDashboardHome() {
   const rows = [
     {
-      month: 4, // April
       value: 3620,
       valueLabel: "طفل",
       trend: "up" as const,
       data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
     },
     {
-      month: 3, // March
       value: 3620,
       valueLabel: "طفل",
       trend: "down" as const,
       data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      month: 2, // February
       value: 3620,
       valueLabel: "طفل",
       trend: "up" as const,

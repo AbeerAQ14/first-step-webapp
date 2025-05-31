@@ -6,7 +6,6 @@ import AreaComparison from "./AreaComparison";
 import { useLocale } from "next-intl";
 
 interface MonthRow {
-  month: number;
   value: number;
   valueLabel: string;
   trend: "up" | "down";
@@ -24,6 +23,12 @@ export default function MonthlyAreaComparison({
 }: MonthlyAreaComparisonProps) {
   const locale = useLocale();
 
+  // Get current date and calculate last 3 months
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+  const twoMonthsAgo = lastMonth === 1 ? 12 : lastMonth - 1;
+
   // Function to format month with proper locale
   const formatMonth = (month: number) => {
     const date = new Date(2024, month - 1, 1); // Using 2024 as it's a leap year
@@ -32,9 +37,10 @@ export default function MonthlyAreaComparison({
     });
   };
 
-  const formattedRows = rows.map((row) => ({
+  const formattedRows = rows.map((row, index) => ({
     ...row,
-    label: formatMonth(row.month),
+    month: [currentMonth, lastMonth, twoMonthsAgo][index],
+    label: formatMonth([currentMonth, lastMonth, twoMonthsAgo][index]),
   }));
 
   return <AreaComparison title={title} rows={formattedRows} />;
