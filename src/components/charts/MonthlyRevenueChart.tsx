@@ -44,6 +44,7 @@ export default function RevenueChart() {
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart
           data={data}
+          margin={{ left: 10, right: 10 }}
           onClick={(e) => {
             if (e && e.activePayload && e.activePayload[0]) {
               setSelected(e.activePayload[0].payload);
