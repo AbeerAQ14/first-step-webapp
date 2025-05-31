@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export type Booking = {
   id: number;
-  center: string;
+  center?: string;
   branch: string;
   count: string;
   income: number;

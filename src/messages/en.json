@@ -907,6 +907,10 @@
       "bookings": {
         "title": "Bookings Comparison",
         "valueLabel": "SAR"
+      },
+      "revenue": {
+        "title": "Revenue for Month {month}",
+        "currency": "SAR"
       }
     },
     "tables": {

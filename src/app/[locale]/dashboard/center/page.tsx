@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
+import TopBookings from "@/components/dashboard/center-bookings/TopBooking";
+import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
 
 const CARDS = [
   {
@@ -139,6 +141,15 @@ export default async function CenterDashboardHome() {
 
         <div className="flex-1">
           <MonthlyAreaComparison title={t("title")} rows={bookingsRows} />
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex-1">
+          <MonthlyRevenueChart />
+        </div>
+        <div className="max-w-[40%]">
+          <TopBookings />
         </div>
       </div>
 

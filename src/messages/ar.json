@@ -903,6 +903,10 @@
       "bookings": {
         "title": "مقارنة الحجوزات",
         "valueLabel": "ر.س"
+      },
+      "revenue": {
+        "title": "العائد لشهر {month}",
+        "currency": "ر.س"
       }
     },
     "tables": {
