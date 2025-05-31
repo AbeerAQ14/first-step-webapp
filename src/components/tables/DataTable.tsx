@@ -116,8 +116,8 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="rounded-sm w-full overflow-hidden">
-      <div className="w-[calc(100vw-3rem)] md:w-[calc(100vw-22rem)] lg:w-[calc(100vw-40rem)]">
+    <div className="rounded-sm max-w-full overflow-hidden">
+      <div className="max-w-[calc(100vw-3rem)] md:max-w-[calc(100vw-22rem)] xl:max-w-[calc(100vw-40rem)]">
         {isLoading ? (
           <TableSkeleton />
         ) : (

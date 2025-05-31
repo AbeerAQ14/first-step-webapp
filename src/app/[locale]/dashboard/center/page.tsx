@@ -144,16 +144,16 @@ export default async function CenterDashboardHome() {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <div className="flex-1">
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="flex-1 min-w-3xs">
           <MonthlyRevenueChart />
         </div>
-        <div className="max-w-[40%]">
+        <div className="flex-1">
           <TopBookings />
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
         <div className="flex-1">
           <CircularProgressChart totalValue={1000} currentValue={350} />
         </div>
