@@ -17,7 +17,7 @@ const CircularProgressChart: React.FC<CircularProgressChartProps> = ({
   capacityLabel = "Nursery Capacity",
 }) => {
   return (
-    <div className="grow flex flex-col items-center gap-y-5 py-4">
+    <div className="grow w-full flex flex-col items-center gap-y-5 py-4 rounded-3xl shadow-[0_0_4px_rgba(34,34,34,.16)]">
       <div className="font-bold text-primary">{title}</div>
 
       <div className="relative">
