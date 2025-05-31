@@ -29,7 +29,7 @@ export default function RevenueChart() {
 
   return (
     <div
-      className="p-4 rounded-xl bg-white shadow-[0_0_4px_rgba(34,34,34,.16)] w-full max-w-md"
+      className="p-4 rounded-xl bg-white shadow-[0_0_4px_rgba(34,34,34,.16)] w-full lg:max-w-md"
       dir="rtl"
     >
       <div className="text-sm text-gray-500 mb-2">

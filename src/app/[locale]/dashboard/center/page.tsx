@@ -121,7 +121,7 @@ export default async function CenterDashboardHome() {
         {CARDS.map((card) => (
           <div
             key={card.title}
-            className="flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
+            className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
           >
             {card.icon}
             <span className="mt-4 mb-2 text-secondary-mint-green font-bold text-4xl lg:text-5xl">
@@ -135,30 +135,30 @@ export default async function CenterDashboardHome() {
       </div>
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <Numbers />
         </div>
 
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <MonthlyAreaComparison title={t("title")} rows={bookingsRows} />
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
-        <div className="flex-1 min-w-3xs">
+        <div className="w-full flex-1 min-w-3xs">
           <MonthlyRevenueChart />
         </div>
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <TopBookings />
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <CircularProgressChart totalValue={1000} currentValue={350} />
         </div>
 
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <MonthlyAreaComparison
             title={"مقارنة عدد الأطفال"}
             rows={childrenRows}
