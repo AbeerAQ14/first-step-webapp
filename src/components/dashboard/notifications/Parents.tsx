@@ -8,19 +8,17 @@ import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 import { ReservationStatus } from "@/types";
 
-interface ApiChild {
+interface ChildFile {
   id: number;
   child_name: string;
-}
-
-interface ApiParent {
-  id: number;
-  name: string;
-  children: ApiChild[];
+  parent_name: string;
   enrollments: Array<{
+    id: number;
+    user_id: number;
     parent_phone: string;
+    parent_name: string;
     status: string;
-    center_branch_id: number;
+    branch_id: number;
   }>;
 }
 
@@ -54,29 +52,44 @@ const Parents = ({
   const t = useTranslations("dashboard.tables.parents");
   const columns = useParentsColumns(selectedChildMap, setSelectedChildMap);
 
-  const { data: parentsData, isLoading } = useQuery<ApiParent[]>({
-    queryKey: ["parents"],
-    queryFn: centerService.getParents,
+  const { data: childrenData, isLoading } = useQuery<ChildFile[]>({
+    queryKey: ["children-files"],
+    queryFn: centerService.getChildrenFiles,
   });
 
   // Transform the data to match the required format
   const transformedData: Parent[] = React.useMemo(() => {
-    if (!parentsData) return [];
+    if (!childrenData) return [];
 
-    return parentsData.map((parent: ApiParent) => ({
-      id: parent.id,
-      parentName: parent.name,
-      phone: parent.enrollments?.[0]?.parent_phone || "",
-      childs: parent.children.map((child: ApiChild) => ({
+    // Group children by parent
+    const parentMap = new Map<number, Parent>();
+
+    childrenData.forEach((child: ChildFile) => {
+      const enrollment = child.enrollments[0];
+      if (!enrollment) return;
+
+      const parentId = enrollment.user_id;
+
+      if (!parentMap.has(parentId)) {
+        parentMap.set(parentId, {
+          id: parentId,
+          parentName: enrollment.parent_name,
+          phone: enrollment.parent_phone,
+          childs: [],
+        });
+      }
+
+      const parent = parentMap.get(parentId)!;
+      parent.childs.push({
         id: child.id.toString(),
         name: child.child_name,
-        reservationStatus: mapEnrollmentStatus(
-          parent.enrollments?.[0]?.status || "pending"
-        ),
-        branch: parent.enrollments?.[0]?.center_branch_id?.toString() || "",
-      })),
-    }));
-  }, [parentsData]);
+        reservationStatus: mapEnrollmentStatus(enrollment.status),
+        branch: enrollment.branch_id.toString(),
+      });
+    });
+
+    return Array.from(parentMap.values());
+  }, [childrenData]);
 
   return (
     <div>
