@@ -93,11 +93,11 @@ export default function DailyReportDetails({
 
       <ReportShow
         initialValues={{
-          activities: report?.activities || "",
-          behavior: report?.behavior || "",
-          meals: report?.meals || "",
-          napTime: report?.nap_time || "",
-          additionalNotes: report?.notes || "",
+          activities: report?.data?.activities || "",
+          behavior: report?.data?.behavior || "",
+          meals: report?.data?.meals || "",
+          napTime: report?.data?.nap_time || "",
+          additionalNotes: report?.data?.notes || "",
           recipients: [],
         }}
       />

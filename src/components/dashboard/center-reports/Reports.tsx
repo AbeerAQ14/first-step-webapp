@@ -19,6 +19,7 @@ interface DailyReport {
     user: {
       id: number;
       name: string;
+      phone: string;
     };
   };
 }
@@ -79,6 +80,7 @@ const Reports = () => {
     reportsData.data.forEach((report) => {
       const parentId = report.child.user.id;
       const parentName = report.child.user.name;
+      const parentPhone = report.child.user.phone;
       const childId = report.child.id.toString();
       const childName = report.child.name;
       const reportDate = report.created_at.split(" ")[0];
@@ -87,7 +89,7 @@ const Reports = () => {
         parentMap.set(parentId, {
           id: parentId,
           parentName,
-          phone: "", // Phone number is not available in the new API structure
+          phone: parentPhone,
           childs: [],
           reportDate,
         });
