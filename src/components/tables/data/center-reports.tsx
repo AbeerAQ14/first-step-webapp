@@ -17,12 +17,22 @@ export type Report = {
   reportDate: string;
 };
 
+interface SelectedChild {
+  reportId: string;
+  reportDate: string;
+}
+
+interface ReportIdMap {
+  reportId: number;
+  reportDate: string;
+}
+
 export function useCenterReportsColumns(
-  selectedChildMap: Record<number, string>,
+  selectedChildMap: Record<number, SelectedChild>,
   setSelectedChildMap: React.Dispatch<
-    React.SetStateAction<Record<number, string>>
+    React.SetStateAction<Record<number, SelectedChild>>
   >,
-  reportIdMap: Record<string, number>
+  reportIdMap: Record<string, ReportIdMap>
 ) {
   const t = useTranslations("dashboard.tables.center-reports");
 
@@ -42,18 +52,25 @@ export function useCenterReportsColumns(
         const parentId = row.original.id;
         const childs = row.original.childs;
 
-        const selectedValue = selectedChildMap[parentId] ?? childs[0]?.id ?? "";
+        const selectedChild = selectedChildMap[parentId] ?? {
+          reportId: childs[0]?.id ?? "",
+          reportDate: reportIdMap[childs[0]?.id]?.reportDate ?? "",
+        };
 
         return (
           <select
             className="text-xs px-2 py-1 rounded bg-info text-white"
-            value={selectedValue}
-            onChange={(e) =>
+            value={selectedChild.reportId}
+            onChange={(e) => {
+              const childId = e.target.value;
               setSelectedChildMap((prev) => ({
                 ...prev,
-                [parentId]: e.target.value,
-              }))
-            }
+                [parentId]: {
+                  reportId: childId,
+                  reportDate: reportIdMap[childId]?.reportDate ?? "",
+                },
+              }));
+            }}
           >
             {childs.map((child) => (
               <option key={child.id} value={child.id}>
@@ -67,15 +84,22 @@ export function useCenterReportsColumns(
     {
       accessorKey: "reportDate",
       header: () => t("headers.reportDate"),
+      cell: ({ row }) => {
+        const parentId = row.original.id;
+        const selectedChild = selectedChildMap[parentId];
+        return selectedChild?.reportDate ?? row.original.reportDate;
+      },
     },
     {
       accessorKey: "control",
       header: () => t("headers.control"),
       cell: ({ row }) => {
         const parent = row.original;
-        const selectedChildId =
-          selectedChildMap[parent.id] ?? parent.childs[0]?.id;
-        const reportId = reportIdMap[selectedChildId];
+        const selectedChild = selectedChildMap[parent.id] ?? {
+          reportId: parent.childs[0]?.id ?? "",
+          reportDate: reportIdMap[parent.childs[0]?.id]?.reportDate ?? "",
+        };
+        const reportId = reportIdMap[selectedChild.reportId]?.reportId;
 
         return (
           <div className="flex items-center gap-1">

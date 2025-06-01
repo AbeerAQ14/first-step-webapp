@@ -16,57 +16,48 @@ interface DailyReport {
   child: {
     id: number;
     name: string;
+    user: {
+      id: number;
+      name: string;
+    };
   };
 }
 
-interface Parent {
-  id: number;
-  name: string;
-  children: Array<{
-    id: number;
-    child_name: string;
-  }>;
-  enrollments: Array<{
-    parent_phone: string;
-  }>;
+interface SelectedChild {
+  reportId: string;
+  reportDate: string;
 }
 
 const Reports = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
-    Record<number, string>
+    Record<number, SelectedChild>
   >({});
   const t = useTranslations("dashboard.tables.center-reports");
 
-  const { data: parentsData, isLoading: isLoadingParents } = useQuery<Parent[]>(
-    {
-      queryKey: ["parents"],
-      queryFn: centerService.getParents,
-    }
-  );
-
-  const { data: reportsData, isLoading: isLoadingReports } = useQuery<{
+  const { data: reportsData, isLoading } = useQuery<{
     data: DailyReport[];
   }>({
     queryKey: ["daily-reports"],
     queryFn: centerService.getDailyReports,
   });
 
-  // Create a map of child IDs to their latest report IDs
+  // Create a map of child IDs to their latest report IDs and dates
   const reportIdMap = React.useMemo(() => {
     if (!reportsData?.data) return {};
 
-    const map: Record<string, number> = {};
+    const map: Record<string, { reportId: number; reportDate: string }> = {};
     reportsData.data.forEach((report) => {
       const childId = report.child.id.toString();
+      const reportDate = report.created_at.split(" ")[0];
+
       if (
         !map[childId] ||
-        new Date(report.created_at) >
-          new Date(
-            reportsData.data.find((r) => r.id === map[childId])?.created_at ||
-              ""
-          )
+        new Date(reportDate) > new Date(map[childId].reportDate)
       ) {
-        map[childId] = report.id;
+        map[childId] = {
+          reportId: report.id,
+          reportDate,
+        };
       }
     });
     return map;
@@ -80,57 +71,46 @@ const Reports = () => {
 
   // Transform the data to match the required format
   const transformedData: Report[] = React.useMemo(() => {
-    if (!parentsData || !reportsData?.data) return [];
+    if (!reportsData?.data) return [];
 
-    // Create a map of child IDs to their reports
-    const childReportsMap = new Map<number, DailyReport[]>();
-    reportsData.data.forEach((report: DailyReport) => {
-      const childId = report.child.id;
-      if (!childReportsMap.has(childId)) {
-        childReportsMap.set(childId, []);
+    // Group reports by parent
+    const parentMap = new Map<number, Report>();
+
+    reportsData.data.forEach((report) => {
+      const parentId = report.child.user.id;
+      const parentName = report.child.user.name;
+      const childId = report.child.id.toString();
+      const childName = report.child.name;
+      const reportDate = report.created_at.split(" ")[0];
+
+      if (!parentMap.has(parentId)) {
+        parentMap.set(parentId, {
+          id: parentId,
+          parentName,
+          phone: "", // Phone number is not available in the new API structure
+          childs: [],
+          reportDate,
+        });
       }
-      childReportsMap.get(childId)?.push(report);
+
+      const parentReport = parentMap.get(parentId)!;
+
+      // Add child if not already present
+      if (!parentReport.childs.some((child) => child.id === childId)) {
+        parentReport.childs.push({
+          id: childId,
+          name: childName,
+        });
+      }
+
+      // Update report date if this report is more recent
+      if (new Date(reportDate) > new Date(parentReport.reportDate)) {
+        parentReport.reportDate = reportDate;
+      }
     });
 
-    // Transform parents data to include only children with reports
-    const reports: Report[] = [];
-
-    parentsData.forEach((parent: Parent) => {
-      // Filter children to only include those with reports
-      const childrenWithReports = parent.children.filter((child) =>
-        childReportsMap.has(child.id)
-      );
-
-      // Skip parents with no children that have reports
-      if (childrenWithReports.length === 0) return;
-
-      // Get the most recent report date among all children
-      const latestReportDate = childrenWithReports.reduce((latest, child) => {
-        const childReports = childReportsMap.get(child.id) || [];
-        const childLatestReport = childReports[0];
-        if (!childLatestReport) return latest;
-        const reportDate = childLatestReport.created_at.split(" ")[0]; // Get only the date part
-        return !latest || new Date(reportDate) > new Date(latest)
-          ? reportDate
-          : latest;
-      }, "");
-
-      const childs = childrenWithReports.map((child) => ({
-        id: child.id.toString(),
-        name: child.child_name,
-      }));
-
-      reports.push({
-        id: parent.id,
-        parentName: parent.name,
-        phone: parent.enrollments?.[0]?.parent_phone || "",
-        childs,
-        reportDate: latestReportDate || new Date().toISOString().split("T")[0],
-      });
-    });
-
-    return reports;
-  }, [parentsData, reportsData]);
+    return Array.from(parentMap.values());
+  }, [reportsData]);
 
   return (
     <div>
@@ -142,7 +122,7 @@ const Reports = () => {
         <DataTable
           columns={columns}
           data={transformedData}
-          isLoading={isLoadingParents || isLoadingReports}
+          isLoading={isLoading}
         />
       </div>
     </div>
