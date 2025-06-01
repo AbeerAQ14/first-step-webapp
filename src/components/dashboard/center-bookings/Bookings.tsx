@@ -11,33 +11,40 @@ import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 
 const transformEnrollmentsData = (data: any): Booking[] => {
-  return data.data
-    .map((parent: any) => {
-      // Filter children that have enrollments
-      const childrenWithEnrollments = parent.children.filter(
-        (child: any) => child.enrollments.length > 0
-      );
+  return data.data.map((parent: any) => {
+    // Filter children that have enrollments
+    const childrenWithEnrollments = parent.children.filter(
+      (child: any) => child.enrollments.length > 0
+    );
 
-      // Create bookings for each child's enrollments
-      return childrenWithEnrollments.flatMap((child: any) =>
-        child.enrollments.map((enrollment: any) => ({
-          id: enrollment.enrollment_id,
-          parentName: parent.parent_name,
-          childs: [
-            {
-              id: child.child_id.toString(),
-              name: child.child_name,
-              reservationStatus: enrollment.status,
-            },
-          ],
-          branch: enrollment.branch_name,
-          startDate: enrollment.enrollment_date,
-          endDate: enrollment.enrollment_date, // You might want to calculate this based on enrollment_type
-          amount: parseFloat(enrollment.price_amount),
-        }))
-      );
-    })
-    .flat();
+    // Get the most recent enrollment date among all children
+    const latestEnrollment = childrenWithEnrollments.reduce(
+      (latest: any, child: any) => {
+        const childLatest = child.enrollments[0];
+        if (!childLatest) return latest;
+        return !latest ||
+          new Date(childLatest.enrollment_date) >
+            new Date(latest.enrollment_date)
+          ? childLatest
+          : latest;
+      },
+      null
+    );
+
+    return {
+      id: parent.parent_id,
+      parentName: parent.parent_name,
+      childs: childrenWithEnrollments.map((child: any) => ({
+        id: child.child_id.toString(),
+        name: child.child_name,
+        reservationStatus: child.enrollments[0]?.status || "pending",
+      })),
+      branch: latestEnrollment?.branch_name || "",
+      startDate: latestEnrollment?.enrollment_date || "",
+      endDate: latestEnrollment?.enrollment_date || "",
+      amount: latestEnrollment ? parseFloat(latestEnrollment.price_amount) : 0,
+    };
+  });
 };
 
 const Bookings = () => {
