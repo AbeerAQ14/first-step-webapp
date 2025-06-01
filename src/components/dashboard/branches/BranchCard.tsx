@@ -10,6 +10,7 @@ import { Trash2 } from "lucide-react";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { centerService } from "@/services/dashboardApi";
 import { useQueryClient } from "@tanstack/react-query";
+import { useHasRole } from "@/store/authStore";
 
 const BranchCard = ({
   branch,
@@ -23,6 +24,8 @@ const BranchCard = ({
   const t = useTranslations("dashboard.center.branches");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const queryClient = useQueryClient();
+
+  const canDelete = useHasRole("center");
 
   const handleDelete = async () => {
     try {
@@ -111,14 +114,16 @@ const BranchCard = ({
         </div>
       </div>
 
-      <Button
-        variant={"ghost"}
-        size={"icon"}
-        className="absolute p-5 top-4 right-4 rtl:right-auto rtl:left-4"
-        onClick={() => setIsDeleteDialogOpen(true)}
-      >
-        <Trash2 className="size-5 text-destructive" />
-      </Button>
+      {canDelete && (
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          className="absolute p-5 top-4 right-4 rtl:right-auto rtl:left-4"
+          onClick={() => setIsDeleteDialogOpen(true)}
+        >
+          <Trash2 className="size-5 text-destructive" />
+        </Button>
+      )}
 
       <ConfirmationDialog
         isOpen={isDeleteDialogOpen}
