@@ -10,22 +10,39 @@ import { ReservationStatus, useReservationStatus } from "./shared/status";
 export type Booking = {
   id: number;
   parentName: string;
-  childs: { id: string; name: string; reservationStatus: ReservationStatus }[];
+  childs: {
+    id: string;
+    name: string;
+    enrollmentId: string;
+    status: string;
+    branch: string;
+    startDate: string;
+    endDate: string;
+    amount: number;
+  }[];
   branch: string;
   startDate: string;
   endDate: string;
   amount: number;
 };
 
+export interface SelectedChild {
+  enrollmentId: string;
+  status: ReservationStatus;
+  branch: string;
+  startDate: string;
+  endDate: string;
+  amount: number;
+}
+
 export function useCenterBookingsColumns(
-  selectedChildMap: Record<number, string>,
+  selectedChildMap: Record<number, SelectedChild>,
   setSelectedChildMap: React.Dispatch<
-    React.SetStateAction<Record<number, string>>
+    React.SetStateAction<Record<number, SelectedChild>>
   >
 ) {
   const t = useTranslations("dashboard.tables.center-bookings");
   const { getStatusText, getStatusColorClass } = useReservationStatus();
-  const sharedT = useTranslations("dashboard.tables.shared.status");
 
   const columns: ColumnDef<Booking>[] = [
     {
@@ -46,10 +63,20 @@ export function useCenterBookingsColumns(
     {
       accessorKey: "startDate",
       header: () => t("headers.startDate"),
+      cell: ({ row }) => {
+        const parentId = row.original.id;
+        const selectedChild = selectedChildMap[parentId];
+        return selectedChild?.startDate ?? row.original.startDate;
+      },
     },
     {
       accessorKey: "endDate",
       header: () => t("headers.endDate"),
+      cell: ({ row }) => {
+        const parentId = row.original.id;
+        const selectedChild = selectedChildMap[parentId];
+        return selectedChild?.endDate ?? row.original.endDate;
+      },
     },
     {
       accessorKey: "childs",
@@ -58,21 +85,39 @@ export function useCenterBookingsColumns(
         const parentId = row.original.id;
         const childs = row.original.childs;
 
-        const selectedValue = selectedChildMap[parentId] ?? childs[0]?.id ?? "";
+        const selectedChild = selectedChildMap[parentId] ?? {
+          enrollmentId: childs[0]?.enrollmentId ?? "",
+          status: childs[0]?.status ?? "",
+          branch: childs[0]?.branch ?? "",
+          startDate: childs[0]?.startDate ?? "",
+          endDate: childs[0]?.endDate ?? "",
+          amount: childs[0]?.amount ?? 0,
+        };
 
         return (
           <select
             className="text-xs px-2 py-1 rounded bg-info text-white"
-            value={selectedValue}
-            onChange={(e) =>
-              setSelectedChildMap((prev) => ({
-                ...prev,
-                [parentId]: e.target.value,
-              }))
-            }
+            value={selectedChild.enrollmentId}
+            onChange={(e) => {
+              const childId = e.target.value;
+              const child = childs.find((c) => c.enrollmentId === childId);
+              if (child) {
+                setSelectedChildMap((prev) => ({
+                  ...prev,
+                  [parentId]: {
+                    enrollmentId: child.enrollmentId,
+                    status: child.status as ReservationStatus,
+                    branch: child.branch,
+                    startDate: child.startDate,
+                    endDate: child.endDate,
+                    amount: child.amount,
+                  },
+                }));
+              }
+            }}
           >
             {childs.map((child) => (
-              <option key={child.id} value={child.id}>
+              <option key={child.enrollmentId} value={child.enrollmentId}>
                 {child.name}
               </option>
             ))}
@@ -83,14 +128,22 @@ export function useCenterBookingsColumns(
     {
       accessorKey: "branch",
       header: () => t("headers.branch"),
+      cell: ({ row }) => {
+        const parentId = row.original.id;
+        const selectedChild = selectedChildMap[parentId];
+        return selectedChild?.branch ?? row.original.branch;
+      },
     },
     {
       accessorKey: "amount",
       header: () => t("headers.amount"),
       cell: ({ row }) => {
+        const parentId = row.original.id;
+        const selectedChild = selectedChildMap[parentId];
+        const amount = selectedChild?.amount ?? row.original.amount;
         return (
           <div className="space-x-1 rtl:space-x-reverse">
-            <span>{row.getValue("amount")}</span>
+            <span>{amount}</span>
             <span>{t("currency")}</span>
           </div>
         );
@@ -100,16 +153,15 @@ export function useCenterBookingsColumns(
       id: "reservationStatus",
       header: () => t("headers.reservationStatus"),
       cell: ({ row }) => {
-        const parent = row.original;
-        const selectedChildId =
-          selectedChildMap[parent.id] ?? parent.childs[0]?.id;
-        const selectedChild = parent.childs.find(
-          (child) => child.id === selectedChildId
-        );
+        const parentId = row.original.id;
+        const childs = row.original.childs;
+        const selectedChild = selectedChildMap[parentId] ?? {
+          status: childs[0]?.status ?? "",
+        };
 
-        const status = selectedChild?.reservationStatus;
-        const colorClasses = status ? getStatusColorClass(status) : "";
-        const text = status ? getStatusText(status) : sharedT("selectChild");
+        const status = selectedChild.status as ReservationStatus;
+        const colorClasses = getStatusColorClass(status);
+        const text = getStatusText(status);
 
         return (
           <div

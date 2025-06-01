@@ -1,13 +1,14 @@
 "use client";
 
-import {
-  Booking,
-  useCenterBookingsColumns,
-} from "@/components/tables/data/center-bookings";
-import { DataTable } from "@/components/tables/DataTable";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
+import {
+  Booking,
+  useCenterBookingsColumns,
+  SelectedChild,
+} from "@/components/tables/data/center-bookings";
+import { DataTable } from "@/components/tables/DataTable";
 import { centerService } from "@/services/dashboardApi";
 
 const transformEnrollmentsData = (data: any): Booking[] => {
@@ -37,7 +38,14 @@ const transformEnrollmentsData = (data: any): Booking[] => {
       childs: childrenWithEnrollments.map((child: any) => ({
         id: child.child_id.toString(),
         name: child.child_name,
-        reservationStatus: child.enrollments[0]?.status || "pending",
+        enrollmentId: child.enrollments[0]?.enrollment_id.toString() || "",
+        status: child.enrollments[0]?.status || "pending",
+        branch: child.enrollments[0]?.branch_name || "",
+        startDate: child.enrollments[0]?.enrollment_date || "",
+        endDate: child.enrollments[0]?.enrollment_date || "",
+        amount: child.enrollments[0]
+          ? parseFloat(child.enrollments[0].price_amount)
+          : 0,
       })),
       branch: latestEnrollment?.branch_name || "",
       startDate: latestEnrollment?.enrollment_date || "",
@@ -49,7 +57,7 @@ const transformEnrollmentsData = (data: any): Booking[] => {
 
 const Bookings = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
-    Record<number, string>
+    Record<number, SelectedChild>
   >({});
   const t = useTranslations("dashboard.center-bookings");
   const columns = useCenterBookingsColumns(
