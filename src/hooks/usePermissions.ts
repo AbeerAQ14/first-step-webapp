@@ -9,7 +9,7 @@ interface User {
   branchId?: string;
 }
 
-export const usePermissions = (user: User) => {
+export const usePermissions = (user: User | null) => {
   const can = useCallback(
     (
       action: Action,
@@ -17,6 +17,8 @@ export const usePermissions = (user: User) => {
       centerId?: string,
       branchId?: string
     ) => {
+      if (!user) return false;
+
       const permission = permissions.find(
         (p) => p.resource === resource && p.action === action
       );
