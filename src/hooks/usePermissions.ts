@@ -2,21 +2,26 @@ import { useCallback } from "react";
 import { Resource, Action } from "@/lib/permissions/types";
 import { UserRole as Role } from "@/store/authStore";
 import { permissions } from "@/lib/permissions/permissions";
+import { useAuthUser } from "@/store/authStore";
 
 interface User {
+  id: number;
+  name: string;
+  email: string;
+  address: string | null;
+  email_verified_at: string | null;
   role: Role;
-  centerId?: string;
-  branchId?: string;
+  created_at: string;
+  updated_at: string;
+  national_number: string | null;
+  branch_id: number;
 }
 
-export const usePermissions = (user: User | null) => {
+export const usePermissions = () => {
+  const user = useAuthUser();
+
   const can = useCallback(
-    (
-      action: Action,
-      resource: Resource,
-      centerId?: string,
-      branchId?: string
-    ) => {
+    (action: Action, resource: Resource, branchId?: string) => {
       if (!user) return false;
 
       const permission = permissions.find(
@@ -30,18 +35,17 @@ export const usePermissions = (user: User | null) => {
         return false;
       }
 
-      // Check center-specific permissions
-      if (permission.centerSpecific && centerId && user.centerId) {
-        if (centerId !== user.centerId) {
+      // Check branch-specific permissions
+      if (permission.branchSpecific && branchId && user.branch_id) {
+        if (branchId !== user.branch_id.toString()) {
           return false;
         }
       }
 
-      // Check branch-specific permissions
-      if (permission.branchSpecific && branchId && user.branchId) {
-        if (branchId !== user.branchId) {
-          return false;
-        }
+      // For center-specific permissions, we only check if the user has the right role
+      // since center users can only access their own center's data
+      if (permission.centerSpecific && user.role !== "center") {
+        return false;
       }
 
       return true;

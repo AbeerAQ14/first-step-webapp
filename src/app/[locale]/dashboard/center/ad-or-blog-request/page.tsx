@@ -11,7 +11,6 @@ import { centerService } from "@/services/dashboardApi";
 import { AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePermissions } from "@/hooks/usePermissions";
-import { useAuthUser } from "@/store/authStore";
 
 const BlogCardSkeleton = () => {
   return (
@@ -117,8 +116,7 @@ const AdsSection = () => {
 };
 
 export default function CenterDashboardRequest() {
-  const user = useAuthUser();
-  const { can } = usePermissions(user);
+  const { can } = usePermissions();
   const canViewtAd = can("view", "advertisements");
   const canViewtBlog = can("view", "blogs");
 

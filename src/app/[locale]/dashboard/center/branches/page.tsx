@@ -5,12 +5,10 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Branches from "@/components/dashboard/branches/Branches";
 import { usePermissions } from "@/hooks/usePermissions";
-import { useAuthUser } from "@/store/authStore";
 
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.center.branches");
-  const user = useAuthUser();
-  const { can } = usePermissions(user);
+  const { can } = usePermissions();
   const canAddBranch = can("create", "branches");
 
   return (
