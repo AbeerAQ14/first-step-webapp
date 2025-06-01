@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 import { AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePermissions } from "@/hooks/usePermissions";
+import { useAuthUser } from "@/store/authStore";
 
 const BlogCardSkeleton = () => {
   return (
@@ -24,7 +26,7 @@ const BlogCardSkeleton = () => {
   );
 };
 
-export default function CenterDashboardRequest() {
+const BlogsSection = () => {
   const t = useTranslations("dashboard.center.ad-or-blog-request");
 
   const {
@@ -48,64 +50,82 @@ export default function CenterDashboardRequest() {
   });
 
   return (
-    <div className="flex flex-col gap-y-10">
-      <div>
-        <div className="mb-2 flex items-center justify-between">
-          <h1 className="heading-4 font-medium text-primary">{t("title")}</h1>
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <h1 className="heading-4 font-medium text-primary">{t("blogs")}</h1>
 
-          <Button asChild size={"sm"} variant={"outline"}>
-            <Link href="ad-or-blog-request/ad-request">{t("request-ad")}</Link>
-          </Button>
-        </div>
-
-        <div className="mt-6">
-          <Ads />
-        </div>
+        <Button asChild size={"sm"} variant={"outline"}>
+          <Link href="ad-or-blog-request/blog-request">
+            {t("request-blog")}
+          </Link>
+        </Button>
       </div>
 
-      <div>
-        <div className="mb-2 flex items-center justify-between">
-          <h1 className="heading-4 font-medium text-primary">{t("blogs")}</h1>
-
-          <Button asChild size={"sm"} variant={"outline"}>
-            <Link href="ad-or-blog-request/blog-request">
-              {t("request-blog")}
-            </Link>
-          </Button>
-        </div>
-
-        <div className="grid md:grid-cols-3 items-start gap-10">
-          {isLoading ? (
-            <>
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
-            </>
-          ) : error ? (
-            <div className="col-span-3 flex flex-col items-center justify-center gap-4 rounded-lg border border-destructive/50 bg-destructive/10 p-8 text-center">
-              <AlertCircle className="h-8 w-8 text-destructive" />
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-destructive">
-                  {t("blog.form.error.title")}
-                </h3>
-                <p className="text-sm text-mid-gray">
-                  {t("blog.form.error.description")}
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => refetch()}
-                className="mt-2"
-              >
-                {t("blog.form.error.retry")}
-              </Button>
+      <div className="grid md:grid-cols-3 items-start gap-10">
+        {isLoading ? (
+          <>
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+          </>
+        ) : error ? (
+          <div className="col-span-3 flex flex-col items-center justify-center gap-4 rounded-lg border border-destructive/50 bg-destructive/10 p-8 text-center">
+            <AlertCircle className="h-8 w-8 text-destructive" />
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-destructive">
+                {t("blog.form.error.title")}
+              </h3>
+              <p className="text-sm text-mid-gray">
+                {t("blog.form.error.description")}
+              </p>
             </div>
-          ) : (
-            blogsData?.map((blog) => <BlogCard key={blog.id} blog={blog} />)
-          )}
-        </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              className="mt-2"
+            >
+              {t("blog.form.error.retry")}
+            </Button>
+          </div>
+        ) : (
+          blogsData?.map((blog) => <BlogCard key={blog.id} blog={blog} />)
+        )}
       </div>
+    </div>
+  );
+};
+
+const AdsSection = () => {
+  const t = useTranslations("dashboard.center.ad-or-blog-request");
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <h1 className="heading-4 font-medium text-primary">{t("title")}</h1>
+
+        <Button asChild size={"sm"} variant={"outline"}>
+          <Link href="ad-or-blog-request/ad-request">{t("request-ad")}</Link>
+        </Button>
+      </div>
+
+      <div className="mt-6">
+        <Ads />
+      </div>
+    </div>
+  );
+};
+
+export default function CenterDashboardRequest() {
+  const user = useAuthUser();
+  const { can } = usePermissions(user);
+  const canViewtAd = can("view", "advertisements");
+  const canViewtBlog = can("view", "blogs");
+
+  return (
+    <div className="flex flex-col gap-y-10">
+      {canViewtAd && <AdsSection />}
+      {canViewtBlog && <BlogsSection />}
     </div>
   );
 }

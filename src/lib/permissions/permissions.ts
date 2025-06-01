@@ -126,23 +126,43 @@ export const permissions: Permission[] = [
   {
     resource: "advertisements",
     action: "view",
-    allowedRoles: ["admin", "center", "branch_admin", "parent"],
+    allowedRoles: ["admin", "center", "branch_admin"],
   },
   {
     resource: "advertisements",
-    action: "manage",
-    allowedRoles: ["admin", "center"],
+    action: "create",
+    allowedRoles: ["admin", "center", "branch_admin"],
+  },
+  {
+    resource: "advertisements",
+    action: "edit",
+    allowedRoles: ["admin", "center", "branch_admin"],
+  },
+  {
+    resource: "advertisements",
+    action: "delete",
+    allowedRoles: ["admin", "center", "branch_admin"],
   },
 
   // Blogs permissions
   {
     resource: "blogs",
     action: "view",
-    allowedRoles: ["admin", "center", "branch_admin", "parent"],
+    allowedRoles: ["admin", "center"],
   },
   {
     resource: "blogs",
-    action: "manage",
+    action: "create",
+    allowedRoles: ["admin", "center"],
+  },
+  {
+    resource: "blogs",
+    action: "edit",
+    allowedRoles: ["admin", "center"],
+  },
+  {
+    resource: "blogs",
+    action: "delete",
     allowedRoles: ["admin", "center"],
   },
 ];
