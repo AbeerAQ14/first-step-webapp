@@ -1,5 +1,6 @@
 import React from "react";
-import { Resource, Action, Role } from "@/lib/permissions/types";
+import { Resource, Action } from "@/lib/permissions/types";
+import { UserRole as Role } from "@/store/authStore";
 import { usePermissions } from "@/hooks/usePermissions";
 
 interface WithPermissionProps {

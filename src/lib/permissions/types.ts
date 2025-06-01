@@ -1,4 +1,4 @@
-export type Role = "admin" | "center" | "branch_admin" | "parent";
+import { UserRole as Role } from "@/store/authStore";
 
 export type Resource =
   | "dashboard"

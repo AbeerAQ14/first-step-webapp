@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { Role, Resource, Action } from "@/lib/permissions/types";
+import { Resource, Action } from "@/lib/permissions/types";
+import { UserRole as Role } from "@/store/authStore";
 import { permissions } from "@/lib/permissions/permissions";
 
 interface User {
