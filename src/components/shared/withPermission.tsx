@@ -28,9 +28,9 @@ export const withPermission = <P extends object>(
     fallback = null,
     ...props
   }: WithPermissionProps & P) => {
-    const { can } = usePermissions(user);
+    const { can } = usePermissions();
 
-    const hasPermission = can(action, resource, centerId, branchId);
+    const hasPermission = can(action, resource, branchId);
 
     if (!hasPermission) {
       return <>{fallback}</>;
