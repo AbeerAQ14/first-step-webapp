@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,47 +12,50 @@ import {
 } from "@/components/ui/form";
 import PhoneInput from "../PhoneInput";
 import CheckboxGroup from "../CheckboxGroup";
-import type { CenterStep1FormData } from "@/lib/schemas";
+import type { BranchStep1FormData, CenterStep1FormData } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { mapOptions } from "@/lib/utils";
+import { CENTER_TYPE_IDS, SERVICE_IDS } from "@/lib/options";
 
-export function Step1BasicInfo() {
+export function Step1BasicInfo({
+  isBranch = false,
+  disabled = false,
+}: {
+  isBranch?: boolean;
+  disabled?: boolean;
+}) {
   const t = useTranslations("auth.center-signup.1.form");
-  const { control } = useFormContext<CenterStep1FormData>();
+  const tOptions = useTranslations("options");
 
-  const centerTypes = [
-    { id: "care", label: t("type.options.care") },
-    { id: "education", label: t("type.options.education") },
-    { id: "support", label: t("type.options.support") },
-  ];
+  const [showPassword, setShowPassword] = useState(false);
 
-  const services = [
-    { id: "education", label: t("services.options.education") },
-    { id: "kindergarten", label: t("services.options.kindergarten") },
-    { id: "after-school", label: t("services.options.after-school") },
-    { id: "special-needs", label: t("services.options.special-needs") },
-    { id: "therapy", label: t("services.options.therapy") },
-    { id: "speech-therapy", label: t("services.options.speech-therapy") },
-    {
-      id: "occupational-therapy",
-      label: t("services.options.occupational-therapy"),
-    },
-    { id: "care", label: t("services.options.care") },
-  ];
+  type Step1FormData = BranchStep1FormData | CenterStep1FormData;
+
+  const { control } = useFormContext<Step1FormData>();
+
+  const centerTypes = mapOptions(CENTER_TYPE_IDS, "centerTypes", tOptions);
+  const services = mapOptions(SERVICE_IDS, "centerServices", tOptions);
 
   return (
     <div className="space-y-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-10 md:gap-y-4">
         <FormField
           control={control}
-          name="centerNameArabic"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("arabic-name.label")}
+                {t("name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("arabic-name.placeholder")} {...field} />
+                <Input
+                  placeholder={t("name.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -61,15 +64,19 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="centerNameEnglish"
+          name="nursery_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("english-name.label")}
+                {t("nursery-name.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("english-name.placeholder")} {...field} />
+                <Input
+                  placeholder={t("nursery-name.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -86,7 +93,11 @@ export function Step1BasicInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("email.placeholder")} {...field} />
+                <Input
+                  placeholder={t("email.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,12 +122,89 @@ export function Step1BasicInfo() {
                       `+966${e.target.value.replace(/^(\+966)?/, "")}`
                     );
                   }}
+                  readOnly={disabled}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {!isBranch && (
+          <>
+            <FormField
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("password.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative w-full">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("password.placeholder")}
+                        {...field}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="size-6 stroke-inherit" />
+                        ) : (
+                          <Eye className="size-6 stroke-inherit" />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("password-confirm.label")}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative w-full">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("password-confirm.placeholder")}
+                        {...field}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 stroke-neutral-500 hover:stroke-neutral-600 duration-300"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="size-6 stroke-inherit" />
+                        ) : (
+                          <Eye className="size-6 stroke-inherit" />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
 
         <FormField
           control={control}
@@ -128,7 +216,11 @@ export function Step1BasicInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("city.placeholder")} {...field} />
+                <Input
+                  placeholder={t("city.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,7 +229,7 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="district"
+          name="neighborhood"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -145,7 +237,11 @@ export function Step1BasicInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("neighborhood.placeholder")} {...field} />
+                <Input
+                  placeholder={t("neighborhood.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -154,15 +250,19 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="street"
+          name="address"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("street.label")}
+                {t("address.label")}
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("street.placeholder")} {...field} />
+                <Input
+                  placeholder={t("address.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -171,7 +271,7 @@ export function Step1BasicInfo() {
 
         <FormField
           control={control}
-          name="locationLink"
+          name="location"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -179,14 +279,18 @@ export function Step1BasicInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("location.placeholder")} {...field} />
+                <Input
+                  placeholder={t("location.placeholder")}
+                  {...field}
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={control}
           name="branches"
           render={({ field }) => (
@@ -198,7 +302,7 @@ export function Step1BasicInfo() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </div>
 
       <div className="flex flex-col items-center gap-y-4">
@@ -206,8 +310,9 @@ export function Step1BasicInfo() {
         <CheckboxGroup
           className="lg:w-3xl"
           items={centerTypes}
-          name="centerType"
+          name="nursery_type"
           control={control}
+          readOnly={disabled}
         />
       </div>
 
@@ -219,12 +324,13 @@ export function Step1BasicInfo() {
           items={services}
           name="services"
           control={control}
+          readOnly={disabled}
         />
       </div>
 
       <FormField
         control={control}
-        name="additionalServices"
+        name="additional_service"
         render={({ field }) => (
           <FormItem>
             <FormLabel className="flex justify-start items-start gap-x-1 flex-col sm:flex-row">
@@ -234,7 +340,11 @@ export function Step1BasicInfo() {
               </span>
             </FormLabel>
             <FormControl>
-              <Input placeholder={t("other.placeholder")} {...field} />
+              <Input
+                placeholder={t("other.placeholder")}
+                {...field}
+                disabled={disabled}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

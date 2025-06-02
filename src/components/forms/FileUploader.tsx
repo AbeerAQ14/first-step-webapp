@@ -8,9 +8,15 @@ interface FileUploaderProps {
   value: File | null;
   onChange: (file: File | null) => void;
   accept?: string;
+  disabled?: boolean;
 }
 
-export function FileUploader({ value, onChange, accept }: FileUploaderProps) {
+export function FileUploader({
+  value,
+  onChange,
+  accept,
+  disabled,
+}: FileUploaderProps) {
   const t = useTranslations("auth.center-signup.4.form");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +41,7 @@ export function FileUploader({ value, onChange, accept }: FileUploaderProps) {
             size="sm"
             onClick={handleRemoveFile}
             className="h-8 w-8 p-0"
+            disabled={disabled}
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Remove file</span>

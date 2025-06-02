@@ -20,26 +20,24 @@ import { Input } from "@/components/ui/input";
 import CheckboxGroup from "../CheckboxGroup";
 import { Clock } from "lucide-react";
 import type { CenterStep2FormData } from "@/lib/schemas";
+import { mapOptions } from "@/lib/utils";
+import { AGE_GROUP_IDS, WEEK_DAYS } from "@/lib/options";
+import { usePathname } from "@/i18n/navigation";
 
-export function Step2AgesAndHours() {
+export function Step2AgesAndHours({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
   const t = useTranslations("auth.center-signup.2.form");
+  const tOptions = useTranslations("options");
   const { control } = useFormContext<CenterStep2FormData>();
 
-  const ageGroups = [
-    { id: "0-3", label: t("ages.options.0-3") },
-    { id: "3-6", label: t("ages.options.3-6") },
-    { id: "special-needs", label: t("ages.options.special-needs") },
-  ];
+  const ageGroups = mapOptions(AGE_GROUP_IDS, "centerAges", tOptions);
+  const days = mapOptions(WEEK_DAYS, "days", tOptions);
 
-  const days = [
-    { value: "sunday", label: t("days.sunday") },
-    { value: "monday", label: t("days.monday") },
-    { value: "tuesday", label: t("days.tuesday") },
-    { value: "wednesday", label: t("days.wednesday") },
-    { value: "thursday", label: t("days.thursday") },
-    { value: "friday", label: t("days.friday") },
-    { value: "saturday", label: t("days.saturday") },
-  ];
+  const pathname = usePathname();
+  const isAdd = pathname.includes("add");
 
   return (
     <div className="space-y-8">
@@ -48,12 +46,12 @@ export function Step2AgesAndHours() {
         <CheckboxGroup
           control={control}
           items={ageGroups}
-          name="ageGroups"
-          className=""
+          name="accepted_ages"
+          readOnly={disabled}
         />
       </div>
 
-      <FormField
+      {/* <FormField
         control={control}
         name="additionalInfo"
         render={({ field }) => (
@@ -65,28 +63,39 @@ export function Step2AgesAndHours() {
             <FormMessage />
           </FormItem>
         )}
-      />
+      /> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <FormField
             control={control}
-            name="workDays.from"
+            name="work_days_from"
             render={({ field }) => (
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={disabled}
                 >
                   <FormLabel>{t("from-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("from-day.placeholder")} />
+                      {!isAdd ? (
+                        <span
+                          data-slot="select-value"
+                          className="text-foreground"
+                        >
+                          {days.find((d) => d.id === field.value)?.label ||
+                            t("from-day.placeholder")}
+                        </span>
+                      ) : (
+                        <SelectValue placeholder={t("from-day.placeholder")} />
+                      )}
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     {days.map((day) => (
-                      <SelectItem key={day.value} value={day.value}>
+                      <SelectItem key={day.id} value={day.id}>
                         {day.label}
                       </SelectItem>
                     ))}
@@ -101,22 +110,33 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workDays.to"
+            name="work_days_to"
             render={({ field }) => (
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={disabled}
                 >
                   <FormLabel>{t("to-day.label")}</FormLabel>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("to-day.placeholder")} />
+                      {!isAdd ? (
+                        <span
+                          data-slot="select-value"
+                          className="text-foreground"
+                        >
+                          {days.find((d) => d.id === field.value)?.label ||
+                            t("to-day.placeholder")}
+                        </span>
+                      ) : (
+                        <SelectValue placeholder={t("to-day.placeholder")} />
+                      )}
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     {days.map((day) => (
-                      <SelectItem key={day.value} value={day.value}>
+                      <SelectItem key={day.id} value={day.id}>
                         {day.label}
                       </SelectItem>
                     ))}
@@ -131,7 +151,7 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workHours.from"
+            name="work_hours_from"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("from-hour.label")}</FormLabel>
@@ -145,6 +165,7 @@ export function Step2AgesAndHours() {
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
+                      disabled={disabled}
                     />
                   </div>
                 </FormControl>
@@ -157,7 +178,7 @@ export function Step2AgesAndHours() {
         <div>
           <FormField
             control={control}
-            name="workHours.to"
+            name="work_hours_to"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("to-hour.label")}</FormLabel>
@@ -171,6 +192,7 @@ export function Step2AgesAndHours() {
                       className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden
       [&::-webkit-inner-spin-button]:hidden
       [&::-ms-clear]:hidden"
+                      disabled={disabled}
                     />
                   </div>
                 </FormControl>

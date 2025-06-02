@@ -2,14 +2,15 @@
 
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import NavbarButton from "./NavbarButton";
+import { useAuthToken } from "@/store/authStore";
 
 const Navbar = ({ children }: { children?: React.ReactNode }) => {
+  const token = useAuthToken();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
@@ -18,13 +19,13 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const t = useTranslations("navbar.links");
+  const t = useTranslations("navbar");
 
   const keys = [
     "home",
     "services",
     "nurseries",
-    "centers",
+    // "centers",
     "blog",
     "story",
     "contact",
@@ -32,8 +33,8 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
   const links = keys.map((key, index) => {
     return {
       id: index,
-      title: t(`${key}.title`),
-      path: t(`${key}.path`),
+      title: t(`links.${key}.title`),
+      path: t(`links.${key}.path`),
     };
   });
 
@@ -41,16 +42,37 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
     "hover:text-primary hover:font-bold hover:text-xl hover:text-secondary-orange duration-300 ";
 
   return (
-    <div className="container mx-auto px-4 py-2.5">
+    <div className="relative container mx-auto px-4 py-2.5">
+      {!token && (
+        <div className="z-10 fixed top-64 -left-[90px] -rotate-90 flex items-center gap-x-4">
+          <Button
+            asChild
+            size={"sm"}
+            className="bg-secondary-mint-green rounded-[8px]"
+          >
+            <Link href={"/sign-up/parent"}>{t("buttons.join-parent")}</Link>
+          </Button>
+          <Button
+            asChild
+            size={"sm"}
+            className="bg-secondary-burgundy rounded-[8px]"
+          >
+            <Link href={"/sign-up/center"}>{t("buttons.join-center")}</Link>
+          </Button>
+        </div>
+      )}
+
       <div className="flex justify-between items-center gap-x-8">
         {/* Left */}
         <div className="flex-1">
-          <Image
-            src="/assets/logos/complete_logo.svg"
-            alt="logo"
-            width={236}
-            height={59.9}
-          />
+          <Link className="inline-block w-fit" href={"/"}>
+            <Image
+              src="/assets/logos/complete_logo.svg"
+              alt="logo"
+              width={236}
+              height={59.9}
+            />
+          </Link>
         </div>
 
         {/* Mobile menu overlay */}
@@ -136,7 +158,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
           <div className="flex-1 text-right flex items-center justify-end">
             {/* Menu Icon */}
             <Button
-              className="xl:hidden mr-8 p-2 rounded-full bg-gradient-to-t from-white from-30 to-emerald-50 text-gray-700"
+              className="xl:hidden p-2 rounded-full bg-gradient-to-t from-white from-30 to-emerald-50 text-gray-700"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
               onClick={toggleMenu}
@@ -144,7 +166,7 @@ const Navbar = ({ children }: { children?: React.ReactNode }) => {
               <Menu size={24} />
             </Button>
 
-            <div className="hidden sm:block">
+            <div className="ml-8 hidden sm:block">
               {children ? children : <NavbarButton />}
             </div>
           </div>

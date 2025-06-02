@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ContactForm from "./ContactForm";
 import { useTranslations } from "next-intl";
+import { Providers } from "@/app/providers";
 
 const Contact = () => {
   const t = useTranslations("contact");
@@ -15,7 +16,10 @@ const Contact = () => {
             </h2>
             <p className="text-mid-gray">{t("subtitle")}</p>
           </div>
-          <ContactForm />
+
+          <Providers>
+            <ContactForm />
+          </Providers>
         </div>
 
         <div className="max-w-xs md:max-w-max md:order-2 grow w-full flex justify-end pointer-events-none select-none">

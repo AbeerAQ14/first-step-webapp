@@ -8,7 +8,6 @@
       "home": { "title": "Home", "path": "/" },
       "services": { "title": "Services", "path": "/services" },
       "nurseries": { "title": "Nurseries", "path": "/nurseries" },
-      "centers": { "title": "Centers", "path": "/centers" },
       "blog": { "title": "Blog", "path": "/blog" },
       "story": { "title": "Our story", "path": "/our-story" },
       "contact": { "title": "Contact us", "path": "/contact" }
@@ -16,7 +15,9 @@
     "buttons": {
       "sign-up": "Sign Up",
       "sign-in": "Sign In",
-      "already-have-account": "Already have an account?"
+      "already-have-account": "Already have an account?",
+      "join-parent": "Join as Parent",
+      "join-center": "Join as Center"
     }
   },
   "faqs": {
@@ -71,19 +72,19 @@
     "form": {
       "name": {
         "label": "Name",
-        "placeholder": ""
+        "placeholder": "Enter your full name"
       },
       "email": {
         "label": "Email",
-        "placeholder": ""
+        "placeholder": "Enter your email address"
       },
       "phone": {
         "label": "Phone Number",
-        "placeholder": ""
+        "placeholder": "Enter your phone number"
       },
       "subject": {
         "label": "Subject",
-        "placeholder": "",
+        "placeholder": "Enter message subject",
         "options": {
           "inquiry": "Inquiry",
           "complaint": "Complaint",
@@ -93,11 +94,14 @@
       },
       "message": {
         "label": "Message",
-        "placeholder": ""
+        "placeholder": "Type your message here"
       },
       "button": {
         "label": "Send",
         "loading": "Sending..."
+      },
+      "success": {
+        "message": "Message sent successfully!"
       }
     }
   },
@@ -115,6 +119,20 @@
     "subtitle": "Articles and resources about childcare and achieving work-life balance",
     "button": "View All Blogs"
   },
+  "blog": {
+    "title": "We all have an experience to share",
+    "blog": "Blog",
+    "subtitle": "Articles and resources on childcare and work-life balance"
+  },
+  "nurseries": {
+    "search": "Search for a center or nursery",
+    "filters": {
+      "all": "All",
+      "0-3": "Nurseries for Ages 0-3",
+      "3-6": "Nurseries for Ages 3-6",
+      "disabled": "Special Needs Nurseries"
+    }
+  },
   "auth": {
     "buttons": {
       "sign-in": "Sign In",
@@ -129,14 +147,17 @@
     },
     "sign-in": {
       "title": "Welcome Back, Sign In",
+      "loading": "Signing you in...",
       "form": {
         "email": {
           "label": "Email",
-          "placeholder": ""
+          "placeholder": "Enter your email address",
+          "error": "Email is required"
         },
         "password": {
           "label": "Password",
-          "placeholder": ""
+          "placeholder": "Enter your password",
+          "error": "Password is required"
         },
         "forgot-password": {
           "label": "Forgot Password?",
@@ -149,27 +170,93 @@
       "form": {
         "name": {
           "label": "Name",
-          "placeholder": ""
+          "placeholder": "Enter your full name"
         },
         "phone": {
           "label": "Phone Number",
-          "placeholder": ""
+          "placeholder": "Enter your phone number"
         },
-        "relation": {
-          "label": "Relationship",
-          "placeholder": ""
+        "national-number": {
+          "label": "National ID",
+          "placeholder": "Enter your national ID"
+        },
+        "kinship": {
+          "label": "Child Relationship",
+          "placeholder": "Enter your relationship to the child"
         },
         "email": {
           "label": "Email Address",
-          "placeholder": ""
+          "placeholder": "Enter your email address"
+        },
+        "address": {
+          "label": "Address",
+          "placeholder": "Enter your full address"
         },
         "password": {
           "label": "Password",
-          "placeholder": ""
+          "placeholder": "Enter your password"
         },
         "password-confirm": {
           "label": "Confirm Password",
-          "placeholder": ""
+          "placeholder": "Re-enter your password"
+        }
+      },
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "national-number": "National ID",
+        "childName": "Child's Name",
+        "birthDate": "Birth Date",
+        "fatherName": "Father's Name",
+        "motherName": "Mother's Name",
+        "gender": "Gender",
+        "chronicDiseases": "Chronic Diseases",
+        "diseases": "Diseases",
+        "allergies": "Allergies",
+        "childDescription": "Child Description",
+        "favoriteThings": "Favorite Things",
+        "recommendations": "Recommendations",
+        "authorizedPersons": "Authorized Persons",
+        "national_number": "National Number",
+        "kinship": "Child Relationship",
+        "comments": "Comments",
+        "nursery_name": "Nursery Name",
+        "location": "Location",
+        "city": "City",
+        "neighborhood": "Neighborhood",
+        "address": "Address",
+        "logo": "Logo",
+        "license_path": "License",
+        "commercial_record_path": "Commercial Record",
+        "nursery_type": "Nursery Type",
+        "additional_service": "Additional Services",
+        "work_days_from": "Work Days From",
+        "work_days_to": "Work Days To",
+        "work_hours_from": "Work Hours From",
+        "work_hours_to": "Work Hours To",
+        "time_of_first_period": "First Period Time",
+        "time_of_second_period": "Second Period Time",
+        "emergency_contact": "Emergency Contact",
+        "special_needs": "Special Needs",
+        "services": "Services",
+        "communication_methods": "Communication Methods",
+        "provides_food": "Provides Food",
+        "accepted_ages": "Accepted Ages",
+        "pricing": "Pricing",
+        "subject": "Subject",
+        "message": "Message",
+        "children": {
+          "kinship": "Child Relationship",
+          "national_number": "National Number"
+        }
+      },
+      "error": {
+        "validation": "Please check these required fields:",
+        "general": {
+          "field-required": "This field is required"
         }
       }
     },
@@ -179,24 +266,29 @@
         "form": {
           "name": {
             "label": "Child's Name",
-            "placeholder": ""
+            "placeholder": "Enter your child's full name"
           },
           "date-of-birth": {
             "label": "Date of Birth",
-            "placeholder": ""
+            "placeholder": "Select date of birth"
           },
           "father-name": {
             "label": "Father's Name",
-            "placeholder": ""
+            "placeholder": "Enter father's full name"
           },
           "mother-name": {
             "label": "Mother's Name",
-            "placeholder": ""
+            "placeholder": "Enter mother's full name"
+          },
+          "kinship": {
+            "label": "Child Relationship",
+            "placeholder": "Enter your relationship to the child"
           },
           "gender": {
             "title": "Child's Gender",
             "male": "Boy",
-            "female": "Girl"
+            "female": "Girl",
+            "label": "Child's Gender"
           }
         }
       },
@@ -211,16 +303,16 @@
             },
             "disease": {
               "label": "Illness Name",
-              "placeholder": ""
+              "placeholder": "Enter illness name"
             },
             "medicine": {
               "label": "Medication Name",
-              "placeholder": ""
+              "placeholder": "Enter medication name"
             },
             "procedures": {
               "label": "What actions should be taken during a sudden episode?",
               "sublabel": "(e.g., specific medications or first aid steps)",
-              "placeholder": ""
+              "placeholder": "Enter emergency procedures"
             },
             "add": "Add Chronic Illness"
           },
@@ -233,15 +325,15 @@
             },
             "allergy": {
               "label": "Type of Allergy",
-              "placeholder": ""
+              "placeholder": "Enter type of allergy"
             },
             "causes": {
               "label": "What substances or foods cause the allergy?",
-              "placeholder": ""
+              "placeholder": "Enter allergy triggers"
             },
             "procedures": {
               "label": "What actions should be taken during a sudden episode?",
-              "placeholder": ""
+              "placeholder": "Enter emergency procedures"
             },
             "add": "Add Allergy Type"
           }
@@ -252,15 +344,15 @@
         "form": {
           "description": {
             "label": "Describe your child in 3 words",
-            "placeholder": ""
+            "placeholder": "Enter 3 descriptive words"
           },
           "likes": {
             "label": "Things your child likes",
-            "placeholder": ""
+            "placeholder": "Enter things your child enjoys"
           },
           "recommendations": {
             "label": "Do you have any recommendations regarding your child?",
-            "placeholder": ""
+            "placeholder": "Enter any special recommendations"
           }
         }
       },
@@ -269,15 +361,15 @@
         "form": {
           "authorize": {
             "label": "Authorized Person's Name",
-            "placeholder": ""
+            "placeholder": "Enter authorized person's full name"
           },
           "identity": {
             "label": "Authorized Person's ID Number",
-            "placeholder": ""
+            "placeholder": "Enter ID number"
           },
           "comment": {
             "label": "Any comments or notes?",
-            "placeholder": ""
+            "placeholder": "Enter any additional notes"
           },
           "add": "Add Authorized Person"
         }
@@ -288,41 +380,45 @@
       "1": {
         "title": "Basic Information",
         "form": {
-          "arabic-name": {
-            "label": "Center Name in Arabic",
-            "placeholder": ""
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter your full name"
           },
-          "english-name": {
-            "label": "Center Name in English",
-            "placeholder": ""
+          "nursery-name": {
+            "label": "Center Name",
+            "placeholder": "Enter center name"
           },
           "phone": {
             "label": "Mobile Number",
-            "placeholder": ""
+            "placeholder": "Enter mobile number"
           },
           "email": {
             "label": "Email",
-            "placeholder": ""
+            "placeholder": "Enter email address"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Enter password"
+          },
+          "password-confirm": {
+            "label": "Confirm Password",
+            "placeholder": "Re-enter password"
           },
           "city": {
             "label": "City",
-            "placeholder": ""
+            "placeholder": "Enter city name"
           },
           "neighborhood": {
             "label": "Neighborhood",
-            "placeholder": ""
+            "placeholder": "Enter neighborhood name"
           },
-          "street": {
-            "label": "Street",
-            "placeholder": ""
+          "address": {
+            "label": "Address",
+            "placeholder": "Enter full address"
           },
           "location": {
             "label": "Location Link",
-            "placeholder": ""
-          },
-          "branches": {
-            "label": "Branch Names",
-            "placeholder": ""
+            "placeholder": "Enter Google Maps link"
           },
           "type": {
             "label": "Center Type",
@@ -348,7 +444,7 @@
           "other": {
             "label": "Other Services",
             "sublabel": "(e.g., toilet training)",
-            "placeholder": ""
+            "placeholder": "Enter additional services"
           }
         }
       },
@@ -365,23 +461,23 @@
           },
           "addition": {
             "label": "Is there anything else you'd like to add?",
-            "placeholder": ""
+            "placeholder": "Enter any additional information"
           },
           "from-day": {
             "label": "From Day",
-            "placeholder": ""
+            "placeholder": "Select start day"
           },
           "to-day": {
             "label": "To Day",
-            "placeholder": ""
+            "placeholder": "Select end day"
           },
           "from-hour": {
             "label": "From Hour",
-            "placeholder": ""
+            "placeholder": "Select start time"
           },
           "to-hour": {
             "label": "To Hour",
-            "placeholder": ""
+            "placeholder": "Select end time"
           },
           "days": {
             "saturday": "Saturday",
@@ -405,7 +501,7 @@
             }
           },
           "communication-methods": {
-            "label": "Children’s Communication Methods with Parents",
+            "label": "Children's Communication Methods with Parents",
             "options": {
               "voice": "Voice",
               "text": "Text",
@@ -432,11 +528,12 @@
         "form": {
           "business-license": "Practice License",
           "commercial-registration": "Commercial Registration",
+          "logo": "Center Logo",
           "file-placeholder": "Choose File",
-          "description": "Required licenses to ensure and confirm the center’s credibility",
+          "description": "Required licenses to ensure and confirm the center's credibility",
           "comments": {
             "label": "Do you have any comments or notes?",
-            "placeholder": ""
+            "placeholder": "Enter any additional comments"
           }
         }
       }
@@ -446,7 +543,7 @@
       "form": {
         "email": {
           "label": "Email",
-          "placeholder": ""
+          "placeholder": "Enter your email address"
         }
       }
     },
@@ -464,11 +561,11 @@
       "form": {
         "password": {
           "label": "New Password",
-          "placeholder": ""
+          "placeholder": "Enter your new password"
         },
         "password-confirm": {
           "label": "Confirm Password",
-          "placeholder": ""
+          "placeholder": "Re-enter your new password"
         }
       }
     },
@@ -476,5 +573,524 @@
       "have": "Already have an account?",
       "dont-have": "Don't have an account?"
     }
+  },
+  "options": {
+    "centerTypes": {
+      "nursing": "Care",
+      "educational": "Educational",
+      "support and rehabilitation": "Support and Rehabilitation"
+    },
+    "centerServices": {
+      "education": "Educational",
+      "kindergarten": "Kindergarten",
+      "after-school": "After School",
+      "special-needs": "Special Needs",
+      "therapy": "Physical Therapy",
+      "speech-therapy": "Speech Therapy",
+      "occupational-therapy": "Occupational Therapy",
+      "care": "Care"
+    },
+    "centerAges": {
+      "0-3": "0 to 3 years",
+      "3-6": "3 to 6 years",
+      "disabled": "Children with Special Needs"
+    },
+    "days": {
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday"
+    },
+    "centerCommunicationMethods": {
+      "phone": "Voice",
+      "sms": "Text",
+      "video": "Video"
+    }
+  },
+  "headline": {
+    "slogan": "Because their first step... is your biggest decision!",
+    "brandStatement": "We chose <brandName>First Step</brandName> as our name."
+  },
+  "vision-mission": {
+    "vision": {
+      "title": "Our Vision",
+      "content": "We believe childcare is more than a service — it's an experience that shapes families' lives. That's why we're redefining it by combining technology with human values, offering smart solutions that bring peace of mind and give every child a strong, confident start."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "We aim to be more than a platform — a trusted companion for every family seeking the best care. We connect families with top nurseries and rehab centers, offering a smooth, reassuring experience that makes finding the right environment easier, safer, and more comforting."
+    }
+  },
+  "error": {
+    "title": "Oops! Something went wrong.",
+    "default-message": "We couldn't process your request.",
+    "description": "Please try refreshing the page or return to the home screen.",
+    "refresh": "Refresh Page",
+    "home": "Go to Homepage"
+  },
+  "shared": {
+    "status": {
+      "rejected": "Rejected",
+      "waitingForConfirmation": "Waiting for Confirmation",
+      "waitingForPayment": "Waiting for Payment",
+      "confirmed": "Payment Confirmed"
+    }
+  },
+  "dashboard": {
+    "center": {
+      "sidebar": {
+        "home": "Home",
+        "branches": "My Branches",
+        "children-files": "Children Files",
+        "bookings": "Bookings",
+        "daily-reports": "Daily Reports",
+        "site-edit": "Edit Site",
+        "ad-or-blog-request": "Ad or Blog Request",
+        "notifications": "Notifications",
+        "team": "Team"
+      },
+      "ad-or-blog-request": {
+        "title": "Advertisements",
+        "request-ad": "Request Ad",
+        "request-blog": "Request Blog",
+        "blogs": "Blogs",
+        "ad": {
+          "title": "Request Advertisement",
+          "free-notice": "Your first advertisement for your nursery/center is 100% free on the homepage for one day",
+          "description": "Attract parents with an advertisement that appears at the top of the homepage. You can specify the number of days the advertisement will appear",
+          "form": {
+            "image": {
+              "label": "Request Image",
+              "placeholder": "Upload activity image"
+            },
+            "title": {
+              "label": "Title",
+              "placeholder": "Title"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Description"
+            },
+            "start_date": {
+              "label": "Start Date"
+            },
+            "end_date": {
+              "label": "End Date"
+            },
+            "submit": "Send Request",
+            "cancel": "Cancel",
+            "sending": "Sending...",
+            "success": {
+              "title": "Request Sent Successfully",
+              "description": "Your request will be reviewed shortly"
+            },
+            "error": {
+              "title": "Error Occurred",
+              "description": "We couldn't send your request. Please try again"
+            }
+          }
+        },
+        "blog": {
+          "title": "Request Blog",
+          "description": "Write your blog completely free",
+          "form": {
+            "mainImage": {
+              "label": "Blog Image",
+              "placeholder": "Upload activity image"
+            },
+            "cardImage": {
+              "label": "Cover Image",
+              "placeholder": "Upload activity image"
+            },
+            "title": {
+              "label": "Title",
+              "placeholder": "Title"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Description"
+            },
+            "content": {
+              "label": "Blog"
+            },
+            "submit": "Send Request",
+            "cancel": "Cancel",
+            "sending": "Sending...",
+            "success": {
+              "title": "Request Sent Successfully",
+              "description": "Your request will be reviewed shortly"
+            },
+            "error": {
+              "title": "Error Occurred",
+              "description": "We couldn't fetch the blogs data. Please try again",
+              "retry": "Try Again"
+            }
+          }
+        }
+      },
+      "branches": {
+        "title": "Branches",
+        "add": "Add Branch",
+        "view": "View Branch",
+        "edit": "Edit Branch",
+        "delete": "Delete Branch",
+        "form": {
+          "buttons": {
+            "add": "Add Branch",
+            "edit": "Edit Branch",
+            "cancel": "Cancel"
+          }
+        },
+        "card": {
+          "address": "Address",
+          "children": "Children",
+          "bookings": "Bookings",
+          "accepted_ages": "Accepted Ages",
+          "available_services": "Available Services",
+          "child_count": "{count} children",
+          "booking_count": "{count} bookings"
+        },
+        "error": {
+          "title": "Could not load branches",
+          "description": "An unexpected error occurred while loading the data. Check your internet connection, or try again later.",
+          "retry": "Try Again"
+        },
+        "admin": {
+          "title": "Create Branch Admin Account",
+          "success": "{branchName} branch has been created successfully",
+          "form": {
+            "name": {
+              "label": "Name",
+              "placeholder": "Enter admin name"
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Enter admin email"
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Enter admin password"
+            },
+            "password-confirm": {
+              "label": "Confirm Password",
+              "placeholder": "Re-enter admin password"
+            }
+          }
+        },
+        "delete_dialog": {
+          "title": "Delete Branch",
+          "description": "Are you sure you want to delete {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "success": "Branch deleted successfully",
+          "error": "Failed to delete branch"
+        }
+      },
+      "notifications": {
+        "title": "Schedule Notifications",
+        "form": {
+          "type": {
+            "label": "Choose Notification",
+            "placeholder": "Sleep Notification",
+            "options": {
+              "sleep": "Sleep Notification",
+              "breakfast": "Breakfast Notification"
+            }
+          },
+          "day": {
+            "label": "Day",
+            "placeholder": "Saturday"
+          },
+          "time": {
+            "label": "Time",
+            "placeholder": ""
+          },
+          "recipients": {
+            "error": "Recipients are required"
+          },
+          "submit": "Send Notification"
+        }
+      },
+      "team": {
+        "title": "Team",
+        "add": {
+          "button": "Add Member",
+          "title": "Add Team Member"
+        },
+        "edit": {
+          "title": "Edit Member Information"
+        },
+        "form": {
+          "name": {
+            "label": "Member Name",
+            "placeholder": "Enter team member name"
+          },
+          "branch": {
+            "label": "Branch",
+            "placeholder": "Select branch"
+          },
+          "job": {
+            "label": "Job Title",
+            "placeholder": "Enter job title"
+          },
+          "image": {
+            "placeholder": "Upload member photo"
+          },
+          "buttons": {
+            "add": "Add Member",
+            "cancel": "Cancel",
+            "save": "Save Changes",
+            "delete": "Delete"
+          }
+        },
+        "delete": {
+          "title": "Delete Team Member",
+          "description": "Are you sure you want to delete this team member? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "children": {
+        "title": "Children",
+        "form": {
+          "sections": {
+            "parent": "Parent Information",
+            "child": "Child Information",
+            "diseases": "Chronic Diseases",
+            "allergies": "Allergies",
+            "recommendations": "Child-Specific Recommendations",
+            "authorized": "Authorized Persons"
+          },
+          "buttons": {
+            "edit": "Edit Child File",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    },
+    "header": {
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "search": "Search"
+    },
+    "secondary-sidebar": {
+      "upcoming-occasions": "Upcoming Occasions",
+      "birthdays": "Birthdays",
+      "tasks": "Tasks",
+      "tasks-progress": "{completed} of {total}",
+      "add": {
+        "occasion": "New Occasion",
+        "birthday": "New Birthday",
+        "task": "New Task"
+      },
+      "empty": {
+        "add-now": "Add Now"
+      },
+      "loading": "Loading Data..."
+    },
+    "charts": {
+      "children": {
+        "title": "Number of Children",
+        "valueLabel": "child",
+        "capacityLabel": "Nursery Capacity",
+        "comparison": {
+          "title": "Children Count Comparison",
+          "months": {
+            "april": "April",
+            "march": "March",
+            "february": "February"
+          }
+        }
+      },
+      "bookings": {
+        "title": "Bookings Comparison",
+        "valueLabel": "SAR"
+      },
+      "revenue": {
+        "title": "Revenue for Month {month}",
+        "currency": "SAR",
+        "month": "Month {month}"
+      },
+      "center": {
+        "title": "Center Dashboard",
+        "cards": {
+          "branches": "Number of Branches",
+          "parents": "Number of Parents",
+          "team": "Number of Team Members"
+        },
+        "comparison": {
+          "title": "Monthly Comparison",
+          "valueLabel": "SAR"
+        },
+        "children": {
+          "title": "Children Comparison",
+          "valueLabel": "child"
+        }
+      },
+      "noData": {
+        "title": "Welcome to Your Dashboard",
+        "description": "Start your journey with us by following these steps to set up your center",
+        "steps": {
+          "addBranch": {
+            "title": "Add a Branch",
+            "description": "Add your center's branches and specify the services available at each branch"
+          },
+          "addTeam": {
+            "title": "Add Team Members",
+            "description": "Add your team members and assign their roles at each branch"
+          },
+          "startBooking": {
+            "title": "Start Taking Bookings",
+            "description": "Begin accepting children's bookings and organizing your center's schedule"
+          }
+        }
+      }
+    },
+    "tables": {
+      "shared": {
+        "status": {
+          "confirmed": "Payment Confirmed",
+          "waitingForPayment": "Waiting for Payment",
+          "waitingForConfirmation": "Waiting for Confirmation",
+          "rejected": "Rejected",
+          "selectChild": "Select Child"
+        }
+      },
+      "parents": {
+        "headers": {
+          "parentName": "Parent Name",
+          "phone": "Phone Number",
+          "child": "Child",
+          "branch": "Branch",
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
+        },
+        "selectChild": "Select Child",
+        "allChildren": "All Children",
+        "title": "Parents"
+      },
+      "ads": {
+        "headers": {
+          "adNumber": "Ad Number",
+          "type": "Ad Type",
+          "startDate": "Ad Start Date",
+          "endDate": "Ad End Date",
+          "branch": "Branch Name",
+          "amount": "Amount",
+          "reservationStatus": "Reservation Status"
+        },
+        "types": {
+          "free": "Free",
+          "paid": "Paid"
+        },
+        "currency": "SAR",
+        "title": "Advertisements",
+        "error": {
+          "title": "Error Occurred",
+          "description": "We couldn't fetch the ads data. Please try again"
+        }
+      },
+      "children": {
+        "headers": {
+          "childNumber": "Child Number",
+          "childName": "Child Name",
+          "dateOfBirth": "Date of Birth",
+          "parentName": "Parent Name",
+          "branch": "Branch",
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
+        }
+      },
+      "center-bookings": {
+        "headers": {
+          "childNumber": "Child Number",
+          "parentName": "Parent Name",
+          "startDate": "Booking Start Date",
+          "endDate": "Booking End Date",
+          "child": "Child",
+          "branch": "Branch",
+          "amount": "Amount",
+          "reservationStatus": "Reservation Status"
+        },
+        "currency": "SAR"
+      },
+      "center-reports": {
+        "headers": {
+          "parentName": "Parent Name",
+          "phone": "Phone",
+          "child": "Child",
+          "reportDate": "Report Date",
+          "control": "Actions"
+        },
+        "title": "Daily Reports"
+      },
+      "top-bookings": {
+        "title": "Branch Ranking by Monthly Bookings",
+        "columns": {
+          "arrangement": "Arrangement",
+          "nursery": "Nursery Name",
+          "branch": "Branch",
+          "count": "Booking Count",
+          "income": "Income",
+          "currency": "SAR"
+        }
+      }
+    },
+    "children": {
+      "search": {
+        "placeholder": "Search by nursery / child name / parent"
+      },
+      "invite": "Invite Parent",
+      "title": "Children"
+    },
+    "center-bookings": {
+      "title": "Bookings"
+    },
+    "center-reports": {
+      "title": "Daily Reports",
+      "send": "Send Report",
+      "report": {
+        "title": "Daily Report",
+        "send": "Send Report",
+        "cancel": "Cancel",
+        "error": "Failed to load report data",
+        "retry": "Retry",
+        "form": {
+          "activities": {
+            "label": "Activities",
+            "placeholder": "Enter daily activities"
+          },
+          "behavior": {
+            "label": "Behavior",
+            "placeholder": "Enter behavior notes"
+          },
+          "meals": {
+            "label": "Meals",
+            "placeholder": "Enter meal details"
+          },
+          "napTime": {
+            "label": "Nap Time",
+            "placeholder": "Enter nap time details"
+          },
+          "additionalNotes": {
+            "label": "Additional Notes",
+            "placeholder": "Enter any additional notes"
+          },
+          "recipients": {
+            "label": "Recipients",
+            "placeholder": "Select report recipients"
+          }
+        },
+        "success": "Report sent successfully",
+        "sending": "Sending...",
+        "noChildSelected": "Please select at least one child"
+      }
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }

@@ -6,8 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { CommonQuestion } from "@/types";
 
-const FAQs = () => {
+const FAQs = ({ commonQuestions }: { commonQuestions: CommonQuestion[] }) => {
   const locale = useLocale();
   const t = useTranslations("faqs");
 
@@ -39,13 +40,17 @@ const FAQs = () => {
           />
         </div>
 
-        <FAQAccordion />
+        <FAQAccordion commonQuestions={commonQuestions} />
       </div>
     </section>
   );
 };
 
-const FAQAccordion = () => {
+const FAQAccordion = ({
+  commonQuestions,
+}: {
+  commonQuestions: CommonQuestion[];
+}) => {
   const t = useTranslations("faqs.questions");
 
   return (

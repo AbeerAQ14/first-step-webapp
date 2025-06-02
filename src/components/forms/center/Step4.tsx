@@ -13,7 +13,7 @@ import {
 import { FileUploader } from "../FileUploader";
 import type { CenterStep4FormData } from "@/lib/schemas";
 
-export function Step4Permits() {
+export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
   const t = useTranslations("auth.center-signup.4.form");
   const { control } = useFormContext<CenterStep4FormData>();
 
@@ -22,7 +22,7 @@ export function Step4Permits() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={control}
-          name="businessLicense"
+          name="license_path"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("business-license")}</FormLabel>
@@ -31,6 +31,7 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept=".pdf"
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -40,7 +41,7 @@ export function Step4Permits() {
 
         <FormField
           control={control}
-          name="commercialRegistration"
+          name="commercial_record_path"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("commercial-registration")}</FormLabel>
@@ -49,6 +50,26 @@ export function Step4Permits() {
                   value={field.value}
                   onChange={field.onChange}
                   accept=".pdf"
+                  disabled={disabled}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("logo")}</FormLabel>
+              <FormControl>
+                <FileUploader
+                  value={field.value}
+                  onChange={field.onChange}
+                  accept="image/png, image/jpeg, image/jpg"
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
@@ -72,6 +93,7 @@ export function Step4Permits() {
                 placeholder={t("comments.placeholder")}
                 className="min-h-[100px]"
                 {...field}
+                disabled={disabled}
               />
             </FormControl>
             <FormMessage />

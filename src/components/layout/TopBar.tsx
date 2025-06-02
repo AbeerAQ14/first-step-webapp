@@ -19,32 +19,32 @@ const TopBar = () => {
     {
       title: "X",
       icon: Icons.twitter,
-      link: "/",
+      link: "https://x.com/firststepapp",
     },
     {
-      title: "Linkedin",
+      title: "LinkedIn",
       icon: Icons.linkedin,
-      link: "/",
+      link: "https://www.linkedin.com/company/firststepapp",
     },
     {
       title: "Facebook",
       icon: Icons.facebook,
-      link: "/",
+      link: "https://www.facebook.com/firststepapp",
     },
     {
       title: "Snapchat",
       icon: Icons.snapchat,
-      link: "/",
+      link: "https://www.snapchat.com/add/first_stepsa",
     },
     {
       title: "Instagram",
       icon: Icons.instagram,
-      link: "/",
+      link: "https://www.instagram.com/firststepapp.sa",
     },
     {
-      title: "Tiktok",
+      title: "TikTok",
       icon: Icons.tiktok,
-      link: "/",
+      link: "https://www.tiktok.com/@firststepapp",
     },
   ];
 
@@ -55,9 +55,9 @@ const TopBar = () => {
 
         <div className="flex items-center gap-x-4">
           {icons.map((item) => (
-            <Link key={item.title} href={item.link}>
-              <item.icon className="fill-white" />
-            </Link>
+            <a target="_blank" key={item.title} href={item.link}>
+              <item.icon className="text-white size-4" />
+            </a>
           ))}
         </div>
       </div>

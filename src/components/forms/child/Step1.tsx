@@ -31,7 +31,7 @@ export default function Step1ChildInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder={t("name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,7 +63,7 @@ export default function Step1ChildInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder={t("father-name.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,7 +80,24 @@ export default function Step1ChildInfo() {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder={t("mother-name.placeholder")} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="kinship"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("kinship.label")}
+                <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder={t("kinship.placeholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -8,7 +8,6 @@
       "home": { "title": "الرئيسية", "path": "/" },
       "services": { "title": "خدماتنا", "path": "/services" },
       "nurseries": { "title": "الحضانات", "path": "/nurseries" },
-      "centers": { "title": "المراكز", "path": "/centers" },
       "blog": { "title": "المدونة", "path": "/blog" },
       "story": { "title": "قصتنا", "path": "/our-story" },
       "contact": { "title": "تواصل معنا", "path": "/contact" }
@@ -16,7 +15,9 @@
     "buttons": {
       "sign-up": "إنشاء حساب",
       "sign-in": "سجل دخولك",
-      "already-have-account": "لديك حساب بالفعل؟"
+      "already-have-account": "لديك حساب بالفعل؟",
+      "join-parent": "انضم كولي أمر",
+      "join-center": "انضم كمركز"
     }
   },
   "faqs": {
@@ -68,33 +69,36 @@
     "form": {
       "name": {
         "label": "الاسم",
-        "placeholder": ""
+        "placeholder": "أدخل اسمك الكامل"
       },
       "email": {
-        "label": "الايميل",
-        "placeholder": ""
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
       },
       "phone": {
         "label": "رقم الجوال",
-        "placeholder": ""
+        "placeholder": "أدخل رقم جوالك"
       },
       "subject": {
-        "label": "موضوع الرسالة",
-        "placeholder": "",
+        "label": "الموضوع",
+        "placeholder": "أدخل موضوع الرسالة",
         "options": {
           "inquiry": "استفسار",
           "complaint": "شكوى",
           "suggestion": "اقتراح",
-          "other": "اخرى"
+          "other": "أخرى"
         }
       },
       "message": {
         "label": "الرسالة",
-        "placeholder": ""
+        "placeholder": "اكتب رسالتك هنا"
       },
       "button": {
         "label": "إرسال",
-        "loading": "جارى الإرسال"
+        "loading": "جاري الإرسال..."
+      },
+      "success": {
+        "message": "تم إرسال الرسالة بنجاح!"
       }
     }
   },
@@ -112,6 +116,20 @@
     "subtitle": "مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة الأسرية",
     "button": "عرض كل المدونات"
   },
+  "blog": {
+    "title": "كل منا لديه تجربة يشاركها",
+    "blog": "مدونة",
+    "subtitle": "مقالات وموارد حول رعاية الأطفال وتحقيق التوازن بين العمل والحياة الأسرية"
+  },
+  "nurseries": {
+    "search": "ابحث هم المركز أو الحضانة",
+    "filters": {
+      "all": "الكل",
+      "0-3": "حضانات من 0 إلى 3 سنوات",
+      "3-6": "حضانات من 3 إلى 6 سنوات",
+      "disabled": "حضانات الاحتياجات الخاصة"
+    }
+  },
   "auth": {
     "buttons": {
       "sign-in": "سجل دخولك",
@@ -126,14 +144,17 @@
     },
     "sign-in": {
       "title": "مرحبًا مرة أخرى، سجل دخولك",
+      "loading": "جارى تسجيل دخولك...",
       "form": {
         "email": {
-          "label": "البريد الإلكترومي",
-          "placeholder": ""
+          "label": "البريد الإلكتروني",
+          "placeholder": "أدخل بريدك الإلكتروني",
+          "error": "البريد الإلكتروني مطلوب"
         },
         "password": {
-          "label": "كلمة السر",
-          "placeholder": ""
+          "label": "كلمة المرور",
+          "placeholder": "أدخل كلمة المرور",
+          "error": "كلمة المرور مطلوبة"
         },
         "forgot-password": {
           "label": "هل نسيت كلمة المرور؟",
@@ -146,27 +167,92 @@
       "form": {
         "name": {
           "label": "الاسم",
-          "placeholder": ""
+          "placeholder": "أدخل اسمك الكامل"
         },
         "phone": {
           "label": "رقم الجوال",
-          "placeholder": ""
+          "placeholder": "أدخل رقم جوالك"
         },
-        "relation": {
+        "national-number": {
+          "label": "رقم الهوية",
+          "placeholder": "أدخل رقم هويتك"
+        },
+        "kinship": {
           "label": "صلة القرابة",
-          "placeholder": ""
+          "placeholder": "أدخل صلة قرابتك"
         },
         "email": {
           "label": "البريد الإلكتروني",
-          "placeholder": ""
+          "placeholder": "أدخل بريدك الإلكتروني"
+        },
+        "address": {
+          "label": "العنوان",
+          "placeholder": "أدخل عنوانك الكامل"
         },
         "password": {
           "label": "كلمة السر",
-          "placeholder": ""
+          "placeholder": "أدخل كلمة السر"
         },
         "password-confirm": {
           "label": "تأكيد كلمة السر",
-          "placeholder": ""
+          "placeholder": "أعد إدخال كلمة السر"
+        }
+      },
+      "fields": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الجوال",
+        "password": "كلمة المرور",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "national_number": "رقم الهوية",
+        "childName": "اسم الطفل",
+        "birthDate": "تاريخ الميلاد",
+        "fatherName": "اسم الأب",
+        "motherName": "اسم الأم",
+        "gender": "الجنس",
+        "chronicDiseases": "الأمراض المزمنة",
+        "diseases": "الأمراض",
+        "allergies": "الحساسية",
+        "childDescription": "وصف الطفل",
+        "favoriteThings": "الأشياء المفضلة",
+        "recommendations": "التوصيات",
+        "authorizedPersons": "الأشخاص المصرح لهم",
+        "kinship": "صلة القرابة",
+        "comments": "ملاحظات",
+        "nursery_name": "اسم الحضانة",
+        "location": "الموقع",
+        "city": "المدينة",
+        "neighborhood": "الحي",
+        "address": "العنوان",
+        "logo": "الشعار",
+        "license_path": "الرخصة",
+        "commercial_record_path": "السجل التجاري",
+        "nursery_type": "نوع الحضانة",
+        "additional_service": "الخدمات الإضافية",
+        "work_days_from": "أيام العمل من",
+        "work_days_to": "أيام العمل إلى",
+        "work_hours_from": "ساعات العمل من",
+        "work_hours_to": "ساعات العمل إلى",
+        "time_of_first_period": "وقت الفترة الأولى",
+        "time_of_second_period": "وقت الفترة الثانية",
+        "emergency_contact": "الاتصال في حالات الطوارئ",
+        "special_needs": "الاحتياجات الخاصة",
+        "services": "الخدمات",
+        "communication_methods": "وسائل التواصل",
+        "provides_food": "توفير الطعام",
+        "accepted_ages": "الأعمار المقبولة",
+        "pricing": "الأسعار",
+        "subject": "الموضوع",
+        "message": "الرسالة",
+        "children": {
+          "kinship": "صلة القرابة بالطفل",
+          "national_number": "رقم الهوية"
+        }
+      },
+      "error": {
+        "validation": "يرجى التحقق من هذه الحقول المطلوبة:",
+        "general": {
+          "field-required": "هذا الحقل مطلوب"
         }
       }
     },
@@ -176,24 +262,29 @@
         "form": {
           "name": {
             "label": "اسم الطفل",
-            "placeholder": ""
+            "placeholder": "أدخل اسم طفلك الكامل"
           },
           "date-of-birth": {
             "label": "تاريخ الميلاد",
-            "placeholder": ""
+            "placeholder": "اختر تاريخ الميلاد"
           },
           "father-name": {
             "label": "اسم الأب",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الأب الكامل"
           },
           "mother-name": {
             "label": "اسم الأم",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الأم الكامل"
+          },
+          "kinship": {
+            "label": "صلة القرابة",
+            "placeholder": "أدخل صلة قرابتك"
           },
           "gender": {
             "title": "جنس الطفل",
             "male": "ولد",
-            "female": "بنت"
+            "female": "بنت",
+            "label": "جنس الطفل"
           }
         }
       },
@@ -208,16 +299,16 @@
             },
             "disease": {
               "label": "اسم المرض",
-              "placeholder": ""
+              "placeholder": "أدخل اسم المرض"
             },
             "medicine": {
               "label": "اسم الدواء",
-              "placeholder": ""
+              "placeholder": "أدخل اسم الدواء"
             },
             "procedures": {
               "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
               "sublabel": "(مثل أدوية معينة أو خطوات إسعافية)",
-              "placeholder": ""
+              "placeholder": "أدخل الإجراءات الطارئة"
             },
             "add": "إضافة مرض مزمن"
           },
@@ -230,15 +321,15 @@
             },
             "allergy": {
               "label": "نوع الحساسية",
-              "placeholder": ""
+              "placeholder": "أدخل نوع الحساسية"
             },
             "causes": {
               "label": "ما هي المواد أو الأطعمة المسببة للحساسية؟",
-              "placeholder": ""
+              "placeholder": "أدخل مسببات الحساسية"
             },
             "procedures": {
               "label": "ما هي الإجراءات الواجب اتخاذها في حالة حدوث نوبة مفاجئة؟",
-              "placeholder": ""
+              "placeholder": "أدخل الإجراءات الطارئة"
             },
             "add": "إضافة نوع حساسية"
           }
@@ -249,15 +340,15 @@
         "form": {
           "description": {
             "label": "صف لنا طفلك في 3 كلمات",
-            "placeholder": ""
+            "placeholder": "أدخل 3 كلمات وصفية"
           },
           "likes": {
             "label": "أشياء يحبها طفلك",
-            "placeholder": ""
+            "placeholder": "أدخل الأشياء التي يستمتع بها طفلك"
           },
           "recommendations": {
             "label": "هل لديك أي توصيات تتعلق بطفلك؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي توصيات خاصة"
           }
         }
       },
@@ -266,15 +357,15 @@
         "form": {
           "authorize": {
             "label": "اسم الشخص المفوض",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الشخص المفوض الكامل"
           },
           "identity": {
             "label": "رقم هوية الشخص المفوض",
-            "placeholder": ""
+            "placeholder": "أدخل رقم الهوية"
           },
           "comment": {
             "label": "هل لديك أي تعليق أو ملاحظة",
-            "placeholder": ""
+            "placeholder": "أدخل أي ملاحظات إضافية"
           },
           "add": "إضافة شخص مفوض"
         }
@@ -285,41 +376,45 @@
       "1": {
         "title": "المعلومات الأساسية",
         "form": {
-          "arabic-name": {
-            "label": "اسم المركز باللغة العربية",
-            "placeholder": ""
+          "name": {
+            "label": "الاسم",
+            "placeholder": "أدخل اسمك الكامل"
           },
-          "english-name": {
-            "label": "اسم المركز باللغة الإنجليزية",
-            "placeholder": ""
+          "nursery-name": {
+            "label": "اسم المركز",
+            "placeholder": "أدخل اسم المركز"
           },
           "phone": {
             "label": "رقم الجوال",
-            "placeholder": ""
+            "placeholder": "أدخل رقم الجوال"
           },
           "email": {
             "label": "البريد الإلكتروني",
-            "placeholder": ""
+            "placeholder": "أدخل البريد الإلكتروني"
+          },
+          "password": {
+            "label": "كلمة السر",
+            "placeholder": "أدخل كلمة السر"
+          },
+          "password-confirm": {
+            "label": "تأكيد كلمة السر",
+            "placeholder": "أعد إدخال كلمة السر"
           },
           "city": {
             "label": "المدينة",
-            "placeholder": ""
+            "placeholder": "أدخل اسم المدينة"
           },
           "neighborhood": {
             "label": "الحي",
-            "placeholder": ""
+            "placeholder": "أدخل اسم الحي"
           },
-          "street": {
-            "label": "الشارع",
-            "placeholder": ""
+          "address": {
+            "label": "العنوان",
+            "placeholder": "أدخل العنوان الكامل"
           },
           "location": {
             "label": "رابط الموقع الجغرافي",
-            "placeholder": ""
-          },
-          "branches": {
-            "label": "أسماء الفروع",
-            "placeholder": ""
+            "placeholder": "أدخل رابط خرائط جوجل"
           },
           "type": {
             "label": "نوع المركز",
@@ -345,7 +440,7 @@
           "other": {
             "label": "خدمات أخرى",
             "sublabel": "(مثل التدريب على دورات المياه)",
-            "placeholder": ""
+            "placeholder": "أدخل الخدمات الإضافية"
           }
         }
       },
@@ -362,23 +457,23 @@
           },
           "addition": {
             "label": "هل يوجد شئ تريد إضافته؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي معلومات إضافية"
           },
           "from-day": {
             "label": "من يوم",
-            "placeholder": ""
+            "placeholder": "اختر يوم البداية"
           },
           "to-day": {
             "label": "إلى يوم",
-            "placeholder": ""
+            "placeholder": "اختر يوم النهاية"
           },
           "from-hour": {
             "label": "من ساعة",
-            "placeholder": ""
+            "placeholder": "اختر وقت البداية"
           },
           "to-hour": {
             "label": "إلى ساعة",
-            "placeholder": ""
+            "placeholder": "اختر وقت النهاية"
           },
           "days": {
             "saturday": "السبت",
@@ -419,7 +514,7 @@
           "food-details": {
             "name": "اسم الطعام",
             "ingredients": "المكونات",
-            "drink": "المكونات",
+            "drink": "العصائر",
             "add": "إضافة وجبة"
           }
         }
@@ -429,11 +524,12 @@
         "form": {
           "business-license": "رخصة المزاولة",
           "commercial-registration": "السجل التجاري",
+          "logo": "شعار المركز",
           "file-placeholder": "اختر ملف",
           "description": "التصريحات المطلوبة لضمان وتأكيد موثوقية المركز",
           "comments": {
             "label": "هل لديك أي تعليق أو ملاحظة؟",
-            "placeholder": ""
+            "placeholder": "أدخل أي تعليقات إضافية"
           }
         }
       }
@@ -443,7 +539,7 @@
       "form": {
         "email": {
           "label": "البريد الإلكتروني",
-          "placeholder": ""
+          "placeholder": "أدخل بريدك الإلكتروني"
         }
       }
     },
@@ -460,12 +556,12 @@
       "title": "إنشاء كلمة سر جديدة",
       "form": {
         "password": {
-          "label": "كلمة السر الجديدة",
-          "placeholder": ""
+          "label": "كلمة المرور الجديدة",
+          "placeholder": "أدخل كلمة المرور الجديدة"
         },
         "password-confirm": {
-          "label": "تأكيد كلمة السر",
-          "placeholder": ""
+          "label": "تأكيد كلمة المرور",
+          "placeholder": "أعد إدخال كلمة المرور الجديدة"
         }
       }
     },
@@ -473,5 +569,524 @@
       "have": "ليدك حساب بالفعل؟",
       "dont-have": "ليس لديك حساب؟"
     }
+  },
+  "options": {
+    "centerTypes": {
+      "nursing": "رعاية",
+      "educational": "تعليمي",
+      "support and rehabilitation": "الدعم والتأهيل"
+    },
+    "centerServices": {
+      "education": "تعليمي",
+      "kindergarten": "روضة",
+      "after-school": "بعد المدرسة",
+      "special-needs": "ذوي الاحتياجات الخاصة",
+      "therapy": "علاج طبيعي",
+      "speech-therapy": "علاج النطق",
+      "occupational-therapy": "علاج وظيفي",
+      "care": "رعاية"
+    },
+    "centerAges": {
+      "0-3": "من سن 0 إلى 3 سنوات",
+      "3-6": "من سن 3 إلى 6 سنوات",
+      "disabled": "ذوي الاحتياجات الخاصة"
+    },
+    "days": {
+      "saturday": "السبت",
+      "sunday": "الأحد",
+      "monday": "الاثنين",
+      "tuesday": "الثلاثاء",
+      "wednesday": "الأربعاء",
+      "thursday": "الخميس",
+      "friday": "الجمعة"
+    },
+    "centerCommunicationMethods": {
+      "phone": "تواصل صوتي",
+      "sms": "تواصل نصي",
+      "video": "تواصل فيديو"
+    }
+  },
+  "headline": {
+    "slogan": "لأن أول خطوة لطفلك.. أهم قرار لك!",
+    "brandStatement": "اخترنا <brandName>First Step</brandName> اسمًا لنا"
+  },
+  "vision-mission": {
+    "vision": {
+      "title": "رؤيتنا",
+      "content": "نؤمن بأن رعاية الأطفال ليست مجرد خدمة، بل تجربة تصنع فارقًا في حياة كل‌‌ أسرة. لهذا، نسعى إلى إعادة تعريف مفهوم رعاية الأطفال من خلال دمج التكنولوجيا‌‌ بالقيم الإنسانية، لنمنح العائلات حلولًا ذكية ومبتكرة، تُحدث تأثيرًا إيجابيًا يعزز‌‌ راحة بالهم ويضمن لطفلهم بداية قوية ومتميزة."
+    },
+    "mission": {
+      "title": "رسالتنا",
+      "content": "نطمح لأن نكون أكثر من مجرد منصة، بل رفيقًا موثوقًا لكل أسرة تبحث عن أفضل‌‌ رعاية لأطفالها. نحن الجسر الذي يربط العائلات بأفضل الحضانات والمراكز‌‌ التأهيلية، مقدمين تجربة سلسة وسهلة تجعل كل خطوة في رحلة البحث عن البيئة‌‌ الأنسب لنمو أطفالهم أكثر راحة، أمانًا، واطمئنانًا."
+    }
+  },
+  "error": {
+    "title": "عذراً! حدث خطأ ما.",
+    "default-message": "لم نتمكن من معالجة طلبك.",
+    "description": "يرجى تحديث الصفحة أو العودة إلى الصفحة الرئيسية.",
+    "refresh": "تحديث الصفحة",
+    "home": "الذهاب للصفحة الرئيسية"
+  },
+  "shared": {
+    "status": {
+      "rejected": "مرفوض",
+      "waitingForConfirmation": "بانتظار التأكيد",
+      "waitingForPayment": "بانتظار الدفع",
+      "confirmed": "تم الدفع"
+    }
+  },
+  "dashboard": {
+    "center": {
+      "sidebar": {
+        "home": "الرئيسية",
+        "branches": "فروعي",
+        "children-files": "ملفات الأطفال",
+        "bookings": "الحجوزات",
+        "daily-reports": "التقارير اليومية",
+        "site-edit": "تعديل الموقع",
+        "ad-or-blog-request": "طلب إعلان أو مدونة",
+        "notifications": "الإشعارات",
+        "team": "فريق العمل"
+      },
+      "branches": {
+        "title": "الفروع",
+        "add": "إضافة فرع",
+        "view": "عرض الفرع",
+        "edit": "تعديل الفرع",
+        "delete": "حذف الفرع",
+        "form": {
+          "buttons": {
+            "add": "إضافة فرع",
+            "edit": "تعديل الفرع",
+            "cancel": "إلغاء"
+          }
+        },
+        "card": {
+          "address": "العنوان",
+          "children": "الأطفال",
+          "bookings": "الحجوزات",
+          "accepted_ages": "الأعمار المقبولة",
+          "available_services": "الخدمات المتاحة في الفرع",
+          "child_count": "{count} طفل",
+          "booking_count": "{count} حجز"
+        },
+        "error": {
+          "title": "لم نتمكن من تحميل الفروع",
+          "description": "حدث خطأ غير متوقع أثناء تحميل البيانات. تحقق من اتصالك بالإنترنت، أو حاول مرة أخرى لاحقًا.",
+          "retry": "إعادة المحاولة"
+        },
+        "admin": {
+          "title": "إنشاء حساب مسئول الفرع",
+          "success": "تم إنشاء فرع {branchName} بنجاح",
+          "form": {
+            "name": {
+              "label": "الاسم",
+              "placeholder": "أدخل اسم المشرف"
+            },
+            "email": {
+              "label": "البريد الإلكتروني",
+              "placeholder": "أدخل بريد المشرف الإلكتروني"
+            },
+            "password": {
+              "label": "كلمة المرور",
+              "placeholder": "أدخل كلمة مرور المشرف"
+            },
+            "password-confirm": {
+              "label": "تأكيد كلمة المرور",
+              "placeholder": "أعد إدخال كلمة مرور المشرف"
+            },
+            "submit": "إنشاء حساب مسئول الفرع"
+          }
+        },
+        "delete_dialog": {
+          "title": "حذف الفرع",
+          "description": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا الإجراء.",
+          "confirm": "حذف",
+          "success": "تم حذف الفرع بنجاح",
+          "error": "فشل في حذف الفرع"
+        }
+      },
+      "ad-or-blog-request": {
+        "title": "الإعلانات",
+        "request-ad": "طلب إعلان",
+        "request-blog": "طلب مدونة",
+        "blogs": "المدونات",
+        "ad": {
+          "title": "طلب إعلان",
+          "free-notice": "الإعلان الأول لحضانتك/ مركزك مجاني 100% في الصفحة الرئيسية لمدة يوم واحد",
+          "description": "اجذب أولياء الأمور بإعلان يظهر في بداية الصفحة الرئيسية، يمكنك تحديد عدد أيام ظهور الإعلان",
+          "form": {
+            "image": {
+              "label": "صورة الطلب",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "title": {
+              "label": "العنوان",
+              "placeholder": "العنوان"
+            },
+            "description": {
+              "label": "الوصف",
+              "placeholder": "الوصف"
+            },
+            "start_date": {
+              "label": "بداية يوم"
+            },
+            "end_date": {
+              "label": "نهاية يوم"
+            },
+            "submit": "إرسال طلب",
+            "cancel": "إلغاء"
+          },
+          "success": {
+            "title": "تم إرسال الطلب بنجاح",
+            "description": "سيتم مراجعة طلبك قريباً"
+          },
+          "error": {
+            "title": "حدث خطأ",
+            "description": "لم نتمكن من إرسال طلبك. يرجى المحاولة مرة أخرى"
+          }
+        },
+        "blog": {
+          "title": "طلب مدونة",
+          "description": "اكتب مدونتك بشكل مجاني تمامًا",
+          "form": {
+            "mainImage": {
+              "label": "صورة المدونة",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "cardImage": {
+              "label": "صورة الغلاف",
+              "placeholder": "ارفع صورة النشاط"
+            },
+            "title": {
+              "label": "العنوان",
+              "placeholder": "العنوان"
+            },
+            "description": {
+              "label": "الوصف",
+              "placeholder": "الوصف"
+            },
+            "content": {
+              "label": "المدونة"
+            },
+            "submit": "إرسال طلب",
+            "cancel": "إلغاء",
+            "sending": "جاري الإرسال...",
+            "success": {
+              "title": "تم إرسال الطلب بنجاح",
+              "description": "سيتم مراجعة طلبك قريباً"
+            },
+            "error": {
+              "title": "حدث خطأ",
+              "description": "لم نتمكن من جلب بيانات المدونات. يرجى المحاولة مرة أخرى",
+              "retry": "إعادة المحاولة"
+            }
+          }
+        }
+      },
+      "notifications": {
+        "title": "جدولة الإشعارات",
+        "form": {
+          "type": {
+            "label": "اختر الإشعار",
+            "placeholder": "إشعار النوم",
+            "options": {
+              "sleep": "إشعار النوم",
+              "breakfast": "إشعار الإفطار"
+            }
+          },
+          "day": {
+            "label": "اليوم",
+            "placeholder": "السبت"
+          },
+          "time": {
+            "label": "الوقت",
+            "placeholder": ""
+          },
+          "recipients": {
+            "error": "يجب اختيار المستلمين"
+          },
+          "submit": "إرسال الإشعار"
+        }
+      },
+      "team": {
+        "title": "الفريق",
+        "add": {
+          "button": "إضافة فرد",
+          "title": "إضافة فرد للفريق"
+        },
+        "edit": {
+          "title": "تعديل معلومات الفرد"
+        },
+        "form": {
+          "name": {
+            "label": "اسم العضو",
+            "placeholder": "أدخل اسم عضو الفريق"
+          },
+          "branch": {
+            "label": "الفرع",
+            "placeholder": "اختر الفرع"
+          },
+          "job": {
+            "label": "المسمى الوظيفي",
+            "placeholder": "أدخل المسمى الوظيفي"
+          },
+          "image": {
+            "placeholder": "ارفع صورة النشاط"
+          },
+          "buttons": {
+            "add": "إضافة فرد",
+            "cancel": "إلغاء",
+            "save": "حفظ التعديل",
+            "delete": "حذف"
+          }
+        },
+        "delete": {
+          "title": "حذف عضو الفريق",
+          "description": "هل أنت متأكد أنك تريد حذف هذا العضو؟ لا يمكن التراجع عن هذا الإجراء.",
+          "confirm": "حذف",
+          "cancel": "إلغاء"
+        }
+      },
+      "children": {
+        "title": "الأطفال",
+        "form": {
+          "sections": {
+            "parent": "بيانات ولي الأمر",
+            "child": "بيانات الطفل",
+            "diseases": "الأمراض المزمنة",
+            "allergies": "الحساسية",
+            "recommendations": "توصيات تتعلق بالطفل",
+            "authorized": "الأشخاص المفوضة"
+          },
+          "buttons": {
+            "edit": "تعديل ملف الطفل",
+            "cancel": "إلغاء"
+          }
+        }
+      }
+    },
+    "header": {
+      "dashboard": "لوحة التحكم",
+      "home": "الرئيسية",
+      "search": "بحث"
+    },
+    "secondary-sidebar": {
+      "upcoming-occasions": "مناسبات قادمة",
+      "birthdays": "أعياد الميلاد",
+      "tasks": "المهمات",
+      "tasks-progress": "{completed} من {total}",
+      "add": {
+        "occasion": "مناسبة جديدة",
+        "birthday": "عيد ميلاد جديد",
+        "task": "مهمة جديدة"
+      },
+      "empty": {
+        "add-now": "أضف الآن"
+      },
+      "loading": "جارى تحميل البيانا..."
+    },
+    "charts": {
+      "children": {
+        "title": "عدد الأطفال",
+        "valueLabel": "طفل",
+        "capacityLabel": "سعة الحضانة",
+        "comparison": {
+          "title": "مقارنة عدد الأطفال",
+          "months": {
+            "april": "شهر إبريل",
+            "march": "شهر مارس",
+            "february": "شهر فبراير"
+          }
+        }
+      },
+      "bookings": {
+        "title": "مقارنة الحجوزات",
+        "valueLabel": "ر.س"
+      },
+      "revenue": {
+        "title": "العائد لشهر {month}",
+        "currency": "ر.س",
+        "month": "الشهر {month}"
+      },
+      "center": {
+        "title": "لوحة تحكم المركز",
+        "cards": {
+          "branches": "عدد الفروع",
+          "parents": "عدد أولياء الأمور",
+          "team": "عدد أعضاء الفريق"
+        },
+        "comparison": {
+          "title": "المقارنة الشهرية",
+          "valueLabel": "ر.س"
+        },
+        "children": {
+          "title": "مقارنة عدد الأطفال",
+          "valueLabel": "طفل"
+        }
+      },
+      "noData": {
+        "title": "مرحباً بك في لوحة التحكم",
+        "description": "ابدأ رحلتك معنا من خلال اتباع الخطوات التالية لإعداد مركزك",
+        "steps": {
+          "addBranch": {
+            "title": "إضافة فرع",
+            "description": "قم بإضافة فروع مركزك وتحديد الخدمات المتوفرة في كل فرع"
+          },
+          "addTeam": {
+            "title": "إضافة فريق العمل",
+            "description": "أضف أعضاء فريق العمل وحدد مهامهم في كل فرع"
+          },
+          "startBooking": {
+            "title": "بدء الحجوزات",
+            "description": "ابدأ في استقبال حجوزات الأطفال وتنظيم جدول المركز"
+          }
+        }
+      }
+    },
+    "tables": {
+      "shared": {
+        "status": {
+          "confirmed": "تم الدفع",
+          "waitingForPayment": "في انتظار الدفع",
+          "waitingForConfirmation": "في انتظار التأكيد",
+          "rejected": "مرفوض",
+          "selectChild": "اختر الطفل"
+        }
+      },
+      "parents": {
+        "headers": {
+          "parentName": "اسم ولي الأمر",
+          "phone": "رقم الجوال",
+          "child": "الطفل",
+          "branch": "الفرع",
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
+        },
+        "selectChild": "اختر الطفل",
+        "allChildren": "كل الأطفال",
+        "title": "أولياء الأمور"
+      },
+      "children": {
+        "headers": {
+          "childNumber": "رقم الطفل",
+          "childName": "اسم الطفل",
+          "dateOfBirth": "تاريخ الميلاد",
+          "parentName": "اسم ولي الأمر",
+          "branch": "الفرع",
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
+        }
+      },
+      "center-bookings": {
+        "headers": {
+          "childNumber": "رقم الطفل",
+          "parentName": "اسم ولي الأمر",
+          "startDate": "تاريخ بداية الحجز",
+          "endDate": "تاريخ نهاية الحجز",
+          "child": "الطفل",
+          "branch": "الفرع",
+          "amount": "المبلغ",
+          "reservationStatus": "حالة الحجز"
+        },
+        "currency": "ر.س"
+      },
+      "ads": {
+        "headers": {
+          "adNumber": "رقم الإعلان",
+          "type": "نوع الإعلان",
+          "startDate": "تاريخ بداية الإعلان",
+          "endDate": "تاريخ نهاية الإعلان",
+          "branch": "اسم الفرع",
+          "amount": "المبلغ",
+          "reservationStatus": "حالة الحجز"
+        },
+        "types": {
+          "free": "مجاني",
+          "paid": "مدفوع"
+        },
+        "currency": "ر.س",
+        "title": "الإعلانات",
+        "error": {
+          "title": "حدث خطأ",
+          "description": "لم نتمكن من جلب بيانات الإعلانات. يرجى المحاولة مرة أخرى"
+        }
+      },
+      "center-reports": {
+        "title": "التقارير اليومية",
+        "headers": {
+          "parentName": "اسم ولي الأمر",
+          "phone": "رقم الهاتف",
+          "child": "الطفل",
+          "reportDate": "تاريخ التقرير",
+          "control": "الإجراءات"
+        }
+      },
+      "top-bookings": {
+        "title": "ترتيب الفروع من حيث عدد الحجوزات شهريًا",
+        "columns": {
+          "arrangement": "الترتيب",
+          "nursery": "اسم الحضانة",
+          "branch": "الفرع",
+          "count": "عدد الحجوزات",
+          "income": "الدخل",
+          "currency": "ر.س"
+        }
+      }
+    },
+    "children": {
+      "search": {
+        "placeholder": "البحث باسم الحضانة / اسم طفل / ولي امر"
+      },
+      "invite": "دعوة ولي أمر",
+      "title": "الأطفال"
+    },
+    "center-bookings": {
+      "title": "الحجوزات"
+    },
+    "center-reports": {
+      "title": "التقارير اليومية",
+      "send": "إرسال تقرير",
+      "report": {
+        "title": "تقرير يومي",
+        "send": "إرسال التقرير",
+        "cancel": "إلغاء",
+        "error": "فشل في تحميل بيانات التقرير",
+        "retry": "إعادة المحاولة",
+        "form": {
+          "activities": {
+            "label": "الأنشطة",
+            "placeholder": "أدخل الأنشطة اليومية"
+          },
+          "behavior": {
+            "label": "السلوك",
+            "placeholder": "أدخل ملاحظات السلوك"
+          },
+          "meals": {
+            "label": "الوجبات",
+            "placeholder": "أدخل تفاصيل الوجبات"
+          },
+          "napTime": {
+            "label": "وقت القيلولة",
+            "placeholder": "أدخل تفاصيل وقت القيلولة"
+          },
+          "additionalNotes": {
+            "label": "ملاحظات إضافية",
+            "placeholder": "أدخل أي ملاحظات إضافية"
+          },
+          "recipients": {
+            "label": "المستلمون",
+            "placeholder": "اختر مستلمي التقرير"
+          }
+        },
+        "success": "تم إرسال التقرير بنجاح",
+        "sending": "جاري الإرسال...",
+        "noChildSelected": "الرجاء اختيار طفل واحد على الأقل"
+      }
+    }
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "confirm": "تأكيد"
   }
 }
