@@ -1,8 +1,8 @@
-import ChildrenCards from "@/components/dashboard/children/Children";
+import Children from "@/components/dashboard/children/Children";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
-export default async function Children() {
+export default async function ChildrenPage() {
   return (
     <div>
       <div className="mb-3.5 flex items-center justify-end">
@@ -13,7 +13,7 @@ export default async function Children() {
         </Button>
       </div>
 
-      <ChildrenCards />
+      <Children />
     </div>
   );
 }

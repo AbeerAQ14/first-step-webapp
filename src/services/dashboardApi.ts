@@ -477,4 +477,13 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getParentChildren: async () => {
+    try {
+      const response = await apiClient.get("/parent/children");
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
