@@ -27,6 +27,10 @@ const ERRORMESSAGES = {
     ar: "يرجى إدخال بريد إلكتروني صحيح",
     en: "Please enter a valid email address",
   },
+  "invalid-url": {
+    ar: "يرجى إدخال رابط صحيح",
+    en: "Please enter a valid URL",
+  },
   "invalid-phone": {
     ar: "يرجى إدخال رقم هاتف صحيح",
     en: "Please enter a valid phone number",
