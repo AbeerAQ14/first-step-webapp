@@ -128,14 +128,10 @@ export default function DashboardChildShow({
   // Transform the API data to match the form structure
   const initialValues = {
     // Parent data
-    name: childData?.name || "",
-    phone: childData?.phone || "",
-    email: childData?.email || "",
-    kinship: childData?.kinship || "",
-    password: "",
-    confirmPassword: "",
-    national_number: childData?.national_number || "",
-    address: childData?.address || "",
+    name: childData?.user?.name || "",
+    phone: childData?.user?.phone || "",
+    email: childData?.user?.email || "",
+    address: childData?.user?.address || "",
 
     // Child data
     childName: childData?.child_name || "",
@@ -144,12 +140,8 @@ export default function DashboardChildShow({
       : new Date(),
     fatherName: childData?.parent_name || "",
     motherName: childData?.mother_name || "",
-    gender:
-      childData?.gender === "girl"
-        ? "female"
-        : childData?.gender === "boy"
-        ? "male"
-        : childData?.gender || "",
+    gender: childData?.gender === "boy" ? "male" : "female",
+    kinship: childData?.Kinship || "",
 
     // Chronic diseases
     chronicDiseases: {
@@ -165,25 +157,25 @@ export default function DashboardChildShow({
         : [],
     },
 
-    // Child description fields
-    childDescription: childData?.description_3_words || "",
-    favoriteThings: childData?.things_child_likes || "",
-    recommendations: childData?.recommendations || "",
-
     // Allergies
     allergies: {
       hasAllergies: childData?.allergy ? "yes" : "no",
       allergies:
         childData?.allergies?.map((allergy: any) => ({
           allergyTypes: allergy.name || "",
-          allergyFoods: allergy.allergy_causes?.[0] || "",
+          allergyFoods: allergy.allergy_causes?.join(", ") || "",
           allergyProcedures: allergy.allergy_emergency || "",
         })) || [],
     },
 
+    // Recommendations
+    childDescription: childData?.description_3_words || "",
+    favoriteThings: childData?.things_child_likes || "",
+    recommendations: childData?.recommendations || "",
+
     // Authorized persons
     authorizedPersons:
-      childData?.authorized_persons?.map((person: any) => ({
+      childData?.authorized_people?.map((person: any) => ({
         name: person.name || "",
         idNumber: person.cin || "",
       })) || [],
