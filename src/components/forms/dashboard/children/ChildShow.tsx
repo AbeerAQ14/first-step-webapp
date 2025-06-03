@@ -67,34 +67,44 @@ const ChildShow = ({
           readOnly={isReadOnly}
         />
 
-        <DiseasesPart
-          control={methods.control}
-          locale={locale}
-          hasDiseases={hasDiseases}
-          diseases={diseases}
-          readOnly={isReadOnly}
-        />
+        {hasDiseases === "yes" && diseases && diseases.length > 0 && (
+          <DiseasesPart
+            control={methods.control}
+            locale={locale}
+            hasDiseases={hasDiseases}
+            diseases={diseases}
+            readOnly={isReadOnly}
+          />
+        )}
 
-        <AllergiesPart
-          control={methods.control}
-          locale={locale}
-          hasAllergies={hasAllergies}
-          allergies={allergies}
-          readOnly={isReadOnly}
-        />
+        {hasAllergies === "yes" && allergies && allergies.length > 0 && (
+          <AllergiesPart
+            control={methods.control}
+            locale={locale}
+            hasAllergies={hasAllergies}
+            allergies={allergies}
+            readOnly={isReadOnly}
+          />
+        )}
 
-        <Recommendations
-          control={methods.control}
-          locale={locale}
-          readOnly={isReadOnly}
-        />
+        {(initialValues.childDescription ||
+          initialValues.favoriteThings ||
+          initialValues.recommendations) && (
+          <Recommendations
+            control={methods.control}
+            locale={locale}
+            readOnly={isReadOnly}
+          />
+        )}
 
-        <AuthorizationPart
-          control={methods.control}
-          locale={locale}
-          authorizedPersons={authorizedPersons}
-          readOnly={isReadOnly}
-        />
+        {authorizedPersons && authorizedPersons.length > 0 && (
+          <AuthorizationPart
+            control={methods.control}
+            locale={locale}
+            authorizedPersons={authorizedPersons}
+            readOnly={isReadOnly}
+          />
+        )}
 
         {childId && (
           <div className="flex justify-center gap-5 lg:gap-x-10">
