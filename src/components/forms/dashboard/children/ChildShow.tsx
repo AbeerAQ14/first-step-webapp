@@ -364,67 +364,41 @@ const ChildPart = ({
               name="gender"
               render={({ field }) => (
                 <>
-                  <div className="group flex flex-col items-center">
-                    <label
-                      className={`cursor-pointer p-4 px-5.5 border rounded-2xl hover:border-secondary-mint-green duration-300 ${
-                        field.value === "male"
-                          ? "border-secondary-mint-green"
-                          : "border-light-gray"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        className="sr-only peer"
-                        value="male"
-                        checked={field.value === "male"}
-                        onChange={() => field.onChange("male")}
-                        disabled={readOnly}
-                      />
-                      <div className="group relative transition-all duration-300 peer-checked:saturate-100 group-hover:saturate-100 saturate-0">
-                        <Image
-                          src="/assets/illustrations/boy.png"
-                          alt="Boy"
-                          width={91.32}
-                          height={120}
-                          className="group-hover:scale-110 duration-300"
-                        />
-                      </div>
-                      <p className="text-xl font-medium text-center mt-2 text-mid-gray peer-checked:text-primary hover:text-primary duration-300">
-                        {t("gender.male")}
-                      </p>
-                    </label>
-                  </div>
+                  {field.value === "male" && (
+                    <div className="group flex flex-col items-center">
+                      <label className="cursor-pointer p-4 px-5.5 border rounded-2xl border-secondary-mint-green">
+                        <div className="group relative transition-all duration-300 saturate-100">
+                          <Image
+                            src="/assets/illustrations/boy.png"
+                            alt="Boy"
+                            width={91.32}
+                            height={120}
+                          />
+                        </div>
+                        <p className="text-xl font-medium text-center mt-2 text-primary">
+                          {t("gender.male")}
+                        </p>
+                      </label>
+                    </div>
+                  )}
 
-                  <div className="group flex flex-col items-center">
-                    <label
-                      className={`cursor-pointer p-4 px-6.5 border rounded-2xl hover:border-secondary-burgundy duration-300 ${
-                        field.value === "female"
-                          ? "border-secondary-burgundy"
-                          : "border-light-gray"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        className="sr-only peer"
-                        value="female"
-                        checked={field.value === "female"}
-                        onChange={() => field.onChange("female")}
-                        disabled={readOnly}
-                      />
-                      <div className="group relative transition-all duration-300 peer-checked:saturate-100 group-hover:saturate-100 saturate-0">
-                        <Image
-                          src="/assets/illustrations/girl.png"
-                          alt="Girl"
-                          width={84.74}
-                          height={120}
-                          className="group-hover:scale-110 duration-300"
-                        />
-                      </div>
-                      <p className="text-xl font-medium text-center mt-2 text-mid-gray peer-checked:text-primary hover:text-primary duration-300">
-                        {t("gender.female")}
-                      </p>
-                    </label>
-                  </div>
+                  {field.value === "female" && (
+                    <div className="group flex flex-col items-center">
+                      <label className="cursor-pointer p-4 px-6.5 border rounded-2xl border-secondary-burgundy">
+                        <div className="group relative transition-all duration-300 saturate-100">
+                          <Image
+                            src="/assets/illustrations/girl.png"
+                            alt="Girl"
+                            width={84.74}
+                            height={120}
+                          />
+                        </div>
+                        <p className="text-xl font-medium text-center mt-2 text-primary">
+                          {t("gender.female")}
+                        </p>
+                      </label>
+                    </div>
+                  )}
                   <FormMessage />
                 </>
               )}
