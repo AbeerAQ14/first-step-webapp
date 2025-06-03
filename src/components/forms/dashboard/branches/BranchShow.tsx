@@ -13,9 +13,12 @@ import { Step4Permits } from "../../center/Step4";
 import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import BranchFormSkeleton from "./BranchFormSkeleton";
+import { usePermissions } from "@/hooks/usePermissions";
 
 const BranchShow = ({ branchId }: { branchId: string }) => {
   const locale = useLocale();
+  const { can } = usePermissions();
+  const canEdit = can("edit", "branches", branchId);
   const branchSchema = createBranchSchema(locale as "ar" | "en");
 
   const { data: fetchedBranch, isLoading: isFetchingBranch } =
@@ -117,11 +120,19 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
           <Step4Permits disabled />
 
           <div className="flex justify-center gap-5 lg:gap-x-10">
-            <Button asChild size="sm" variant="default">
-              <Link href={`${branchId}/edit`}>
-                {locale === "ar" ? "تعديل الفرع" : "Edit Branch"}
-              </Link>
-            </Button>
+            {canEdit ? (
+              <Button asChild size="sm" variant="default">
+                <Link href={`${branchId}/edit`}>
+                  {locale === "ar" ? "تعديل الفرع" : "Edit Branch"}
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild size="sm" variant="outline">
+                <Link href="/dashboard/center/branches">
+                  {locale === "ar" ? "العودة" : "Back"}
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </form>
