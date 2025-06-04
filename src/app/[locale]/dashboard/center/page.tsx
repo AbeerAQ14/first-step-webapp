@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
@@ -210,26 +209,67 @@ const NoDataView = () => {
 
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.charts");
-  const [hasData] = useState(false); // This should be replaced with actual data check
+  const isCenter = useHasRole("center");
+  const { stats: centerStats, isLoading: centerLoading } = useCenterStats();
+  const { stats: branchStats, isLoading: branchLoading } = useBranchStats();
+
+  const stats = isCenter ? centerStats : branchStats;
+  const isLoading = isCenter ? centerLoading : branchLoading;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-light-gray">{t("loading")}</div>
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return <NoDataView />;
+  }
 
   const bookingsRows = [
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-05"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "up" as const,
-      data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
+      trend:
+        stats.enrollments_over_time?.["2025-05"] >
+        (stats.enrollments_over_time?.["2025-04"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-05"] >
+        (stats.enrollments_over_time?.["2025-04"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-04"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "down" as const,
-      data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
+      trend:
+        stats.enrollments_over_time?.["2025-04"] >
+        (stats.enrollments_over_time?.["2025-03"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-04"] >
+        (stats.enrollments_over_time?.["2025-03"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-03"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "up" as const,
-      data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
+      trend:
+        stats.enrollments_over_time?.["2025-03"] >
+        (stats.enrollments_over_time?.["2025-02"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-03"] >
+        (stats.enrollments_over_time?.["2025-02"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
   ];
 
@@ -254,27 +294,37 @@ export default function CenterDashboardHome() {
     },
   ];
 
-  if (!hasData) {
-    return <NoDataView />;
-  }
-
   return (
     <div className="grid gap-y-10">
       <div className="flex flex-wrap gap-5 xl:gap-20 text-center">
-        {CARDS.map((card) => (
-          <div
-            key={card.title}
-            className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
-          >
-            {card.icon}
-            <span className="mt-4 mb-2 text-secondary-mint-green font-bold text-4xl lg:text-5xl">
-              200
-            </span>
-            <span className="text-xl lg:text-2xl text-primary font-bold">
-              {t(card.title)}
-            </span>
-          </div>
-        ))}
+        {CARDS.map((card, index) => {
+          let value = 0;
+          switch (index) {
+            case 0:
+              value = isCenter ? stats.total_branches : stats.total_enrollments;
+              break;
+            case 1:
+              value = stats.total_parents;
+              break;
+            case 2:
+              value = stats.total_team_members;
+              break;
+          }
+          return (
+            <div
+              key={card.title}
+              className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
+            >
+              {card.icon}
+              <span className="mt-4 mb-2 text-secondary-mint-green font-bold text-4xl lg:text-5xl">
+                {value}
+              </span>
+              <span className="text-xl lg:text-2xl text-primary font-bold">
+                {t(card.title)}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
@@ -302,8 +352,7 @@ export default function CenterDashboardHome() {
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
         <div className="w-full flex-1">
           <CircularProgressChart
-            totalValue={1000}
-            currentValue={350}
+            currentValue={stats.total_children}
             title={t("children.title")}
             valueLabel={t("children.valueLabel")}
             capacityLabel={t("children.capacityLabel")}

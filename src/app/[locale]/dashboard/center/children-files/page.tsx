@@ -31,7 +31,6 @@ export default function CenterDashboardHome() {
     <div>
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <CircularProgressChart
-          totalValue={1000}
           currentValue={350}
           title={t("title")}
           valueLabel={t("valueLabel")}
