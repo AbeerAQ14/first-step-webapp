@@ -537,4 +537,22 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getCenterStats: async () => {
+    try {
+      const response = await apiClient.get(`/center/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranchStats: async () => {
+    try {
+      const response = await apiClient.get(`/branch/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };

@@ -2,11 +2,15 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Check } from "lucide-react";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
 import TopBookings from "@/components/dashboard/center-bookings/TopBooking";
 import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
+import { useHasRole } from "@/store/authStore";
+import { useCenterStats } from "@/hooks/useCenterStats";
+import { useBranchStats } from "@/hooks/useBranchStats";
 
 const CARDS = [
   {
@@ -69,6 +73,20 @@ const CARDS = [
 
 const NoDataView = () => {
   const t = useTranslations("dashboard.charts");
+  const isCenter = useHasRole("center");
+  const { stats: centerStats, isLoading: centerLoading } = useCenterStats();
+  const { stats: branchStats, isLoading: branchLoading } = useBranchStats();
+
+  const stats = isCenter ? centerStats : branchStats;
+  const isLoading = isCenter ? centerLoading : branchLoading;
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[400px]">
+  //       <div className="text-light-gray">{t("loading")}</div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
@@ -92,18 +110,39 @@ const NoDataView = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {isCenter ? (
+              stats?.total_branches >= 2 ? (
+                <Check className="size-6 text-success" />
+              ) : (
+                <svg
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )
+            ) : stats?.total_children >= 2 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.addBranch.title")}
@@ -114,18 +153,22 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {stats?.total_team_members >= 1 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.addTeam.title")}
@@ -136,18 +179,22 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {stats?.total_enrollments >= 1 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.startBooking.title")}
