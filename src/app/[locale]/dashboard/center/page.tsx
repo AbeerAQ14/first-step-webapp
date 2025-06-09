@@ -10,6 +10,7 @@ import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
 import { useHasRole } from "@/store/authStore";
 import { useCenterStats } from "@/hooks/useCenterStats";
 import { useBranchStats } from "@/hooks/useBranchStats";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const CARDS = [
   {
@@ -207,6 +208,56 @@ const NoDataView = () => {
   );
 };
 
+const DashboardSkeleton = () => {
+  return (
+    <div className="grid gap-y-10">
+      {/* Stats Cards */}
+      <div className="flex flex-wrap gap-5 xl:gap-20 text-center">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
+          >
+            <Skeleton className="w-[46px] h-[49px]" />
+            <Skeleton className="mt-4 mb-2 h-12 w-24" />
+            <Skeleton className="h-8 w-32" />
+          </div>
+        ))}
+      </div>
+
+      {/* Numbers and Monthly Area Comparison */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+
+      {/* Monthly Revenue and Top Bookings */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1 min-w-3xs">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+
+      {/* Circular Progress and Monthly Area Comparison */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.charts");
   const isCenter = useHasRole("center");
@@ -217,11 +268,7 @@ export default function CenterDashboardHome() {
   const isLoading = isCenter ? centerLoading : branchLoading;
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-light-gray">{t("loading")}</div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if (!stats) {
