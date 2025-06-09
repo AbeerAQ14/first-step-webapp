@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 
-export type CenterStats = {
+export type Stats = {
   total_enrollments: number;
   total_active_enrollments: number;
-  total_branches: number;
+  total_branches?: number; // Only for center role
   total_children: number;
   total_team_members: number;
   total_parents: number;
@@ -26,21 +26,26 @@ export type CenterStats = {
     total_messages: number;
   };
   total_revenue_for_the_lates_5_months: any[];
-  branches_ordering_depending_on_the_number_of_enrollments: Array<{
+  branches_ordering_depending_on_the_number_of_enrollments?: Array<{
     nursery_name: string;
     enrollment_count: number;
-  }>;
+  }>; // Only for center role
 };
 
-export const useCenterStats = () => {
+type Role = "center" | "branch";
+
+export const useCenterStats = (role: Role) => {
   const {
     data: stats,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["centerStats"],
+    queryKey: ["stats", role],
     queryFn: async () => {
-      const response = await centerService.getCenterStats();
+      const response =
+        role === "center"
+          ? await centerService.getCenterStats()
+          : await centerService.getBranchStats();
       return response;
     },
   });

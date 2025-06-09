@@ -9,7 +9,6 @@ import TopBookings from "@/components/dashboard/center-bookings/TopBooking";
 import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
 import { useHasRole } from "@/store/authStore";
 import { useCenterStats } from "@/hooks/useCenterStats";
-import { useBranchStats } from "@/hooks/useBranchStats";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const CARDS = [
@@ -71,22 +70,24 @@ const CARDS = [
   },
 ];
 
-const NoDataView = () => {
+interface NoDataViewProps {
+  stats: {
+    total_branches?: number;
+    total_children?: number;
+    total_team_members?: number;
+    total_enrollments?: number;
+  } | null;
+  isCenter: boolean;
+}
+
+const NoDataView = ({ stats, isCenter }: NoDataViewProps) => {
   const t = useTranslations("dashboard.charts");
-  const isCenter = useHasRole("center");
-  const { stats: centerStats, isLoading: centerLoading } = useCenterStats();
-  const { stats: branchStats, isLoading: branchLoading } = useBranchStats();
-
-  const stats = isCenter ? centerStats : branchStats;
-  const isLoading = isCenter ? centerLoading : branchLoading;
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-[400px]">
-  //       <div className="text-light-gray">{t("loading")}</div>
-  //     </div>
-  //   );
-  // }
+  const {
+    total_branches = 0,
+    total_children = 0,
+    total_team_members = 0,
+    total_enrollments = 0,
+  } = stats || {};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
@@ -111,7 +112,7 @@ const NoDataView = () => {
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
             {isCenter ? (
-              stats?.total_branches >= 2 ? (
+              total_branches >= 1 ? (
                 <Check className="size-6 text-success" />
               ) : (
                 <svg
@@ -127,7 +128,7 @@ const NoDataView = () => {
                   />
                 </svg>
               )
-            ) : stats?.total_children >= 2 ? (
+            ) : total_children >= 1 ? (
               <Check className="size-6 text-success" />
             ) : (
               <svg
@@ -153,7 +154,7 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            {stats?.total_team_members >= 1 ? (
+            {total_team_members >= 1 ? (
               <Check className="size-6 text-success" />
             ) : (
               <svg
@@ -179,7 +180,7 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            {stats?.total_enrollments >= 1 ? (
+            {total_enrollments >= 1 ? (
               <Check className="size-6 text-success" />
             ) : (
               <svg
@@ -258,21 +259,30 @@ const DashboardSkeleton = () => {
   );
 };
 
+const hasMinimalData = (stats: any) => {
+  if (!stats) return false;
+
+  // Check if we have at least one of these essential stats
+  const hasEssentialStats =
+    stats.total_enrollments > 1 ||
+    stats.total_children > 1 ||
+    stats.total_team_members > 1 ||
+    stats.total_parents > 1;
+
+  return hasEssentialStats;
+};
+
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.charts");
   const isCenter = useHasRole("center");
-  const { stats: centerStats, isLoading: centerLoading } = useCenterStats();
-  const { stats: branchStats, isLoading: branchLoading } = useBranchStats();
-
-  const stats = isCenter ? centerStats : branchStats;
-  const isLoading = isCenter ? centerLoading : branchLoading;
+  const { stats, isLoading } = useCenterStats(isCenter ? "center" : "branch");
 
   if (isLoading) {
     return <DashboardSkeleton />;
   }
 
-  if (!stats) {
-    return <NoDataView />;
+  if (!hasMinimalData(stats)) {
+    return <NoDataView stats={stats} isCenter={isCenter} />;
   }
 
   const bookingsRows = [
@@ -348,7 +358,9 @@ export default function CenterDashboardHome() {
           let value = 0;
           switch (index) {
             case 0:
-              value = isCenter ? stats.total_branches : stats.total_enrollments;
+              value = isCenter
+                ? stats.total_branches || 0
+                : stats.total_enrollments;
               break;
             case 1:
               value = stats.total_parents;

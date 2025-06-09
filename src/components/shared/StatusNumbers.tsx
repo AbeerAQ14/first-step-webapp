@@ -2,16 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { useCenterStats } from "@/hooks/useCenterStats";
-import { useBranchStats } from "@/hooks/useBranchStats";
 import { useHasRole } from "@/store/authStore";
 
 export const useStatusNumbers = () => {
   const t = useTranslations("shared.status");
   const isCenter = useHasRole("center");
-  const { stats: centerStats } = useCenterStats();
-  const { stats: branchStats } = useBranchStats();
+  const { stats } = useCenterStats(isCenter ? "center" : "branch");
 
-  const stats = isCenter ? centerStats : branchStats;
   const statusBreakdown = stats?.enrollment_status_breakdown || {
     waitingForConfirmation: 0,
     waitingForPayment: 0,
