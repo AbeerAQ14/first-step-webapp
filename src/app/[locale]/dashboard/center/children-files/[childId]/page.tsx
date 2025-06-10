@@ -146,15 +146,12 @@ export default function DashboardChildShow({
     // Chronic diseases
     chronicDiseases: {
       hasDiseases: childData?.disease ? "yes" : "no",
-      diseases: childData?.disease
-        ? [
-            {
-              name: childData.disease_name || "",
-              medication: childData.medicament_disease || "",
-              procedures: childData.disease_emergency || "",
-            },
-          ]
-        : [],
+      diseases:
+        childData?.disease_details?.map((disease: any) => ({
+          name: disease.disease_name,
+          medication: disease.medicament,
+          procedures: disease.emergency,
+        })) || [],
     },
 
     // Allergies
