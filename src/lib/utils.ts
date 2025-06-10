@@ -182,12 +182,14 @@ export function transformParentDataToExpectedPayload(
 
   // 1. Handle Chronic Diseases
   const hasDisease = formData.chronicDiseases?.hasDiseases === "yes";
-  const firstDisease =
-    hasDisease &&
-    formData.chronicDiseases?.diseases &&
-    formData.chronicDiseases.diseases.length > 0
-      ? formData.chronicDiseases.diseases[0]
-      : null;
+  const diseaseDetails =
+    hasDisease && formData.chronicDiseases?.diseases
+      ? formData.chronicDiseases.diseases.map((disease) => ({
+          disease_name: disease.name,
+          medicament: disease.medication,
+          emergency: disease.procedures,
+        }))
+      : [];
 
   // 2. Handle Allergies
   const hasAllergy = formData.allergies?.hasAllergies === "yes";
@@ -253,9 +255,7 @@ export function transformParentDataToExpectedPayload(
     birthday_date: formattedBirthday, // Use the formatted date (or null)
     gender: childGender,
     disease: hasDisease,
-    disease_name: firstDisease ? firstDisease.name : null,
-    medicament_disease: firstDisease ? firstDisease.medication : null,
-    disease_emergency: firstDisease ? firstDisease.procedures : null,
+    disease_details: diseaseDetails,
     allergy: hasAllergy,
     // Use the type from the first allergy as the primary allergy_name
     allergy_name: firstAllergySource ? firstAllergySource.allergyTypes : null,

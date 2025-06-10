@@ -32,9 +32,11 @@ export interface Child {
   birthday_date: string | null;
   gender: "girl" | "boy" | string;
   disease: boolean;
-  disease_name: string | null;
-  medicament_disease: string | null;
-  disease_emergency: string | null;
+  disease_details: Array<{
+    disease_name: string;
+    medicament: string;
+    emergency: string;
+  }>;
   allergy: boolean;
   allergy_name: string | null;
   parent_name: string;
