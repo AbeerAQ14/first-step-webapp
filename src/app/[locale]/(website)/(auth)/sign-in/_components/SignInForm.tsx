@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { createSignInSchema, SignInFormData } from "@/lib/schemas";
+import { initializeGoogleAuth, triggerGoogleSignIn } from "@/lib/google-auth";
 
 const SignInForm = ({
   onSubmit,
@@ -32,6 +33,7 @@ const SignInForm = ({
   const t = useTranslations("auth.sign-in");
   const tBtns = useTranslations("auth.buttons");
   const [showPassword, setShowPassword] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const locale = useLocale();
   const signInSchema = createSignInSchema(locale as "ar" | "en");
 
@@ -48,6 +50,20 @@ const SignInForm = ({
       formRef.current = form;
     }
   }, [form, formRef]);
+
+  useEffect(() => {
+    // Initialize Google Sign-In
+    initializeGoogleAuth();
+  }, []);
+
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true);
+    try {
+      await triggerGoogleSignIn();
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -141,9 +157,17 @@ const SignInForm = ({
             variant={"outline"}
             size={"long"}
             type="button"
-            className="text-mid-gray !border-light-gray"
-            disabled={isLoading || form.formState.isSubmitting}
+            className="text-mid-gray !border-light-gray w-full"
+            disabled={
+              isLoading || form.formState.isSubmitting || isGoogleLoading
+            }
+            onClick={handleGoogleSignIn}
           >
+            {isGoogleLoading && (
+              <span className="animate-spin mr-2.5">
+                <LoaderCircle />
+              </span>
+            )}
             <span>{tBtns("sign-in-google")}</span>
             <Image
               src="/assets/icons/google_icon.svg"
