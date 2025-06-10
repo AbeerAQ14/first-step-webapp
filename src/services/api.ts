@@ -27,11 +27,42 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   // Retrieve token (e.g., from Zustand store or localStorage)
   const token = useAuthStore.getState().token; // Example with Zustand
+  console.log("API Request Interceptor:", {
+    url: config.url,
+    method: config.method,
+    hasToken: !!token,
+    headers: config.headers,
+  });
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("Added Authorization header:", config.headers.Authorization);
+  } else {
+    console.log("No token available for request");
   }
   return config;
 });
+
+// Add response interceptor for debugging
+apiClient.interceptors.response.use(
+  (response) => {
+    console.log("API Response:", {
+      url: response.config.url,
+      status: response.status,
+      headers: response.headers,
+    });
+    return response;
+  },
+  (error) => {
+    console.error("API Error:", {
+      url: error.config?.url,
+      status: error.response?.status,
+      data: error.response?.data,
+      headers: error.response?.headers,
+    });
+    return Promise.reject(error);
+  }
+);
 
 export const websiteService = {
   getAdSlides: async (locale: string): Promise<AdSlide[]> => {

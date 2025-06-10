@@ -550,9 +550,35 @@ export const centerService = {
   getBranchStats: async () => {
     try {
       const response = await apiClient.get(`/branch/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   getParentChildren: async () => {
     try {
       const response = await apiClient.get("/parent/children");
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+};
+
+export const parentService = {
+  getDailyReports: async () => {
+    try {
+      const response = await apiClient.get("/parent/daily-reports");
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteDailyReport: async (id: number) => {
+    try {
+      const response = await apiClient.delete(`/parent/daily-reports/${id}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
