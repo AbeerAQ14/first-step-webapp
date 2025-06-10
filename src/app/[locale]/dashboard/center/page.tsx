@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Check } from "lucide-react";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import CircularProgressChart from "@/components/charts/CircularProgressChart";
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
 import TopBookings from "@/components/dashboard/center-bookings/TopBooking";
 import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
+import { useHasRole } from "@/store/authStore";
+import { useCenterStats } from "@/hooks/useCenterStats";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const CARDS = [
   {
@@ -67,8 +70,24 @@ const CARDS = [
   },
 ];
 
-const NoDataView = () => {
+interface NoDataViewProps {
+  stats: {
+    total_branches?: number;
+    total_children?: number;
+    total_team_members?: number;
+    total_enrollments?: number;
+  } | null;
+  isCenter: boolean;
+}
+
+const NoDataView = ({ stats, isCenter }: NoDataViewProps) => {
   const t = useTranslations("dashboard.charts");
+  const {
+    total_branches = 0,
+    total_children = 0,
+    total_team_members = 0,
+    total_enrollments = 0,
+  } = stats || {};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
@@ -92,18 +111,39 @@ const NoDataView = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {isCenter ? (
+              total_branches >= 1 ? (
+                <Check className="size-6 text-success" />
+              ) : (
+                <svg
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )
+            ) : total_children >= 1 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.addBranch.title")}
@@ -114,18 +154,22 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {total_team_members >= 1 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.addTeam.title")}
@@ -136,18 +180,22 @@ const NoDataView = () => {
         </div>
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="text-primary/80 mb-2 flex justify-center">
-            <svg
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                fill="currentColor"
-              />
-            </svg>
+            {total_enrollments >= 1 ? (
+              <Check className="size-6 text-success" />
+            ) : (
+              <svg
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <h4 className="font-semibold text-gray-700 mb-2">
             {t("noData.steps.startBooking.title")}
@@ -161,28 +209,124 @@ const NoDataView = () => {
   );
 };
 
+const DashboardSkeleton = () => {
+  return (
+    <div className="grid gap-y-10">
+      {/* Stats Cards */}
+      <div className="flex flex-wrap gap-5 xl:gap-20 text-center">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
+          >
+            <Skeleton className="w-[46px] h-[49px]" />
+            <Skeleton className="mt-4 mb-2 h-12 w-24" />
+            <Skeleton className="h-8 w-32" />
+          </div>
+        ))}
+      </div>
+
+      {/* Numbers and Monthly Area Comparison */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+
+      {/* Monthly Revenue and Top Bookings */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1 min-w-3xs">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+
+      {/* Circular Progress and Monthly Area Comparison */}
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+        <div className="w-full flex-1">
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const hasMinimalData = (stats: any) => {
+  if (!stats) return false;
+
+  // Check if we have at least one of these essential stats
+  const hasEssentialStats =
+    stats.total_enrollments > 1 ||
+    stats.total_children > 1 ||
+    stats.total_team_members > 1 ||
+    stats.total_parents > 1;
+
+  return hasEssentialStats;
+};
+
 export default function CenterDashboardHome() {
   const t = useTranslations("dashboard.charts");
-  const [hasData] = useState(false); // This should be replaced with actual data check
+  const isCenter = useHasRole("center");
+  const { stats, isLoading } = useCenterStats(isCenter ? "center" : "branch");
+
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
+
+  if (!hasMinimalData(stats)) {
+    return <NoDataView stats={stats} isCenter={isCenter} />;
+  }
 
   const bookingsRows = [
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-05"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "up" as const,
-      data: [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }],
+      trend:
+        stats.enrollments_over_time?.["2025-05"] >
+        (stats.enrollments_over_time?.["2025-04"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-05"] >
+        (stats.enrollments_over_time?.["2025-04"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-04"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "down" as const,
-      data: [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
+      trend:
+        stats.enrollments_over_time?.["2025-04"] >
+        (stats.enrollments_over_time?.["2025-03"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-04"] >
+        (stats.enrollments_over_time?.["2025-03"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
     {
-      value: 3620,
+      value: stats.enrollments_over_time?.["2025-03"] || 0,
       valueLabel: t("center.comparison.valueLabel"),
-      trend: "up" as const,
-      data: [{ v: 7 }, { v: 10 }, { v: 13 }, { v: 12 }, { v: 15 }, { v: 17 }],
+      trend:
+        stats.enrollments_over_time?.["2025-03"] >
+        (stats.enrollments_over_time?.["2025-02"] || 0)
+          ? ("up" as const)
+          : ("down" as const),
+      data:
+        stats.enrollments_over_time?.["2025-03"] >
+        (stats.enrollments_over_time?.["2025-02"] || 0)
+          ? [{ v: 8 }, { v: 10 }, { v: 12 }, { v: 17 }, { v: 13 }, { v: 15 }]
+          : [{ v: 18 }, { v: 12 }, { v: 15 }, { v: 10 }, { v: 7 }, { v: 9 }],
     },
   ];
 
@@ -207,27 +351,39 @@ export default function CenterDashboardHome() {
     },
   ];
 
-  if (!hasData) {
-    return <NoDataView />;
-  }
-
   return (
     <div className="grid gap-y-10">
       <div className="flex flex-wrap gap-5 xl:gap-20 text-center">
-        {CARDS.map((card) => (
-          <div
-            key={card.title}
-            className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
-          >
-            {card.icon}
-            <span className="mt-4 mb-2 text-secondary-mint-green font-bold text-4xl lg:text-5xl">
-              200
-            </span>
-            <span className="text-xl lg:text-2xl text-primary font-bold">
-              {t(card.title)}
-            </span>
-          </div>
-        ))}
+        {CARDS.map((card, index) => {
+          let value = 0;
+          switch (index) {
+            case 0:
+              value = isCenter
+                ? stats.total_branches || 0
+                : stats.total_enrollments;
+              break;
+            case 1:
+              value = stats.total_parents;
+              break;
+            case 2:
+              value = stats.total_team_members;
+              break;
+          }
+          return (
+            <div
+              key={card.title}
+              className="w-full flex-1 flex flex-col items-center p-6 rounded-3xl shadow-[0_0_2px_rgba(0,0,0,.08)]"
+            >
+              {card.icon}
+              <span className="mt-4 mb-2 text-secondary-mint-green font-bold text-4xl lg:text-5xl">
+                {value}
+              </span>
+              <span className="text-xl lg:text-2xl text-primary font-bold">
+                {t(card.title)}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
@@ -255,8 +411,7 @@ export default function CenterDashboardHome() {
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
         <div className="w-full flex-1">
           <CircularProgressChart
-            totalValue={1000}
-            currentValue={350}
+            currentValue={stats.total_children}
             title={t("children.title")}
             valueLabel={t("children.valueLabel")}
             capacityLabel={t("children.capacityLabel")}

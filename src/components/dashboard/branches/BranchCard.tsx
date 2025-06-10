@@ -11,6 +11,7 @@ import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { centerService } from "@/services/dashboardApi";
 import { useQueryClient } from "@tanstack/react-query";
 import { useHasRole } from "@/store/authStore";
+import { usePermissions } from "@/hooks/usePermissions";
 
 const BranchCard = ({
   branch,
@@ -26,6 +27,8 @@ const BranchCard = ({
   const queryClient = useQueryClient();
 
   const canDelete = useHasRole("center");
+  const { can } = usePermissions();
+  const canEdit = can("edit", "branches");
 
   const handleDelete = async () => {
     try {
@@ -78,7 +81,7 @@ const BranchCard = ({
               {t("view")}
             </Link>
           </Button>
-          {!noEdit && (
+          {!noEdit && canEdit && (
             <Button asChild size={"sm"} variant={"outline"}>
               <Link href={`${baseUrl || "branches"}/${branch.id}/edit`}>
                 {t("edit")}

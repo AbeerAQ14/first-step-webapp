@@ -18,25 +18,16 @@ export const permissions: Permission[] = [
     resource: "branches",
     action: "create",
     allowedRoles: ["center"],
-    centerSpecific: true,
   },
   {
     resource: "branches",
     action: "edit",
     allowedRoles: ["center"],
-    centerSpecific: true,
   },
   {
     resource: "branches",
     action: "delete",
     allowedRoles: ["center"],
-    centerSpecific: true,
-  },
-  {
-    resource: "branches",
-    action: "edit",
-    allowedRoles: ["branch_admin"],
-    branchSpecific: true,
   },
 
   // Children permissions

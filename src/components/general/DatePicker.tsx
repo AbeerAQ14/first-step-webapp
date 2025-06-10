@@ -24,6 +24,7 @@ const DatePicker = ({
   disabled,
   inputDisabled,
 }: DatePickerProps) => {
+  const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState(
     value ? format(value, "yyyy-MM-dd") : ""
   );
@@ -54,10 +55,11 @@ const DatePicker = ({
   const handleCalendarSelect = (date: Date | undefined) => {
     onChange(date);
     setInputValue(date ? format(date, "yyyy-MM-dd") : "");
+    setOpen(false);
   };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <FormControl>
           <div className="relative">
@@ -88,7 +90,7 @@ const DatePicker = ({
             disabled ||
             ((date) => date > new Date() || date < new Date("1900-01-01"))
           }
-          initialFocus
+          captionLayout="dropdown"
         />
       </PopoverContent>
     </Popover>

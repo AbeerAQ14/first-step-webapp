@@ -10,12 +10,27 @@ export type ReservationStatus =
 export function useReservationStatus() {
   const t = useTranslations("dashboard.tables.shared.status");
 
-  function getStatusText(status: ReservationStatus): string {
-    return t(status);
+  function mapStatus(status: string): ReservationStatus {
+    switch (status.toLowerCase()) {
+      case "accepted":
+        return "confirmed";
+      case "pending":
+        return "waitingForConfirmation";
+      case "rejected":
+        return "rejected";
+      default:
+        return status as ReservationStatus;
+    }
   }
 
-  function getStatusColorClass(status: ReservationStatus): string {
-    switch (status) {
+  function getStatusText(status: string): string {
+    const mappedStatus = mapStatus(status);
+    return t(mappedStatus);
+  }
+
+  function getStatusColorClass(status: string): string {
+    const mappedStatus = mapStatus(status);
+    switch (mappedStatus) {
       case "confirmed":
         return "bg-success text-white";
       case "waitingForPayment":

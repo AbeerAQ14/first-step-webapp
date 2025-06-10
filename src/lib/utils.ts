@@ -27,6 +27,10 @@ const ERRORMESSAGES = {
     ar: "يرجى إدخال بريد إلكتروني صحيح",
     en: "Please enter a valid email address",
   },
+  "invalid-url": {
+    ar: "يرجى إدخال رابط صحيح",
+    en: "Please enter a valid URL",
+  },
   "invalid-phone": {
     ar: "يرجى إدخال رقم هاتف صحيح",
     en: "Please enter a valid phone number",
@@ -174,110 +178,130 @@ export function slugToReadableName(slug: string): string {
 export function transformParentDataToExpectedPayload(
   formData: ParentRegisterFormDataInput
 ): ParentRegisterPayload {
-  // --- Child Data Processing ---
+  const childData = transformChildData(formData);
 
-  // 1. Handle Chronic Diseases
-  const hasDisease = formData.chronicDiseases?.hasDiseases === "yes";
-  const firstDisease =
-    hasDisease &&
-    formData.chronicDiseases?.diseases &&
-    formData.chronicDiseases.diseases.length > 0
-      ? formData.chronicDiseases.diseases[0]
-      : null;
+  return {
+    name: formData.name,
+    email: formData.email,
+    password: formData.password,
+    address: formData.address,
+    national_number: formData.national_number,
+    phone: formData.phone,
+    children: [childData],
+  };
+}
 
-  // 2. Handle Allergies
-  const hasAllergy = formData.allergies?.hasAllergies === "yes";
-  const firstAllergySource =
-    hasAllergy &&
-    formData.allergies?.allergies &&
-    formData.allergies.allergies.length > 0
-      ? formData.allergies.allergies[0]
-      : null;
-
-  // Map detailed allergies array
-  const allergiesTransformed: ChildAllergyDetail[] =
-    hasAllergy && formData.allergies?.allergies
-      ? formData.allergies.allergies.map((allergy) => ({
-          name: allergy.allergyTypes,
-          // Wrap the allergyFoods string into an array as expected
-          allergy_causes: allergy.allergyFoods ? [allergy.allergyFoods] : [],
-          allergy_emergency: allergy.allergyProcedures,
-        }))
-      : []; // Return empty array if no allergies or data missing
-
-  // 3. Format Birthday Date (Extract YYYY-MM-DD)
-  let formattedBirthday: string | null = null;
-  if (formData.birthDate) {
-    try {
-      // Get the date part (YYYY-MM-DD) from the ISO string
-      formattedBirthday = new Date(formData.birthDate)
-        .toISOString()
-        .split("T")[0];
-    } catch (e) {
-      console.error("Could not parse birthDate:", formData.birthDate, e);
-      // formattedBirthday remains null if parsing fails
-    }
-  }
-
-  // 4. Map Gender
-  let childGender: "girl" | "boy" | string;
-  if (formData.gender === "female") {
-    childGender = "girl";
-  } else if (formData.gender === "male") {
-    childGender = "boy";
-  } else {
-    childGender = formData.gender; // Keep original if not male/female
-  }
-
-  // 5. Map Authorized Persons (Rename idNumber to cin)
-  const authorizedPersonsTransformed: AuthorizedPerson[] = (
-    formData.authorizedPersons || []
-  ).map((person) => ({
-    name: person.name,
-    cin: person.idNumber, // Renaming idNumber to cin
-  }));
-
-  // 6. Combine descriptive fields for recommendations
-  const recommendations = formData.recommendations || undefined;
-  const description_3_words = formData.childDescription || "";
-  const things_child_likes = formData.favoriteThings || "";
-  const notes = formData.comments || undefined;
-
-  // 7. Construct the Child object
-  const childData: Child = {
+function transformChildData(formData: ParentRegisterFormDataInput): Child {
+  return {
     child_name: formData.childName,
-    birthday_date: formattedBirthday, // Use the formatted date (or null)
-    gender: childGender,
-    disease: hasDisease,
-    disease_name: firstDisease ? firstDisease.name : null,
-    medicament_disease: firstDisease ? firstDisease.medication : null,
-    disease_emergency: firstDisease ? firstDisease.procedures : null,
-    allergy: hasAllergy,
-    // Use the type from the first allergy as the primary allergy_name
-    allergy_name: firstAllergySource ? firstAllergySource.allergyTypes : null,
+    birthday_date: formatBirthdayDate(formData.birthDate),
+    gender: mapGender(formData.gender),
+    disease: formData.chronicDiseases?.hasDiseases === "yes",
+    disease_details: transformDiseases(formData.chronicDiseases),
+    allergy: formData.allergies?.hasAllergies === "yes",
+    allergy_name: getFirstAllergyType(formData.allergies),
     parent_name: formData.fatherName,
     mother_name: formData.motherName,
     kinship: formData.kinship,
-    recommendations,
-    description_3_words,
-    things_child_likes,
-    notes, // Use the combined text
-    authorized_persons: authorizedPersonsTransformed,
-    allergies: allergiesTransformed, // Use the transformed detailed allergies
+    recommendations: formData.recommendations,
+    description_3_words: formData.childDescription || "",
+    things_child_likes: formData.favoriteThings || "",
+    notes: formData.comments,
+    authorized_persons: transformAuthorizedPersons(formData.authorizedPersons),
+    allergies: transformAllergies(formData.allergies),
   };
+}
 
-  // --- Construct Final Payload ---
-  const expectedPayload: ParentRegisterPayload = {
-    name: formData.name,
-    email: formData.email,
-    password: formData.password, // Directly mapped
-    address: formData.address, // Address is not present in the source formData
-    national_number: formData.national_number,
-    phone: formData.phone,
-    children: [childData], // Place the constructed child object into an array
-  };
+function formatBirthdayDate(date: string | undefined): string | null {
+  if (!date) return null;
+  try {
+    return new Date(date).toISOString().split("T")[0];
+  } catch (e) {
+    console.error("Could not parse birthDate:", date, e);
+    return null;
+  }
+}
 
-  return expectedPayload;
+function mapGender(gender: string): "girl" | "boy" | string {
+  switch (gender) {
+    case "female":
+      return "girl";
+    case "male":
+      return "boy";
+    default:
+      return gender;
+  }
+}
+
+function transformDiseases(chronicDiseases?: {
+  hasDiseases: "yes" | "no";
+  diseases?: Array<{ name: string; medication: string; procedures: string }>;
+}): Array<{ disease_name: string; medicament: string; emergency: string }> {
+  if (
+    !chronicDiseases?.hasDiseases ||
+    chronicDiseases.hasDiseases !== "yes" ||
+    !chronicDiseases.diseases
+  ) {
+    return [];
+  }
+
+  return chronicDiseases.diseases.map((disease) => ({
+    disease_name: disease.name,
+    medicament: disease.medication,
+    emergency: disease.procedures,
+  }));
+}
+
+function getFirstAllergyType(allergies?: {
+  hasAllergies: "yes" | "no";
+  allergies?: Array<{
+    allergyTypes: string;
+    allergyFoods: string;
+    allergyProcedures: string;
+  }>;
+}): string | null {
+  if (
+    !allergies?.hasAllergies ||
+    allergies.hasAllergies !== "yes" ||
+    !allergies.allergies?.length
+  ) {
+    return null;
+  }
+  return allergies.allergies[0].allergyTypes;
+}
+
+function transformAllergies(allergies?: {
+  hasAllergies: "yes" | "no";
+  allergies?: Array<{
+    allergyTypes: string;
+    allergyFoods: string;
+    allergyProcedures: string;
+  }>;
+}): ChildAllergyDetail[] {
+  if (
+    !allergies?.hasAllergies ||
+    allergies.hasAllergies !== "yes" ||
+    !allergies.allergies
+  ) {
+    return [];
+  }
+
+  return allergies.allergies.map((allergy) => ({
+    name: allergy.allergyTypes,
+    allergy_causes: allergy.allergyFoods ? [allergy.allergyFoods] : [],
+    allergy_emergency: allergy.allergyProcedures,
+  }));
+}
+
+function transformAuthorizedPersons(
+  persons?: Array<{ name: string; idNumber: string }>
+): AuthorizedPerson[] {
+  if (!persons) return [];
+
+  return persons.map((person) => ({
+    name: person.name,
+    cin: person.idNumber,
+  }));
 }
 
 // to 24-hour format
