@@ -550,6 +550,9 @@ export const centerService = {
   getBranchStats: async () => {
     try {
       const response = await apiClient.get(`/branch/statistics`);
+  getParentChildren: async () => {
+    try {
+      const response = await apiClient.get("/parent/children");
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);

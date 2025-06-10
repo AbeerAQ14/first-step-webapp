@@ -28,6 +28,7 @@ export interface Allergy {
 }
 
 export interface Child {
+  id: number;
   child_name: string;
   birthday_date: string | null;
   gender: "girl" | "boy" | string;
