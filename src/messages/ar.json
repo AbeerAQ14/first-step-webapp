@@ -890,7 +890,7 @@
       "children": {
         "title": "عدد الأطفال",
         "valueLabel": "طفل",
-        "capacityLabel": "سعة الحضانة",
+        "capacityLabel": "المستوى القادم",
         "comparison": {
           "title": "مقارنة عدد الأطفال",
           "months": {

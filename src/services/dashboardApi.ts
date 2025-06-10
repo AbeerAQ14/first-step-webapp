@@ -249,6 +249,15 @@ export const centerService = {
     }
   },
 
+  getChildrenBirthdays: async () => {
+    try {
+      const response = await apiClient.get(`/child-birthdays`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   getBranchTeam: async (id: string) => {
     try {
       const response = await apiClient.get(
@@ -472,6 +481,75 @@ export const centerService = {
   deleteTask: async (taskId: string) => {
     try {
       const response = await apiClient.delete(`/to-do-centers/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOccasions: async () => {
+    try {
+      const response = await apiClient.get(`/occassions`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.get(`/occassions/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createOccasion: async (payload: { title: string; date: string }) => {
+    try {
+      const response = await apiClient.post(`/occassions`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateOccasion: async (
+    occasionId: string,
+    payload: { title: string; date: string }
+  ) => {
+    try {
+      const response = await apiClient.put(
+        `/occassions/${occasionId}`,
+        payload
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.delete(`/occassions/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterStats: async () => {
+    try {
+      const response = await apiClient.get(`/center/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranchStats: async () => {
+    try {
+      const response = await apiClient.get(`/branch/statistics`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);

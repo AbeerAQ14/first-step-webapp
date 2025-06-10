@@ -533,4 +533,15 @@ export const authService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  googleSignIn: async (token: string) => {
+    try {
+      const response = await apiClient.post("/auth/google", {
+        token,
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };

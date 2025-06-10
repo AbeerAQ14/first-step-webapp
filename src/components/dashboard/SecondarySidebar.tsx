@@ -9,17 +9,28 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 import Header from "./secondary-sidebar/Header";
-import { useEventsStore } from "@/store/eventsStore";
 import TaskCard from "./secondary-sidebar/TaskCard";
 import Card from "./secondary-sidebar/Card";
 import EmptyState from "./secondary-sidebar/EmptyState";
 import { Task, useTasks } from "@/hooks/useTasks";
+import { useOccasions, Occasion } from "@/hooks/useOccasions";
+import { useBirthdays, Birthday } from "@/hooks/useBirthdays";
 
 const SecondarySidebar = () => {
   const locale = useLocale();
   const t = useTranslations("dashboard.secondary-sidebar");
 
-  const { occasions, birthdays, addOccasion, addBirthday } = useEventsStore();
+  const {
+    occasions,
+    isLoading: occasionsLoading,
+    error: occasionsError,
+    addOccasion,
+  } = useOccasions();
+  const {
+    birthdays,
+    isLoading: birthdaysLoading,
+    error: birthdaysError,
+  } = useBirthdays();
   const { tasks, isLoading, error, addTask } = useTasks();
 
   return (
@@ -40,21 +51,37 @@ const SecondarySidebar = () => {
             </p>
             <PlusCircle
               onClick={() =>
-                addOccasion({ title: t("add.occasion"), date: new Date() })
+                addOccasion.mutate({
+                  title: t("add.occasion"),
+                  date: new Date(),
+                })
               }
               className="size-4 text-light-gray hover:text-primary cursor-pointer"
             />
           </div>
 
-          {occasions.length === 0 ? (
+          {occasionsLoading ? (
+            <div className="mt-4 text-center text-light-gray">
+              {t("loading")}
+            </div>
+          ) : occasionsError ? (
+            <div className="mt-4 text-center text-error">
+              {occasionsError instanceof Error
+                ? occasionsError.message
+                : "An error occurred"}
+            </div>
+          ) : occasions.length === 0 ? (
             <EmptyState
               onAdd={() =>
-                addOccasion({ title: t("add.occasion"), date: new Date() })
+                addOccasion.mutate({
+                  title: t("add.occasion"),
+                  date: new Date(),
+                })
               }
             />
           ) : (
             <div className="mt-2 flex flex-col items-center gap-y-2">
-              {occasions.map((item) => (
+              {occasions.map((item: Occasion) => (
                 <Card
                   key={item.id}
                   id={item.id}
@@ -76,23 +103,23 @@ const SecondarySidebar = () => {
         <SidebarGroup className="px-0">
           <div className="flex items-center justify-between">
             <p className="font-medium text-xl text-primary">{t("birthdays")}</p>
-            <PlusCircle
-              onClick={() =>
-                addBirthday({ title: t("add.birthday"), date: new Date() })
-              }
-              className="size-4 text-light-gray hover:text-primary cursor-pointer"
-            />
           </div>
 
-          {birthdays.length === 0 ? (
-            <EmptyState
-              onAdd={() =>
-                addBirthday({ title: t("add.birthday"), date: new Date() })
-              }
-            />
+          {birthdaysLoading ? (
+            <div className="mt-4 text-center text-light-gray">
+              {t("loading")}
+            </div>
+          ) : birthdaysError ? (
+            <div className="mt-4 text-center text-error">
+              {birthdaysError instanceof Error
+                ? birthdaysError.message
+                : "An error occurred"}
+            </div>
+          ) : birthdays.length === 0 ? (
+            <EmptyState />
           ) : (
             <div className="mt-2 flex flex-col items-center gap-y-2">
-              {birthdays.map((item) => (
+              {birthdays.map((item: Birthday) => (
                 <Card
                   key={item.id}
                   id={item.id}
@@ -110,6 +137,7 @@ const SecondarySidebar = () => {
             </div>
           )}
         </SidebarGroup>
+
         <SidebarGroup>
           <div className="flex items-center justify-between">
             <p className="font-medium text-xl text-primary">{t("tasks")}</p>

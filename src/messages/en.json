@@ -894,7 +894,7 @@
       "children": {
         "title": "Number of Children",
         "valueLabel": "child",
-        "capacityLabel": "Nursery Capacity",
+        "capacityLabel": "Next Level",
         "comparison": {
           "title": "Children Count Comparison",
           "months": {

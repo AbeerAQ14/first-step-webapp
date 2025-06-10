@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 type EmptyStateProps = {
-  onAdd: () => void;
+  onAdd?: () => void;
 };
 
 const EmptyState = ({ onAdd }: EmptyStateProps) => {
@@ -18,17 +18,19 @@ const EmptyState = ({ onAdd }: EmptyStateProps) => {
         height={60}
         alt="empty"
       />
-      <Button
-        onClick={onAdd}
-        className="h-7 px-4 font-bold text-[.75rem]"
-        size="sm"
-        variant="outline"
-      >
-        {t("empty.add-now")}
-        <Plus className="size-4 ml-1" />
-      </Button>
+      {onAdd ? (
+        <Button
+          onClick={onAdd}
+          className="h-7 px-4 font-bold text-[.75rem]"
+          size="sm"
+          variant="outline"
+        >
+          {t("empty.add-now")}
+          <Plus className="size-4 ml-1" />
+        </Button>
+      ) : null}
     </div>
   );
 };
 
-export default EmptyState; 
+export default EmptyState;

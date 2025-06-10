@@ -7,6 +7,7 @@ import "@/styles/globals.css";
 import { Providers } from "../providers";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
 
 const tajawal = Tajawal({
   weight: ["400", "500", "700", "800"],
@@ -45,6 +46,10 @@ export default async function RootLayout({
           <Providers>{children}</Providers>
           <Toaster />
         </NextIntlClientProvider>
+        <Script
+          src="https://accounts.google.com/gsi/client"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
