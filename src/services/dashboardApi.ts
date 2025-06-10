@@ -555,4 +555,18 @@ export const centerService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  sendNotification: async (payload: {
+    parent_ids: number[];
+    title: string;
+    date: string;
+    time: string;
+  }) => {
+    try {
+      const response = await apiClient.post(`/notify-parents`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };

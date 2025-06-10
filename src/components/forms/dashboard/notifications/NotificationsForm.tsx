@@ -10,14 +10,17 @@ import Parents from "@/components/dashboard/notifications/Parents";
 import type { Parent } from "@/components/tables/data/parents";
 import NotificationForm from "@/components/forms/dashboard/notifications/NotificationForm";
 import { useTranslations } from "next-intl";
+import { useMutation } from "@tanstack/react-query";
+import { centerService } from "@/services/dashboardApi";
+import { toast } from "sonner";
 
 const notificationSchema = z.object({
   type: z
     .string()
     .min(1, { message: getErrorMessage("general-field-required", "ar") }),
-  day: z
-    .string()
-    .min(1, { message: getErrorMessage("general-field-required", "ar") }),
+  day: z.date({
+    required_error: getErrorMessage("general-field-required", "ar"),
+  }),
   time: z
     .string({
       message: getErrorMessage("invalid-time", "ar"),
@@ -64,11 +67,37 @@ const NotificationsForm = () => {
     Record<number, string>
   >({});
 
+  const sendNotificationMutation = useMutation({
+    mutationFn: (data: NotificationsFormData) => {
+      const selectedWithOnlySelectedChild = useFilteredParents(
+        selectedParents,
+        selectedChildMap
+      );
+
+      return centerService.sendNotification({
+        parent_ids: selectedWithOnlySelectedChild.map((parent) => parent.id),
+        title: data.type,
+        date: data.day.toISOString().split("T")[0],
+        time: data.time,
+      });
+    },
+    onSuccess: () => {
+      toast.success(t("form.success"));
+      methods.reset();
+      setSelectedParents([]);
+      setSelectedChildMap({});
+    },
+    onError: (error) => {
+      toast.error(t("form.error"));
+      console.error("Notification error:", error);
+    },
+  });
+
   const methods = useForm<NotificationsFormData>({
     resolver: zodResolver(notificationSchema),
     defaultValues: {
       type: "",
-      day: "",
+      day: undefined,
       time: "",
       recipients: [],
     },
@@ -88,10 +117,7 @@ const NotificationsForm = () => {
     if (!valid) return;
 
     const data = methods.getValues();
-
-    const finalPayload = data;
-
-    console.log("Final Payload", finalPayload);
+    sendNotificationMutation.mutate(data);
   };
 
   return (
@@ -125,8 +151,14 @@ const NotificationsForm = () => {
           </p>
         )}
 
-        <Button size={"sm"} type="submit">
-          {t("form.submit")}
+        <Button
+          size={"sm"}
+          type="submit"
+          disabled={sendNotificationMutation.isPending}
+        >
+          {sendNotificationMutation.isPending
+            ? t("form.sending")
+            : t("form.submit")}
         </Button>
       </form>
     </FormProvider>

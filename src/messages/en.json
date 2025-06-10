@@ -795,8 +795,11 @@
             "label": "Choose Notification",
             "placeholder": "Sleep Notification",
             "options": {
-              "sleep": "Sleep Notification",
-              "breakfast": "Breakfast Notification"
+              "arrived": "Arrived",
+              "left": "Left",
+              "meal": "Meal Time",
+              "nap": "Nap Time",
+              "activity": "Activity Time"
             }
           },
           "day": {
@@ -810,7 +813,10 @@
           "recipients": {
             "error": "Recipients are required"
           },
-          "submit": "Send Notification"
+          "submit": "Send Notification",
+          "sending": "Sending...",
+          "success": "Notification sent successfully",
+          "error": "Failed to send notification"
         }
       },
       "team": {
