@@ -69,7 +69,6 @@ const SignUpWrapper = () => {
       logo: data.logo,
       license_path: data.license_path,
       commercial_record_path: data.commercial_record_path,
-      name: data.name,
       email: data.email,
       password: data.password,
       address: data.address,
@@ -92,7 +91,8 @@ const SignUpWrapper = () => {
       emergency_contact: data.emergency_contact === "yes",
       special_needs: data.accepted_ages.includes("disabled"),
 
-      nursery_name: data.nursery_name,
+      name: data.nursery_name_ar,
+      nursery_name: data.nursery_name_en,
       location: data.location,
       city: data.city,
       neighborhood: data.neighborhood,

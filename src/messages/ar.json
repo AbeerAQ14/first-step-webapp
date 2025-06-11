@@ -376,13 +376,13 @@
       "1": {
         "title": "المعلومات الأساسية",
         "form": {
-          "name": {
-            "label": "الاسم",
-            "placeholder": "أدخل اسمك الكامل"
+          "nursery_name_ar": {
+            "label": "اسم المركز بالعربية",
+            "placeholder": "أدخل اسم المركز بالعربية"
           },
-          "nursery-name": {
-            "label": "اسم المركز",
-            "placeholder": "أدخل اسم المركز"
+          "nursery_name_en": {
+            "label": "اسم المركز بالإنجليزية",
+            "placeholder": "أدخل اسم المركز بالإنجليزية"
           },
           "phone": {
             "label": "رقم الجوال",

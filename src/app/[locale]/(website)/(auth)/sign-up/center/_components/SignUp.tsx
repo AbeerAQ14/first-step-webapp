@@ -43,13 +43,13 @@ export function SignUp({
     resolver: zodResolver(signUpCenterSchema),
     defaultValues: {
       // step1
-      name: "",
+      nursery_name_ar: "",
+      nursery_name_en: "",
       email: "",
       phone: "",
       password: "",
       confirmPassword: "",
       neighborhood: "",
-      nursery_name: "",
       nursery_type: [],
       address: "",
       city: "",
@@ -102,8 +102,8 @@ export function SignUp({
     switch (step) {
       case 1:
         return [
-          "name",
-          "nursery_name",
+          "nursery_name_ar",
+          "nursery_name_en",
           "email",
           "phone",
           "city",

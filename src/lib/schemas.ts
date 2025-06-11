@@ -370,10 +370,10 @@ export type BranchStep1FormData = z.infer<
 const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
-    name: z
+    nursery_name_ar: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    nursery_name: z
+    nursery_name_en: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
     email: z

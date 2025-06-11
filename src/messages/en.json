@@ -380,13 +380,13 @@
       "1": {
         "title": "Basic Information",
         "form": {
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter your full name"
+          "nursery_name_ar": {
+            "label": "Center Name In Arabic",
+            "placeholder": "Enter center name in arabic"
           },
-          "nursery-name": {
-            "label": "Center Name",
-            "placeholder": "Enter center name"
+          "nursery_name_en": {
+            "label": "Center Name In English",
+            "placeholder": "Enter center name in english"
           },
           "phone": {
             "label": "Mobile Number",
