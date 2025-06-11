@@ -372,40 +372,49 @@ const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
     // Step 1: Basic Information
     nursery_name_ar: z
       .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     nursery_name_en: z
       .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     email: z
       .string()
-      .email({ message: getErrorMessage("invalid-email", locale) }),
+      .email({ message: getErrorMessage("invalid-email", locale) })
+      .optional(),
     phone: z
       .string()
-      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
-        message: getErrorMessage("invalid-phone", locale),
-      }),
-    password: z.string().min(8, {
-      message: getErrorMessage("password-min", locale, { min: 8 }),
-    }),
-    confirmPassword: z.string(),
+
+      .optional(),
+    password: z
+      .string()
+
+      .optional(),
+    confirmPassword: z.string().optional(),
     city: z
       .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     neighborhood: z
       .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     address: z
       .string()
-      .min(2, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     location: z
       .string()
-      .url({ message: getErrorMessage("invalid-url", locale) }),
+
+      .optional(),
     nursery_type: z
       .array(z.string())
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
     services: z
       .array(z.string())
-      .min(1, { message: getErrorMessage("services-one-required", locale) }),
+
+      .optional(),
     additional_service: z.string().optional(),
   });
 
@@ -414,40 +423,17 @@ export type CenterStep1FormData = z.infer<
 >;
 
 // Sign Up For Centers Step 2
-const createCenterStep2Schema = (
-  locale: "ar" | "en" = "ar"
-): z.ZodObject<{
-  accepted_ages: z.ZodArray<z.ZodString>;
-  work_days_from: z.ZodString;
-  work_days_to: z.ZodString;
-  work_hours_from: z.ZodString;
-  work_hours_to: z.ZodString;
-}> =>
+const createCenterStep2Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 2: Ages and Hours
     accepted_ages: z
       .array(z.string())
-      .min(1, { message: getErrorMessage("age-groups-one-required", locale) }),
-    work_days_from: z
-      .string({
-        message: getErrorMessage("invalid-date", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_days_to: z
-      .string({
-        message: getErrorMessage("invalid-date", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_hours_from: z
-      .string({
-        message: getErrorMessage("invalid-time", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
-    work_hours_to: z
-      .string({
-        message: getErrorMessage("invalid-time", locale),
-      })
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+
+      .optional(),
+    work_days_from: z.string({}).optional(),
+    work_days_to: z.string({}).optional(),
+    work_hours_from: z.string({}).optional(),
+    work_hours_to: z.string({}).optional(),
   });
 
 export type CenterStep2FormData = z.infer<
@@ -458,17 +444,11 @@ export type CenterStep2FormData = z.infer<
 const createCenterStep3Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 3: Communication and Food
-    emergency_contact: z.enum(["yes", "no"], {
-      required_error: getErrorMessage("general-answer-required", locale),
-    }),
-    communication_methods: z
-      .array(z.string())
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    emergency_contact: z.enum(["yes", "no"], {}).optional(),
+    communication_methods: z.array(z.string()).optional(),
     meals_and_periods: z
       .object({
-        provides_food: z.enum(["yes", "no"], {
-          required_error: getErrorMessage("general-answer-required", locale),
-        }),
+        provides_food: z.enum(["yes", "no"], {}).optional(),
         first_meals: z
           .array(
             z.object({
@@ -490,95 +470,7 @@ const createCenterStep3Schema = (locale: "ar" | "en" = "ar") =>
         time_of_first_period: z.string().trim().optional(),
         time_of_second_period: z.string().trim().optional(),
       })
-      .superRefine((data, ctx) => {
-        if (data.provides_food === "yes") {
-          if (!data.first_meals || data.first_meals.length === 0) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: getErrorMessage("general-field-required", locale),
-              path: ["first_meals"],
-            });
-          } else {
-            data.first_meals.forEach((meal, index) => {
-              if (!meal.meal_name || meal.meal_name.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`first_meals.${index}.meal_name`],
-                });
-              }
-              if (!meal.juice || meal.juice.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`first_meals.${index}.juice`],
-                });
-              }
-              if (!meal.components || meal.components.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`first_meals.${index}.components`],
-                });
-              }
-            });
-          }
-
-          if (!data.second_meals || data.second_meals.length === 0) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: getErrorMessage("general-field-required", locale),
-              path: ["second_meals"],
-            });
-          } else {
-            data.second_meals.forEach((meal, index) => {
-              if (!meal.meal_name || meal.meal_name.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`second_meals.${index}.meal_name`],
-                });
-              }
-              if (!meal.juice || meal.juice.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`second_meals.${index}.juice`],
-                });
-              }
-              if (!meal.components || meal.components.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: getErrorMessage("general-field-required", locale),
-                  path: [`second_meals.${index}.components`],
-                });
-              }
-            });
-          }
-
-          if (
-            !data.time_of_first_period ||
-            data.time_of_first_period.trim() === ""
-          ) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: getErrorMessage("general-field-required", locale),
-              path: ["time_of_first_period"],
-            });
-          }
-
-          if (
-            !data.time_of_second_period ||
-            data.time_of_second_period.trim() === ""
-          ) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: getErrorMessage("general-field-required", locale),
-              path: ["time_of_second_period"],
-            });
-          }
-        }
-      }),
+      .optional(),
   });
 
 export type CenterStep3FormData = z.infer<
@@ -593,48 +485,28 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 4: Permits
     license_path: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("file-size", locale)
-      ),
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type))
+      .optional(),
 
     commercial_record_path: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("pdf-type", locale)
-      ),
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type))
+      .optional(),
 
     logo: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
       .refine(
         (file) =>
           ["image/png", "image/jpeg", "image/jpg", "image/svg+xml"].includes(
             file.type
           ),
-        {
-          message: getErrorMessage("image-type", locale),
-        }
-      ),
+        {}
+      )
+      .optional(),
 
     comments: z.string().optional(),
   });
@@ -654,10 +526,18 @@ export const createSignUpCenterSchema = (locale: "ar" | "en" = "ar") => {
     .merge(step2Schema)
     .merge(step3Schema)
     .merge(step4Schema)
-    .refine((data) => data.password === data.confirmPassword, {
-      message: getErrorMessage("password-match", locale),
-      path: ["confirmPassword"],
-    });
+    .refine(
+      (data) => {
+        if (data.password && data.confirmPassword) {
+          return data.password === data.confirmPassword;
+        }
+        return true;
+      },
+      {
+        message: getErrorMessage("password-match", locale),
+        path: ["confirmPassword"],
+      }
+    );
 };
 
 export type SignUpCenterFormData = z.infer<
