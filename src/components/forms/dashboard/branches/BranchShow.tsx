@@ -27,11 +27,11 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
   const transformedInitialValues: BranchFormData | undefined = useMemo(() => {
     if (!fetchedBranch) return undefined;
     return {
-      name: fetchedBranch.name || "",
+      nursery_name_ar: fetchedBranch.name || "",
       email: fetchedBranch.email || "",
       phone: fetchedBranch.phone || "",
       neighborhood: fetchedBranch.neighborhood || "",
-      nursery_name: fetchedBranch.nursery_name || "",
+      nursery_name_en: fetchedBranch.nursery_name || "",
       nursery_type: fetchedBranch.nursery_type || [],
       address: fetchedBranch.address || "",
       city: fetchedBranch.city || "",
@@ -63,11 +63,11 @@ const BranchShow = ({ branchId }: { branchId: string }) => {
     resolver: zodResolver(branchSchema),
     defaultValues: {
       // step1
-      name: "",
+      nursery_name_ar: "",
+      nursery_name_en: "",
       email: "",
       phone: "",
       neighborhood: "",
-      nursery_name: "",
       nursery_type: [],
       address: "",
       city: "",
