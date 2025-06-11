@@ -139,12 +139,12 @@ export function SignUp({
     switch (currentStep) {
       case 1:
         return <Step1BasicInfo />;
-      case 2:
-        return <Step2AgesAndHours />;
-      case 3:
-        return <Step3Communication />;
-      case 4:
-        return <Step4Permits />;
+      // case 2:
+      //   return <Step2AgesAndHours />;
+      // case 3:
+      //   return <Step3Communication />;
+      // case 4:
+      //   return <Step4Permits />;
       default:
         return null;
     }
@@ -186,7 +186,7 @@ export function SignUp({
 
             <FormNavigation
               currentStep={currentStep}
-              totalSteps={totalSteps}
+              totalSteps={1}
               onPrevious={goToPreviousStep}
               onNext={goToNextStep}
               isLoading={isLoading}
