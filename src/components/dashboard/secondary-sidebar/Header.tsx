@@ -6,10 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuthUser } from "@/store/authStore";
 
 export default function SidebarHeader() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [name, setName] = useState("حضانة الأمل");
+  const user = useAuthUser();
+  const [name, setName] = useState(user?.name);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -46,7 +48,7 @@ export default function SidebarHeader() {
             <SelectValue placeholder="إشعار النوم" />
           </SelectTrigger>
           <SelectContent>
-            {["حضانة الأمل", "حضانة النجاح"].map((day) => (
+            {[user?.name ?? ""].map((day) => (
               <SelectItem key={day} value={day}>
                 {day}
               </SelectItem>
