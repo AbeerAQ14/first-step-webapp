@@ -44,9 +44,9 @@ const SignUpWrapper = () => {
   const mutation = useMutation<
     any, // Success response type (update this based on your API response)
     ApiError,
-    CenterRegisterPayload
+    any
   >({
-    mutationFn: async (data: CenterRegisterPayload) => {
+    mutationFn: async (data: any) => {
       return await authService.registerCenter(data);
     },
     onSuccess: (data) => {
@@ -66,76 +66,76 @@ const SignUpWrapper = () => {
     }
 
     const expectedData = {
-      logo: data.logo,
-      license_path: data.license_path,
-      commercial_record_path: data.commercial_record_path,
+      // logo: data.logo,
+      // license_path: data.license_path,
+      // commercial_record_path: data.commercial_record_path,
       email: data.email,
       password: data.password,
-      address: data.address,
-      phone: data.phone,
-      comments: data.comments,
+      // address: data.address,
+      // phone: data.phone,
+      // comments: data.comments,
 
-      nursery_type: data.nursery_type,
-      additional_service: data.additional_service,
-      work_days_from: data.work_days_from,
-      work_days_to: data.work_days_to,
+      // nursery_type: data.nursery_type,
+      // additional_service: data.additional_service,
+      // work_days_from: data.work_days_from,
+      // work_days_to: data.work_days_to,
 
-      work_hours_from: data.work_hours_from,
-      work_hours_to: data.work_hours_to,
-      time_of_first_period: data.meals_and_periods.time_of_first_period,
-      time_of_second_period: data.meals_and_periods.time_of_second_period,
+      // work_hours_from: data.work_hours_from,
+      // work_hours_to: data.work_hours_to,
+      // time_of_first_period: data.meals_and_periods.time_of_first_period,
+      // time_of_second_period: data.meals_and_periods.time_of_second_period,
 
-      first_meals: data.meals_and_periods.first_meals,
-      second_meals: data.meals_and_periods.second_meals,
+      // first_meals: data.meals_and_periods.first_meals,
+      // second_meals: data.meals_and_periods.second_meals,
 
-      emergency_contact: data.emergency_contact === "yes",
-      special_needs: data.accepted_ages.includes("disabled"),
+      // emergency_contact: data.emergency_contact === "yes",
+      // special_needs: data.accepted_ages.includes("disabled"),
 
       name: data.nursery_name_ar,
-      nursery_name: data.nursery_name_en,
-      location: data.location,
-      city: data.city,
-      neighborhood: data.neighborhood,
+      // nursery_name: data.nursery_name_en,
+      // location: data.location,
+      // city: data.city,
+      // neighborhood: data.neighborhood,
 
-      services: data.services,
-      communication_methods: data.communication_methods,
+      // services: data.services,
+      // communication_methods: data.communication_methods,
 
-      provides_food: data.meals_and_periods.provides_food === "yes",
+      // provides_food: data.meals_and_periods.provides_food === "yes",
 
-      accepted_ages: data.accepted_ages,
+      // accepted_ages: data.accepted_ages,
 
-      pricing: [
-        {
-          enrollment_type: "daily",
-          response_speed: "normal",
-          price_amount: 100,
-        },
-        {
-          enrollment_type: "daily",
-          response_speed: "emergency",
-          price_amount: 120,
-        },
-        {
-          enrollment_type: "monthly",
-          response_speed: "normal",
-          price_amount: 1200,
-        },
-        {
-          enrollment_type: "monthly",
-          response_speed: "emergency",
-          price_amount: 1400,
-        },
-        {
-          enrollment_type: "6_months",
-          response_speed: "normal",
-          price_amount: 6500,
-        },
-        {
-          enrollment_type: "hourly",
-          response_speed: "normal",
-          price_amount: 30,
-        },
-      ],
+      // pricing: [
+      //   {
+      //     enrollment_type: "daily",
+      //     response_speed: "normal",
+      //     price_amount: 100,
+      //   },
+      //   {
+      //     enrollment_type: "daily",
+      //     response_speed: "emergency",
+      //     price_amount: 120,
+      //   },
+      //   {
+      //     enrollment_type: "monthly",
+      //     response_speed: "normal",
+      //     price_amount: 1200,
+      //   },
+      //   {
+      //     enrollment_type: "monthly",
+      //     response_speed: "emergency",
+      //     price_amount: 1400,
+      //   },
+      //   {
+      //     enrollment_type: "6_months",
+      //     response_speed: "normal",
+      //     price_amount: 6500,
+      //   },
+      //   {
+      //     enrollment_type: "hourly",
+      //     response_speed: "normal",
+      //     price_amount: 30,
+      //   },
+      // ],
     };
 
     mutation.mutate(expectedData);
