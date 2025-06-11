@@ -231,6 +231,17 @@ export const centerService = {
     }
   },
 
+  respondEnrollment: async (id: number, status: string) => {
+    try {
+      const response = await apiClient.patch(`/enrollments/${id}`, {
+        status,
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   getChildrenFiles: async () => {
     try {
       const response = await apiClient.get(`/children`);

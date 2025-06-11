@@ -3,6 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { ReservationStatus, useReservationStatus } from "./shared/status";
+import { Button } from "@/components/ui/button";
+import { Check, X } from "lucide-react";
+import { centerService } from "@/services/dashboardApi";
+import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -28,7 +33,7 @@ export type Booking = {
 
 export interface SelectedChild {
   enrollmentId: string;
-  status: ReservationStatus;
+  status: string;
   branch: string;
   startDate: string;
   endDate: string;
@@ -43,6 +48,34 @@ export function useCenterBookingsColumns(
 ) {
   const t = useTranslations("dashboard.tables.center-bookings");
   const { getStatusText, getStatusColorClass } = useReservationStatus();
+  const queryClient = useQueryClient();
+
+  const enrollmentMutation = useMutation({
+    mutationFn: async ({
+      enrollmentId,
+      status,
+    }: {
+      enrollmentId: string;
+      status: string;
+    }) => {
+      await centerService.respondEnrollment(parseInt(enrollmentId), status);
+    },
+    onSuccess: () => {
+      toast.success(t("enrollmentResponseSuccess"));
+      // Invalidate and refetch relevant queries
+      queryClient.invalidateQueries({ queryKey: ["centerBookings"] });
+    },
+    onError: () => {
+      toast.error(t("enrollmentResponseError"));
+    },
+  });
+
+  const handleEnrollmentResponse = async (
+    enrollmentId: string,
+    status: string
+  ) => {
+    enrollmentMutation.mutate({ enrollmentId, status });
+  };
 
   const columns: ColumnDef<Booking>[] = [
     {
@@ -170,6 +203,58 @@ export function useCenterBookingsColumns(
             {text}
           </div>
         );
+      },
+    },
+    {
+      id: "control",
+      header: () => t("headers.control"),
+      cell: ({ row }) => {
+        const parentId = row.original.id;
+        const childs = row.original.childs;
+        const selectedChild = selectedChildMap[parentId] ?? {
+          status: childs[0]?.status ?? "",
+          enrollmentId: childs[0]?.enrollmentId,
+        };
+        const isWaitingForConfirmation = selectedChild?.status === "pending";
+
+        if (!isWaitingForConfirmation) return null;
+
+        return (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 h-fit text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() =>
+                handleEnrollmentResponse(selectedChild.enrollmentId, "accepted")
+              }
+              disabled={enrollmentMutation.isPending}
+            >
+              <Check className="w-4 h-4" />
+              {enrollmentMutation.isPending ? t("processing") : t("accept")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 h-fit text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() =>
+                handleEnrollmentResponse(selectedChild.enrollmentId, "rejected")
+              }
+              disabled={enrollmentMutation.isPending}
+            >
+              <X className="w-4 h-4" />
+              {enrollmentMutation.isPending ? t("processing") : t("reject")}
+            </Button>
+          </div>
+        );
+      },
+      enableHiding: true,
+      meta: {
+        isWaitingForConfirmation: (row: any) => {
+          const parentId = row.original.id;
+          const selectedChild = selectedChildMap[parentId];
+          return selectedChild?.status === "waitingForConfirmation";
+        },
       },
     },
   ];

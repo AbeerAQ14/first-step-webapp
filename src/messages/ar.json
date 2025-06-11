@@ -989,14 +989,20 @@
         "headers": {
           "childNumber": "رقم الطفل",
           "parentName": "اسم ولي الأمر",
-          "startDate": "تاريخ بداية الحجز",
-          "endDate": "تاريخ نهاية الحجز",
+          "startDate": "تاريخ البداية",
+          "endDate": "تاريخ النهاية",
           "child": "الطفل",
           "branch": "الفرع",
           "amount": "المبلغ",
-          "reservationStatus": "حالة الحجز"
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
         },
-        "currency": "ر.س"
+        "currency": "ر.س",
+        "accept": "قبول",
+        "reject": "رفض",
+        "processing": "جاري المعالجة...",
+        "enrollmentResponseSuccess": "تم إرسال الرد بنجاح",
+        "enrollmentResponseError": "فشل في إرسال الرد"
       },
       "ads": {
         "headers": {

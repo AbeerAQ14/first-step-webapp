@@ -1012,16 +1012,22 @@
       },
       "center-bookings": {
         "headers": {
-          "childNumber": "Child Number",
+          "childNumber": "No.",
           "parentName": "Parent Name",
-          "startDate": "Booking Start Date",
-          "endDate": "Booking End Date",
+          "startDate": "Start Date",
+          "endDate": "End Date",
           "child": "Child",
           "branch": "Branch",
           "amount": "Amount",
-          "reservationStatus": "Reservation Status"
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
         },
-        "currency": "SAR"
+        "currency": "SAR",
+        "accept": "Accept",
+        "reject": "Reject",
+        "processing": "Processing...",
+        "enrollmentResponseSuccess": "Enrollment response sent successfully",
+        "enrollmentResponseError": "Failed to send enrollment response"
       },
       "center-reports": {
         "headers": {
