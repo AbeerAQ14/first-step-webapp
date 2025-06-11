@@ -7,6 +7,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
 import { ReservationStatus } from "@/types";
+import { useReservationStatus } from "@/components/tables/data/shared/status";
 
 interface ChildFile {
   id: number;
@@ -22,20 +23,6 @@ interface ChildFile {
   }>;
 }
 
-// Map enrollment status to ReservationStatus
-const mapEnrollmentStatus = (status: string): ReservationStatus => {
-  switch (status) {
-    case "accepted":
-      return "confirmed";
-    case "pending":
-      return "waitingForConfirmation";
-    case "rejected":
-      return "rejected";
-    default:
-      return "waitingForConfirmation";
-  }
-};
-
 const Parents = ({
   selected,
   setSelected,
@@ -50,6 +37,7 @@ const Parents = ({
   >;
 }) => {
   const t = useTranslations("dashboard.tables.parents");
+  const { mapStatus } = useReservationStatus();
   const columns = useParentsColumns(selectedChildMap, setSelectedChildMap);
 
   const { data: childrenData, isLoading } = useQuery<ChildFile[]>({
@@ -83,7 +71,7 @@ const Parents = ({
       parent.childs.push({
         id: child.id.toString(),
         name: child.child_name,
-        reservationStatus: mapEnrollmentStatus(enrollment.status),
+        reservationStatus: mapStatus(enrollment.status) as ReservationStatus,
         branch: enrollment.branch_id.toString(),
       });
     });

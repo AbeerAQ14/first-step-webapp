@@ -1,11 +1,12 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Eye, Trash2 } from "lucide-react";
+import { Eye } from "lucide-react";
 import { ReservationStatus } from "@/types";
-import { useTranslations } from "next-intl";
 import { useReservationStatus } from "./shared/status";
 
 // This type is used to define the shape of our data.
@@ -131,16 +132,25 @@ export function useParentsColumns(
       accessorKey: "control",
       header: () => t("headers.control"),
       cell: ({ row }) => {
+        const parent = row.original;
+        const selectedChildId = selectedChildMap[parent.id];
+        const hasSelectedChild = selectedChildId && selectedChildId !== "all";
+
         return (
           <div className="flex items-center gap-1">
-            <Button variant={"ghost"} size={"icon"}>
-              <Eye className="size-4 text-mid-gray" />
-            </Button>
-            <Button variant={"ghost"} size={"icon"}>
-              <Edit className="size-4 text-mid-gray" />
-            </Button>
-            <Button variant={"ghost"} size={"icon"}>
-              <Trash2 className="size-4 text-mid-gray" />
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              disabled={!hasSelectedChild}
+              asChild={hasSelectedChild ? true : undefined}
+            >
+              {hasSelectedChild ? (
+                <Link href={`children-files/${selectedChildId}`}>
+                  <Eye className="size-4 text-mid-gray" />
+                </Link>
+              ) : (
+                <Eye className="size-4 text-mid-gray" />
+              )}
             </Button>
           </div>
         );
