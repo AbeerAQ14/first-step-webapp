@@ -627,6 +627,7 @@
   "error": {
     "title": "Oops! Something went wrong.",
     "default-message": "We couldn't process your request.",
+    "server-render-error": "We're sorry, but something went wrong while loading this page. Please try refreshing the page or return to the home page. If the problem persists, please try again later.",
     "description": "Please try refreshing the page or return to the home screen.",
     "refresh": "Refresh Page",
     "home": "Go to Homepage"
