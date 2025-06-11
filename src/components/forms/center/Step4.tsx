@@ -20,7 +20,7 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormField
+        {/* <FormField
           control={control}
           name="license_path"
           render={({ field }) => (
@@ -37,9 +37,9 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+        {/* <FormField
           control={control}
           name="commercial_record_path"
           render={({ field }) => (
@@ -56,9 +56,9 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+        {/* <FormField
           control={control}
           name="logo"
           render={({ field }) => (
@@ -75,7 +75,7 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </div>
 
       <p className="text-center text-sm lg:text-base text-info">
