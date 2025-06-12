@@ -581,3 +581,70 @@ export const centerService = {
     }
   },
 };
+
+export const adminService = {
+  getCenters: async () => {
+    try {
+      const response = await apiClient.get("/dashboard/centers");
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranches: async (centerId: string) => {
+    try {
+      const response = await apiClient.get(
+        `/dashboard/branches/${centerId}/branches`
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranch: async (branchId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/branches/${branchId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getChildren: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/childs`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getChild: async (childId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/childs/${childId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParents: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/parents`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParent: async (parentId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/parents/${parentId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+};
