@@ -1,77 +1,100 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
-import { Trash2 } from "lucide-react";
+"use client";
+
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 
-const CenterCard = () => {
-  const acceptedAges = {
-    "0-3": "من سن 0 إلى 3 سنوات",
-    "3-6": "من سن 3 إلى 6  سنوات",
+interface CenterCardProps {
+  center: {
+    user_id: number;
+    nursery_name: string;
+    city?: string;
+    neighborhood?: string;
+    logo?: string;
+    accepted_ages?: string[];
+    branches?: Array<{
+      id: number;
+      name: string;
+      nursery_name_branch?: string;
+    }>;
+    children_count?: number;
+    enrollments_count?: number;
   };
+}
 
-  const services = ["فرع مكة ", "فرع المدينة", "فرع الرياض", "فرع جدة"];
+const CenterCard = ({ center }: CenterCardProps) => {
+  const acceptedAges = center.accepted_ages || [];
+  const branches = center.branches || [];
 
   return (
     <div className="relative bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
       <div className="flex flex-col gap-y-6">
         <div className="flex items-start gap-4">
           <Image
-            src="/assets/logos/instagram-logo.png"
+            className="size-20 object-center object-cover rounded-full bg-primary-blue/20"
+            src={center.logo || "/assets/logos/instagram-logo.png"}
             width={81.66}
             height={80}
-            alt="Nersery Logo"
+            alt="Nursery Logo"
           />
-
           <div className="flex flex-col gap-2 lg:gap-4">
-            <p className="font-bold text-primary text-xl">اسم الحضانة</p>
+            <p className="font-bold text-primary text-xl">
+              {center.nursery_name}
+            </p>
             <span className="font-medium text-mid-gray flex gap-1">
               <span>العنوان:</span>
-              <span>السعودية ،المدينة، الحي، الشارع، رقم البناية</span>
+              <span>
+                {[center.city, center.neighborhood]
+                  .filter(Boolean)
+                  .join("، ") || "-"}
+              </span>
             </span>
             <span className="font-medium text-mid-gray flex gap-1">
-              <span>سعة الحضانة:</span>
-              <span>50 طفل</span>
+              <span>عدد الأطفال:</span>
+              <span>{center.children_count ?? "-"}</span>
             </span>
             <span className="font-medium text-mid-gray flex gap-1">
               <span>مجموع الحجوزات:</span>
-              <span>70 حجز</span>
+              <span>{center.enrollments_count ?? "-"}</span>
             </span>
           </div>
         </div>
-
         <div className="flex gap-5 lg:gap-x-10">
           <Button asChild size={"sm"}>
-            <Link href={"centers/123"}>عرض الحضانة</Link>
+            <Link href={`centers/${center.user_id}`}>عرض الحضانة</Link>
           </Button>
         </div>
       </div>
-
       <div className="flex flex-col gap-y-4">
         <div>
           <p className="mb-1 font-medium text-primary text-xl">
             الأعمار المقبولة
           </p>
-
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {Object.keys(acceptedAges).map((item) => (
-              <span key={item}>
-                {acceptedAges[item as keyof typeof acceptedAges]}
-              </span>
-            ))}
+            {acceptedAges.length > 0 ? (
+              Array.isArray(acceptedAges) &&
+              acceptedAges.map((age) => <span key={age}>{age}</span>)
+            ) : (
+              <span>-</span>
+            )}
           </div>
         </div>
-
         <div>
           <p className="mb-1 font-medium text-primary text-xl">الفروع</p>
-
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {services.map((service) => (
-              <span key={service}>{service}</span>
-            ))}
+            {branches.length > 0 ? (
+              branches.map((branch) => (
+                <span key={branch.id}>
+                  {branch.name || branch.nursery_name_branch}
+                </span>
+              ))
+            ) : (
+              <span>-</span>
+            )}
           </div>
         </div>
       </div>
-
       <Button
         variant={"ghost"}
         size={"icon"}
