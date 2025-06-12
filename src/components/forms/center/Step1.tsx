@@ -62,7 +62,7 @@ export function Step1BasicInfo({
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={control}
           name="nursery_name_en"
           render={({ field }) => (
@@ -81,7 +81,7 @@ export function Step1BasicInfo({
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         <FormField
           control={control}
@@ -104,7 +104,7 @@ export function Step1BasicInfo({
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={control}
           name="phone"
           render={({ field }) => (
@@ -128,7 +128,7 @@ export function Step1BasicInfo({
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         {!isBranch && (
           <>
@@ -206,7 +206,7 @@ export function Step1BasicInfo({
           </>
         )}
 
-        {/* <FormField
+        <FormField
           control={control}
           name="city"
           render={({ field }) => (
@@ -288,7 +288,7 @@ export function Step1BasicInfo({
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         {/* <FormField
           control={control}
@@ -305,7 +305,7 @@ export function Step1BasicInfo({
         /> */}
       </div>
 
-      {/* <div className="flex flex-col items-center gap-y-4">
+      <div className="flex flex-col items-center gap-y-4">
         <p className="form-label">{t("type.label")}</p>
         <CheckboxGroup
           className="lg:w-3xl"
@@ -349,7 +349,7 @@ export function Step1BasicInfo({
             <FormMessage />
           </FormItem>
         )}
-      /> */}
+      />
     </div>
   );
 }

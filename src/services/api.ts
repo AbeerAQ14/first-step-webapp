@@ -363,11 +363,11 @@ export const authService = {
       formData.append("name", payload.name);
       formData.append("email", payload.email);
       formData.append("password", payload.password);
-      // formData.append("address", payload.address);
-      // formData.append("phone", payload.phone);
+      formData.append("address", payload.address);
+      formData.append("phone", payload.phone);
 
-      // payload.additional_service &&
-      //   formData.append("additional_service", payload.additional_service);
+      payload.additional_service &&
+        formData.append("additional_service", payload.additional_service);
       // formData.append("work_days_from", payload.work_days_from);
       // formData.append("work_days_to", payload.work_days_to);
       // formData.append("work_hours_from", formatTime(payload.work_hours_from));
@@ -389,25 +389,25 @@ export const authService = {
       // );
       // formData.append("special_needs", payload.special_needs ? "1" : "0");
 
-      // formData.append("nursery_name", payload.nursery_name);
-      // formData.append("location", payload.location);
-      // formData.append("city", payload.city);
-      // formData.append("neighborhood", payload.neighborhood);
+      formData.append("nursery_name", payload.nursery_name);
+      formData.append("location", payload.location);
+      formData.append("city", payload.city);
+      formData.append("neighborhood", payload.neighborhood);
 
       // formData.append("provides_food", payload.provides_food ? "1" : "0");
 
       // Append arrays
-      // payload.nursery_type.forEach((item) => {
-      //   formData.append("nursery_type[]", item);
-      // });
+      payload.nursery_type.forEach((item) => {
+        formData.append("nursery_type[]", item);
+      });
 
       // payload.communication_methods.forEach((item) => {
       //   formData.append("communication_methods[]", item);
       // });
 
-      // payload.services.forEach((item) => {
-      //   formData.append("services[]", item);
-      // });
+      payload.services.forEach((item) => {
+        formData.append("services[]", item);
+      });
 
       // payload.accepted_ages.forEach((item) => {
       //   formData.append("accepted_ages[]", item);

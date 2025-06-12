@@ -71,12 +71,12 @@ const SignUpWrapper = () => {
       // commercial_record_path: data.commercial_record_path,
       email: data.email,
       password: data.password,
-      // address: data.address,
-      // phone: data.phone,
+      address: data.address,
+      phone: data.phone,
       // comments: data.comments,
 
-      // nursery_type: data.nursery_type,
-      // additional_service: data.additional_service,
+      nursery_type: data.nursery_type,
+      additional_service: data.additional_service,
       // work_days_from: data.work_days_from,
       // work_days_to: data.work_days_to,
 
@@ -92,12 +92,12 @@ const SignUpWrapper = () => {
       // special_needs: data.accepted_ages.includes("disabled"),
 
       name: data.nursery_name_ar,
-      // nursery_name: data.nursery_name_en,
-      // location: data.location,
-      // city: data.city,
-      // neighborhood: data.neighborhood,
+      nursery_name: data.nursery_name_en,
+      location: data.location,
+      city: data.city,
+      neighborhood: data.neighborhood,
 
-      // services: data.services,
+      services: data.services,
       // communication_methods: data.communication_methods,
 
       // provides_food: data.meals_and_periods.provides_food === "yes",

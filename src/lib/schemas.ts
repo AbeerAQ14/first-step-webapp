@@ -372,49 +372,40 @@ const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
     // Step 1: Basic Information
     nursery_name_ar: z
       .string()
-
-      .optional(),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     nursery_name_en: z
       .string()
-
-      .optional(),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     email: z
       .string()
-      .email({ message: getErrorMessage("invalid-email", locale) })
-      .optional(),
+      .email({ message: getErrorMessage("invalid-email", locale) }),
     phone: z
       .string()
-
-      .optional(),
-    password: z
-      .string()
-
-      .optional(),
-    confirmPassword: z.string().optional(),
+      .regex(/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/, {
+        message: getErrorMessage("invalid-phone", locale),
+      }),
+    password: z.string().min(8, {
+      message: getErrorMessage("password-min", locale, { min: 8 }),
+    }),
+    confirmPassword: z.string(),
     city: z
       .string()
-
-      .optional(),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     neighborhood: z
       .string()
-
-      .optional(),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     address: z
       .string()
-
-      .optional(),
+      .min(2, { message: getErrorMessage("general-field-required", locale) }),
     location: z
       .string()
-
-      .optional(),
+      .url({ message: getErrorMessage("invalid-url", locale) }),
     nursery_type: z
       .array(z.string())
-
-      .optional(),
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
     services: z
       .array(z.string())
-
-      .optional(),
+      .min(1, { message: getErrorMessage("services-one-required", locale) }),
     additional_service: z.string().optional(),
   });
 
