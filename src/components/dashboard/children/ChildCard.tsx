@@ -84,8 +84,8 @@ const ChildCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {child.disease_name ? (
-              <span>{child.disease_name}</span>
+            {child.disease_details ? (
+              <span>{JSON.parse(child.disease_details)[0]?.disease_name}</span>
             ) : (
               <span>لا يوجد</span>
             )}
@@ -96,8 +96,10 @@ const ChildCard = ({
           <p className="mb-1 font-medium text-primary text-xl">الحساسية</p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {child.allergy_name ? (
-              <span>{child.allergy_name}</span>
+            {child.allergies?.length > 0 ? (
+              child.allergies.map((allergy) => (
+                <span key={allergy.id}>{allergy.name}</span>
+              ))
             ) : (
               <span>لا يوجد</span>
             )}
@@ -110,8 +112,8 @@ const ChildCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {child.authorized_persons?.length > 0 ? (
-              child.authorized_persons.map((person) => (
+            {child.authorized_people?.length > 0 ? (
+              child.authorized_people.map((person) => (
                 <span key={person.cin}>
                   {person.name} - {person.cin}
                 </span>

@@ -29,26 +29,61 @@ export interface Allergy {
 
 export interface Child {
   id: number;
+  user_id: number;
   child_name: string;
   birthday_date: string | null;
   gender: "girl" | "boy" | string;
-  disease: boolean;
-  disease_details: Array<{
-    disease_name: string;
-    medicament: string;
-    emergency: string;
-  }>;
-  allergy: boolean;
-  allergy_name: string | null;
+  disease: number;
+  allergy: number;
   parent_name: string;
   mother_name: string;
-  kinship: string;
-  recommendations?: string;
-  description_3_words: string;
-  things_child_likes: string;
-  notes?: string;
-  authorized_persons: AuthorizedPerson[];
-  allergies: ChildAllergyDetail[];
+  recommendations: string | null;
+  created_at: string;
+  updated_at: string;
+  center_id: number | null;
+  description_3_words: string | null;
+  things_child_likes: string | null;
+  notes: string | null;
+  Kinship: string | null;
+  center_branch_id: number | null;
+  disease_details: string | null;
+  enrollments: Array<{
+    id: number;
+    center_id: number;
+    user_id: number;
+    center_branch_id: number;
+    reservation_number: string;
+    parent_phone: string;
+    price_amount: string;
+    enrollment_type: string;
+    hours_per_day: string | null;
+    response_speed: string;
+    enrollment_date: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    pivot: {
+      child_id: number;
+      enrollment_id: number;
+    };
+  }>;
+  authorized_people: Array<{
+    id: number;
+    child_id: number;
+    name: string;
+    cin: string;
+    created_at: string;
+    updated_at: string;
+  }>;
+  allergies: Array<{
+    id: number;
+    child_id: number;
+    name: string;
+    allergy_causes: string;
+    allergy_emergency: string;
+    created_at: string;
+    updated_at: string;
+  }>;
 }
 
 // ===== Parent Related Types =====
