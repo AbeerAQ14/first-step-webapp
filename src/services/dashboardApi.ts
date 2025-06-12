@@ -149,6 +149,20 @@ export const parentService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getChild: async (id: string) => {
+    try {
+      const response = await apiClient.get(`/parent/children/`);
+      const children = response.data;
+      const child = children.find((child: any) => child.id.toString() === id);
+      if (!child) {
+        throw new Error("Child not found");
+      }
+      return child;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
 
 export const centerService = {
@@ -262,7 +276,7 @@ export const centerService = {
 
   getChildrenBirthdays: async () => {
     try {
-      const response = await apiClient.get(`/child-birthdays`);
+      const response = await apiClient.get(`/children-birthdays`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -500,7 +514,7 @@ export const centerService = {
 
   getOccasions: async () => {
     try {
-      const response = await apiClient.get(`/occassions`);
+      const response = await apiClient.get(`/occasions`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -509,7 +523,7 @@ export const centerService = {
 
   getOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.get(`/occassions/${occasionId}`);
+      const response = await apiClient.get(`/occasions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -518,7 +532,7 @@ export const centerService = {
 
   createOccasion: async (payload: { title: string; date: string }) => {
     try {
-      const response = await apiClient.post(`/occassions`, payload);
+      const response = await apiClient.post(`/occasions`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -530,10 +544,7 @@ export const centerService = {
     payload: { title: string; date: string }
   ) => {
     try {
-      const response = await apiClient.put(
-        `/occassions/${occasionId}`,
-        payload
-      );
+      const response = await apiClient.put(`/occasions/${occasionId}`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -542,7 +553,7 @@ export const centerService = {
 
   deleteOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.delete(`/occassions/${occasionId}`);
+      const response = await apiClient.delete(`/occasions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);

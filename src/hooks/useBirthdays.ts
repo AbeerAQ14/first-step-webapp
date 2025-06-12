@@ -16,7 +16,7 @@ export const useBirthdays = () => {
     queryKey: ["birthdays"],
     queryFn: async () => {
       const response = await centerService.getChildrenBirthdays();
-      return response.map((birthday: any) => ({
+      return response.data.map((birthday: any) => ({
         id: birthday.id,
         title: birthday.child_name,
         date: new Date(birthday.birthday_date),
