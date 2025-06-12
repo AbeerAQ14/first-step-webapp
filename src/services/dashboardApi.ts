@@ -163,6 +163,118 @@ export const parentService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  updateChild: async (id: string, payload: any) => {
+    try {
+      // Format the date to YYYY-MM-DD format
+      const formattedDate =
+        payload.birthDate instanceof Date
+          ? payload.birthDate.toISOString().split("T")[0]
+          : payload.birthDate;
+
+      const response = await apiClient.put(`/parent/children/${id}`, {
+        child_name: payload.childName,
+        birthday_date: formattedDate,
+        gender: payload.gender === "male" ? "boy" : "girl",
+        disease: payload.chronicDiseases.hasDiseases === "yes",
+        disease_details: payload.chronicDiseases.diseases.map(
+          (disease: any) => ({
+            disease_name: disease.name,
+            medicament: disease.medication,
+            emergency: disease.procedures,
+          })
+        ),
+        allergy: payload.allergies.hasAllergies === "yes",
+        parent_name: payload.fatherName,
+        mother_name: payload.motherName,
+        recommendations: payload.recommendations,
+        description_3_words: payload.childDescription,
+        things_child_likes: payload.favoriteThings,
+        notes: payload.comments,
+        kinship: payload.kinship,
+        authorized_persons: payload.authorizedPersons.map((person: any) => ({
+          name: person.name,
+          cin: person.idNumber,
+        })),
+        allergies: payload.allergies.allergies.map((allergy: any) => ({
+          name: allergy.allergyTypes,
+          allergy_causes: allergy.allergyFoods.split(", "),
+          allergy_emergency: allergy.allergyProcedures,
+        })),
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getDailyReports: async () => {
+    try {
+      const response = await apiClient.get(`/parent/daily-reports`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteDailyReport: async (id: number) => {
+    try {
+      const response = await apiClient.delete(`/parent/daily-reports/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  addChild: async (payload: any) => {
+    try {
+      // Format the date to YYYY-MM-DD format
+      const formattedDate =
+        payload.birthDate instanceof Date
+          ? payload.birthDate.toISOString().split("T")[0]
+          : payload.birthDate;
+
+      const response = await apiClient.post(`/parent/children`, {
+        children: [
+          {
+            child_name: payload.childName,
+            birthday_date: formattedDate,
+            gender: payload.gender === "male" ? "boy" : "girl",
+            disease: payload.chronicDiseases.hasDiseases === "yes",
+            disease_details: payload.chronicDiseases.diseases.map(
+              (disease: any) => ({
+                disease_name: disease.name,
+                medicament: disease.medication,
+                emergency: disease.procedures,
+              })
+            ),
+            allergy: payload.allergies.hasAllergies === "yes",
+            parent_name: payload.fatherName,
+            mother_name: payload.motherName,
+            recommendations: payload.recommendations,
+            description_3_words: payload.childDescription,
+            things_child_likes: payload.favoriteThings,
+            notes: payload.comments,
+            kinship: payload.kinship,
+            authorized_persons: payload.authorizedPersons.map(
+              (person: any) => ({
+                name: person.name,
+                cin: person.idNumber,
+              })
+            ),
+            allergies: payload.allergies.allergies.map((allergy: any) => ({
+              name: allergy.allergyTypes,
+              allergy_causes: allergy.allergyFoods.split(", "),
+              allergy_emergency: allergy.allergyProcedures,
+            })),
+          },
+        ],
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
 
 export const centerService = {

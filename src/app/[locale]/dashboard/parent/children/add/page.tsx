@@ -37,7 +37,7 @@ export default async function AddChild() {
     <div>
       <div className="mb-3.5 flex items-center justify-between">
         <h1 className="heading-4 font-bold text-primary max-w-[39.75rem] mx-auto">
-          إضافة فرع
+          إضافة طفل
         </h1>
       </div>
 

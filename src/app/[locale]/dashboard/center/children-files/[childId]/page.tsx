@@ -124,7 +124,7 @@ export default function DashboardChildShow({
   // Transform the API data to match the form structure
   const initialValues = {
     // Parent Information (direct mapping to match ParentPart component)
-    name: childData?.user?.name || "",
+    name: childData?.parent_name || "",
     email: childData?.user?.email || "",
     phone: childData?.user?.phone || "",
     kinship: childData?.Kinship || "",
