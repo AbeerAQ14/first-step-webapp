@@ -386,16 +386,20 @@ export const centerService = {
   },
 
   requestAd: async (payload: {
-    title: string;
-    description: string;
+    titleAr: string;
+    titleEn: string;
+    descriptionAr: string;
+    descriptionEn: string;
     image: File;
     publish_date: string;
     end_date: string;
   }) => {
     try {
       const formData = new FormData();
-      formData.append("title", payload.title);
-      formData.append("description", payload.description);
+      formData.append("title[ar]", payload.titleAr);
+      formData.append("title[en]", payload.titleEn);
+      formData.append("description[ar]", payload.descriptionAr);
+      formData.append("description[en]", payload.descriptionEn);
       formData.append("image", payload.image);
       formData.append("publish_date", payload.publish_date);
       formData.append("end_date", payload.end_date);
@@ -642,6 +646,24 @@ export const adminService = {
   getParent: async (parentId: string) => {
     try {
       const response = await apiClient.get(`/dashboard/parents/${parentId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdvertisements: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/ads-for-admin`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdvertisement: async (adId: string) => {
+    try {
+      const response = await apiClient.get(`dashboard/ads-for-admin/${adId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
