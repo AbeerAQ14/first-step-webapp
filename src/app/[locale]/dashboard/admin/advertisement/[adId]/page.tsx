@@ -1,21 +1,36 @@
+"use client";
+
+import { use } from "react";
+import { useQuery } from "@tanstack/react-query";
 import AdDetailsWrapper from "@/components/dashboard/advertisement/AdDetailsWrapper";
 import { AdRequestFormData } from "@/lib/schemas";
+import { adminService } from "@/services/dashboardApi";
 
-export default async function AdvertisementDetails({
+export default function AdvertisementDetails({
   params,
 }: {
   params: Promise<{ adId: string }>;
 }) {
-  const { adId } = await params;
+  const { adId } = use(params);
 
-  const initialValues: AdRequestFormData & { id: string } = {
-    id: "1",
-    title: "تجربة ١",
-    description: "هذا وصف لتجربة ١",
-    image:
-      "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    start_date: new Date(),
-    end_date: new Date(),
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["advertisement", adId],
+    queryFn: () => adminService.getAdvertisement(adId),
+    enabled: !!adId,
+  });
+
+  if (isLoading) return <div>جاري التحميل...</div>;
+  if (error)
+    return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
+  if (!data) return null;
+
+  // Map API response to AdRequestFormData
+  const initialValues: AdRequestFormData = {
+    title: data.title,
+    description: data.description,
+    image: data.image,
+    start_date: data.publish_date,
+    end_date: data.end_date,
   };
 
   return (
