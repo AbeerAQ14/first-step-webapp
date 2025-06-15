@@ -30,7 +30,8 @@ const AdRequestForm = ({
   children: (
     data: AdRequestFormData,
     isValid: boolean,
-    isSubmitting: boolean
+    isSubmitting: boolean,
+    dirtyFields: string[]
   ) => React.ReactNode;
 }) => {
   const locale = useLocale();
@@ -44,8 +45,14 @@ const AdRequestForm = ({
   const methods = useForm<AdRequestFormData>({
     resolver: zodResolver(adRequestSchema),
     defaultValues: {
-      title: initialData?.title ?? { ar: "", en: "" },
-      description: initialData?.description ?? { ar: "", en: "" },
+      title: {
+        ar: initialData?.title?.ar ?? "",
+        en: initialData?.title?.en ?? "",
+      },
+      description: {
+        ar: initialData?.description?.ar ?? "",
+        en: initialData?.description?.en ?? "",
+      },
       image: initialData?.image || undefined,
       start_date: initialData?.start_date || undefined,
       end_date: initialData?.end_date || undefined,
@@ -323,7 +330,12 @@ const AdRequestForm = ({
         />
 
         <div className="sm:col-span-2 flex gap-2 justify-end">
-          {children(formData, isValid, isSubmitting)}
+          {children(
+            methods.getValues(),
+            methods.formState.isValid,
+            methods.formState.isSubmitting,
+            Object.keys(methods.formState.dirtyFields)
+          )}
         </div>
       </form>
     </FormProvider>
