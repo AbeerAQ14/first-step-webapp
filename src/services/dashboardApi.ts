@@ -664,6 +664,91 @@ export const adminService = {
   getAdvertisement: async (adId: string) => {
     try {
       const response = await apiClient.get(`dashboard/ads-for-admin/${adId}`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createAdvertisement: async (payload: {
+    titleAr: string;
+    titleEn: string;
+    descriptionAr: string;
+    descriptionEn: string;
+    image: File;
+    publish_date: string;
+    end_date: string;
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("title[ar]", payload.titleAr);
+      formData.append("title[en]", payload.titleEn);
+      formData.append("description[ar]", payload.descriptionAr);
+      formData.append("description[en]", payload.descriptionEn);
+      formData.append("image", payload.image);
+      formData.append("publish_date", payload.publish_date);
+      formData.append("end_date", payload.end_date);
+
+      const response = await apiClient.post(
+        `/dashboard/ads-for-admin`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateAdvertisement: async (
+    adId: string,
+    payload: {
+      titleAr?: string;
+      titleEn?: string;
+      descriptionAr?: string;
+      descriptionEn?: string;
+      image: File;
+      publish_date?: string;
+      end_date?: string;
+    }
+  ) => {
+    try {
+      const formData = new FormData();
+      payload.titleAr && formData.append("title[ar]", payload.titleAr);
+      payload.titleEn && formData.append("title[en]", payload.titleEn);
+      payload.descriptionAr &&
+        formData.append("description[ar]", payload.descriptionAr);
+      payload.descriptionEn &&
+        formData.append("description[en]", payload.descriptionEn);
+      payload.image && formData.append("image", payload.image);
+      payload.publish_date &&
+        formData.append("publish_date", payload.publish_date);
+      payload.end_date && formData.append("end_date", payload.end_date);
+
+      const response = await apiClient.post(
+        `/dashboard/ads-for-admin/${adId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteAdvertisement: async (adId: string) => {
+    try {
+      const response = await apiClient.delete(
+        `/dashboard/ads-for-admin/${adId}`
+      );
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
