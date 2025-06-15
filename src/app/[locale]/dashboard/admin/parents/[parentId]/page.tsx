@@ -14,6 +14,7 @@ interface ParentData {
     phone: string;
     email: string;
     national_number: string;
+    children: any;
   };
 }
 
@@ -97,7 +98,14 @@ export default function DashboardChildrenPage({
         <h1 className="heading-4 font-medium text-primary">بيانات الأطفال</h1>
       </div>
 
-      <ChildrenCards noEdit absoluteBaseUrl="/dashboard/admin/children" />
+      <ChildrenCards
+        noEdit
+        absoluteBaseUrl="/dashboard/admin/children"
+        childrenData={{
+          userName: data?.parent.name || "",
+          children: data?.parent.children,
+        }}
+      />
     </div>
   );
 }

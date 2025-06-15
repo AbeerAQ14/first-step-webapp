@@ -34,30 +34,35 @@ const Children = ({
   noEdit,
   baseUrl,
   absoluteBaseUrl,
+  childrenData,
 }: {
   noEdit?: boolean;
   baseUrl?: string;
   absoluteBaseUrl?: string;
+  childrenData?: { userName: string; children: Child[] };
 }) => {
   const { data, isLoading } = useQuery<Child[]>({
     queryKey: ["children"],
     queryFn: adminService.getChildren,
+    enabled: !childrenData,
   });
 
-  if (isLoading) {
+  const childrenToRender = childrenData?.children || data;
+
+  if (!childrenToRender && isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {data?.map((child) => (
+      {childrenToRender?.map((child) => (
         <ChildCard
           key={child.id}
           id={child.id}
           name={child.child_name}
           birthday={child.birthday_date}
           gender={child.gender}
-          userName={child.user.name}
+          userName={childrenData?.userName || child.user.name}
           disease_details={child.disease_details}
           allergies={child.allergies}
           authorized_people={child.authorized_people}
