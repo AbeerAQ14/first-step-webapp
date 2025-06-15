@@ -598,11 +598,21 @@ export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
   z
     .object({
       // Step 1: Basic Information
-      title: z
-        .string()
-        .min(5, { message: getErrorMessage("general-field-required", locale) }),
-      description: z.string().min(10, {
-        message: getErrorMessage("general-field-required", locale),
+      title: z.object({
+        ar: z
+          .string()
+          .min(5, { message: getErrorMessage("general-field-required", "ar") }),
+        en: z
+          .string()
+          .min(5, { message: getErrorMessage("general-field-required", "en") }),
+      }),
+      description: z.object({
+        ar: z.string().min(10, {
+          message: getErrorMessage("general-field-required", "ar"),
+        }),
+        en: z.string().min(10, {
+          message: getErrorMessage("general-field-required", "en"),
+        }),
       }),
       start_date: z.date({
         required_error: getErrorMessage("general-field-required", locale),

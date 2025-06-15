@@ -44,8 +44,8 @@ const AdRequestForm = ({
   const methods = useForm<AdRequestFormData>({
     resolver: zodResolver(adRequestSchema),
     defaultValues: {
-      title: initialData?.title || "",
-      description: initialData?.description || "",
+      title: initialData?.title ?? { ar: "", en: "" },
+      description: initialData?.description ?? { ar: "", en: "" },
       image: initialData?.image || undefined,
       start_date: initialData?.start_date || undefined,
       end_date: initialData?.end_date || undefined,
@@ -63,8 +63,10 @@ const AdRequestForm = ({
       };
 
       await centerService.requestAd({
-        title: data.title,
-        description: data.description,
+        titleAr: data.title.ar,
+        titleEn: data.title.en,
+        descriptionAr: data.description.ar,
+        descriptionEn: data.description.en,
         image: data.image?.[0] as File,
         publish_date: formatDate(data.start_date),
         end_date: formatDate(data.end_date),
@@ -148,13 +150,14 @@ const AdRequestForm = ({
           )}
         />
 
+        {/* Title AR */}
         <FormField
           control={methods.control}
-          name="title"
+          name="title.ar"
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">{t("title.label")}</span>
+                <span className="text-base">{t("title.label")} (عربي)</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -174,13 +177,70 @@ const AdRequestForm = ({
           )}
         />
 
+        {/* Title EN */}
         <FormField
           control={methods.control}
-          name="description"
+          name="title.en"
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">{t("description.label")}</span>
+                <span className="text-base">{t("title.label")} (EN)</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
+              </Label>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder={t("title.placeholder")}
+                  {...field}
+                  disabled={mode === "show"}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Description AR */}
+        <FormField
+          control={methods.control}
+          name="description.ar"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">
+                  {t("description.label")} (عربي)
+                </span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
+              </Label>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder={t("description.placeholder")}
+                  {...field}
+                  disabled={mode === "show"}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Description EN */}
+        <FormField
+          control={methods.control}
+          name="description.en"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">{t("description.label")} (EN)</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >

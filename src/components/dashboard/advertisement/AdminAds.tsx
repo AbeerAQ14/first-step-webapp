@@ -1,58 +1,28 @@
-import { Link } from "@/i18n/navigation";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { adminService } from "@/services/dashboardApi";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import AdRequestForm from "@/components/forms/dashboard/adblog-request/AdRequestForm";
 import { AdRequestFormData } from "@/lib/schemas";
 
 const AdminAds = () => {
-  const advertisements = [
-    {
-      id: "1",
-      title: "تجربة ١",
-      description: "هذا وصف لتجربة ١",
-      image:
-        "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      start_date: new Date(),
-      end_date: new Date(),
-    },
-    {
-      id: "2",
-      title: "تجربة ٢",
-      description: "هذا وصف لتجربة ٢",
-      image:
-        "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      start_date: new Date(),
-      end_date: new Date(),
-    },
-    {
-      id: "3",
-      title: "تجربة ٣",
-      description: "هذا وصف لتجربة ٣",
-      image:
-        "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      start_date: new Date(),
-      end_date: new Date(),
-    },
-    {
-      id: "4",
-      title: "تجربة ٤",
-      description: "هذا وصف لتجربة ٤",
-      image:
-        "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      start_date: new Date(),
-      end_date: new Date(),
-    },
-    {
-      id: "5",
-      title: "تجربة ٥",
-      description: "هذا وصف لتجربة ٥",
-      image:
-        "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      start_date: new Date(),
-      end_date: new Date(),
-    },
-  ];
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["adminAdvertisements"],
+    queryFn: adminService.getAdvertisements,
+  });
 
-  const buttons = (data: AdRequestFormData, isValid: boolean, adId: string) => (
+  if (isLoading) return <div>جاري التحميل...</div>;
+  if (error)
+    return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
+  if (!data?.data?.length) return <div>لا توجد إعلانات</div>;
+
+  const buttons = (
+    formData: AdRequestFormData,
+    isValid: boolean,
+    adId: number
+  ) => (
     <>
       <Button asChild size={"sm"}>
         <Link href={`advertisement/${adId}/edit`}>تعديل الإعلان</Link>
@@ -60,7 +30,8 @@ const AdminAds = () => {
       <Button
         onClick={(e) => {
           e.preventDefault();
-          console.log(data, isValid);
+          // Implement delete logic here
+          console.log(formData, isValid);
         }}
         size={"sm"}
         variant={"outline"}
@@ -73,19 +44,19 @@ const AdminAds = () => {
 
   return (
     <div className="flex flex-col gap-y-6">
-      {advertisements.map((item) => (
+      {data.data.map((item: any) => (
         <AdRequestForm
           key={item.id}
           initialData={{
-            title: item.title,
-            description: item.description,
+            title: { ar: item.title.ar, en: item.title.en },
+            description: { ar: item.description.ar, en: item.description.en },
             image: item.image,
-            start_date: item.start_date,
-            end_date: item.end_date,
+            start_date: new Date(item.publish_date),
+            end_date: new Date(item.end_date),
           }}
           mode="show"
         >
-          {(data, isValid) => buttons(data, isValid, item.id)}
+          {(formData, isValid) => buttons(formData, isValid, item.id)}
         </AdRequestForm>
       ))}
     </div>
