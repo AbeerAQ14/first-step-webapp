@@ -368,10 +368,10 @@ export const authService = {
 
       payload.additional_service &&
         formData.append("additional_service", payload.additional_service);
-      // formData.append("work_days_from", payload.work_days_from);
-      // formData.append("work_days_to", payload.work_days_to);
-      // formData.append("work_hours_from", formatTime(payload.work_hours_from));
-      // formData.append("work_hours_to", formatTime(payload.work_hours_to));
+      formData.append("work_days_from", payload.work_days_from);
+      formData.append("work_days_to", payload.work_days_to);
+      formData.append("work_hours_from", formatTime(payload.work_hours_from));
+      formData.append("work_hours_to", formatTime(payload.work_hours_to));
       // payload.time_of_first_period &&
       //   formData.append(
       //     "time_of_first_period",
@@ -409,9 +409,9 @@ export const authService = {
         formData.append("services[]", item);
       });
 
-      // payload.accepted_ages.forEach((item) => {
-      //   formData.append("accepted_ages[]", item);
-      // });
+      payload.accepted_ages.forEach((item) => {
+        formData.append("accepted_ages[]", item);
+      });
 
       // payload.first_meals?.forEach((meal, index) => {
       //   meal.meal_name &&
