@@ -414,17 +414,40 @@ export type CenterStep1FormData = z.infer<
 >;
 
 // Sign Up For Centers Step 2
-const createCenterStep2Schema = (locale: "ar" | "en" = "ar") =>
+const createCenterStep2Schema = (
+  locale: "ar" | "en" = "ar"
+): z.ZodObject<{
+  accepted_ages: z.ZodArray<z.ZodString>;
+  work_days_from: z.ZodString;
+  work_days_to: z.ZodString;
+  work_hours_from: z.ZodString;
+  work_hours_to: z.ZodString;
+}> =>
   z.object({
     // Step 2: Ages and Hours
     accepted_ages: z
       .array(z.string())
-
-      .optional(),
-    work_days_from: z.string({}).optional(),
-    work_days_to: z.string({}).optional(),
-    work_hours_from: z.string({}).optional(),
-    work_hours_to: z.string({}).optional(),
+      .min(1, { message: getErrorMessage("age-groups-one-required", locale) }),
+    work_days_from: z
+      .string({
+        message: getErrorMessage("invalid-date", locale),
+      })
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    work_days_to: z
+      .string({
+        message: getErrorMessage("invalid-date", locale),
+      })
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    work_hours_from: z
+      .string({
+        message: getErrorMessage("invalid-time", locale),
+      })
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    work_hours_to: z
+      .string({
+        message: getErrorMessage("invalid-time", locale),
+      })
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
   });
 
 export type CenterStep2FormData = z.infer<

@@ -56,13 +56,13 @@ export function SignUp({
       location: "",
       services: [],
       additional_service: "",
-      // // step2
-      // accepted_ages: [],
-      // // additionalInfo: "",
-      // work_days_from: "",
-      // work_days_to: "",
-      // work_hours_from: "",
-      // work_hours_to: "",
+      // step2
+      accepted_ages: [],
+      // additionalInfo: "",
+      work_days_from: "",
+      work_days_to: "",
+      work_hours_from: "",
+      work_hours_to: "",
       // // step3
       // emergency_contact: undefined,
       // communication_methods: [],
@@ -139,8 +139,8 @@ export function SignUp({
     switch (currentStep) {
       case 1:
         return <Step1BasicInfo />;
-      // case 2:
-      //   return <Step2AgesAndHours />;
+      case 2:
+        return <Step2AgesAndHours />;
       // case 3:
       //   return <Step3Communication />;
       // case 4:
@@ -186,7 +186,7 @@ export function SignUp({
 
             <FormNavigation
               currentStep={currentStep}
-              totalSteps={1}
+              totalSteps={2}
               onPrevious={goToPreviousStep}
               onNext={goToNextStep}
               isLoading={isLoading}

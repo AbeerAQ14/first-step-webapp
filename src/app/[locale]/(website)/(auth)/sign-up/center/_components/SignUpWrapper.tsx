@@ -77,11 +77,11 @@ const SignUpWrapper = () => {
 
       nursery_type: data.nursery_type,
       additional_service: data.additional_service,
-      // work_days_from: data.work_days_from,
-      // work_days_to: data.work_days_to,
+      work_days_from: data.work_days_from,
+      work_days_to: data.work_days_to,
 
-      // work_hours_from: data.work_hours_from,
-      // work_hours_to: data.work_hours_to,
+      work_hours_from: data.work_hours_from,
+      work_hours_to: data.work_hours_to,
       // time_of_first_period: data.meals_and_periods.time_of_first_period,
       // time_of_second_period: data.meals_and_periods.time_of_second_period,
 
@@ -102,7 +102,7 @@ const SignUpWrapper = () => {
 
       // provides_food: data.meals_and_periods.provides_food === "yes",
 
-      // accepted_ages: data.accepted_ages,
+      accepted_ages: data.accepted_ages,
 
       // pricing: [
       //   {
