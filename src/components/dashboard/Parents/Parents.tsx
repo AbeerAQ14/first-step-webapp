@@ -13,7 +13,8 @@ interface Parent {
   id: number;
   name: string;
   email: string;
-  address: string;
+  phone: string;
+  national_number: string;
   children_count: number;
   children: Child[];
 }
@@ -40,7 +41,8 @@ const Parents = () => {
           id={parent.id}
           name={parent.name}
           email={parent.email}
-          address={parent.address}
+          phone={parent.phone}
+          national_number={parent.national_number}
           childrenCount={parent.children_count}
           children={parent.children}
         />

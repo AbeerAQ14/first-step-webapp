@@ -10,7 +10,8 @@ interface ParentCardProps {
   id: number;
   name: string;
   email: string;
-  address: string;
+  phone: string;
+  national_number: string;
   childrenCount: number;
   children: Child[];
 }
@@ -19,7 +20,8 @@ const ParentCard = ({
   id,
   name,
   email,
-  address,
+  phone,
+  national_number,
   childrenCount,
   children,
 }: ParentCardProps) => {
@@ -29,12 +31,16 @@ const ParentCard = ({
         <div className="flex flex-col gap-2 lg:gap-4">
           <p className="font-bold text-primary text-xl">{name}</p>
           <span className="font-medium text-mid-gray flex gap-1">
+            <span>رقم الجوال:</span>
+            <span>{phone}</span>
+          </span>
+          <span className="font-medium text-mid-gray flex gap-1">
             <span>البريد الإلكتروني:</span>
             <span>{email}</span>
           </span>
           <span className="font-medium text-mid-gray flex gap-1">
-            <span>العنوان:</span>
-            <span>{address}</span>
+            <span>رقم الهوية:</span>
+            <span>{national_number}</span>
           </span>
         </div>
 
