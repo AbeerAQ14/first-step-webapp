@@ -95,7 +95,9 @@ export default function DashboardChildrenPage({
       </div>
 
       <div className="mb-3.5 flex items-center">
-        <h1 className="heading-4 font-medium text-primary">بيانات الأطفال</h1>
+        <h1 className="sr-only heading-4 font-medium text-primary">
+          بيانات الأطفال
+        </h1>
       </div>
 
       <ChildrenCards
