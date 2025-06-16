@@ -754,4 +754,33 @@ export const adminService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getAllCenterAds: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/all-centers-ads`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOneCenterAds: async (centerId: string) => {
+    try {
+      const response = await apiClient.get(
+        `/dashboard/all-for-specific-center/${centerId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/specific-ad/${adId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
