@@ -13,10 +13,25 @@ const AdminAds = () => {
     queryFn: adminService.getAdvertisements,
   });
 
+  // Add Advertisement button at the top
+  const addButton = (
+    <div className="mb-4 flex justify-end">
+      <Button asChild size="sm">
+        <Link href="/dashboard/admin/advertisement/add">إضافة إعلان جديد</Link>
+      </Button>
+    </div>
+  );
+
   if (isLoading) return <div>جاري التحميل...</div>;
   if (error)
     return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
-  if (!data?.data?.length) return <div>لا توجد إعلانات</div>;
+  if (!data?.data?.length)
+    return (
+      <>
+        {addButton}
+        <div>لا توجد إعلانات</div>
+      </>
+    );
 
   const buttons = (
     formData: AdRequestFormData,
@@ -44,6 +59,7 @@ const AdminAds = () => {
 
   return (
     <div className="flex flex-col gap-y-6">
+      {addButton}
       {data.data.map((item: any) => (
         <AdRequestForm
           key={item.id}

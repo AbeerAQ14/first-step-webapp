@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "@/i18n/navigation";
 import DatePicker from "@/components/general/DatePicker";
 import {
   FormControl,
@@ -17,7 +18,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { centerService } from "@/services/dashboardApi";
+import { adminService, centerService } from "@/services/dashboardApi";
 import { toast } from "sonner";
 
 const AdRequestForm = ({
@@ -35,6 +36,9 @@ const AdRequestForm = ({
   ) => React.ReactNode;
 }) => {
   const locale = useLocale();
+  const pathname = usePathname();
+  const isAdmin = pathname.includes("/admin/");
+
   const t = useTranslations("dashboard.center.ad-or-blog-request.ad.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData?.image === "string" && initialData?.image) || null
@@ -69,7 +73,11 @@ const AdRequestForm = ({
         return date.toISOString().split("T")[0];
       };
 
-      await centerService.requestAd({
+      const createAd = isAdmin
+        ? adminService.createAdvertisement
+        : centerService.requestAd;
+
+      await createAd({
         titleAr: data.title.ar,
         titleEn: data.title.en,
         descriptionAr: data.description.ar,
