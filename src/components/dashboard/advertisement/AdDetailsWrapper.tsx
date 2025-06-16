@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import AdRequestForm from "@/components/forms/dashboard/adblog-request/AdRequestForm";
@@ -22,6 +22,8 @@ const AdDetailsWrapper = ({
   mode: "add" | "show";
   adType?: AdType;
 }) => {
+  const router = useRouter();
+
   const editMutation = useMutation({
     mutationFn: (data: Partial<AdRequestFormData>) => {
       // Transform the data structure to match the API's expected format
@@ -41,6 +43,17 @@ const AdDetailsWrapper = ({
     },
     onError: (error) => {
       toast.error("حدث خطأ أثناء تحديث الإعلان");
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => adminService.deleteAdvertisement(adId),
+    onSuccess: () => {
+      toast.success("تم حذف الإعلان بنجاح");
+      router.push(`advertisements`);
+    },
+    onError: () => {
+      toast.error("حدث خطأ أثناء حذف الإعلان");
     },
   });
 
@@ -70,7 +83,7 @@ const AdDetailsWrapper = ({
 
   const deleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Deleted Ad");
+    deleteMutation.mutate();
   };
 
   const adTypeButtons = (
@@ -90,8 +103,11 @@ const AdDetailsWrapper = ({
               size={"sm"}
               variant={"outline"}
               className="!border-destructive text-destructive"
+              disabled={deleteMutation.status === "pending"}
             >
-              حذف الإعلان
+              {deleteMutation.status === "pending"
+                ? "جاري الحذف..."
+                : "حذف الإعلان"}
             </Button>
           </>
         );
@@ -156,8 +172,11 @@ const AdDetailsWrapper = ({
             size={"sm"}
             variant={"outline"}
             className="!border-destructive text-destructive"
+            disabled={deleteMutation.status === "pending"}
           >
-            حذف الإعلان
+            {deleteMutation.status === "pending"
+              ? "جاري الحذف..."
+              : "حذف الإعلان"}
           </Button>
         </>
       );
