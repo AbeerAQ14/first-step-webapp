@@ -17,7 +17,7 @@ const CentersAdvertisements = () => {
 
   // Map backend data to table format
   const rows: Advertisement[] = (data || []).map((item: any) => ({
-    id: item.id,
+    id: item.center?.id,
     center: item.center?.nursery_name || item.name || "-",
     phone: item.center?.phone || item.phone || "-",
     email: item.email || "-",

@@ -769,7 +769,7 @@ export const adminService = {
       const response = await apiClient.get(
         `/dashboard/all-for-specific-center/${centerId}`
       );
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
