@@ -1,16 +1,31 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Link } from "@/i18n/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { adminService } from "@/services/dashboardApi";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
 import AdRequestForm from "@/components/forms/dashboard/adblog-request/AdRequestForm";
 import { AdRequestFormData } from "@/lib/schemas";
 
 const AdminAds = () => {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["adminAdvertisements"],
     queryFn: adminService.getAdvertisements,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (adId: string) => adminService.deleteAdvertisement(adId),
+    onSuccess: () => {
+      toast.success("تم حذف الإعلان بنجاح");
+      queryClient.invalidateQueries({ queryKey: ["adminAdvertisements"] });
+    },
+    onError: () => {
+      toast.error("حدث خطأ أثناء حذف الإعلان");
+    },
   });
 
   // Add Advertisement button at the top
@@ -36,7 +51,7 @@ const AdminAds = () => {
   const buttons = (
     formData: AdRequestFormData,
     isValid: boolean,
-    adId: number
+    adId: string
   ) => (
     <>
       <Button asChild size={"sm"}>
@@ -45,8 +60,7 @@ const AdminAds = () => {
       <Button
         onClick={(e) => {
           e.preventDefault();
-          // Implement delete logic here
-          console.log(formData, isValid);
+          deleteMutation.mutate(adId);
         }}
         size={"sm"}
         variant={"outline"}
