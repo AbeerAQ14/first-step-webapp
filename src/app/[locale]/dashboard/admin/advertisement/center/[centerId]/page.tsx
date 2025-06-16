@@ -67,7 +67,7 @@ export default function CenterAdvertisementsPage({
           <p className="heading-4 text-primary font-medium">إعلانات مقبولة</p>
           <div className="flex flex-col gap-y-6 lg:px-5 xl:px-9">
             {ads
-              .filter((ad: any) => ad.status === "accepted")
+              .filter((ad: any) => ad.status === "approved")
               .map((ad: any) => (
                 <AdDetailsWrapper
                   key={ad.id}

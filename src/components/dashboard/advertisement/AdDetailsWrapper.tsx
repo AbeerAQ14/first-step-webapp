@@ -2,7 +2,7 @@
 
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AdRequestForm from "@/components/forms/dashboard/adblog-request/AdRequestForm";
 import { AdRequestFormData } from "@/lib/schemas";
 import { adminService } from "@/services/dashboardApi";
@@ -23,6 +23,7 @@ const AdDetailsWrapper = ({
   adType?: AdType;
 }) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const editMutation = useMutation({
     mutationFn: (data: Partial<AdRequestFormData>) => {
@@ -50,10 +51,32 @@ const AdDetailsWrapper = ({
     mutationFn: () => adminService.deleteAdvertisement(adId),
     onSuccess: () => {
       toast.success("تم حذف الإعلان بنجاح");
-      router.push(`advertisements`);
+      router.push(`advertisement`);
     },
     onError: () => {
       toast.error("حدث خطأ أثناء حذف الإعلان");
+    },
+  });
+
+  const acceptMutation = useMutation({
+    mutationFn: () => adminService.approveCenterAd(adId),
+    onSuccess: () => {
+      toast.success("تم قبول الإعلان بنجاح");
+      queryClient.invalidateQueries({ queryKey: ["centerAds"] });
+    },
+    onError: () => {
+      toast.error("حدث خطأ أثناء قبول الإعلان");
+    },
+  });
+
+  const rejectMutation = useMutation({
+    mutationFn: () => adminService.rejectCenterAd(adId),
+    onSuccess: () => {
+      toast.success("تم رفض الإعلان بنجاح");
+      queryClient.invalidateQueries({ queryKey: ["centerAds"] });
+    },
+    onError: () => {
+      toast.error("حدث خطأ أثناء رفض الإعلان");
     },
   });
 
@@ -73,12 +96,12 @@ const AdDetailsWrapper = ({
 
   const rejectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Rejected Ad");
+    rejectMutation.mutate();
   };
 
   const acceptHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Accepted Ad");
+    acceptMutation.mutate();
   };
 
   const deleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -114,16 +137,21 @@ const AdDetailsWrapper = ({
       case "pending":
         return (
           <>
-            <Button onClick={acceptHandler} size={"sm"}>
-              قبول الإعلان
+            <Button
+              onClick={acceptHandler}
+              size={"sm"}
+              disabled={acceptMutation.isPending}
+            >
+              {acceptMutation.isPending ? "جاري القبول..." : "قبول الإعلان"}
             </Button>
             <Button
               onClick={rejectHandler}
               size={"sm"}
               variant={"outline"}
               className="!border-destructive text-destructive"
+              disabled={rejectMutation.isPending}
             >
-              رفض الإعلان
+              {rejectMutation.isPending ? "جاري الرفض..." : "رفض الإعلان"}
             </Button>
           </>
         );

@@ -783,4 +783,22 @@ export const adminService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  approveCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.post(`/ads/${adId}/approve`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  rejectCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.post(`/ads/${adId}/reject`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
