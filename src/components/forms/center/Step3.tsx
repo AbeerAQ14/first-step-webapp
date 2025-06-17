@@ -75,7 +75,7 @@ export function Step3Communication({
     <div className="space-y-8">
       <div className="space-y-4">
         <p className="form-label">{t("emergency-contact.label")}</p>
-        {/* <FormField
+        <FormField
           control={control}
           name="emergency_contact"
           render={({ field }) => (
@@ -101,7 +101,7 @@ export function Step3Communication({
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
       </div>
 
       <div className="space-y-4">
@@ -117,7 +117,7 @@ export function Step3Communication({
       <div className="space-y-4">
         <p className="form-label">{t("food-service.label")}</p>
 
-        {/* <FormField
+        <FormField
           control={control}
           name="meals_and_periods.provides_food"
           render={({ field }) => (
@@ -143,7 +143,7 @@ export function Step3Communication({
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
       </div>
 
       {/* Meal sections */}

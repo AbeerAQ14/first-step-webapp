@@ -63,16 +63,16 @@ export function SignUp({
       work_days_to: "",
       work_hours_from: "",
       work_hours_to: "",
-      // // step3
-      // emergency_contact: undefined,
-      // communication_methods: [],
-      // meals_and_periods: {
-      //   provides_food: "yes",
-      //   first_meals: [{ meal_name: "", juice: "", components: "" }],
-      //   second_meals: [{ meal_name: "", juice: "", components: "" }],
-      //   time_of_first_period: "",
-      //   time_of_second_period: "",
-      // },
+      // step3
+      emergency_contact: undefined,
+      communication_methods: [],
+      meals_and_periods: {
+        provides_food: "yes",
+        first_meals: [{ meal_name: "", juice: "", components: "" }],
+        second_meals: [{ meal_name: "", juice: "", components: "" }],
+        time_of_first_period: "",
+        time_of_second_period: "",
+      },
       // // step4
       // license_path: undefined,
       // commercial_record_path: undefined,
@@ -141,8 +141,8 @@ export function SignUp({
         return <Step1BasicInfo />;
       case 2:
         return <Step2AgesAndHours />;
-      // case 3:
-      //   return <Step3Communication />;
+      case 3:
+        return <Step3Communication />;
       // case 4:
       //   return <Step4Permits />;
       default:
@@ -186,7 +186,7 @@ export function SignUp({
 
             <FormNavigation
               currentStep={currentStep}
-              totalSteps={2}
+              totalSteps={3}
               onPrevious={goToPreviousStep}
               onNext={goToNextStep}
               isLoading={isLoading}
