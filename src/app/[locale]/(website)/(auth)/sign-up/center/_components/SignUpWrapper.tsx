@@ -66,14 +66,14 @@ const SignUpWrapper = () => {
     }
 
     const expectedData = {
-      // logo: data.logo,
-      // license_path: data.license_path,
-      // commercial_record_path: data.commercial_record_path,
+      logo: data.logo,
+      license_path: data.license_path,
+      commercial_record_path: data.commercial_record_path,
       email: data.email,
       password: data.password,
       address: data.address,
       phone: data.phone,
-      // comments: data.comments,
+      comments: data.comments,
 
       nursery_type: data.nursery_type,
       additional_service: data.additional_service,
@@ -104,38 +104,38 @@ const SignUpWrapper = () => {
 
       accepted_ages: data.accepted_ages,
 
-      // pricing: [
-      //   {
-      //     enrollment_type: "daily",
-      //     response_speed: "normal",
-      //     price_amount: 100,
-      //   },
-      //   {
-      //     enrollment_type: "daily",
-      //     response_speed: "emergency",
-      //     price_amount: 120,
-      //   },
-      //   {
-      //     enrollment_type: "monthly",
-      //     response_speed: "normal",
-      //     price_amount: 1200,
-      //   },
-      //   {
-      //     enrollment_type: "monthly",
-      //     response_speed: "emergency",
-      //     price_amount: 1400,
-      //   },
-      //   {
-      //     enrollment_type: "6_months",
-      //     response_speed: "normal",
-      //     price_amount: 6500,
-      //   },
-      //   {
-      //     enrollment_type: "hourly",
-      //     response_speed: "normal",
-      //     price_amount: 30,
-      //   },
-      // ],
+      pricing: [
+        {
+          enrollment_type: "daily",
+          response_speed: "normal",
+          price_amount: 100,
+        },
+        {
+          enrollment_type: "daily",
+          response_speed: "emergency",
+          price_amount: 120,
+        },
+        {
+          enrollment_type: "monthly",
+          response_speed: "normal",
+          price_amount: 1200,
+        },
+        {
+          enrollment_type: "monthly",
+          response_speed: "emergency",
+          price_amount: 1400,
+        },
+        {
+          enrollment_type: "6_months",
+          response_speed: "normal",
+          price_amount: 6500,
+        },
+        {
+          enrollment_type: "hourly",
+          response_speed: "normal",
+          price_amount: 30,
+        },
+      ],
     };
 
     mutation.mutate(expectedData);

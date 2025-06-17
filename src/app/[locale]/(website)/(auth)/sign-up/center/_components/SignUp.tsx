@@ -73,11 +73,11 @@ export function SignUp({
         time_of_first_period: "",
         time_of_second_period: "",
       },
-      // // step4
-      // license_path: undefined,
-      // commercial_record_path: undefined,
-      // logo: undefined,
-      // comments: "",
+      // step4
+      license_path: undefined,
+      commercial_record_path: undefined,
+      logo: undefined,
+      comments: "",
     },
     mode: "onChange",
   });
@@ -143,8 +143,8 @@ export function SignUp({
         return <Step2AgesAndHours />;
       case 3:
         return <Step3Communication />;
-      // case 4:
-      //   return <Step4Permits />;
+      case 4:
+        return <Step4Permits />;
       default:
         return null;
     }
@@ -186,7 +186,7 @@ export function SignUp({
 
             <FormNavigation
               currentStep={currentStep}
-              totalSteps={3}
+              totalSteps={totalSteps}
               onPrevious={goToPreviousStep}
               onNext={goToNextStep}
               isLoading={isLoading}
