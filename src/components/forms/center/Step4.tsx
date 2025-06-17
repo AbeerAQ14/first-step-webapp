@@ -28,7 +28,7 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormLabel>{t("business-license")}</FormLabel>
               <FormControl>
                 <FileUploader
-                  value={field.value}
+                  value={field.value || null}
                   onChange={field.onChange}
                   accept=".pdf"
                   disabled={disabled}
@@ -47,7 +47,7 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormLabel>{t("commercial-registration")}</FormLabel>
               <FormControl>
                 <FileUploader
-                  value={field.value}
+                  value={field.value || null}
                   onChange={field.onChange}
                   accept=".pdf"
                   disabled={disabled}
@@ -66,7 +66,7 @@ export function Step4Permits({ disabled = false }: { disabled?: boolean }) {
               <FormLabel>{t("logo")}</FormLabel>
               <FormControl>
                 <FileUploader
-                  value={field.value}
+                  value={field.value || null}
                   onChange={field.onChange}
                   accept="image/png, image/jpeg, image/jpg"
                   disabled={disabled}
