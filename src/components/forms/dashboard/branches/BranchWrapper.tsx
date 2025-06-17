@@ -109,7 +109,7 @@ const BranchWrapper = ({
       license_path: undefined,
       commercial_record_path: undefined,
       logo: undefined,
-      comments: "",
+      // comments: "",
     },
     mode: "onChange",
   });
