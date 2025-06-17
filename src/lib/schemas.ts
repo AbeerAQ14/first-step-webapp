@@ -593,48 +593,28 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 4: Permits
     license_path: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("file-size", locale)
-      ),
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type))
+      .optional(),
 
     commercial_record_path: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("pdf-type", locale)
-      ),
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type))
+      .optional(),
 
     logo: z
-      .instanceof(File, {
-        message: getErrorMessage("general-field-required", locale),
-      })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
+      .instanceof(File, {})
+      .refine((file) => file.size <= MAX_FILE_SIZE)
       .refine(
         (file) =>
           ["image/png", "image/jpeg", "image/jpg", "image/svg+xml"].includes(
             file.type
           ),
-        {
-          message: getErrorMessage("image-type", locale),
-        }
-      ),
+        {}
+      )
+      .optional(),
 
     // comments: z.string().optional(),
   });
