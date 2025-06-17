@@ -747,6 +747,47 @@ export type BlogRequestFormData = z.infer<
   ReturnType<typeof createBlogRequestSchema>
 >;
 
+export const createAdminBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
+  z.object({
+    // Step 1: Basic Information
+    title: z.object({
+      ar: z
+        .string()
+        .min(5, { message: getErrorMessage("general-field-required", "ar") }),
+      en: z
+        .string()
+        .min(5, { message: getErrorMessage("general-field-required", "en") }),
+    }),
+    description: z.object({
+      ar: z
+        .string()
+        .min(10, { message: getErrorMessage("general-field-required", "ar") }),
+      en: z
+        .string()
+        .min(10, { message: getErrorMessage("general-field-required", "en") }),
+    }),
+    content: z.object({
+      ar: z.string().min(30, "محتوى التدوينة مطلوب (نص MDX)"),
+      en: z.string().min(30, "Blog content is required (MDX text)"),
+    }),
+    mainImage: createImageSchema(
+      1440,
+      680,
+      "يجب أن يكون مقاس الصورة 1440 × 680",
+      locale
+    ),
+    cardImage: createImageSchema(
+      264,
+      160,
+      "يجب أن يكون مقاس الصورة 264 × 160",
+      locale
+    ),
+  });
+
+export type AdminBlogRequestFormData = z.infer<
+  ReturnType<typeof createAdminBlogRequestSchema>
+>;
+
 export const createTeamMemberSchema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
