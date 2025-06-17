@@ -168,54 +168,34 @@ export const parentService = {
           ? payload.birthDate.toISOString().split("T")[0]
           : payload.birthDate;
 
-      // Prepare authorized persons data - preserve IDs for existing records
-      const authorizedPersons = payload.authorizedPersons.map((person: any) => {
-        const personData: any = {
+      // Prepare authorized persons data
+      const authorizedPersons = payload.authorizedPersons.map(
+        (person: any) => ({
           name: person.name,
           cin: person.idNumber,
-        };
-        
-        // If the person has an ID, include it in the request
-        if (person.id) {
-          personData.id = person.id;
-        }
-        
-        return personData;
-      });
+          ...(person.id && { id: person.id }),
+        })
+      );
 
-      // Prepare allergies data - preserve IDs for existing records
-      const allergies = payload.allergies.allergies.map((allergy: any) => {
-        const allergyData: any = {
-          name: allergy.allergyTypes,
-          allergy_causes: Array.isArray(allergy.allergyFoods) 
-            ? allergy.allergyFoods 
-            : allergy.allergyFoods.split(", "),
-          allergy_emergency: allergy.allergyProcedures,
-        };
-        
-        // If the allergy has an ID, include it in the request
-        if (allergy.id) {
-          allergyData.id = allergy.id;
-        }
-        
-        return allergyData;
-      });
+      // Prepare allergies data
+      const allergies = payload.allergies.allergies.map((allergy: any) => ({
+        name: allergy.allergyTypes,
+        allergy_causes: Array.isArray(allergy.allergyFoods)
+          ? allergy.allergyFoods
+          : allergy.allergyFoods.split(", "),
+        allergy_emergency: allergy.allergyProcedures,
+        ...(allergy.id && { id: allergy.id }),
+      }));
 
-      // Prepare disease details data - preserve IDs for existing records
-      const diseaseDetails = payload.chronicDiseases.diseases.map((disease: any) => {
-        const diseaseData: any = {
+      // Prepare disease details data
+      const diseaseDetails = payload.chronicDiseases.diseases.map(
+        (disease: any) => ({
           disease_name: disease.name,
           medicament: disease.medication,
           emergency: disease.procedures,
-        };
-        
-        // If the disease has an ID, include it in the request
-        if (disease.id) {
-          diseaseData.id = disease.id;
-        }
-        
-        return diseaseData;
-      });
+          ...(disease.id && { id: disease.id }),
+        })
+      );
 
       const response = await apiClient.put(`/parent/children/${id}`, {
         child_name: payload.childName,
@@ -226,14 +206,15 @@ export const parentService = {
         allergy: payload.allergies.hasAllergies === "yes",
         parent_name: payload.fatherName,
         mother_name: payload.motherName,
-        recommendations: payload.recommendations,
-        description_3_words: payload.childDescription,
-        things_child_likes: payload.favoriteThings,
-        notes: payload.comments,
-        kinship: payload.kinship,
+        recommendations: payload.recommendations || "",
+        description_3_words: payload.childDescription || "",
+        things_child_likes: payload.favoriteThings || "",
+        notes: payload.comments || "",
+        kinship: payload.kinship || "",
         authorized_persons: authorizedPersons,
         allergies: allergies,
       });
+
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
