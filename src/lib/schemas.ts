@@ -636,7 +636,7 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
         }
       ),
 
-    comments: z.string().optional(),
+    // comments: z.string().optional(),
   });
 
 export type CenterStep4FormData = z.infer<

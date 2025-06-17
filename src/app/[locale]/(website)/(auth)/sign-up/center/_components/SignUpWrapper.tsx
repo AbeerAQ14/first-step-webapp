@@ -73,7 +73,7 @@ const SignUpWrapper = () => {
       password: data.password,
       address: data.address,
       phone: data.phone,
-      comments: data.comments,
+      // comments: data.comments,
 
       nursery_type: data.nursery_type,
       additional_service: data.additional_service,
