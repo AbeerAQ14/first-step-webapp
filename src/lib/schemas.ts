@@ -591,41 +591,35 @@ const ACCEPTED_FILE_TYPES = ["application/pdf"];
 // Sign Up For Centers Step 4
 const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
-    // Step 4: Permits
     license_path: z
-      .instanceof(File, {
+      .custom<File>((file) => file instanceof File && file.name !== "", {
         message: getErrorMessage("general-field-required", locale),
       })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("file-size", locale)
-      ),
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+        message: getErrorMessage("file-size", locale),
+      })
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type), {
+        message: getErrorMessage("pdf-type", locale),
+      }),
 
     commercial_record_path: z
-      .instanceof(File, {
+      .custom<File>((file) => file instanceof File && file.name !== "", {
         message: getErrorMessage("general-field-required", locale),
       })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
-      .refine(
-        (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-        getErrorMessage("pdf-type", locale)
-      ),
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+        message: getErrorMessage("file-size", locale),
+      })
+      .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type), {
+        message: getErrorMessage("pdf-type", locale),
+      }),
 
     logo: z
-      .instanceof(File, {
+      .custom<File>((file) => file instanceof File && file.name !== "", {
         message: getErrorMessage("general-field-required", locale),
       })
-      .refine(
-        (file) => file.size <= MAX_FILE_SIZE,
-        getErrorMessage("file-size", locale)
-      )
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+        message: getErrorMessage("file-size", locale),
+      })
       .refine(
         (file) =>
           ["image/png", "image/jpeg", "image/jpg", "image/svg+xml"].includes(
@@ -636,8 +630,9 @@ const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
         }
       ),
 
-    // comments: z.string().optional(),
+    comments: z.string().optional(),
   });
+
 
 export type CenterStep4FormData = z.infer<
   ReturnType<typeof createCenterStep4Schema>
