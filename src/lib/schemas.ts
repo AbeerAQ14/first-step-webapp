@@ -591,7 +591,6 @@ const ACCEPTED_FILE_TYPES = ["application/pdf"];
 // Sign Up For Centers Step 4
 const createCenterStep4Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
-    // Step 4: Permits
     license_path: z
       .instanceof(File, {})
       .refine((file) => file.size <= MAX_FILE_SIZE)
