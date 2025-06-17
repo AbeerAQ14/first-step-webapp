@@ -82,14 +82,14 @@ const SignUpWrapper = () => {
 
       work_hours_from: data.work_hours_from,
       work_hours_to: data.work_hours_to,
-      // time_of_first_period: data.meals_and_periods.time_of_first_period,
-      // time_of_second_period: data.meals_and_periods.time_of_second_period,
+      time_of_first_period: data.meals_and_periods.time_of_first_period,
+      time_of_second_period: data.meals_and_periods.time_of_second_period,
 
-      // first_meals: data.meals_and_periods.first_meals,
-      // second_meals: data.meals_and_periods.second_meals,
+      first_meals: data.meals_and_periods.first_meals,
+      second_meals: data.meals_and_periods.second_meals,
 
-      // emergency_contact: data.emergency_contact === "yes",
-      // special_needs: data.accepted_ages.includes("disabled"),
+      emergency_contact: data.emergency_contact === "yes",
+      special_needs: data.accepted_ages.includes("disabled"),
 
       name: data.nursery_name_ar,
       nursery_name: data.nursery_name_en,
@@ -98,9 +98,9 @@ const SignUpWrapper = () => {
       neighborhood: data.neighborhood,
 
       services: data.services,
-      // communication_methods: data.communication_methods,
+      communication_methods: data.communication_methods,
 
-      // provides_food: data.meals_and_periods.provides_food === "yes",
+      provides_food: data.meals_and_periods.provides_food === "yes",
 
       accepted_ages: data.accepted_ages,
 

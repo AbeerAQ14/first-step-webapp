@@ -458,11 +458,17 @@ export type CenterStep2FormData = z.infer<
 const createCenterStep3Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 3: Communication and Food
-    emergency_contact: z.enum(["yes", "no"], {}).optional(),
-    communication_methods: z.array(z.string()).optional(),
+    emergency_contact: z.enum(["yes", "no"], {
+      required_error: getErrorMessage("general-answer-required", locale),
+    }),
+    communication_methods: z
+      .array(z.string())
+      .min(1, { message: getErrorMessage("general-field-required", locale) }),
     meals_and_periods: z
       .object({
-        provides_food: z.enum(["yes", "no"], {}).optional(),
+        provides_food: z.enum(["yes", "no"], {
+          required_error: getErrorMessage("general-answer-required", locale),
+        }),
         first_meals: z
           .array(
             z.object({
@@ -484,7 +490,95 @@ const createCenterStep3Schema = (locale: "ar" | "en" = "ar") =>
         time_of_first_period: z.string().trim().optional(),
         time_of_second_period: z.string().trim().optional(),
       })
-      .optional(),
+      .superRefine((data, ctx) => {
+        if (data.provides_food === "yes") {
+          if (!data.first_meals || data.first_meals.length === 0) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: getErrorMessage("general-field-required", locale),
+              path: ["first_meals"],
+            });
+          } else {
+            data.first_meals.forEach((meal, index) => {
+              if (!meal.meal_name || meal.meal_name.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`first_meals.${index}.meal_name`],
+                });
+              }
+              if (!meal.juice || meal.juice.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`first_meals.${index}.juice`],
+                });
+              }
+              if (!meal.components || meal.components.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`first_meals.${index}.components`],
+                });
+              }
+            });
+          }
+
+          if (!data.second_meals || data.second_meals.length === 0) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: getErrorMessage("general-field-required", locale),
+              path: ["second_meals"],
+            });
+          } else {
+            data.second_meals.forEach((meal, index) => {
+              if (!meal.meal_name || meal.meal_name.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`second_meals.${index}.meal_name`],
+                });
+              }
+              if (!meal.juice || meal.juice.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`second_meals.${index}.juice`],
+                });
+              }
+              if (!meal.components || meal.components.trim() === "") {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: getErrorMessage("general-field-required", locale),
+                  path: [`second_meals.${index}.components`],
+                });
+              }
+            });
+          }
+
+          if (
+            !data.time_of_first_period ||
+            data.time_of_first_period.trim() === ""
+          ) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: getErrorMessage("general-field-required", locale),
+              path: ["time_of_first_period"],
+            });
+          }
+
+          if (
+            !data.time_of_second_period ||
+            data.time_of_second_period.trim() === ""
+          ) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: getErrorMessage("general-field-required", locale),
+              path: ["time_of_second_period"],
+            });
+          }
+        }
+      }),
   });
 
 export type CenterStep3FormData = z.infer<

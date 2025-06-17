@@ -372,38 +372,38 @@ export const authService = {
       formData.append("work_days_to", payload.work_days_to);
       formData.append("work_hours_from", formatTime(payload.work_hours_from));
       formData.append("work_hours_to", formatTime(payload.work_hours_to));
-      // payload.time_of_first_period &&
-      //   formData.append(
-      //     "time_of_first_period",
-      //     formatTime(payload.time_of_first_period)
-      //   );
-      // payload.time_of_second_period &&
-      //   formData.append(
-      //     "time_of_second_period",
-      //     formatTime(payload.time_of_second_period)
-      //   );
+      payload.time_of_first_period &&
+        formData.append(
+          "time_of_first_period",
+          formatTime(payload.time_of_first_period)
+        );
+      payload.time_of_second_period &&
+        formData.append(
+          "time_of_second_period",
+          formatTime(payload.time_of_second_period)
+        );
 
-      // formData.append(
-      //   "emergency_contact",
-      //   payload.emergency_contact ? "1" : "0"
-      // );
-      // formData.append("special_needs", payload.special_needs ? "1" : "0");
+      formData.append(
+        "emergency_contact",
+        payload.emergency_contact ? "1" : "0"
+      );
+      formData.append("special_needs", payload.special_needs ? "1" : "0");
 
       formData.append("nursery_name", payload.nursery_name);
       formData.append("location", payload.location);
       formData.append("city", payload.city);
       formData.append("neighborhood", payload.neighborhood);
 
-      // formData.append("provides_food", payload.provides_food ? "1" : "0");
+      formData.append("provides_food", payload.provides_food ? "1" : "0");
 
       // Append arrays
       payload.nursery_type.forEach((item) => {
         formData.append("nursery_type[]", item);
       });
 
-      // payload.communication_methods.forEach((item) => {
-      //   formData.append("communication_methods[]", item);
-      // });
+      payload.communication_methods.forEach((item) => {
+        formData.append("communication_methods[]", item);
+      });
 
       payload.services.forEach((item) => {
         formData.append("services[]", item);
@@ -413,26 +413,26 @@ export const authService = {
         formData.append("accepted_ages[]", item);
       });
 
-      // payload.first_meals?.forEach((meal, index) => {
-      //   meal.meal_name &&
-      //     formData.append(`first_meals[${index}][meal_name]`, meal.meal_name);
-      //   meal.juice &&
-      //     formData.append(`first_meals[${index}][juice]`, meal.juice);
-      //   meal.components &&
-      //     formData.append(`first_meals[${index}][components]`, meal.components);
-      // });
+      payload.first_meals?.forEach((meal, index) => {
+        meal.meal_name &&
+          formData.append(`first_meals[${index}][meal_name]`, meal.meal_name);
+        meal.juice &&
+          formData.append(`first_meals[${index}][juice]`, meal.juice);
+        meal.components &&
+          formData.append(`first_meals[${index}][components]`, meal.components);
+      });
 
-      // payload.second_meals?.forEach((meal, index) => {
-      //   meal.meal_name &&
-      //     formData.append(`second_meals[${index}][meal_name]`, meal.meal_name);
-      //   meal.juice &&
-      //     formData.append(`second_meals[${index}][juice]`, meal.juice);
-      //   meal.components &&
-      //     formData.append(
-      //       `second_meals[${index}][components]`,
-      //       meal.components
-      //     );
-      // });
+      payload.second_meals?.forEach((meal, index) => {
+        meal.meal_name &&
+          formData.append(`second_meals[${index}][meal_name]`, meal.meal_name);
+        meal.juice &&
+          formData.append(`second_meals[${index}][juice]`, meal.juice);
+        meal.components &&
+          formData.append(
+            `second_meals[${index}][components]`,
+            meal.components
+          );
+      });
 
       // payload.pricing.forEach((price, index) => {
       //   formData.append(
