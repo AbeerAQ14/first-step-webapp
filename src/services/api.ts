@@ -54,13 +54,44 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error("API Error:", {
+    // Handle network errors
+    if (!error.response) {
+      const networkError = {
+        message: "Network error - Please check your internet connection",
+        errors: {},
+        status: 0,
+        url: error.config?.url,
+        method: error.config?.method,
+      };
+      console.error("Network Error:", networkError);
+      return Promise.reject(networkError);
+    }
+
+    // Handle API errors
+    const errorDetails = {
       url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data || {},
+      headers: error.response?.headers,
+      message: error.message,
+    };
+
+    console.error("API Error:", errorDetails);
+
+    // Ensure error response has the expected structure
+    const formattedError = {
+      message:
+        error.response?.data?.message ||
+        error.message ||
+        "An unexpected error occurred",
+      errors: error.response?.data?.errors || {},
       status: error.response?.status,
       data: error.response?.data,
-      headers: error.response?.headers,
-    });
-    return Promise.reject(error);
+    };
+
+    return Promise.reject(formattedError);
   }
 );
 
