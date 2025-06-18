@@ -3,7 +3,7 @@
 import { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { adminService } from "@/services/dashboardApi";
-import { AdminBlogRequestFormData } from "@/lib/schemas";
+import AdminBlogCard from "@/components/general/blog/AdminBlogCard";
 
 export default function CenterBlogsPage({
   params,
@@ -11,7 +11,11 @@ export default function CenterBlogsPage({
   params: Promise<{ centerId: string }>;
 }) {
   const { centerId } = use(params);
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: blogs,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["centerBlogs", centerId],
     queryFn: () => adminService.getOneCenterBlogs(centerId),
   });
@@ -20,21 +24,15 @@ export default function CenterBlogsPage({
   if (error)
     return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
 
-  // Defensive: handle empty or missing blogs
-  const blogs = data?.blog_centers || [];
-
-  // Helper to map backend blog to AdminBlogRequestFormData
-  const mapBlogToFormData = (blog: any): AdminBlogRequestFormData => ({
-    title: blog.title,
+  // Helper to map backend blog to AdminBlogCard props
+  const mapBlogToCard = (blog: any) => ({
+    id: blog.id,
+    title: blog.title || "بدون عنوان",
     description: blog.description,
-    content: blog.content,
-    mainImage:
-      "https://images.unsplash.com/photo-1744265385437-8b591b626a8b?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    cardImage:
-      "https://images.unsplash.com/photo-1744265385437-8b591b626a8b?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: blog.blog_image_url,
+    published_at: blog.created_at.split(" ")[0],
+    status: blog.status,
   });
-
-  console.log(blogs);
 
   return (
     <div className="space-y-4">
@@ -46,26 +44,40 @@ export default function CenterBlogsPage({
           <p className="heading-4 text-primary font-medium">
             مدونات في انتظار القبول
           </p>
-          <div className="flex flex-col gap-y-6 lg:px-5 xl:px-9">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogs
+              .map(mapBlogToCard)
               .filter((blog: any) => blog.status === "pending")
-              .map((blog: any) => null)}
+              .map((blog: any) => (
+                <AdminBlogCard
+                  key={blog.id}
+                  blog={blog}
+                  onAccept={() => alert(`قبول المدونة: ${blog.title}`)}
+                  onReject={() => alert(`رفض المدونة: ${blog.title}`)}
+                />
+              ))}
           </div>
         </div>
         <div className="space-y-4">
           <p className="heading-4 text-primary font-medium">مدونات مقبولة</p>
-          <div className="flex flex-col gap-y-6 lg:px-5 xl:px-9">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogs
+              .map(mapBlogToCard)
               .filter((blog: any) => blog.status === "approved")
-              .map((blog: any) => null)}
+              .map((blog: any) => (
+                <AdminBlogCard key={blog.id} blog={blog} />
+              ))}
           </div>
         </div>
         <div className="space-y-4">
           <p className="heading-4 text-primary font-medium">مدونات مرفوضة</p>
-          <div className="flex flex-col gap-y-6 lg:px-5 xl:px-9">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogs
+              .map(mapBlogToCard)
               .filter((blog: any) => blog.status === "rejected")
-              .map((blog: any) => null)}
+              .map((blog: any) => (
+                <AdminBlogCard key={blog.id} blog={blog} />
+              ))}
           </div>
         </div>
       </div>

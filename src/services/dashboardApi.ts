@@ -839,7 +839,7 @@ export const adminService = {
       formData.append("content[ar]", payload.contentAr);
       formData.append("content[en]", payload.contentEn);
       formData.append("image", payload.cardImage);
-      formData.append("cover", payload.mainImage);
+      formData.append("file", payload.mainImage);
 
       const response = await apiClient.post(`/dashboard/Blogs`, formData, {
         headers: {
@@ -876,7 +876,7 @@ export const adminService = {
       payload.contentAr && formData.append("content[ar]", payload.contentAr);
       payload.contentEn && formData.append("content[en]", payload.contentEn);
       payload.cardImage && formData.append("image", payload.cardImage);
-      payload.mainImage && formData.append("cover", payload.mainImage);
+      payload.mainImage && formData.append("file", payload.mainImage);
 
       const response = await apiClient.post(
         `/dashboard/Blogs/${blogId}`,

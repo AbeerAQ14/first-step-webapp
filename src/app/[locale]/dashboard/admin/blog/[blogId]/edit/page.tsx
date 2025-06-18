@@ -1,9 +1,12 @@
 "use client";
 
 import { use } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminBlogRequestFormData } from "@/lib/schemas";
 import { adminService } from "@/services/dashboardApi";
+import AdminBlogForm from "@/components/forms/dashboard/blog/AdminBlogForm";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function BlogEdit({
   params,
@@ -12,11 +15,35 @@ export default function BlogEdit({
 }) {
   const { blogId } = use(params);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["blog", blogId],
     queryFn: () => adminService.getBlog(blogId),
     enabled: !!blogId,
   });
+
+  const mutation = useMutation({
+    mutationFn: async (payload: Partial<AdminBlogRequestFormData>) => {
+      await adminService.updateBlog(blogId, {
+        titleAr: payload.title?.ar,
+        titleEn: payload.title?.en,
+        descriptionAr: payload.description?.ar,
+        descriptionEn: payload.description?.en,
+        contentAr: payload.content?.ar,
+        contentEn: payload.content?.en,
+        mainImage: payload.mainImage?.[0] as File,
+        cardImage: payload.cardImage?.[0] as File,
+      });
+    },
+    onSuccess: () => {
+      toast("تم تحديث المدونة بنجاح");
+      refetch();
+    },
+    onError: () => {
+      toast("حدث خطأ أثناء تحديث المدونة");
+    },
+  });
+
+  const router = useRouter();
 
   if (isLoading) return <div>جاري التحميل...</div>;
   if (error)
@@ -32,6 +59,30 @@ export default function BlogEdit({
     cardImage: data.image,
   };
 
+  // Handler to collect dirty fields and only send those
+  const handleSubmit = (data: AdminBlogRequestFormData, dirtyFields: any) => {
+    const payload: Partial<AdminBlogRequestFormData> = {};
+    payload.title = {
+      ar: dirtyFields.title?.ar ? data.title.ar : initialValues.title.ar,
+      en: dirtyFields.title?.en ? data.title.en : initialValues.title.en,
+    };
+    payload.description = {
+      ar: dirtyFields.description?.ar
+        ? data.description.ar
+        : initialValues.description.ar,
+      en: dirtyFields.description?.en
+        ? data.description.en
+        : initialValues.description.en,
+    };
+    payload.content = {
+      ar: dirtyFields.content?.ar ? data.content.ar : initialValues.content.ar,
+      en: dirtyFields.content?.en ? data.content.en : initialValues.content.en,
+    };
+    if (dirtyFields.mainImage) payload.mainImage = data.mainImage;
+    if (dirtyFields.cardImage) payload.cardImage = data.cardImage;
+    mutation.mutate(payload);
+  };
+
   return (
     <div>
       <div className="mb-3.5 flex items-center justify-between">
@@ -39,6 +90,12 @@ export default function BlogEdit({
           تعديل المدونة
         </h1>
       </div>
+      <AdminBlogForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        loading={mutation.isPending}
+        onCancel={() => router.back()}
+      />
     </div>
   );
 }

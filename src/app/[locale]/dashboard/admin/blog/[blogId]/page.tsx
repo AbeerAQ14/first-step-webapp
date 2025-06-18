@@ -4,6 +4,8 @@ import { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AdminBlogRequestFormData } from "@/lib/schemas";
 import { adminService } from "@/services/dashboardApi";
+import AdminBlogForm from "@/components/forms/dashboard/blog/AdminBlogForm";
+import { useRouter } from "next/navigation";
 
 export default function BlogDetails({
   params,
@@ -17,6 +19,8 @@ export default function BlogDetails({
     queryFn: () => adminService.getBlog(blogId),
     enabled: !!blogId,
   });
+
+  const router = useRouter();
 
   if (isLoading) return <div>جاري التحميل...</div>;
   if (error)
@@ -32,5 +36,11 @@ export default function BlogDetails({
     cardImage: data.image,
   };
 
-  return <div></div>;
+  return (
+    <AdminBlogForm
+      initialValues={initialValues}
+      readOnly
+      onCancel={() => router.back()}
+    />
+  );
 }
