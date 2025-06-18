@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { Tabs } from "@/components/general/Tabs";
-import AdminBlogs from "@/components/dashboard/blog/AdminBlogs";
-import CentersBlogs from "@/components/dashboard/blog/CentersBlogs";
 
 export default function blogPage() {
   const [activeTab, setActiveTab] = useState<"firstStep" | "centers">(
@@ -21,7 +19,7 @@ export default function blogPage() {
         setActiveTab={setActiveTab}
       />
 
-      {activeTab === "firstStep" ? <AdminBlogs /> : <CentersBlogs />}
+      {/* {activeTab === "firstStep" ? <AdminBlogs /> : <CentersBlogs />} */}
     </div>
   );
 }
