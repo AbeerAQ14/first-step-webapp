@@ -2,76 +2,41 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { parentService } from "@/services/parent";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const STATUS_STYLES: Record<string, string> = {
-  "تم الدفع": "bg-success text-white border-green-400",
-  "في انتظار الدفع": "bg-warning text-white ",
-  مرفوض: "bg-danger text-white border-red-400",
-  "في انتظار التأكيد": "bg-light-gray text-white ",
+  accepted: "bg-success text-white border-green-400",
+  pending: "bg-warning text-white",
+  rejected: "bg-danger text-white border-red-400",
+  waiting_confirmation: "bg-light-gray text-white",
 };
 
-const bookings = [
-  {
-    id: 1,
-    status: "تم الدفع",
-    childName: "إيسام، أمنية",
-    className: "حضانه الأمل",
-    branch: "الرياض",
-    program: "يومي",
-    startDay: "السبت 2025/5/20",
-    endDay: "الخميس 2025/5/26",
-    daysCount: 9,
-    paymentMethod: "ميسر",
-    amount: 450,
-    notes: [
-      "تم إرسال إشعار الدفع عبر البريد الإلكتروني.",
-      "سيتم إرسال إشعار آخر للدفع.",
-      "سيتم إلغاء الحجز تلقائياً في حال عدم الدفع.",
-    ],
-  },
-  {
-    id: 2,
-    status: "في انتظار الدفع",
-    childName: "سارة محمد",
-    className: "حضانة المستقبل",
-    branch: "جدة",
-    program: "أسبوعي",
-    startDay: "الأحد 2025/6/1",
-    endDay: "الخميس 2025/6/5",
-    daysCount: 5,
-    paymentMethod: "بطاقة",
-    amount: 300,
-    notes: ["سيتم إرسال إشعار آخر للدفع."],
-  },
-  {
-    id: 3,
-    status: "مرفوض",
-    childName: "ليان خالد",
-    className: "حضانة الزهور",
-    branch: "الدمام",
-    program: "شهري",
-    startDay: "الإثنين 2025/7/1",
-    endDay: "الخميس 2025/7/31",
-    daysCount: 30,
-    paymentMethod: "نقدي",
-    amount: 1200,
-    notes: ["تم رفض الحجز بسبب عدم توفر أماكن."],
-  },
-  {
-    id: 4,
-    status: "في انتظار التأكيد",
-    childName: "محمد علي",
-    className: "حضانة الأمل",
-    branch: "الرياض",
-    program: "بالساعة",
-    startDay: "الثلاثاء 2025/8/10",
-    endDay: "الثلاثاء 2025/8/10",
-    daysCount: 1,
-    paymentMethod: "ميسر",
-    amount: 50,
-    notes: [],
-  },
-];
+// Map API status to display status
+const STATUS_MAP: Record<string, string> = {
+  accepted: "تم الدفع",
+  pending: "في انتظار الدفع",
+  rejected: "مرفوض",
+  waiting_confirmation: "في انتظار التأكيد",
+};
+
+interface ApiResponse {
+  data: Array<{
+    id: number;
+    status: string;
+    price_amount: string;
+    enrollment_date: string;
+    enrollment_type: string;
+    children: Array<{
+      child_name: string;
+      branch: {
+        name: string;
+        nursery_name: string;
+      };
+    }>;
+  }>;
+}
 
 const rightFields = [
   { key: "status", label: "حالة الحجز", isStatus: true },
@@ -115,8 +80,39 @@ function StatusBadge({ status }: { status: string }) {
         STATUS_STYLES[status] || "bg-gray-100 text-gray-700 border-gray-400"
       }`}
     >
-      {status}
+      {STATUS_MAP[status] || status}
     </span>
+  );
+}
+
+function BookingCardSkeleton() {
+  return (
+    <Card className="w-full">
+      <CardContent className="py-6">
+        <div className="grid grid-cols-2 gap-6 text-sm mb-4 place-items-center">
+          <div className="flex flex-col gap-2 text-right w-full">
+            {rightFields.map((field) => (
+              <div key={field.key} className="flex items-center gap-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2 text-right w-full">
+            {leftFields.map((field) => (
+              <div key={field.key} className="flex items-center gap-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center gap-2 mt-6">
+          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -124,7 +120,7 @@ function BookingCard({
   booking,
   onShowDetails,
 }: {
-  booking: (typeof bookings)[0];
+  booking: any;
   onShowDetails: () => void;
 }) {
   return (
@@ -164,22 +160,24 @@ function BookingCard({
         </div>
 
         <div className="flex justify-center gap-2 mt-6">
-          {actionsByStatus[booking.status]?.[0].map((action, idx) => (
-            <Button
-              key={action.label}
-              variant={action.variant}
-              className={`border ${
-                action.label === "الغاء الحجز"
-                  ? "bg-transparent text-red-500 border-red-500 hover:bg-red-50"
-                  : "border-0"
-              }`}
-              onClick={
-                action.label === "عرض التفاصيل" ? onShowDetails : undefined
-              }
-            >
-              {action.label}
-            </Button>
-          ))}
+          {actionsByStatus[STATUS_MAP[booking.status]]?.[0].map(
+            (action, idx) => (
+              <Button
+                key={action.label}
+                variant={action.variant}
+                className={`border ${
+                  action.label === "الغاء الحجز"
+                    ? "bg-transparent text-red-500 border-red-500 hover:bg-red-50"
+                    : "border-0"
+                }`}
+                onClick={
+                  action.label === "عرض التفاصيل" ? onShowDetails : undefined
+                }
+              >
+                {action.label}
+              </Button>
+            )
+          )}
         </div>
       </CardContent>
     </Card>
@@ -188,6 +186,56 @@ function BookingCard({
 
 export const Bookings = () => {
   const [showDetails, setShowDetails] = useState(false);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["enrollments"],
+    queryFn: parentService.getEnrollments,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4">
+        {[1, 2, 3].map((i) => (
+          <BookingCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-4 text-red-500">
+        حدث خطأ أثناء تحميل البيانات
+      </div>
+    );
+  }
+
+  const bookings =
+    data?.data.map((booking) => ({
+      id: booking.id,
+      status: booking.status,
+      childName: booking.children.map((child) => child.child_name).join("، "),
+      className: booking.children[0]?.branch.nursery_name || "",
+      branch: booking.children[0]?.branch.name || "",
+      program: booking.enrollment_type,
+      startDay: new Date(booking.enrollment_date).toLocaleDateString("ar-SA", {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      }),
+      endDay: new Date(booking.enrollment_date).toLocaleDateString("ar-SA", {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      }),
+      daysCount: 1,
+      paymentMethod: "ميسر",
+      amount: parseFloat(booking.price_amount),
+      notes: [],
+    })) || [];
+
   return (
     <div className="flex flex-col gap-4">
       {bookings.map((booking) => (
