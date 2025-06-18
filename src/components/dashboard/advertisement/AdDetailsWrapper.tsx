@@ -51,7 +51,7 @@ const AdDetailsWrapper = ({
     mutationFn: () => adminService.deleteAdvertisement(adId),
     onSuccess: () => {
       toast.success("تم حذف الإعلان بنجاح");
-      router.push(`advertisement`);
+      router.push(`/dashboard/admin/advertisement`);
     },
     onError: () => {
       toast.error("حدث خطأ أثناء حذف الإعلان");
