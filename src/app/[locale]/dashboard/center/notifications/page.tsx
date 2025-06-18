@@ -1,4 +1,4 @@
-import NotificationsForm from "@/components/forms/dashboard/notifications/NotificationsForm";
+import NotificationsForm from "@/components/forms/dashboard/notifications/CenterNotificationsForm";
 
 export default function CenterDashboardNotifications() {
   return (

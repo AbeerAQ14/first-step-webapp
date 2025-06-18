@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Clock } from "lucide-react";
-import { NotificationsFormData } from "@/components/forms/dashboard/notifications/NotificationsForm";
+import { NotificationsFormData } from "@/components/forms/dashboard/notifications/CenterNotificationsForm";
 import DatePicker from "@/components/general/DatePicker";
 
 const NotificationForm = () => {

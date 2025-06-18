@@ -8,6 +8,8 @@ import { getErrorMessage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Parents from "@/components/dashboard/notifications/Parents";
 import type { Parent } from "@/components/tables/data/parents";
+import Centers from "@/components/dashboard/notifications/Centers";
+import type { Center } from "@/components/tables/data/centers";
 import NotificationForm from "@/components/forms/dashboard/notifications/NotificationForm";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
@@ -26,7 +28,10 @@ const notificationSchema = z.object({
       message: getErrorMessage("invalid-time", "ar"),
     })
     .min(1, { message: getErrorMessage("general-field-required", "ar") }),
-  recipients: z
+  centerRecipients: z
+    .array(z.any())
+    .min(1, { message: getErrorMessage("general-field-required", "ar") }),
+  parentRecipients: z
     .array(z.any())
     .min(1, { message: getErrorMessage("general-field-required", "ar") }),
 });
@@ -66,6 +71,7 @@ const NotificationsForm = () => {
   const [selectedChildMap, setSelectedChildMap] = useState<
     Record<number, string>
   >({});
+  const [selectedCenters, setSelectedCenters] = useState<Center[]>([]);
 
   const sendNotificationMutation = useMutation({
     mutationFn: (data: NotificationsFormData) => {
@@ -73,6 +79,8 @@ const NotificationsForm = () => {
         selectedParents,
         selectedChildMap
       );
+
+      console.log(data);
 
       return centerService.sendNotification({
         parent_ids: selectedWithOnlySelectedChild.map((parent) => parent.id),
@@ -99,7 +107,8 @@ const NotificationsForm = () => {
       type: "",
       day: undefined,
       time: "",
-      recipients: [],
+      centerRecipients: [],
+      parentRecipients: [],
     },
     mode: "onChange",
   });
@@ -111,7 +120,7 @@ const NotificationsForm = () => {
     );
 
     // Update the hidden field value before validation
-    methods.setValue("recipients", selectedWithOnlySelectedChild);
+    methods.setValue("parentRecipients", selectedWithOnlySelectedChild);
 
     const valid = await methods.trigger(); // re-validate with updated recipients
     if (!valid) return;
@@ -127,12 +136,19 @@ const NotificationsForm = () => {
           e.preventDefault(); // prevent default submission
           onSubmit(); // our custom function
         }}
-        className="flex flex-col items-center gap-y-6"
+        className="flex flex-col gap-y-6"
       >
         <div className="mb-2 w-full flex flex-col gap-y-6">
           <h1 className="heading-4 font-medium text-primary">{t("title")}</h1>
 
           <NotificationForm />
+        </div>
+
+        <div className="mb-6">
+          <Centers
+            selected={selectedCenters}
+            setSelected={setSelectedCenters}
+          />
         </div>
 
         <div>
@@ -144,8 +160,15 @@ const NotificationsForm = () => {
           />
         </div>
 
-        <input type="hidden" {...methods.register("recipients")} />
-        {methods.formState.errors.recipients && (
+        <input type="hidden" {...methods.register("centerRecipients")} />
+        {methods.formState.errors.centerRecipients && (
+          <p className="text-sm text-red-500 text-center mt-2">
+            {t("form.recipients.error")}
+          </p>
+        )}
+
+        <input type="hidden" {...methods.register("parentRecipients")} />
+        {methods.formState.errors.parentRecipients && (
           <p className="text-sm text-red-500 text-center mt-2">
             {t("form.recipients.error")}
           </p>
@@ -155,6 +178,7 @@ const NotificationsForm = () => {
           size={"sm"}
           type="submit"
           disabled={sendNotificationMutation.isPending}
+          className="mx-auto"
         >
           {sendNotificationMutation.isPending
             ? t("form.sending")
