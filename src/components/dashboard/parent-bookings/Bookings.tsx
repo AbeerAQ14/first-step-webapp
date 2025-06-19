@@ -125,34 +125,45 @@ function BookingCard({
 }) {
   return (
     <Card className="w-full">
-      <CardContent className="py-6">
-        <div className="grid grid-cols-2 gap-6 text-sm mb-4 place-items-center">
+      <CardContent className="py-6 px-6">
+        <div
+          className="grid grid-cols-2 gap-x-20 gap-y-4 text-sm mb-4 justify-center"
+          dir="rtl"
+        >
           {/* Right column */}
-          <div className="flex flex-col gap-2 text-right">
-            {rightFields.map((field) => (
-              <div key={field.key}>
-                <span className="text-primary-blue font-bold">
-                  {field.label}:{" "}
+          <div className="flex flex-col gap-2 items-start" dir="rtl">
+            {rightFields.map((field, idx) => (
+              <div
+                key={field.key + "-" + idx}
+                className="flex flex-row items-center gap-x-2 w-full text-right justify-start"
+                dir="rtl"
+              >
+                <span className="text-primary-blue font-bold whitespace-nowrap text-right">
+                  {field.label}:
                 </span>
-                {field.isStatus ? (
-                  <StatusBadge status={booking.status} />
-                ) : (
-                  <span className="font-bold text-mid-gray">
-                    {booking[field.key as keyof typeof booking]}
-                  </span>
-                )}
+                <span className="font-bold text-mid-gray text-right">
+                  {field.isStatus ? (
+                    <StatusBadge status={booking.status} />
+                  ) : (
+                    booking[field.key]
+                  )}
+                </span>
               </div>
             ))}
           </div>
           {/* Left column */}
-          <div className="flex flex-col gap-2 text-right">
-            {leftFields.map((field) => (
-              <div key={field.key}>
-                <span className="text-primary-blue font-bold">
-                  {field.label}:{" "}
+          <div className="flex flex-col gap-2 items-start" dir="rtl">
+            {leftFields.map((field, idx) => (
+              <div
+                key={field.key + "-" + idx}
+                className="flex flex-row items-center gap-x-2 w-full text-right justify-start"
+                dir="rtl"
+              >
+                <span className="text-primary-blue font-bold whitespace-nowrap text-right">
+                  {field.label}:
                 </span>
-                <span className="font-bold text-mid-gray">
-                  {booking[field.key as keyof typeof booking]}
+                <span className="font-bold text-mid-gray text-right">
+                  {booking[field.key]}
                 </span>
               </div>
             ))}
