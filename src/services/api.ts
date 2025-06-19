@@ -27,11 +27,73 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   // Retrieve token (e.g., from Zustand store or localStorage)
   const token = useAuthStore.getState().token; // Example with Zustand
+  console.log("API Request Interceptor:", {
+    url: config.url,
+    method: config.method,
+    hasToken: !!token,
+    headers: config.headers,
+  });
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("Added Authorization header:", config.headers.Authorization);
+  } else {
+    console.log("No token available for request");
   }
   return config;
 });
+
+// Add response interceptor for debugging
+apiClient.interceptors.response.use(
+  (response) => {
+    console.log("API Response:", {
+      url: response.config.url,
+      status: response.status,
+      headers: response.headers,
+    });
+    return response;
+  },
+  (error) => {
+    // Handle network errors
+    if (!error.response) {
+      const networkError = {
+        message: "Network error - Please check your internet connection",
+        errors: {},
+        status: 0,
+        url: error.config?.url,
+        method: error.config?.method,
+      };
+      console.error("Network Error:", networkError);
+      return Promise.reject(networkError);
+    }
+
+    // Handle API errors
+    const errorDetails = {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data || {},
+      headers: error.response?.headers,
+      message: error.message,
+    };
+
+    console.error("API Error:", errorDetails);
+
+    // Ensure error response has the expected structure
+    const formattedError = {
+      message:
+        error.response?.data?.message ||
+        error.message ||
+        "An unexpected error occurred",
+      errors: error.response?.data?.errors || {},
+      status: error.response?.status,
+      data: error.response?.data,
+    };
+
+    return Promise.reject(formattedError);
+  }
+);
 
 export const websiteService = {
   getAdSlides: async (locale: string): Promise<AdSlide[]> => {

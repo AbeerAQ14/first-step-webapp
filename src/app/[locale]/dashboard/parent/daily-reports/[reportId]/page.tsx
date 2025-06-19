@@ -1,23 +1,106 @@
-import ReportShow from "@/components/forms/dashboard/center-reports/ReportShow";
+"use client";
 
-export default async function DailyReportDetails({
+import { use } from "react";
+import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import ReportShow from "@/components/forms/dashboard/center-reports/ReportShow";
+import { Skeleton } from "@/components/ui/skeleton";
+import { parentService } from "@/services/dashboardApi";
+
+const ReportShowSkeleton = () => {
+  return (
+    <div className="grid md:grid-cols-2 gap-4 lg:gap-6 xl:gap-9">
+      {/* Activities */}
+      <div className="space-y-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+
+      {/* Behavior */}
+      <div className="space-y-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+
+      {/* Meals */}
+      <div className="space-y-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+
+      {/* Nap Time */}
+      <div className="space-y-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+
+      {/* Additional Notes */}
+      <div className="space-y-2 md:col-span-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+    </div>
+  );
+};
+
+export default function DailyReportDetails({
   params,
 }: {
   params: Promise<{ reportId: string }>;
 }) {
-  const { reportId } = await params;
+  const { reportId } = use(params);
+  const t = useTranslations("dashboard.center-reports.report");
+
+  const {
+    data: reports,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["daily-reports"],
+    queryFn: parentService.getDailyReports,
+  });
+
+  // Find the specific report
+  const report = reports?.data?.find((r: any) => r.id === parseInt(reportId));
+
+  if (isLoading) {
+    return (
+      <div className="lg:p-4 space-y-6">
+        <p className="heading-4 text-primary text-center">{t("title")}</p>
+        <ReportShowSkeleton />
+      </div>
+    );
+  }
+
+  if (error || !report) {
+    return (
+      <div className="lg:p-4 space-y-6">
+        <p className="heading-4 text-primary text-center">{t("title")}</p>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <p className="text-red-500 text-lg">{t("error")}</p>
+          <button
+            onClick={() => refetch()}
+            className="cursor-pointer px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+          >
+            {t("retry")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="lg:p-4 space-y-6">
-      <p className="heading-4 text-primary text-center">تقرير يومي</p>
+      <p className="heading-4 text-primary text-center">{t("title")}</p>
 
       <ReportShow
         initialValues={{
-          activities: "تدريب بيانو",
-          behavior: "كان هادئًا",
-          meals: "وجبة غداء صحية",
-          napTime: "ساعة واحدة",
-          additionalNotes: "لا توجد ملاحظات",
+          activities: report.activities || "",
+          behavior: report.behavior || "",
+          meals: report.meals || "",
+          napTime: report.nap_time || "",
+          additionalNotes: report.notes || "",
           recipients: [],
         }}
       />

@@ -1,11 +1,9 @@
-export default async function Bookings() {
-  return (
-    <div>
-      <h1 className="mb-6 heading-4 font-bold text-primary text-center">
-        الحجز
-      </h1>
+import { Bookings } from "@/components/dashboard/parent-bookings/Bookings";
 
-      <div className="lg:px-8 lg:py-9"></div>
+export default function ParentBookingsPage() {
+  return (
+    <div className="flex flex-col gap-5">
+      <Bookings />
     </div>
   );
 }

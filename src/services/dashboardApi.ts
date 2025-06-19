@@ -140,6 +140,184 @@ const prepareCenterFormData = (
     formData.append("commercial_record_path", payload.commercial_record_path);
 };
 
+export const parentService = {
+  getParentChildren: async () => {
+    try {
+      const response = await apiClient.get(`/parent/children/`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getChild: async (id: string) => {
+    try {
+      // Use the direct endpoint to get a specific child with parent information
+      const response = await apiClient.get(`/parent/children/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateChild: async (id: string, payload: any) => {
+    try {
+      // Format the date to YYYY-MM-DD format
+      const formattedDate =
+        payload.birthDate instanceof Date
+          ? payload.birthDate.toISOString().split("T")[0]
+          : payload.birthDate;
+
+      // Prepare authorized persons data
+      const authorizedPersons = payload.authorizedPersons.map(
+        (person: any) => ({
+          name: person.name,
+          cin: person.idNumber,
+          ...(person.id && { id: person.id }),
+        })
+      );
+
+      // Prepare allergies data
+      const allergies = payload.allergies.allergies.map((allergy: any) => ({
+        name: allergy.allergyTypes,
+        allergy_causes: Array.isArray(allergy.allergyFoods)
+          ? allergy.allergyFoods
+          : allergy.allergyFoods.split(", "),
+        allergy_emergency: allergy.allergyProcedures,
+        ...(allergy.id && { id: allergy.id }),
+      }));
+
+      // Prepare disease details data
+      const diseaseDetails = payload.chronicDiseases.diseases.map(
+        (disease: any) => ({
+          disease_name: disease.name,
+          medicament: disease.medication,
+          emergency: disease.procedures,
+          ...(disease.id && { id: disease.id }),
+        })
+      );
+
+      const response = await apiClient.put(`/parent/children/${id}`, {
+        child_name: payload.childName,
+        birthday_date: formattedDate,
+        gender: payload.gender === "male" ? "boy" : "girl",
+        disease: payload.chronicDiseases.hasDiseases === "yes",
+        disease_details: diseaseDetails,
+        allergy: payload.allergies.hasAllergies === "yes",
+        parent_name: payload.fatherName,
+        mother_name: payload.motherName,
+        recommendations: payload.recommendations || "",
+        description_3_words: payload.childDescription || "",
+        things_child_likes: payload.favoriteThings || "",
+        notes: payload.comments || "",
+        kinship: payload.kinship || "",
+        authorized_persons: authorizedPersons,
+        allergies: allergies,
+      });
+
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getDailyReports: async () => {
+    try {
+      const response = await apiClient.get(`/parent/daily-reports`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteDailyReport: async (id: number) => {
+    try {
+      const response = await apiClient.delete(`/parent/daily-reports/${id}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  addChild: async (payload: any) => {
+    try {
+      // Format the date to YYYY-MM-DD format
+      const formattedDate =
+        payload.birthDate instanceof Date
+          ? payload.birthDate.toISOString().split("T")[0]
+          : payload.birthDate;
+
+      const response = await apiClient.post(`/parent/children`, {
+        children: [
+          {
+            child_name: payload.childName,
+            birthday_date: formattedDate,
+            gender: payload.gender === "male" ? "boy" : "girl",
+            disease: payload.chronicDiseases.hasDiseases === "yes",
+            disease_details: payload.chronicDiseases.diseases.map(
+              (disease: any) => ({
+                disease_name: disease.name,
+                medicament: disease.medication,
+                emergency: disease.procedures,
+              })
+            ),
+            allergy: payload.allergies.hasAllergies === "yes",
+            parent_name: payload.fatherName,
+            mother_name: payload.motherName,
+            recommendations: payload.recommendations,
+            description_3_words: payload.childDescription,
+            things_child_likes: payload.favoriteThings,
+            notes: payload.comments,
+            kinship: payload.kinship,
+            authorized_persons: payload.authorizedPersons.map(
+              (person: any) => ({
+                name: person.name,
+                cin: person.idNumber,
+              })
+            ),
+            allergies: payload.allergies.allergies.map((allergy: any) => ({
+              name: allergy.allergyTypes,
+              allergy_causes: allergy.allergyFoods.split(", "),
+              allergy_emergency: allergy.allergyProcedures,
+            })),
+          },
+        ],
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParentEnrollments: async (): Promise<EnrollmentsResponse> => {
+    const authStorage = localStorage.getItem("auth-storage");
+    let token = null;
+    if (authStorage) {
+      try {
+        token = JSON.parse(authStorage).state.token;
+      } catch (e) {
+        console.error("Failed to parse auth-storage:", e);
+      }
+    }
+    const response = await apiClient.get(`/parent/enrollments-get-all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  },
+
+  cancelEnrollment: async (id: number) => {
+    try {
+      const response = await apiClient.post(`/parent/enrollments/${id}/cancel`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+};
+
 export const centerService = {
   getBranches: async () => {
     try {
@@ -262,7 +440,7 @@ export const centerService = {
 
   getChildrenBirthdays: async () => {
     try {
-      const response = await apiClient.get(`/child-birthdays`);
+      const response = await apiClient.get(`/children-birthdays`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -504,7 +682,7 @@ export const centerService = {
 
   getOccasions: async () => {
     try {
-      const response = await apiClient.get(`/occassions`);
+      const response = await apiClient.get(`/occasions`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -513,7 +691,7 @@ export const centerService = {
 
   getOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.get(`/occassions/${occasionId}`);
+      const response = await apiClient.get(`/occasions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -522,7 +700,7 @@ export const centerService = {
 
   createOccasion: async (payload: { title: string; date: string }) => {
     try {
-      const response = await apiClient.post(`/occassions`, payload);
+      const response = await apiClient.post(`/occasions`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -534,10 +712,7 @@ export const centerService = {
     payload: { title: string; date: string }
   ) => {
     try {
-      const response = await apiClient.put(
-        `/occassions/${occasionId}`,
-        payload
-      );
+      const response = await apiClient.put(`/occasions/${occasionId}`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -546,7 +721,7 @@ export const centerService = {
 
   deleteOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.delete(`/occassions/${occasionId}`);
+      const response = await apiClient.delete(`/occasions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -991,3 +1166,23 @@ export const adminService = {
     }
   },
 };
+
+export interface Enrollment {
+  id: number;
+  branch_id: number;
+  branch_name: string;
+  center_id: number;
+  center_name: string;
+  user_id: number;
+  parent_phone: string;
+  parent_name: string;
+  price_amount: string;
+  enrollment_type: string;
+  response_speed: string;
+  enrollment_date: string;
+  status: string;
+}
+
+export interface EnrollmentsResponse {
+  data: Enrollment[];
+}

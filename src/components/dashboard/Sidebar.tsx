@@ -67,11 +67,11 @@ const getCenterNavbar = (t: any) => [
 ];
 
 const parentNavbar = [
-  {
-    title: "الرئيسية", // Home
-    url: "/dashboard/parent",
-    icon: dashboardIcons.home,
-  },
+  // {
+  //   title: "الرئيسية", // Home
+  //   url: "/dashboard/parent",
+  //   icon: dashboardIcons.home,
+  // },
   {
     title: "أطفالي", // Children
     url: "/dashboard/parent/children",
