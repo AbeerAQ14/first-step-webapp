@@ -3,6 +3,7 @@
 import Numbers from "@/components/dashboard/center-bookings/Numbers";
 import MonthlyAreaComparison from "@/components/charts/MonthlyAreaComparison";
 import TopBookings from "@/components/dashboard/admin-bookings/TopBooking";
+import MonthlyRevenueChart from "@/components/charts/MonthlyRevenueChart";
 
 const CARDS = [
   {
@@ -221,6 +222,15 @@ export default function AdminDashboardHome() {
         <Numbers />
 
         <MonthlyAreaComparison title={"مقارنة الحجوزات"} rows={rows} />
+      </div>
+
+      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="w-full flex-1 min-w-3xs">
+          <MonthlyRevenueChart />
+        </div>
+        <div className="w-full flex-1">
+          <TopBookings />
+        </div>
       </div>
     </div>
   );
