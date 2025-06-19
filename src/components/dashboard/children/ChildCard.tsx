@@ -14,6 +14,8 @@ const ChildCard = ({
   baseUrl?: string;
   absoluteBaseUrl?: string;
 }) => {
+  const token = localStorage.getItem("auth token");
+
   return (
     <div className="bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
       <div className="flex flex-col gap-y-6">

@@ -33,7 +33,16 @@ export interface EnrollmentsResponse {
 
 export const parentService = {
   getEnrollments: async (): Promise<EnrollmentsResponse> => {
-    const token = localStorage.getItem("token");
+    // Get the auth-storage object and parse it
+    const authStorage = localStorage.getItem("auth-storage");
+    let token = null;
+    if (authStorage) {
+      try {
+        token = JSON.parse(authStorage).state.token;
+      } catch (e) {
+        console.error("Failed to parse auth-storage:", e);
+      }
+    }
     console.log("Current token:", token);
 
     const response = await axios.get(
@@ -42,6 +51,7 @@ export const parentService = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       }
     );
     return response.data;
