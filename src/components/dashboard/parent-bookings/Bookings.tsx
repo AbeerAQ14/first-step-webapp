@@ -5,6 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { parentService } from "@/services/dashboardApi";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 const STATUS_STYLES: Record<string, string> = {
   accepted: "bg-success text-white border-green-400",
@@ -19,6 +26,8 @@ const STATUS_MAP: Record<string, string> = {
   pending: "في انتظار الدفع",
   rejected: "مرفوض",
   waiting_confirmation: "في انتظار التأكيد",
+  canceled: "ملغي",
+  cancelled: "ملغي",
 };
 
 interface ApiResponse {
@@ -55,21 +64,22 @@ const leftFields = [
 
 const actionsByStatus: Record<
   string,
-  { label: string; variant?: "destructive"; onClick?: (b: any) => void }[][]
+  {
+    label: string;
+    variant?: "destructive";
+    action: "details" | "cancel" | null;
+  }[]
 > = {
-  "تم الدفع": [[{ label: "عرض تفاصيل الحجز" }]],
-  "في انتظار الدفع": [
-    [
-      { label: "أكد الحجز الان" },
-      { label: "الغاء الحجز", variant: "destructive" },
-    ],
-  ],
-  مرفوض: [[{ label: "عرض تفاصيل الحجز" }]],
+  "تم الدفع": [{ label: "عرض تفاصيل الحجز", action: "details" }],
+  مرفوض: [{ label: "عرض تفاصيل الحجز", action: "details" }],
+  ملغي: [{ label: "عرض تفاصيل الحجز", action: "details" }],
   "في انتظار التأكيد": [
-    [
-      { label: "عرض تفاصيل الحجز" },
-      { label: "الغاء الحجز", variant: "destructive" },
-    ],
+    { label: "عرض تفاصيل الحجز", action: "details" },
+    { label: "الغاء الحجز", variant: "destructive", action: "cancel" },
+  ],
+  "في انتظار الدفع": [
+    { label: "عرض تفاصيل الحجز", action: "details" },
+    { label: "الغاء الحجز", variant: "destructive", action: "cancel" },
   ],
 };
 
@@ -119,9 +129,11 @@ function BookingCardSkeleton() {
 function BookingCard({
   booking,
   onShowDetails,
+  onCancel,
 }: {
   booking: any;
   onShowDetails: () => void;
+  onCancel: () => void;
 }) {
   return (
     <Card className="w-full">
@@ -171,32 +183,135 @@ function BookingCard({
         </div>
 
         <div className="flex justify-center gap-2 mt-6">
-          {actionsByStatus[STATUS_MAP[booking.status]]?.[0].map(
-            (action, idx) => (
-              <Button
-                key={action.label}
-                variant={action.variant}
-                className={`border ${
-                  action.label === "الغاء الحجز"
-                    ? "bg-transparent text-red-500 border-red-500 hover:bg-red-50"
-                    : "border-0"
-                }`}
-                onClick={
-                  action.label === "عرض التفاصيل" ? onShowDetails : undefined
-                }
-              >
-                {action.label}
-              </Button>
-            )
-          )}
+          {actionsByStatus[STATUS_MAP[booking.status]]?.map((action, idx) => (
+            <Button
+              key={action.label}
+              variant={action.variant}
+              className={`border ${
+                action.label === "الغاء الحجز"
+                  ? "bg-transparent text-red-500 border-red-500 hover:bg-red-50"
+                  : "border-0"
+              }`}
+              onClick={
+                action.action === "details"
+                  ? onShowDetails
+                  : action.action === "cancel"
+                  ? onCancel
+                  : undefined
+              }
+            >
+              {action.label}
+            </Button>
+          ))}
         </div>
       </CardContent>
     </Card>
   );
 }
 
+// InvoiceDialog component (inline for now)
+function InvoiceDialog({
+  open,
+  onOpenChange,
+  booking,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  booking: any;
+}) {
+  if (!booking) return null;
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="text-center w-full">الحجز</DialogTitle>
+        </DialogHeader>
+        {/* Invoice design based on image */}
+        <div className="flex flex-col items-center gap-4">
+          {/* Price Tabs */}
+          <div className="flex gap-4 mb-2">
+            <div className="flex flex-col items-center">
+              <span className="text-lg font-bold">50 ر.س</span>
+              <span className="text-xs text-gray-500">شهري</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-lg font-bold">50 ر.س</span>
+              <span className="text-xs text-gray-500">اسبوعي</span>
+            </div>
+            <div className="flex flex-col items-center bg-primary/20 rounded-lg px-4 py-1 border-2 border-primary">
+              <span className="text-lg font-bold text-primary">50 ر.س</span>
+              <span className="text-xs text-primary">يومي</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-lg font-bold">50 ر.س</span>
+              <span className="text-xs text-gray-500">سعر بالساعة</span>
+            </div>
+          </div>
+          {/* Details Section */}
+          <div className="w-full bg-white rounded-lg shadow p-4">
+            <div className="text-primary font-bold mb-2">تفاصيل الحجز</div>
+            <div className="grid grid-cols-2 gap-2 text-sm mb-2">
+              <div>
+                اسم الطفل/الأطفال:{" "}
+                <span className="font-bold">{booking.childName}</span>
+              </div>
+              <div>
+                اسم الحضانة:{" "}
+                <span className="font-bold">{booking.className}</span>
+              </div>
+              <div>
+                اسم الفرع: <span className="font-bold">{booking.branch}</span>
+              </div>
+              <div>
+                نوع البرنامج:{" "}
+                <span className="font-bold">{booking.program}</span>
+              </div>
+              <div>
+                حالة الحجز:{" "}
+                <span className="font-bold">{STATUS_MAP[booking.status]}</span>
+              </div>
+              <div>
+                طريقة الدفع:{" "}
+                <span className="font-bold">{booking.paymentMethod}</span>
+              </div>
+              <div>
+                بداية يوم: <span className="font-bold">{booking.startDay}</span>
+              </div>
+              <div>
+                نهاية يوم: <span className="font-bold">{booking.endDay}</span>
+              </div>
+              <div>
+                عدد الأيام:{" "}
+                <span className="font-bold">{booking.daysCount}</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center border-t pt-2 mt-2">
+              <span className="font-bold text-lg">المبلغ</span>
+              <span className="font-bold text-primary text-xl">
+                {booking.amount} ر.س
+              </span>
+            </div>
+            {/* خدمات */}
+            <div className="mt-2">
+              <div className="font-bold text-sm mb-1">الخدمات:</div>
+              <ul className="list-decimal pr-4 text-xs text-gray-600">
+                <li>خدمة 1 (مثال: تعليم القران الكريم)</li>
+                <li>خدمة 2 (مثال: تعليم اللغة الانجليزية)</li>
+                <li>خدمة 3 (مثال: أنشطة ترفيهية)</li>
+                <li>خدمة 4 (مثال: وجبات غذائية)</li>
+                <li>خدمة 5 (مثال: رعاية صحية)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export const Bookings = () => {
   const [showDetails, setShowDetails] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<any>(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["enrollments"],
@@ -247,15 +362,30 @@ export const Bookings = () => {
       notes: [],
     })) || [];
 
+  // Cancel booking handler (stub)
+  const handleCancel = (booking: any) => {
+    // TODO: Implement cancel logic (API call)
+    alert("سيتم إلغاء الحجز رقم " + booking.id);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {bookings.map((booking) => (
         <BookingCard
           key={booking.id}
           booking={booking}
-          onShowDetails={() => setShowDetails(true)}
+          onShowDetails={() => {
+            setSelectedBooking(booking);
+            setShowDetails(true);
+          }}
+          onCancel={() => handleCancel(booking)}
         />
       ))}
+      <InvoiceDialog
+        open={showDetails}
+        onOpenChange={setShowDetails}
+        booking={selectedBooking}
+      />
     </div>
   );
 };
