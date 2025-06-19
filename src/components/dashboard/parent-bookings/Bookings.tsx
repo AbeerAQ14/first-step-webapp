@@ -215,8 +215,8 @@ export const Bookings = () => {
       id: booking.id,
       status: booking.status,
       childName: booking.children.map((child) => child.child_name).join("، "),
-      className: booking.children[0]?.branch.nursery_name || "",
-      branch: booking.children[0]?.branch.name || "",
+      className: booking.children[0]?.branch?.nursery_name || "",
+      branch: booking.children[0]?.branch?.name || "",
       program: booking.enrollment_type,
       startDay: new Date(booking.enrollment_date).toLocaleDateString("ar-SA", {
         weekday: "long",
