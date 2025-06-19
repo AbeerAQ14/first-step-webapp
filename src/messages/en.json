@@ -380,13 +380,13 @@
       "1": {
         "title": "Basic Information",
         "form": {
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter your full name"
+          "nursery_name_ar": {
+            "label": "Center Name In Arabic",
+            "placeholder": "Enter center name in arabic"
           },
-          "nursery-name": {
-            "label": "Center Name",
-            "placeholder": "Enter center name"
+          "nursery_name_en": {
+            "label": "Center Name In English",
+            "placeholder": "Enter center name in english"
           },
           "phone": {
             "label": "Mobile Number",
@@ -627,6 +627,7 @@
   "error": {
     "title": "Oops! Something went wrong.",
     "default-message": "We couldn't process your request.",
+    "server-render-error": "We're sorry, but something went wrong while loading this page. Please try refreshing the page or return to the home page. If the problem persists, please try again later.",
     "description": "Please try refreshing the page or return to the home screen.",
     "refresh": "Refresh Page",
     "home": "Go to Homepage"
@@ -793,10 +794,17 @@
         "form": {
           "type": {
             "label": "Choose Notification",
-            "placeholder": "Sleep Notification",
+            "placeholder": "Choose Notification",
             "options": {
-              "sleep": "Sleep Notification",
-              "breakfast": "Breakfast Notification"
+              "arrived": "Arrived",
+              "left": "Left",
+              "meal": "Meal Time",
+              "nap": "Nap Time",
+              "activity": "Activity Time",
+              "eid": "Eid",
+              "new_year": "New Year",
+              "meeting": "Meeting",
+              "reminder": "Reminder"
             }
           },
           "day": {
@@ -810,7 +818,10 @@
           "recipients": {
             "error": "Recipients are required"
           },
-          "submit": "Send Notification"
+          "submit": "Send Notification",
+          "sending": "Sending...",
+          "success": "Notification sent successfully",
+          "error": "Failed to send notification"
         }
       },
       "team": {
@@ -1005,16 +1016,22 @@
       },
       "center-bookings": {
         "headers": {
-          "childNumber": "Child Number",
+          "childNumber": "No.",
           "parentName": "Parent Name",
-          "startDate": "Booking Start Date",
-          "endDate": "Booking End Date",
+          "startDate": "Start Date",
+          "endDate": "End Date",
           "child": "Child",
           "branch": "Branch",
           "amount": "Amount",
-          "reservationStatus": "Reservation Status"
+          "reservationStatus": "Reservation Status",
+          "control": "Control"
         },
-        "currency": "SAR"
+        "currency": "SAR",
+        "accept": "Accept",
+        "reject": "Reject",
+        "processing": "Processing...",
+        "enrollmentResponseSuccess": "Enrollment response sent successfully",
+        "enrollmentResponseError": "Failed to send enrollment response"
       },
       "center-reports": {
         "headers": {

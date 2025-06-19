@@ -2,46 +2,19 @@
 
 import { Booking, getColumns } from "@/components/tables/data/top-bookings";
 import { DataTable } from "@/components/tables/DataTable";
-
-const bookingsData: Booking[] = [
-  {
-    id: 1,
-    center: "اسم الحضانة",
-    branch: "اسم الفرع",
-    count: "5",
-    income: 5444.5,
-  },
-  {
-    id: 2,
-    center: "اسم الحضانة",
-    branch: "اسم الفرع",
-    count: "4",
-    income: 56444.5,
-  },
-  {
-    id: 3,
-    center: "اسم الحضانة",
-    branch: "اسم الفرع",
-    count: "3",
-    income: 56664.5,
-  },
-  {
-    id: 4,
-    center: "اسم الحضانة",
-    branch: "اسم الفرع",
-    count: "3",
-    income: 5664.5,
-  },
-  {
-    id: 5,
-    center: "اسم الحضانة",
-    branch: "اسم الفرع",
-    count: "3",
-    income: 5634.5,
-  },
-];
+import { useAdminStats } from "@/hooks/useAdminStats";
 
 const TopBookings = () => {
+  const { stats } = useAdminStats();
+  const topCenters = stats?.top_centers || [];
+
+  const bookingsData = topCenters.map((center:any, index:number) => ({
+    id: index + 1,
+    center: center.nursery_name,
+    count: Number(center.enrollments_count),
+    income: 0, // We don't have income data in the API response
+  }));
+
   const columns = getColumns({ nurseryName: true });
 
   return (
@@ -50,8 +23,10 @@ const TopBookings = () => {
         <p className="font-bold text-primary text-center">
           أعلى 5 حضانات أو مراكز من حيث عدد الحجوزات شهريًا
         </p>
-
-        <DataTable pagination={false} columns={columns} data={bookingsData} />
+        <DataTable
+          data={bookingsData}
+          columns={columns}
+        />
       </div>
     </div>
   );

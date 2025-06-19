@@ -512,9 +512,14 @@ export const authService = {
       });
 
       // ✅ Append files
-      formData.append("logo", payload.logo);
-      formData.append("license_path", payload.license_path);
-      formData.append("commercial_record_path", payload.commercial_record_path);
+      payload.logo && formData.append("logo", payload.logo);
+      payload.license_path &&
+        formData.append("license_path", payload.license_path);
+      payload.commercial_record_path &&
+        formData.append(
+          "commercial_record_path",
+          payload.commercial_record_path
+        );
 
       const response = await apiClient.post("/register-center", formData, {
         headers: {

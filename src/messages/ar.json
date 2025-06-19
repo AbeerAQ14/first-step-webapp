@@ -376,13 +376,13 @@
       "1": {
         "title": "المعلومات الأساسية",
         "form": {
-          "name": {
-            "label": "الاسم",
-            "placeholder": "أدخل اسمك الكامل"
+          "nursery_name_ar": {
+            "label": "اسم المركز بالعربية",
+            "placeholder": "أدخل اسم المركز بالعربية"
           },
-          "nursery-name": {
-            "label": "اسم المركز",
-            "placeholder": "أدخل اسم المركز"
+          "nursery_name_en": {
+            "label": "اسم المركز بالإنجليزية",
+            "placeholder": "أدخل اسم المركز بالإنجليزية"
           },
           "phone": {
             "label": "رقم الجوال",
@@ -623,6 +623,7 @@
   "error": {
     "title": "عذراً! حدث خطأ ما.",
     "default-message": "لم نتمكن من معالجة طلبك.",
+    "server-render-error": "نأسف، حدث خطأ أثناء تحميل هذه الصفحة. يرجى تحديث الصفحة أو العودة لاحقًا إذا استمرت المشكلة.",
     "description": "يرجى تحديث الصفحة أو العودة إلى الصفحة الرئيسية.",
     "refresh": "تحديث الصفحة",
     "home": "الذهاب للصفحة الرئيسية"
@@ -789,10 +790,17 @@
         "form": {
           "type": {
             "label": "اختر الإشعار",
-            "placeholder": "إشعار النوم",
+            "placeholder": "اختر الإشعار",
             "options": {
-              "sleep": "إشعار النوم",
-              "breakfast": "إشعار الإفطار"
+              "arrived": "وصل",
+              "left": "غادر",
+              "meal": "وقت الوجبة",
+              "nap": "وقت القيلولة",
+              "activity": "وقت النشاط",
+              "eid": "عيد",
+              "new_year": "السنة الجديدة",
+              "meeting": "الاجتماع",
+              "reminder": "تذكير"
             }
           },
           "day": {
@@ -806,7 +814,10 @@
           "recipients": {
             "error": "يجب اختيار المستلمين"
           },
-          "submit": "إرسال الإشعار"
+          "submit": "إرسال الإشعار",
+          "sending": "جاري الإرسال...",
+          "success": "تم إرسال الإشعار بنجاح",
+          "error": "فشل في إرسال الإشعار"
         }
       },
       "team": {
@@ -982,14 +993,20 @@
         "headers": {
           "childNumber": "رقم الطفل",
           "parentName": "اسم ولي الأمر",
-          "startDate": "تاريخ بداية الحجز",
-          "endDate": "تاريخ نهاية الحجز",
+          "startDate": "تاريخ البداية",
+          "endDate": "تاريخ النهاية",
           "child": "الطفل",
           "branch": "الفرع",
           "amount": "المبلغ",
-          "reservationStatus": "حالة الحجز"
+          "reservationStatus": "حالة الحجز",
+          "control": "التحكم"
         },
-        "currency": "ر.س"
+        "currency": "ر.س",
+        "accept": "قبول",
+        "reject": "رفض",
+        "processing": "جاري المعالجة...",
+        "enrollmentResponseSuccess": "تم إرسال الرد بنجاح",
+        "enrollmentResponseError": "فشل في إرسال الرد"
       },
       "ads": {
         "headers": {

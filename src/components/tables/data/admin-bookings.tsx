@@ -2,6 +2,7 @@
 
 import { ReservationStatus } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { useReservationStatus } from "./shared/status";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -16,38 +17,6 @@ export type Booking = {
   endDate: string;
   amount: number;
 };
-
-// Function to get the status text in Arabic
-function getStatusText(status: ReservationStatus): string {
-  switch (status) {
-    case "confirmed":
-      return "تم الدفع";
-    case "waitingForPayment":
-      return "في انتظار الدفع";
-    case "waitingForConfirmation":
-      return "في انتظار التأكيد";
-    case "rejected":
-      return "مرفوض";
-    default:
-      return "";
-  }
-}
-
-// Function to get the status color class
-function getStatusColorClass(status: ReservationStatus): string {
-  switch (status) {
-    case "confirmed":
-      return "bg-success text-white";
-    case "waitingForPayment":
-      return "bg-warning text-white";
-    case "waitingForConfirmation":
-      return "bg-light-gray text-white";
-    case "rejected":
-      return "bg-danger text-white";
-    default:
-      return "";
-  }
-}
 
 export const getColumns = (
   selectedChildMap: Record<number, string>,
@@ -70,15 +39,27 @@ export const getColumns = (
   },
   {
     accessorKey: "center",
-    header: "Center Or Nursery",
+    header: "المركز أو الحضانة",
+    cell: ({ row }) => {
+      const center = row.getValue("center") as string;
+      return <div className="text-right">{center || "غير محدد"}</div>;
+    },
   },
   {
     accessorKey: "startDate",
-    header: "Booking Start Date",
+    header: "تاريخ بدء الحجز",
+    cell: ({ row }) => {
+      const date = row.getValue("startDate") as string;
+      return <div className="text-center">{date || "غير محدد"}</div>;
+    },
   },
   {
     accessorKey: "endDate",
-    header: "Booking End Date",
+    header: "تاريخ انتهاء الحجز",
+    cell: ({ row }) => {
+      const date = row.getValue("endDate") as string;
+      return <div className="text-center">{date || "غير محدد"}</div>;
+    },
   },
   {
     accessorKey: "childs",
@@ -111,15 +92,20 @@ export const getColumns = (
   },
   {
     accessorKey: "branch",
-    header: "Branch",
+    header: "الفرع",
+    cell: ({ row }) => {
+      const branch = row.getValue("branch") as string;
+      return <div className="text-right">{branch || "غير محدد"}</div>;
+    },
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: "المبلغ",
     cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount")) || 0;
       return (
-        <div className="space-x-1">
-          <span>{row.getValue("amount")}</span>
+        <div className="space-x-1 text-left">
+          <span>{amount.toFixed(2)}</span>
           <span>ر.س</span>
         </div>
       );
@@ -127,8 +113,10 @@ export const getColumns = (
   },
   {
     id: "reservationStatus",
-    header: "Reservation Status",
+    header: "حالة الحجز",
     cell: ({ row }) => {
+      const { getStatusText, getStatusColorClass } = useReservationStatus();
+
       const parent = row.original;
       const selectedChildId =
         selectedChildMap[parent.id] ?? parent.childs[0]?.id;
@@ -137,12 +125,15 @@ export const getColumns = (
       );
 
       const status = selectedChild?.reservationStatus;
-      const colorClasses = getStatusColorClass(status ?? "confirmed");
+      const colorClasses = getStatusColorClass(
+        status || "waitingForConfirmation"
+      );
       const text = status ? getStatusText(status) : "اختر الطفل";
 
       return (
         <div
-          className={`text-xs w-fit px-2 py-1 rounded-[4px] select-none ${colorClasses}`}
+          className={`text-xs w-fit px-2 py-1 rounded-[4px] select-none ${colorClasses} whitespace-nowrap`}
+          dir="rtl"
         >
           {text}
         </div>

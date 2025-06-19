@@ -39,11 +39,11 @@ const BranchWrapper = ({
   const transformedInitialValues: BranchFormData | undefined = useMemo(() => {
     if (!fetchedBranch) return undefined;
     return {
-      name: fetchedBranch.name || "",
+      nursery_name_ar: fetchedBranch.name || "",
       email: fetchedBranch.email || "",
       phone: fetchedBranch.phone || "",
       neighborhood: fetchedBranch.neighborhood || "",
-      nursery_name: fetchedBranch.nursery_name || "",
+      nursery_name_en: fetchedBranch.nursery_name || "",
       nursery_type: fetchedBranch.nursery_type || [],
       address: fetchedBranch.address || "",
       city: fetchedBranch.city || "",
@@ -77,11 +77,11 @@ const BranchWrapper = ({
     resolver: zodResolver(branchSchema),
     defaultValues: {
       // step1
-      name: "",
+      nursery_name_ar: "",
+      nursery_name_en: "",
       email: "",
       phone: "",
       neighborhood: "",
-      nursery_name: "",
       nursery_type: [],
       address: "",
       city: "",
@@ -109,7 +109,7 @@ const BranchWrapper = ({
       license_path: undefined,
       commercial_record_path: undefined,
       logo: undefined,
-      comments: "",
+      // comments: "",
     },
     mode: "onChange",
   });
@@ -372,7 +372,7 @@ const BranchWrapper = ({
           open={open}
           setOpen={setOpen}
           onSubmit={onSubmitAdmin}
-          branchName={methods.getValues().nursery_name}
+          branchName={methods.getValues().nursery_name_en}
           disabled={branchMutation.isPending || branchMutation.isPending}
         />
       )}

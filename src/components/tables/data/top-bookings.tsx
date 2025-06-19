@@ -9,15 +9,17 @@ import { useTranslations } from "next-intl";
 export type Booking = {
   id: number;
   center?: string;
-  branch: string;
+  branch?: string;
   count: string;
   income: number;
 };
 
 export const getColumns = ({
   nurseryName,
+  branch
 }: {
   nurseryName?: boolean;
+  branch?: boolean
 }): ColumnDef<Booking>[] => {
   const t = useTranslations("dashboard.tables.top-bookings.columns");
 
@@ -41,10 +43,14 @@ export const getColumns = ({
           },
         ]
       : []),
-    {
-      accessorKey: "branch",
-      header: t("branch"),
-    },
+    ...(branch
+      ? [
+          {
+            accessorKey: "branch",
+            header: t("branch"),
+          },
+        ]
+      : []),
     {
       accessorKey: "count",
       header: t("count"),

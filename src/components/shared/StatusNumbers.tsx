@@ -2,12 +2,18 @@
 
 import { useTranslations } from "next-intl";
 import { useCenterStats } from "@/hooks/useCenterStats";
+import { useAdminStats } from "@/hooks/useAdminStats";
 import { useHasRole } from "@/store/authStore";
 
 export const useStatusNumbers = () => {
   const t = useTranslations("shared.status");
+  const isAdmin = useHasRole('admin')
   const isCenter = useHasRole("center");
-  const { stats } = useCenterStats(isCenter ? "center" : "branch");
+
+  const { stats: centerStats } = useCenterStats(isCenter ? "center" : "branch");
+  const { stats: adminStats } = useAdminStats();
+
+  const stats = isAdmin ? adminStats : centerStats;
 
   const statusBreakdown = stats?.enrollment_status_breakdown || {
     waitingForConfirmation: 0,

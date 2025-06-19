@@ -18,25 +18,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Clock } from "lucide-react";
-import { NotificationsFormData } from "@/components/forms/dashboard/notifications/NotificationsForm";
+import { NotificationsFormData } from "@/components/forms/dashboard/notifications/CenterNotificationsForm";
+import DatePicker from "@/components/general/DatePicker";
+import { useHasRole } from "@/store/authStore";
 
 const NotificationForm = () => {
+  const isAdmin = useHasRole("admin");
   const t = useTranslations("dashboard.center.notifications.form");
-  const daysT = useTranslations("auth.center-signup.2.form.days");
-
-  const days = [
-    { value: "sunday", label: daysT("sunday") },
-    { value: "monday", label: daysT("monday") },
-    { value: "tuesday", label: daysT("tuesday") },
-    { value: "wednesday", label: daysT("wednesday") },
-    { value: "thursday", label: daysT("thursday") },
-    { value: "friday", label: daysT("friday") },
-    { value: "saturday", label: daysT("saturday") },
-  ];
 
   const notificationTypes = [
-    { value: "sleep", label: t("type.options.sleep") },
-    { value: "breakfast", label: t("type.options.breakfast") },
+    { value: "Arrived", label: t("type.options.arrived") },
+    { value: "Left", label: t("type.options.left") },
+    { value: "Meal Time", label: t("type.options.meal") },
+    { value: "Nap Time", label: t("type.options.nap") },
+    { value: "Activity Time", label: t("type.options.activity") },
+  ];
+
+  const adminNotificationTypes = [
+    { value: "Eid", label: t("type.options.eid") },
+    { value: "New Year", label: t("type.options.new_year") },
+    { value: "Meeting", label: t("type.options.meeting") },
+    { value: "Reminder", label: t("type.options.reminder") },
   ];
 
   const { control } = useFormContext<NotificationsFormData>();
@@ -56,7 +58,7 @@ const NotificationForm = () => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {notificationTypes.map((type) => (
+                {adminNotificationTypes.map((type) => (
                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
                   </SelectItem>
@@ -73,21 +75,16 @@ const NotificationForm = () => {
         control={control}
         render={({ field }) => (
           <FormItem>
-            <Select onValueChange={field.onChange}>
-              <FormLabel>{t("day.label")}</FormLabel>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder={t("day.placeholder")} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {days.map((day) => (
-                  <SelectItem key={day.value} value={day.value}>
-                    {day.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <FormLabel>{t("day.label")}</FormLabel>
+            <FormControl>
+              <DatePicker
+                value={field.value}
+                onChange={field.onChange}
+                disabled={{
+                  before: new Date(),
+                }}
+              />
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}

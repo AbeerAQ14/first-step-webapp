@@ -44,9 +44,9 @@ const SignUpWrapper = () => {
   const mutation = useMutation<
     any, // Success response type (update this based on your API response)
     ApiError,
-    CenterRegisterPayload
+    any
   >({
-    mutationFn: async (data: CenterRegisterPayload) => {
+    mutationFn: async (data: any) => {
       return await authService.registerCenter(data);
     },
     onSuccess: (data) => {
@@ -69,12 +69,11 @@ const SignUpWrapper = () => {
       logo: data.logo,
       license_path: data.license_path,
       commercial_record_path: data.commercial_record_path,
-      name: data.name,
       email: data.email,
       password: data.password,
       address: data.address,
       phone: data.phone,
-      comments: data.comments,
+      // comments: data.comments,
 
       nursery_type: data.nursery_type,
       additional_service: data.additional_service,
@@ -92,7 +91,8 @@ const SignUpWrapper = () => {
       emergency_contact: data.emergency_contact === "yes",
       special_needs: data.accepted_ages.includes("disabled"),
 
-      nursery_name: data.nursery_name,
+      name: data.nursery_name_ar,
+      nursery_name: data.nursery_name_en,
       location: data.location,
       city: data.city,
       neighborhood: data.neighborhood,

@@ -49,5 +49,6 @@ export function useReservationStatus() {
   return {
     getStatusText,
     getStatusColorClass,
+    mapStatus,
   };
 }

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
+import { useHasRole } from "@/store/authStore";
 
 export type Stats = {
   total_enrollments: number;
@@ -35,6 +36,8 @@ export type Stats = {
 type Role = "center" | "branch";
 
 export const useCenterStats = (role: Role) => {
+  const isCenter = useHasRole(["center", "branch_admin"]);
+
   const {
     data: stats,
     isLoading,
@@ -48,6 +51,7 @@ export const useCenterStats = (role: Role) => {
           : await centerService.getBranchStats();
       return response;
     },
+    enabled: isCenter,
   });
 
   return {

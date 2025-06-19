@@ -60,7 +60,8 @@ const SignInForm = ({
     setIsGoogleLoading(true);
     try {
       await triggerGoogleSignIn();
-    } finally {
+      // The loading state will be maintained until redirect
+    } catch (error) {
       setIsGoogleLoading(false);
     }
   };

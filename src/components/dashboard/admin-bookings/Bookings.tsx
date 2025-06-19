@@ -1,175 +1,90 @@
 "use client";
 
-import { useState } from "react";
-import { Booking, getColumns } from "@/components/tables/data/admin-bookings";
+import { useMemo, useState } from "react";
+import { getColumns } from "@/components/tables/data/admin-bookings";
 import { DataTable } from "@/components/tables/DataTable";
+import { useAdminEnrollments } from "@/hooks/useAdminEnrollments";
 
-const bookingsData: Booking[] = [
-  {
-    id: 1,
-    parentName: "أحمد محمد",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c1", name: "سارة أحمد", reservationStatus: "confirmed" },
-      { id: "c2", name: "سعد أحمد", reservationStatus: "waitingForPayment" },
-    ],
-    branch: "فرع الرياض",
-    startDate: "10/05/2025",
-    endDate: "12/05/2025",
-    amount: 750.0,
-  },
-  {
-    id: 2,
-    parentName: "علي حسن",
-    center: "مركز الرياض",
-    childs: [
-      {
-        id: "c3",
-        name: "جنى حسن",
-        reservationStatus: "waitingForConfirmation",
-      },
-    ],
-    branch: "فرع جدة",
-    startDate: "15/05/2025",
-    endDate: "17/05/2025",
-    amount: 820.5,
-  },
-  {
-    id: 3,
-    parentName: "سارة محمود",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c4", name: "رنا محمود", reservationStatus: "confirmed" },
-      { id: "c5", name: "فهد محمود", reservationStatus: "rejected" },
-    ],
-    branch: "فرع مكة",
-    startDate: "20/05/2025",
-    endDate: "22/05/2025",
-    amount: 680.0,
-  },
-  {
-    id: 4,
-    parentName: "إبراهيم خليل",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c6", name: "ليلى خليل", reservationStatus: "waitingForPayment" },
-    ],
-    branch: "فرع المدينة المنورة",
-    startDate: "25/05/2025",
-    endDate: "27/05/2025",
-    amount: 900.25,
-  },
-  {
-    id: 5,
-    parentName: "منى السيد",
-    center: "مركز الرياض",
-    childs: [{ id: "c7", name: "حسن منى", reservationStatus: "confirmed" }],
-    branch: "فرع الدمام",
-    startDate: "01/06/2025",
-    endDate: "03/06/2025",
-    amount: 795.0,
-  },
-  {
-    id: 6,
-    parentName: "خالد عمر",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c8", name: "خالد خالد", reservationStatus: "confirmed" },
-      {
-        id: "c9",
-        name: "نورة خالد",
-        reservationStatus: "waitingForConfirmation",
-      },
-    ],
-    branch: "فرع تبوك",
-    startDate: "05/06/2025",
-    endDate: "07/06/2025",
-    amount: 855.75,
-  },
-  {
-    id: 7,
-    parentName: "ليلى عبد الله",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c10", name: "ريم عبد الله", reservationStatus: "rejected" },
-    ],
-    branch: "فرع الأحساء",
-    startDate: "10/06/2025",
-    endDate: "12/06/2025",
-    amount: 720.0,
-  },
-  {
-    id: 8,
-    parentName: "طارق حسين",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c11", name: "زياد طارق", reservationStatus: "confirmed" },
-      { id: "c12", name: "فرح طارق", reservationStatus: "waitingForPayment" },
-    ],
-    branch: "فرع القطيف",
-    startDate: "15/06/2025",
-    endDate: "17/06/2025",
-    amount: 880.5,
-  },
-  {
-    id: 9,
-    parentName: "نهى جمال",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c13", name: "عبدالله جمال", reservationStatus: "confirmed" },
-    ],
-    branch: "فرع خميس مشيط",
-    startDate: "20/06/2025",
-    endDate: "22/06/2025",
-    amount: 700.0,
-  },
-  {
-    id: 10,
-    parentName: "محمود إبراهيم",
-    center: "مركز الرياض",
-    childs: [
-      {
-        id: "c14",
-        name: "أمل محمود",
-        reservationStatus: "waitingForConfirmation",
-      },
-      { id: "c15", name: "راشد محمود", reservationStatus: "confirmed" },
-    ],
-    branch: "فرع الطائف",
-    startDate: "25/06/2025",
-    endDate: "27/06/2025",
-    amount: 920.25,
-  },
-  {
-    id: 11,
-    parentName: "سميرة علي",
-    center: "مركز الرياض",
-    childs: [
-      { id: "c16", name: "مازن علي", reservationStatus: "waitingForPayment" },
-    ],
-    branch: "فرع نجران",
-    startDate: "01/07/2025",
-    endDate: "03/07/2025",
-    amount: 815.0,
-  },
-  {
-    id: 12,
-    parentName: "يوسف أحمد",
-    center: "مركز الرياض",
-    childs: [{ id: "c17", name: "نجوى يوسف", reservationStatus: "confirmed" }],
-    branch: "فرع حائل",
-    startDate: "05/07/2025",
-    endDate: "07/07/2025",
-    amount: 770.75,
-  },
-];
+import { Parent } from "@/hooks/useAdminEnrollments";
+import { ReservationStatus } from "@/types";
+
+const transformEnrollmentsToBookings = (data: Parent[] = []) => {
+  const bookings = [];
+  
+  for (const parent of data) {
+    // Group enrollments by parent
+    const parentEnrollments: Record<string, any> = {};
+    
+    // First, collect all enrollments for this parent
+    for (const child of parent.children) {
+      for (const enrollment of child.enrollments) {
+        const key = `${parent.parent_id}-${enrollment.branch_name}-${enrollment.enrollment_date}`;
+        
+        if (!parentEnrollments[key]) {
+          // Create a new booking entry for this parent-branch-date combination
+          parentEnrollments[key] = {
+            id: enrollment.enrollment_id,
+            parentName: parent.parent_name,
+            center: enrollment.branch_name,
+            childs: [],
+            branch: enrollment.branch_name,
+            startDate: enrollment.enrollment_date,
+            endDate: '', // You might need to adjust this based on your data model
+            amount: 0, // Will sum up amounts
+            enrollment_id: enrollment.enrollment_id,
+            enrollment_date: enrollment.enrollment_date,
+            status: enrollment.status
+          };
+        }
+        
+        // Add child to the children array
+        parentEnrollments[key].childs.push({
+          id: child.child_id.toString(),
+          name: child.child_name,
+          reservationStatus: enrollment.status as ReservationStatus
+        });
+        
+        // Sum up the amounts
+        parentEnrollments[key].amount += parseFloat(enrollment.price_amount) || 0;
+      }
+    }
+    
+    // Add all bookings for this parent to the result
+    bookings.push(...Object.values(parentEnrollments));
+  }
+  
+  return bookings;
+};
 
 const Bookings = () => {
+  const { enrollments, isLoading, error } = useAdminEnrollments();
   const [selectedChildMap, setSelectedChildMap] = useState<
     Record<number, string>
   >({});
 
+  // Transform enrollments data to match the Booking type
+  const bookingsData = useMemo(() => {
+    return transformEnrollmentsToBookings(enrollments);
+  }, [enrollments]);
+
   const columns = getColumns(selectedChildMap, setSelectedChildMap);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى لاحقًا.
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -177,8 +92,13 @@ const Bookings = () => {
         <p className="heading-4 font-medium text-primary text-center">
           الحجوزات
         </p>
-
-        <DataTable columns={columns} data={bookingsData} />
+        {bookingsData.length > 0 ? (
+          <DataTable columns={columns} data={bookingsData} />
+        ) : (
+          <div className="text-center py-10 text-gray-500">
+            لا توجد حجوزات متاحة
+          </div>
+        )}
       </div>
     </div>
   );

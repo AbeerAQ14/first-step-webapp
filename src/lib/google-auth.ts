@@ -1,19 +1,17 @@
 import { useAuthStore } from "@/store/authStore";
 import { authService } from "@/services/api";
 import { toast } from "sonner";
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-declare global {
-  interface Window {
-    google: {
-      accounts: {
-        id: {
-          initialize: (config: any) => void;
-          prompt: () => void;
-        };
-      };
-    };
-  }
-}
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
 
 let isInitialized = false;
 
@@ -21,45 +19,24 @@ export const initializeGoogleAuth = () => {
   if (typeof window === "undefined") return;
   if (isInitialized) return;
 
-  // Check if Google script is loaded
-  if (!window.google?.accounts?.id) {
-    // If not loaded, wait for it
-    const checkGoogleLoaded = setInterval(() => {
-      if (window.google?.accounts?.id) {
-        clearInterval(checkGoogleLoaded);
-        initializeGoogle();
-      }
-    }, 100);
-
-    // Clear interval after 10 seconds to prevent infinite checking
-    setTimeout(() => clearInterval(checkGoogleLoaded), 10000);
-  } else {
-    initializeGoogle();
+  try {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    isInitialized = true;
+  } catch (error) {
+    console.error("Firebase initialization failed:", error);
   }
 };
 
-const initializeGoogle = () => {
-  if (!window.google?.accounts?.id) return;
-
-  window.google.accounts.id.initialize({
-    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-    callback: handleGoogleSignIn,
-  });
-  isInitialized = true;
-};
-
-const handleGoogleSignIn = async (response: { credential: string }) => {
+const handleGoogleSignIn = async (credential: any) => {
   try {
-    // Send the token to your backend
-    const result = await authService.googleSignIn(response.credential);
+    const result = await authService.googleSignIn(credential);
 
-    // Update auth store with the response
     useAuthStore.setState({
       token: result.token,
       user: result.user,
     });
 
-    // Redirect based on user role
     let dashboardPath = "/dashboard/center";
     if (result.user.role === "parent") {
       dashboardPath = "/dashboard/parent";
@@ -74,12 +51,34 @@ const handleGoogleSignIn = async (response: { credential: string }) => {
   }
 };
 
-export const triggerGoogleSignIn = () => {
+export const triggerGoogleSignIn = async () => {
   if (typeof window === "undefined") return;
-  if (!window.google?.accounts?.id) {
-    toast.error("Google Sign-In is not available. Please try again later.");
-    return;
-  }
 
-  window.google.accounts.id.prompt();
+  try {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    const result = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+
+    // Start the sign-in process
+    const signInPromise = handleGoogleSignIn(credential?.accessToken);
+
+    // Return a promise that resolves after redirect
+    return new Promise((resolve) => {
+      signInPromise
+        .then(() => {
+          // The redirect will happen in handleGoogleSignIn
+          // This promise will never resolve, keeping the loading state
+          resolve(true);
+        })
+        .catch((error) => {
+          resolve(false);
+        });
+    });
+  } catch (error: any) {
+    console.error("Google sign-in failed:", error);
+    toast.error("Failed to sign in with Google. Please try again.");
+    return false;
+  }
 };

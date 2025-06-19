@@ -409,6 +409,17 @@ export const centerService = {
     }
   },
 
+  respondEnrollment: async (id: number, status: string) => {
+    try {
+      const response = await apiClient.patch(`/enrollments/${id}`, {
+        status,
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   getChildrenFiles: async () => {
     try {
       const response = await apiClient.get(`/children`);
@@ -553,16 +564,20 @@ export const centerService = {
   },
 
   requestAd: async (payload: {
-    title: string;
-    description: string;
+    titleAr: string;
+    titleEn: string;
+    descriptionAr: string;
+    descriptionEn: string;
     image: File;
     publish_date: string;
     end_date: string;
   }) => {
     try {
       const formData = new FormData();
-      formData.append("title", payload.title);
-      formData.append("description", payload.description);
+      formData.append("title[ar]", payload.titleAr);
+      formData.append("title[en]", payload.titleEn);
+      formData.append("description[ar]", payload.descriptionAr);
+      formData.append("description[en]", payload.descriptionEn);
       formData.append("image", payload.image);
       formData.append("publish_date", payload.publish_date);
       formData.append("end_date", payload.end_date);
@@ -726,6 +741,426 @@ export const centerService = {
     try {
       const response = await apiClient.get(`/branch/statistics`);
       return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  sendNotification: async (payload: {
+    parent_ids: number[];
+    title: string;
+    date: string;
+    time: string;
+  }) => {
+    try {
+      const response = await apiClient.post(`/notify-parents`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+};
+
+export const adminService = {
+  getCenters: async () => {
+    try {
+      const response = await apiClient.get("/dashboard/centers");
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranches: async (centerId: string) => {
+    try {
+      const response = await apiClient.get(
+        `/dashboard/branches/${centerId}/branches`
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBranch: async (branchId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/branches/${branchId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getChildren: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/childs`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getChild: async (childId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/childs/${childId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParents: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/parents`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParent: async (parentId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/parents/${parentId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdvertisements: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/ads-for-admin`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdvertisement: async (adId: string) => {
+    try {
+      const response = await apiClient.get(`dashboard/ads-for-admin/${adId}`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createAdvertisement: async (payload: {
+    titleAr: string;
+    titleEn: string;
+    descriptionAr: string;
+    descriptionEn: string;
+    image: File;
+    publish_date: string;
+    end_date: string;
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("title[ar]", payload.titleAr);
+      formData.append("title[en]", payload.titleEn);
+      formData.append("description[ar]", payload.descriptionAr);
+      formData.append("description[en]", payload.descriptionEn);
+      formData.append("image", payload.image);
+      formData.append("publish_date", payload.publish_date);
+      formData.append("end_date", payload.end_date);
+
+      const response = await apiClient.post(
+        `/dashboard/ads-for-admin`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateAdvertisement: async (
+    adId: string,
+    payload: {
+      titleAr?: string;
+      titleEn?: string;
+      descriptionAr?: string;
+      descriptionEn?: string;
+      image: File;
+      publish_date?: string;
+      end_date?: string;
+    }
+  ) => {
+    try {
+      const formData = new FormData();
+      payload.titleAr && formData.append("title[ar]", payload.titleAr);
+      payload.titleEn && formData.append("title[en]", payload.titleEn);
+      payload.descriptionAr &&
+        formData.append("description[ar]", payload.descriptionAr);
+      payload.descriptionEn &&
+        formData.append("description[en]", payload.descriptionEn);
+      payload.image && formData.append("image", payload.image);
+      payload.publish_date &&
+        formData.append("publish_date", payload.publish_date);
+      payload.end_date && formData.append("end_date", payload.end_date);
+
+      const response = await apiClient.post(
+        `/dashboard/ads-for-admin/${adId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteAdvertisement: async (adId: string) => {
+    try {
+      const response = await apiClient.delete(
+        `/dashboard/ads-for-admin/${adId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAllCenterAds: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/all-centers-ads`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOneCenterAds: async (centerId: string) => {
+    try {
+      const response = await apiClient.get(
+        `/dashboard/all-for-specific-center/${centerId}`
+      );
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/specific-ad/${adId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  approveCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.post(`/ads/${adId}/approve`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  rejectCenterAd: async (adId: string) => {
+    try {
+      const response = await apiClient.post(`/ads/${adId}/reject`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBlogs: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/Blogs`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getBlog: async (blogId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/Blogs/${blogId}`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createBlog: async (payload: {
+    titleAr: string;
+    titleEn: string;
+    descriptionAr: string;
+    descriptionEn: string;
+    contentAr: string;
+    contentEn: string;
+    mainImage: File;
+    cardImage: File;
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("title[ar]", payload.titleAr);
+      formData.append("title[en]", payload.titleEn);
+      formData.append("description[ar]", payload.descriptionAr);
+      formData.append("description[en]", payload.descriptionEn);
+      formData.append("content[ar]", payload.contentAr);
+      formData.append("content[en]", payload.contentEn);
+      formData.append("image", payload.cardImage);
+      formData.append("file", payload.mainImage);
+
+      const response = await apiClient.post(`/dashboard/Blogs`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateBlog: async (
+    blogId: string,
+    payload: {
+      titleAr?: string;
+      titleEn?: string;
+      descriptionAr?: string;
+      descriptionEn?: string;
+      contentAr?: string;
+      contentEn?: string;
+      mainImage?: File;
+      cardImage?: File;
+    }
+  ) => {
+    try {
+      const formData = new FormData();
+      payload.titleAr && formData.append("title[ar]", payload.titleAr);
+      payload.titleEn && formData.append("title[en]", payload.titleEn);
+      payload.descriptionAr &&
+        formData.append("description[ar]", payload.descriptionAr);
+      payload.descriptionEn &&
+        formData.append("description[en]", payload.descriptionEn);
+      payload.contentAr && formData.append("content[ar]", payload.contentAr);
+      payload.contentEn && formData.append("content[en]", payload.contentEn);
+      payload.cardImage && formData.append("image", payload.cardImage);
+      payload.mainImage && formData.append("file", payload.mainImage);
+
+      const response = await apiClient.post(
+        `/dashboard/Blogs/${blogId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteBlog: async (blogId: string) => {
+    try {
+      const response = await apiClient.delete(`/dashboard/Blogs/${blogId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAllCenterBlogs: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/all-centers-blog`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOneCenterBlogs: async (centerId: string) => {
+    try {
+      const response = await apiClient.get(
+        `/dashboard/all-for-specific-center-blog/${centerId}`
+      );
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterBlog: async (blogId: string) => {
+    try {
+      const response = await apiClient.get(`/dashboard/specific-ad/${blogId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  approveCenterBlog: async (blogId: string) => {
+    try {
+      const response = await apiClient.put(
+        `/dashboard/update-status/${blogId}`,
+        {
+          status: "approved",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  rejectCenterBlog: async (blogId: string) => {
+    try {
+      const response = await apiClient.put(
+        `/dashboard/update-status/${blogId}`,
+        {
+          status: "rejected",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  sendNotification: async (payload: {
+    userIds: number[];
+    title: string;
+    date: string;
+    time: string;
+  }) => {
+    try {
+      const response = await apiClient.post(`/dashboard/notifiy-user`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdminStatistics: async () => {
+    try {
+      const response = await apiClient.get(`/admin/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdminEnrollments: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/enrollments/all`);
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }

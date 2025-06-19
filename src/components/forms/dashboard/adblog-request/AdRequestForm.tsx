@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "@/i18n/navigation";
 import DatePicker from "@/components/general/DatePicker";
 import {
   FormControl,
@@ -17,7 +18,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { centerService } from "@/services/dashboardApi";
+import { adminService, centerService } from "@/services/dashboardApi";
 import { toast } from "sonner";
 
 const AdRequestForm = ({
@@ -30,10 +31,14 @@ const AdRequestForm = ({
   children: (
     data: AdRequestFormData,
     isValid: boolean,
-    isSubmitting: boolean
+    isSubmitting: boolean,
+    dirtyFields: string[]
   ) => React.ReactNode;
 }) => {
   const locale = useLocale();
+  const pathname = usePathname();
+  const isAdmin = pathname.includes("/admin/");
+
   const t = useTranslations("dashboard.center.ad-or-blog-request.ad.form");
   const [preview, setPreview] = useState<string | null>(
     (typeof initialData?.image === "string" && initialData?.image) || null
@@ -44,8 +49,14 @@ const AdRequestForm = ({
   const methods = useForm<AdRequestFormData>({
     resolver: zodResolver(adRequestSchema),
     defaultValues: {
-      title: initialData?.title || "",
-      description: initialData?.description || "",
+      title: {
+        ar: initialData?.title?.ar ?? "",
+        en: initialData?.title?.en ?? "",
+      },
+      description: {
+        ar: initialData?.description?.ar ?? "",
+        en: initialData?.description?.en ?? "",
+      },
       image: initialData?.image || undefined,
       start_date: initialData?.start_date || undefined,
       end_date: initialData?.end_date || undefined,
@@ -62,9 +73,15 @@ const AdRequestForm = ({
         return date.toISOString().split("T")[0];
       };
 
-      await centerService.requestAd({
-        title: data.title,
-        description: data.description,
+      const createAd = isAdmin
+        ? adminService.createAdvertisement
+        : centerService.requestAd;
+
+      await createAd({
+        titleAr: data.title.ar,
+        titleEn: data.title.en,
+        descriptionAr: data.description.ar,
+        descriptionEn: data.description.en,
         image: data.image?.[0] as File,
         publish_date: formatDate(data.start_date),
         end_date: formatDate(data.end_date),
@@ -148,13 +165,14 @@ const AdRequestForm = ({
           )}
         />
 
+        {/* Title AR */}
         <FormField
           control={methods.control}
-          name="title"
+          name="title.ar"
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">{t("title.label")}</span>
+                <span className="text-base">{t("title.label")} (عربي)</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -174,13 +192,70 @@ const AdRequestForm = ({
           )}
         />
 
+        {/* Title EN */}
         <FormField
           control={methods.control}
-          name="description"
+          name="title.en"
           render={({ field }) => (
             <FormItem>
               <Label>
-                <span className="text-base">{t("description.label")}</span>
+                <span className="text-base">{t("title.label")} (EN)</span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
+              </Label>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder={t("title.placeholder")}
+                  {...field}
+                  disabled={mode === "show"}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Description AR */}
+        <FormField
+          control={methods.control}
+          name="description.ar"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">
+                  {t("description.label")} (عربي)
+                </span>
+                <span
+                  className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
+                >
+                  *
+                </span>
+              </Label>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder={t("description.placeholder")}
+                  {...field}
+                  disabled={mode === "show"}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Description EN */}
+        <FormField
+          control={methods.control}
+          name="description.en"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">{t("description.label")} (EN)</span>
                 <span
                   className={`text-red-500 ${mode === "show" ? "hidden" : ""}`}
                 >
@@ -263,7 +338,12 @@ const AdRequestForm = ({
         />
 
         <div className="sm:col-span-2 flex gap-2 justify-end">
-          {children(formData, isValid, isSubmitting)}
+          {children(
+            methods.getValues(),
+            methods.formState.isValid,
+            methods.formState.isSubmitting,
+            Object.keys(methods.formState.dirtyFields)
+          )}
         </div>
       </form>
     </FormProvider>

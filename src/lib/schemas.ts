@@ -327,10 +327,10 @@ export type SignUpParentFormData = z.infer<
 const createBranchStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
-    name: z
+    nursery_name_ar: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    nursery_name: z
+    nursery_name_en: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
     email: z
@@ -370,10 +370,10 @@ export type BranchStep1FormData = z.infer<
 const createCenterStep1Schema = (locale: "ar" | "en" = "ar") =>
   z.object({
     // Step 1: Basic Information
-    name: z
+    nursery_name_ar: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
-    nursery_name: z
+    nursery_name_en: z
       .string()
       .min(2, { message: getErrorMessage("general-field-required", locale) }),
     email: z
@@ -654,10 +654,18 @@ export const createSignUpCenterSchema = (locale: "ar" | "en" = "ar") => {
     .merge(step2Schema)
     .merge(step3Schema)
     .merge(step4Schema)
-    .refine((data) => data.password === data.confirmPassword, {
-      message: getErrorMessage("password-match", locale),
-      path: ["confirmPassword"],
-    });
+    .refine(
+      (data) => {
+        if (data.password && data.confirmPassword) {
+          return data.password === data.confirmPassword;
+        }
+        return true;
+      },
+      {
+        message: getErrorMessage("password-match", locale),
+        path: ["confirmPassword"],
+      }
+    );
 };
 
 export type SignUpCenterFormData = z.infer<
@@ -704,11 +712,21 @@ export const createAdRequestSchema = (locale: "ar" | "en" = "ar") =>
   z
     .object({
       // Step 1: Basic Information
-      title: z
-        .string()
-        .min(5, { message: getErrorMessage("general-field-required", locale) }),
-      description: z.string().min(10, {
-        message: getErrorMessage("general-field-required", locale),
+      title: z.object({
+        ar: z
+          .string()
+          .min(5, { message: getErrorMessage("general-field-required", "ar") }),
+        en: z
+          .string()
+          .min(5, { message: getErrorMessage("general-field-required", "en") }),
+      }),
+      description: z.object({
+        ar: z.string().min(10, {
+          message: getErrorMessage("general-field-required", "ar"),
+        }),
+        en: z.string().min(10, {
+          message: getErrorMessage("general-field-required", "en"),
+        }),
       }),
       start_date: z.date({
         required_error: getErrorMessage("general-field-required", locale),
@@ -841,6 +859,47 @@ export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
 
 export type BlogRequestFormData = z.infer<
   ReturnType<typeof createBlogRequestSchema>
+>;
+
+export const createAdminBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
+  z.object({
+    // Step 1: Basic Information
+    title: z.object({
+      ar: z
+        .string()
+        .min(5, { message: getErrorMessage("general-field-required", "ar") }),
+      en: z
+        .string()
+        .min(5, { message: getErrorMessage("general-field-required", "en") }),
+    }),
+    description: z.object({
+      ar: z
+        .string()
+        .min(10, { message: getErrorMessage("general-field-required", "ar") }),
+      en: z
+        .string()
+        .min(10, { message: getErrorMessage("general-field-required", "en") }),
+    }),
+    content: z.object({
+      ar: z.string().min(30, "محتوى التدوينة مطلوب (نص MDX)"),
+      en: z.string().min(30, "Blog content is required (MDX text)"),
+    }),
+    mainImage: createImageSchema(
+      1440,
+      680,
+      "يجب أن يكون مقاس الصورة 1440 × 680",
+      locale
+    ),
+    cardImage: createImageSchema(
+      264,
+      160,
+      "يجب أن يكون مقاس الصورة 264 × 160",
+      locale
+    ),
+  });
+
+export type AdminBlogRequestFormData = z.infer<
+  ReturnType<typeof createAdminBlogRequestSchema>
 >;
 
 export const createTeamMemberSchema = (locale: "ar" | "en" = "ar") =>

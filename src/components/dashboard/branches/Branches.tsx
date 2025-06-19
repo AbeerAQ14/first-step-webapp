@@ -15,7 +15,7 @@ const Branches = ({
   baseUrl?: string;
 }) => {
   const t = useTranslations("dashboard.center.branches");
-  const { data: branches, isLoading, error, refetch } = useBranches();
+  const { data: branches, isLoading, error, refetch } = useBranches(baseUrl);
 
   if (isLoading) {
     return (

@@ -2,91 +2,37 @@
 
 import { DataTable } from "@/components/tables/DataTable";
 import { Advertisement, columns } from "@/components/tables/data/center-ads";
-
-const advertisements: Advertisement[] = [
-  {
-    id: "1",
-    center: "اسم الحضانة",
-    phone: "2222222222",
-    email: "mennarmara@gmail.com",
-    acceptedAds: 6,
-    pendingAds: 6,
-    rejectedAds: 6,
-  },
-  {
-    id: "2",
-    center: "مركز الطفولة المبكرة",
-    phone: "2333333333",
-    email: "childcenter@example.com",
-    acceptedAds: 3,
-    pendingAds: 2,
-    rejectedAds: 1,
-  },
-  {
-    id: "3",
-    center: "روضة النجوم",
-    phone: "2444444444",
-    email: "starskinder@example.com",
-    acceptedAds: 5,
-    pendingAds: 1,
-    rejectedAds: 0,
-  },
-  {
-    id: "4",
-    center: "حضانة الزهور",
-    phone: "2555555555",
-    email: "flowersnursery@example.com",
-    acceptedAds: 4,
-    pendingAds: 2,
-    rejectedAds: 2,
-  },
-  {
-    id: "5",
-    center: "مركز براعم الغد",
-    phone: "2666666666",
-    email: "budscenter@example.com",
-    acceptedAds: 6,
-    pendingAds: 0,
-    rejectedAds: 0,
-  },
-  {
-    id: "6",
-    center: "روضة المستقبل",
-    phone: "2777777777",
-    email: "futurekinder@example.com",
-    acceptedAds: 2,
-    pendingAds: 3,
-    rejectedAds: 1,
-  },
-  {
-    id: "7",
-    center: "حضانة الأمل",
-    phone: "2888888888",
-    email: "hopecenter@example.com",
-    acceptedAds: 1,
-    pendingAds: 4,
-    rejectedAds: 3,
-  },
-  {
-    id: "8",
-    center: "مركز الريان",
-    phone: "2999999999",
-    email: "alrayannursery@example.com",
-    acceptedAds: 0,
-    pendingAds: 6,
-    rejectedAds: 0,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { adminService } from "@/services/dashboardApi";
 
 const CentersAdvertisements = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["allCenterAds"],
+    queryFn: adminService.getAllCenterAds,
+  });
+
+  if (isLoading) return <div>جاري التحميل...</div>;
+  if (error)
+    return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
+
+  // Map backend data to table format
+  const rows: Advertisement[] = (data || []).map((item: any) => ({
+    id: item.center?.id,
+    center: item.center?.nursery_name || item.name || "-",
+    phone: item.center?.phone || item.phone || "-",
+    email: item.email || "-",
+    acceptedAds: item.center?.approved_ads_count ?? 0,
+    pendingAds: item.center?.pending_ads_count ?? 0,
+    rejectedAds: item.center?.rejected_ads_count ?? 0,
+  }));
+
   return (
     <div>
       <div className="mt-6 lg:p-4 space-y-1">
         <p className="heading-4 font-medium text-primary text-center">
           الحجوزات
         </p>
-
-        <DataTable columns={columns} data={advertisements} pagination={true} />
+        <DataTable columns={columns} data={rows} pagination={true} />
       </div>
     </div>
   );

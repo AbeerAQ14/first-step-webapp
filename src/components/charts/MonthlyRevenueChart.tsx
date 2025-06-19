@@ -17,13 +17,20 @@ type RevenueData = {
   value: number;
 };
 
-const data: RevenueData[] = [
-  { month: "01", value: 950 },
-  { month: "02", value: 1000 },
-  { month: "03", value: 960 },
-  { month: "04", value: 990 },
-  { month: "05", value: 970 },
-];
+// Generate the last 5 months dynamically
+function getLast5MonthsData(): RevenueData[] {
+  const now = new Date();
+  const data: RevenueData[] = [];
+  for (let i = 4; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    // Format as MM (01, 02, ...)
+    const month = (d.getMonth() + 1).toString().padStart(2, "0");
+    data.push({ month, value: 0 });
+  }
+  return data;
+}
+
+const data: RevenueData[] = getLast5MonthsData();
 
 export default function RevenueChart() {
   const [selected, setSelected] = useState<RevenueData>(data[1]);

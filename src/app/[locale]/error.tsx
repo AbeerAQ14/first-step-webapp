@@ -6,12 +6,25 @@ import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
-export default function Error({ error }: { error: Error }) {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   const t = useTranslations("error");
 
   useEffect(() => {
     console.error("App error:", error);
   }, [error]);
+
+  const getErrorMessage = (error: Error) => {
+    if (error.message?.includes("Server Components render")) {
+      return t("server-render-error");
+    }
+    return error?.message || t("default-message");
+  };
 
   return (
     <section className="flex flex-col items-center justify-center h-screen px-6 text-center bg-gray-100 dark:bg-gray-900">
@@ -23,16 +36,16 @@ export default function Error({ error }: { error: Error }) {
           {t("title")}
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
-          {error?.message || t("default-message")}
+          {getErrorMessage(error)}
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
           {t("description")}
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button size={"sm"} onClick={() => location.reload()}>
+          <Button size="sm" onClick={reset}>
             {t("refresh")}
           </Button>
-          <Button asChild variant={"ghost"} size={"sm"}>
+          <Button asChild variant="ghost" size="sm">
             <Link
               href="/"
               className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition"

@@ -1,0 +1,69 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { adminService } from "@/services/dashboardApi";
+import BlogCard from "@/components/general/blog/BlogCard";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { Link } from "@/i18n/navigation";
+
+const AdminBlogs = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["adminBlogs"],
+    queryFn: adminService.getBlogs,
+  });
+  const router = useRouter();
+
+  if (isLoading) return <div>جاري التحميل...</div>;
+  if (error)
+    return <div className="text-red-500">حدث خطأ أثناء جلب البيانات</div>;
+
+  // Extract blogs array from paginated response
+  const blogs = data?.data || [];
+
+  // Map blogs to the shape BlogCard expects
+  const mappedBlogs = blogs.map((blog: any) => ({
+    ...blog,
+    title: blog.title?.ar || blog.title?.en || "بدون عنوان",
+    description: blog.description?.ar || blog.description?.en || "",
+    image: blog.image,
+    published_at: blog.published_at,
+  }));
+
+  return (
+    <div>
+      <div className="flex justify-end mb-4">
+        <Button asChild>
+          <Link href="blog/add">إضافة مدونة</Link>
+        </Button>
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {mappedBlogs.map((blog: any) => (
+          <div key={blog.id} className="relative group">
+            <BlogCard blog={blog} />
+            <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+              <Button
+                size="icon"
+                variant="outline"
+                className="rounded-md px-2 py-1 text-xs h-7 w-16"
+                asChild
+              >
+                <Link href={`blog/${blog.id}/edit`}>تعديل</Link>
+              </Button>
+              <Button
+                size="icon"
+                variant="secondary"
+                className="rounded-md px-2 py-1 text-xs h-7 w-16"
+                asChild
+              >
+                <Link href={`blog/${blog.id}`}>عرض</Link>
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default AdminBlogs;
