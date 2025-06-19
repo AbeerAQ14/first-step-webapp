@@ -972,4 +972,22 @@ export const adminService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getAdminStatistics: async () => {
+    try {
+      const response = await apiClient.get(`/admin/statistics`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdminEnrollments: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/enrollments/all`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
