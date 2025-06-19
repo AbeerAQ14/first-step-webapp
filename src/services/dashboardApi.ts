@@ -307,6 +307,15 @@ export const parentService = {
     });
     return response.data;
   },
+
+  cancelEnrollment: async (id: number) => {
+    try {
+      const response = await apiClient.post(`/parent/enrollments/${id}/cancel`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
 
 export const centerService = {

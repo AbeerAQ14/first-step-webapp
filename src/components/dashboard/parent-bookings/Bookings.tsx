@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { parentService } from "@/services/dashboardApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -12,6 +12,8 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const STATUS_STYLES: Record<string, string> = {
   accepted: "bg-success text-white border-green-400",
@@ -130,10 +132,12 @@ function BookingCard({
   booking,
   onShowDetails,
   onCancel,
+  cancellingId,
 }: {
   booking: any;
   onShowDetails: () => void;
   onCancel: () => void;
+  cancellingId: number | null;
 }) {
   return (
     <Card className="w-full">
@@ -199,8 +203,15 @@ function BookingCard({
                   ? onCancel
                   : undefined
               }
+              disabled={
+                action.action === "cancel" && cancellingId === booking.id
+              }
             >
-              {action.label}
+              {action.action === "cancel" && cancellingId === booking.id ? (
+                <LoadingSpinner size="sm" />
+              ) : (
+                action.label
+              )}
             </Button>
           ))}
         </div>
@@ -312,7 +323,8 @@ function InvoiceDialog({
 export const Bookings = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<any>(null);
-
+  const [cancellingId, setCancellingId] = useState<number | null>(null);
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["enrollments"],
     queryFn: parentService.getParentEnrollments,
@@ -362,10 +374,19 @@ export const Bookings = () => {
       notes: [],
     })) || [];
 
-  // Cancel booking handler (stub)
-  const handleCancel = (booking: any) => {
-    // TODO: Implement cancel logic (API call)
-    alert("سيتم إلغاء الحجز رقم " + booking.id);
+  // Cancel booking handler
+  const handleCancel = async (booking: any) => {
+    if (!window.confirm("هل أنت متأكد من رغبتك في إلغاء الحجز؟")) return;
+    setCancellingId(booking.id);
+    try {
+      await parentService.cancelEnrollment(booking.id);
+      toast.success("تم إلغاء الحجز بنجاح");
+      queryClient.invalidateQueries({ queryKey: ["enrollments"] });
+    } catch (e: any) {
+      toast.error(e.message || "حدث خطأ أثناء إلغاء الحجز");
+    } finally {
+      setCancellingId(null);
+    }
   };
 
   return (
@@ -379,6 +400,7 @@ export const Bookings = () => {
             setShowDetails(true);
           }}
           onCancel={() => handleCancel(booking)}
+          cancellingId={cancellingId}
         />
       ))}
       <InvoiceDialog
