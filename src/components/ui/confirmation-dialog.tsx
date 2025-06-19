@@ -42,15 +42,17 @@ export function ConfirmationDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent dir="rtl" className="text-right">
         <DialogClose />
-        <DialogHeader className="sm:rtl:text-right">
-          <DialogTitle className="text-xl">{title}</DialogTitle>
-          <DialogDescription className="text-mid-gray">
+        <DialogHeader className="text-right">
+          <DialogTitle className="text-xl text-right w-full">
+            {title}
+          </DialogTitle>
+          <DialogDescription className="text-mid-gray text-right w-full">
             {description}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex-row justify-center">
+        <DialogFooter className="flex-row justify-end gap-2">
           <Button variant="outline" onClick={onClose}>
             {cancelText || t("cancel")}
           </Button>

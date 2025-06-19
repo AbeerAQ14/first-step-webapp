@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 const STATUS_STYLES: Record<string, string> = {
   accepted: "bg-success text-white border-green-400",
@@ -146,7 +147,23 @@ function BookingCard({
           className="grid grid-cols-2 gap-x-20 gap-y-4 text-sm mb-4 justify-center"
           dir="rtl"
         >
-          {/* Right column */}
+          {/* Swap: Render leftFields first, then rightFields */}
+          <div className="flex flex-col gap-2 items-start" dir="rtl">
+            {leftFields.map((field, idx) => (
+              <div
+                key={field.key + "-" + idx}
+                className="flex flex-row items-center gap-x-2 w-full text-right justify-start"
+                dir="rtl"
+              >
+                <span className="text-primary-blue font-bold whitespace-nowrap text-right">
+                  {field.label}:
+                </span>
+                <span className="font-bold text-mid-gray text-right">
+                  {booking[field.key]}
+                </span>
+              </div>
+            ))}
+          </div>
           <div className="flex flex-col gap-2 items-start" dir="rtl">
             {rightFields.map((field, idx) => (
               <div
@@ -163,23 +180,6 @@ function BookingCard({
                   ) : (
                     booking[field.key]
                   )}
-                </span>
-              </div>
-            ))}
-          </div>
-          {/* Left column */}
-          <div className="flex flex-col gap-2 items-start" dir="rtl">
-            {leftFields.map((field, idx) => (
-              <div
-                key={field.key + "-" + idx}
-                className="flex flex-row items-center gap-x-2 w-full text-right justify-start"
-                dir="rtl"
-              >
-                <span className="text-primary-blue font-bold whitespace-nowrap text-right">
-                  {field.label}:
-                </span>
-                <span className="font-bold text-mid-gray text-right">
-                  {booking[field.key]}
                 </span>
               </div>
             ))}
@@ -262,39 +262,23 @@ function InvoiceDialog({
           <div className="w-full bg-white rounded-lg shadow p-4">
             <div className="text-primary font-bold mb-2">تفاصيل الحجز</div>
             <div className="grid grid-cols-2 gap-2 text-sm mb-2">
-              <div>
-                اسم الطفل/الأطفال:{" "}
-                <span className="font-bold">{booking.childName}</span>
-              </div>
-              <div>
-                اسم الحضانة:{" "}
-                <span className="font-bold">{booking.className}</span>
-              </div>
-              <div>
-                اسم الفرع: <span className="font-bold">{booking.branch}</span>
-              </div>
-              <div>
-                نوع البرنامج:{" "}
-                <span className="font-bold">{booking.program}</span>
-              </div>
-              <div>
-                حالة الحجز:{" "}
-                <span className="font-bold">{STATUS_MAP[booking.status]}</span>
-              </div>
-              <div>
-                طريقة الدفع:{" "}
-                <span className="font-bold">{booking.paymentMethod}</span>
-              </div>
-              <div>
-                بداية يوم: <span className="font-bold">{booking.startDay}</span>
-              </div>
-              <div>
-                نهاية يوم: <span className="font-bold">{booking.endDay}</span>
-              </div>
-              <div>
-                عدد الأيام:{" "}
-                <span className="font-bold">{booking.daysCount}</span>
-              </div>
+              {/* Swap: Render leftFields first, then rightFields */}
+              {leftFields.map((field, idx) => (
+                <div key={field.key + "-inv-l-" + idx}>
+                  {field.label}:{" "}
+                  <span className="font-bold">{booking[field.key]}</span>
+                </div>
+              ))}
+              {rightFields.map((field, idx) => (
+                <div key={field.key + "-inv-r-" + idx}>
+                  {field.label}:{" "}
+                  <span className="font-bold">
+                    {field.isStatus
+                      ? STATUS_MAP[booking.status]
+                      : booking[field.key]}
+                  </span>
+                </div>
+              ))}
             </div>
             <div className="flex justify-between items-center border-t pt-2 mt-2">
               <span className="font-bold text-lg">المبلغ</span>
@@ -324,6 +308,10 @@ export const Bookings = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<any>(null);
   const [cancellingId, setCancellingId] = useState<number | null>(null);
+  const [confirmDialog, setConfirmDialog] = useState<{
+    open: boolean;
+    booking: any | null;
+  }>({ open: false, booking: null });
   const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["enrollments"],
@@ -375,8 +363,13 @@ export const Bookings = () => {
     })) || [];
 
   // Cancel booking handler
-  const handleCancel = async (booking: any) => {
-    if (!window.confirm("هل أنت متأكد من رغبتك في إلغاء الحجز؟")) return;
+  const handleCancel = (booking: any) => {
+    setConfirmDialog({ open: true, booking });
+  };
+
+  const confirmCancel = async () => {
+    const booking = confirmDialog.booking;
+    if (!booking) return;
     setCancellingId(booking.id);
     try {
       await parentService.cancelEnrollment(booking.id);
@@ -386,6 +379,7 @@ export const Bookings = () => {
       toast.error(e.message || "حدث خطأ أثناء إلغاء الحجز");
     } finally {
       setCancellingId(null);
+      setConfirmDialog({ open: false, booking: null });
     }
   };
 
@@ -407,6 +401,16 @@ export const Bookings = () => {
         open={showDetails}
         onOpenChange={setShowDetails}
         booking={selectedBooking}
+      />
+      <ConfirmationDialog
+        isOpen={confirmDialog.open}
+        onClose={() => setConfirmDialog({ open: false, booking: null })}
+        onConfirm={confirmCancel}
+        title="تأكيد إلغاء الحجز"
+        description="هل أنت متأكد أنك تريد إلغاء هذا الحجز؟ لا يمكن التراجع عن هذه العملية."
+        confirmText="نعم، إلغاء الحجز"
+        cancelText="تراجع"
+        variant="destructive"
       />
     </div>
   );

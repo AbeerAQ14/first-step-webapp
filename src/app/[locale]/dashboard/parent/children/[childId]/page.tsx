@@ -107,7 +107,7 @@ export default function DashboardChildShow({
     // Chronic diseases
     chronicDiseases: {
       hasDiseases: childData?.disease ? "yes" : "no",
-      diseases: childData?.disease_details
+      diseases: Array.isArray(childData?.disease_details)
         ? childData.disease_details.map((disease: any) => ({
             name: disease.disease_name,
             medication: disease.medicament,
