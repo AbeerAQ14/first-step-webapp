@@ -99,6 +99,10 @@ const ERRORMESSAGES = {
     ar: "يُسمح فقط بملفات JPG, JPEG, PNG",
     en: "Only JPG, JPEG, PNG files are accepted",
   },
+  "at-least-one-recipient-required": {
+    ar: "يجب إضافة ومركز أو ولي أمر واحد على الأقل",
+    en: "At least one center or parent must be added",
+  },
 };
 
 // get error message helpre function

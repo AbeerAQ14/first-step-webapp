@@ -1,33 +1,62 @@
 "use client";
 
+import React from "react";
 import { Center, useCentersColumns } from "@/components/tables/data/centers";
 import { DataTable } from "@/components/tables/DataTable";
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { adminService } from "@/services/dashboardApi";
 
 interface CentersProps {
   selected: Center[];
   setSelected: React.Dispatch<React.SetStateAction<Center[]>>;
+  selectedBranchMap: Record<number, number>;
+  setSelectedBranchMap: React.Dispatch<React.SetStateAction<Record<number, number>>>;
 }
 
-const mockCenters: Center[] = [
-  {
-    id: 1,
-    centerName: "اسم الحضانة",
-    phone: "2222222222",
-    branch: "كل الفروع",
-    email: "mennarmara@gmail"
-  },
-];
+const Centers: React.FC<CentersProps> = ({ 
+  selected, 
+  setSelected,
+  selectedBranchMap,
+  setSelectedBranchMap
+}) => {
+  const columns = useCentersColumns(selectedBranchMap, setSelectedBranchMap);
 
-const Centers: React.FC<CentersProps> = ({ selected, setSelected }) => {
-  const columns = useCentersColumns(selected, setSelected);
-  const data = mockCenters;
+  const { data: centersData, isLoading } = useQuery({
+    queryKey: ["centers"],
+    queryFn: adminService.getCenters,
+  });
+
+  // Transform the data to match our Center type
+  const transformedData: Center[] = React.useMemo(() => {
+    if (!centersData) return [];
+
+    return centersData.data.map((center: any) => ({
+      id: center.user_id,
+      centerName: center.nursery_name,
+      phone: center.phone,
+      email: center.user?.email,
+      branches: center.branches?.map((branch: any) => ({
+        id: branch.user_id,
+        name: branch.name,
+        phone: branch.phone,
+        email: branch.email_admin_branch,
+      })) || [],
+    }));
+  }, [centersData]);
+
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      setSelected={setSelected}
-    />
+    <div>
+      <div className="lg:p-4 space-y-1">
+        <p className="heading-4 text-primary text-center">Centers</p>
+
+        <DataTable
+          setSelected={setSelected}
+          columns={columns}
+          data={transformedData}
+          isLoading={isLoading}
+        />
+      </div>
+    </div>
   );
 };
 

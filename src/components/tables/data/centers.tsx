@@ -7,13 +7,19 @@ export type Center = {
   id: number;
   centerName: string;
   phone: string;
-  branch: string;
   email: string;
+  branches: {
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+  }[];
+  selectedBranchId?: number;
 };
 
 export function useCentersColumns(
-  selectedCenters: Center[],
-  setSelectedCenters: React.Dispatch<React.SetStateAction<Center[]>>
+  selectedBranchMap: Record<number, number>,
+  setSelectedBranchMap: React.Dispatch<React.SetStateAction<Record<number, number>>>
 ) {
   const columns: ColumnDef<Center>[] = [
     {
@@ -46,17 +52,54 @@ export function useCentersColumns(
     {
       accessorKey: "phone",
       header: () => "رقم الجوال",
-      cell: (info) => info.getValue(),
+      cell: ({ row }) => {
+        const center = row.original;
+        const selectedBranchId = selectedBranchMap[center.id];
+        const selectedBranch = center.branches.find(
+          (branch) => branch.id === selectedBranchId
+        );
+        return selectedBranch?.phone || center.phone || "";
+      },
     },
     {
       accessorKey: "branch",
       header: () => "الفرع",
-      cell: (info) => info.getValue(),
+      cell: ({ row }) => {
+        const center = row.original;
+        const selectedBranchId = selectedBranchMap[center.id];
+        
+        return (
+          <select
+            className="text-xs px-2 py-1 rounded bg-info text-white"
+            value={selectedBranchId || "all"}
+            onChange={(e) =>
+              setSelectedBranchMap((prev) => ({
+                ...prev,
+                [center.id]: parseInt(e.target.value),
+              }))
+            }
+          >
+            <option value="all">كل الفروع</option>
+            {center.branches.map((branch) => (
+              <option key={branch.id} value={branch.id}>
+                {branch.name}
+              </option>
+            ))}
+          </select>
+        );
+      },
     },
     {
       accessorKey: "email",
       header: () => "الإيميل",
-      cell: (info) => info.getValue(),
+      cell: ({ row }) => {
+        const center = row.original;
+        const selectedBranchId = selectedBranchMap[center.id];
+        const selectedBranch = center.branches.find(
+          (branch) => branch.id === selectedBranchId
+        );
+        return selectedBranch?.email || center.email || "-";
+      },
     },
   ];
   return columns;

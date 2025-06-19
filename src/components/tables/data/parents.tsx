@@ -8,6 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { ReservationStatus } from "@/types";
 import { useReservationStatus } from "./shared/status";
+import { useHasRole } from "@/store/authStore";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -136,6 +137,8 @@ export function useParentsColumns(
         const selectedChildId = selectedChildMap[parent.id];
         const hasSelectedChild = selectedChildId && selectedChildId !== "all";
 
+        const isAdmin = useHasRole("admin");
+
         return (
           <div className="flex items-center gap-1">
             <Button
@@ -145,7 +148,7 @@ export function useParentsColumns(
               asChild={hasSelectedChild ? true : undefined}
             >
               {hasSelectedChild ? (
-                <Link href={`children-files/${selectedChildId}`}>
+                <Link href={`${isAdmin ? "children" : "children-files"}/${selectedChildId}`}>
                   <Eye className="size-4 text-mid-gray" />
                 </Link>
               ) : (

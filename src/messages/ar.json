@@ -790,13 +790,17 @@
         "form": {
           "type": {
             "label": "اختر الإشعار",
-            "placeholder": "إشعار النوم",
+            "placeholder": "اختر الإشعار",
             "options": {
               "arrived": "وصل",
               "left": "غادر",
               "meal": "وقت الوجبة",
               "nap": "وقت القيلولة",
-              "activity": "وقت النشاط"
+              "activity": "وقت النشاط",
+              "eid": "عيد",
+              "new_year": "السنة الجديدة",
+              "meeting": "الاجتماع",
+              "reminder": "تذكير"
             }
           },
           "day": {

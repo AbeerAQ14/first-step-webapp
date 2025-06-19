@@ -1,13 +1,15 @@
 "use client";
 
+import React from "react";
 import { Parent, useParentsColumns } from "@/components/tables/data/parents";
 import { DataTable } from "@/components/tables/DataTable";
 import { useTranslations } from "next-intl";
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { centerService } from "@/services/dashboardApi";
+import { adminService } from "@/services/dashboardApi";
 import { ReservationStatus } from "@/types";
 import { useReservationStatus } from "@/components/tables/data/shared/status";
+import { useHasRole } from "@/store/authStore";
 
 interface ChildFile {
   id: number;
@@ -40,9 +42,13 @@ const Parents = ({
   const { mapStatus } = useReservationStatus();
   const columns = useParentsColumns(selectedChildMap, setSelectedChildMap);
 
+  const isAdmin = useHasRole("admin");
+
   const { data: childrenData, isLoading } = useQuery<ChildFile[]>({
-    queryKey: ["children-files"],
-    queryFn: centerService.getChildrenFiles,
+    queryKey: [isAdmin ? "children" : "children-files"],
+    queryFn: isAdmin
+      ? adminService.getChildren
+      : centerService.getChildrenFiles,
   });
 
   // Transform the data to match the required format

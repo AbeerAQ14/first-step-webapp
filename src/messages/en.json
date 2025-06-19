@@ -794,13 +794,17 @@
         "form": {
           "type": {
             "label": "Choose Notification",
-            "placeholder": "Sleep Notification",
+            "placeholder": "Choose Notification",
             "options": {
               "arrived": "Arrived",
               "left": "Left",
               "meal": "Meal Time",
               "nap": "Nap Time",
-              "activity": "Activity Time"
+              "activity": "Activity Time",
+              "eid": "Eid",
+              "new_year": "New Year",
+              "meeting": "Meeting",
+              "reminder": "Reminder"
             }
           },
           "day": {

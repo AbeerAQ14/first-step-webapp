@@ -20,8 +20,10 @@ import {
 import { Clock } from "lucide-react";
 import { NotificationsFormData } from "@/components/forms/dashboard/notifications/CenterNotificationsForm";
 import DatePicker from "@/components/general/DatePicker";
+import { useHasRole } from "@/store/authStore";
 
 const NotificationForm = () => {
+  const isAdmin = useHasRole("admin");
   const t = useTranslations("dashboard.center.notifications.form");
 
   const notificationTypes = [
@@ -30,6 +32,13 @@ const NotificationForm = () => {
     { value: "Meal Time", label: t("type.options.meal") },
     { value: "Nap Time", label: t("type.options.nap") },
     { value: "Activity Time", label: t("type.options.activity") },
+  ];
+
+  const adminNotificationTypes = [
+    { value: "Eid", label: t("type.options.eid") },
+    { value: "New Year", label: t("type.options.new_year") },
+    { value: "Meeting", label: t("type.options.meeting") },
+    { value: "Reminder", label: t("type.options.reminder") },
   ];
 
   const { control } = useFormContext<NotificationsFormData>();
@@ -49,7 +58,7 @@ const NotificationForm = () => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {notificationTypes.map((type) => (
+                {adminNotificationTypes.map((type) => (
                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
                   </SelectItem>
