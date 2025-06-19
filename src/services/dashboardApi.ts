@@ -288,6 +288,25 @@ export const parentService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  getParentEnrollments: async (): Promise<EnrollmentsResponse> => {
+    const authStorage = localStorage.getItem("auth-storage");
+    let token = null;
+    if (authStorage) {
+      try {
+        token = JSON.parse(authStorage).state.token;
+      } catch (e) {
+        console.error("Failed to parse auth-storage:", e);
+      }
+    }
+    const response = await apiClient.get(`/parent/enrollments-get-all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  },
 };
 
 export const centerService = {
@@ -703,3 +722,23 @@ export const centerService = {
     }
   },
 };
+
+export interface Enrollment {
+  id: number;
+  branch_id: number;
+  branch_name: string;
+  center_id: number;
+  center_name: string;
+  user_id: number;
+  parent_phone: string;
+  parent_name: string;
+  price_amount: string;
+  enrollment_type: string;
+  response_speed: string;
+  enrollment_date: string;
+  status: string;
+}
+
+export interface EnrollmentsResponse {
+  data: Enrollment[];
+}

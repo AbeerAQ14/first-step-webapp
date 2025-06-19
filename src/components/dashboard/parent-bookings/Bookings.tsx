@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-import { parentService } from "@/services/parent";
+import { parentService } from "@/services/dashboardApi";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const STATUS_STYLES: Record<string, string> = {
@@ -200,7 +200,7 @@ export const Bookings = () => {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["enrollments"],
-    queryFn: parentService.getEnrollments,
+    queryFn: parentService.getParentEnrollments,
   });
 
   if (isLoading) {
@@ -225,9 +225,9 @@ export const Bookings = () => {
     data?.data.map((booking) => ({
       id: booking.id,
       status: booking.status,
-      childName: booking.children.map((child) => child.child_name).join("، "),
-      className: booking.children[0]?.branch?.nursery_name || "",
-      branch: booking.children[0]?.branch?.name || "",
+      childName: booking.parent_name,
+      className: booking.center_name,
+      branch: booking.branch_name,
       program: booking.enrollment_type,
       startDay: new Date(booking.enrollment_date).toLocaleDateString("ar-SA", {
         weekday: "long",
