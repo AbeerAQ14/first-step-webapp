@@ -84,11 +84,26 @@ const ChildCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-            {child.disease_details ? (
-              <span>{JSON.parse(child.disease_details)[0]?.disease_name}</span>
-            ) : (
-              <span>لا يوجد</span>
-            )}
+            {(() => {
+              let diseases = [];
+              if (
+                typeof child.disease_details === "string" &&
+                child.disease_details.trim() !== ""
+              ) {
+                try {
+                  diseases = JSON.parse(child.disease_details);
+                } catch {
+                  diseases = [];
+                }
+              } else if (Array.isArray(child.disease_details)) {
+                diseases = child.disease_details;
+              }
+              return diseases.length > 0 ? (
+                <span>{diseases[0]?.disease_name}</span>
+              ) : (
+                <span>لا يوجد</span>
+              );
+            })()}
           </div>
         </div>
 

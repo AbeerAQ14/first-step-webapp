@@ -33,7 +33,10 @@ export interface EnrollmentsResponse {
 
 export const getEnrollments = async (): Promise<EnrollmentsResponse> => {
   const response = await axios.get(
-    `${API_BASE_URL}/parent/enrollments-get-all`
+    `${API_BASE_URL}/parent/enrollments-get-all`,
+    {
+      withCredentials: true,
+    }
   );
   return response.data;
 };
