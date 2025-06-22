@@ -6,6 +6,7 @@ import BlogCard from "@/components/general/blog/BlogCard";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Link } from "@/i18n/navigation";
+import { Eye, PencilLine } from "lucide-react";
 
 const AdminBlogs = () => {
   const { data, isLoading, error } = useQuery({
@@ -37,26 +38,27 @@ const AdminBlogs = () => {
           <Link href="blog/add">إضافة مدونة</Link>
         </Button>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         {mappedBlogs.map((blog: any) => (
           <div key={blog.id} className="relative group">
             <BlogCard blog={blog} />
-            <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+
+            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
               <Button
                 size="icon"
                 variant="outline"
-                className="rounded-md px-2 py-1 text-xs h-7 w-16"
+                className="rounded-md p-4 text-xs"
                 asChild
               >
-                <Link href={`blog/${blog.id}/edit`}>تعديل</Link>
+                <Link href={`blog/${blog.id}/edit`}><PencilLine /></Link>
               </Button>
               <Button
                 size="icon"
                 variant="secondary"
-                className="rounded-md px-2 py-1 text-xs h-7 w-16"
+                className="rounded-md p-4 text-xs"
                 asChild
               >
-                <Link href={`blog/${blog.id}`}>عرض</Link>
+                <Link href={`blog/${blog.id}`}><Eye /></Link>
               </Button>
             </div>
           </div>
