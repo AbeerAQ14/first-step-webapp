@@ -11,7 +11,6 @@ import { useAuthUser } from "@/store/authStore";
 export default function SidebarHeader() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const user = useAuthUser();
-  const [name, setName] = useState(user?.name);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,16 +42,16 @@ export default function SidebarHeader() {
       </div>
 
       <div className="grow">
-        <Select onValueChange={setName} defaultValue={name}>
+        <Select value={user?.name} defaultValue={user?.name}>
           <SelectTrigger className="border-primary text-primary text-[.7rem] p-1 shrink">
-            <SelectValue placeholder="إشعار النوم" />
+            <SelectValue placeholder="" />
           </SelectTrigger>
           <SelectContent>
-            {[user?.name ?? ""].map((day) => (
-              <SelectItem key={day} value={day}>
-                {day}
+            {user?.name && (
+              <SelectItem key={user?.name} value={user?.name}>
+                {user?.name}
               </SelectItem>
-            ))}
+            )}
           </SelectContent>
         </Select>
       </div>
