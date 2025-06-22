@@ -90,7 +90,8 @@ const Card = ({ id, type, title, date, rawDate }: CardProps) => {
         className={cn("flex items-center gap-2", !isRTL && "flex-row-reverse")}
       >
         {/* Action buttons - Start side in RTL, End side in LTR */}
-        <div
+        {type === 'birthday' ? null: (
+          <div
           className={cn(
             "absolute flex gap-1 inset-y-0 items-center",
             !isRTL ? "right-2" : "left-2"
@@ -98,6 +99,7 @@ const Card = ({ id, type, title, date, rawDate }: CardProps) => {
         >
           {isEditing ? <EditButtons /> : <ActionButtons />}
         </div>
+        )}
 
         {/* Content */}
         {isEditing ? (
