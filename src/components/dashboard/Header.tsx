@@ -1,133 +1,207 @@
 "use client";
 
-import { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Bell, Settings, Search } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+type BreadcrumbItem = {
+  title: string;
+  url: string;
+};
+
+type RouteConfig = {
+  path: string;
+  titleKey: string;
+  children?: RouteConfig[];
+};
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
   const t = useTranslations("dashboard.header");
-  const sidebarT = useTranslations("dashboard.center.sidebar");
+  const commonT = useTranslations("common");
 
-  const items = [
+  // Define all possible routes with their translations
+  const routes: RouteConfig[] = [
     {
-      title: sidebarT("home"),
-      url: "",
+      path: "center",
+      titleKey: "center",
+      children: [
+        { path: "", titleKey: "home" },
+        { path: "branches", titleKey: "branches" },
+        { path: "branches/add", titleKey: "addBranch" },
+        { path: "branches/[branchId]", titleKey: "branchDetails" },
+        { path: "children-files", titleKey: "childrenFiles" },
+        { path: "children-files/[childId]", titleKey: "childDetails" },
+        { path: "bookings", titleKey: "bookings" },
+        { path: "daily-reports", titleKey: "dailyReports" },
+        { path: "daily-reports/[reportId]", titleKey: "reportDetails" },
+        { path: "daily-reports/send", titleKey: "sendReport" },
+        { path: "site-edit", titleKey: "siteEdit" },
+        { path: "ad-or-blog-request", titleKey: "adOrBlogRequest" },
+        { path: "ad-or-blog-request/ad-request", titleKey: "adRequest" },
+        { path: "ad-or-blog-request/blog-request", titleKey: "blogRequest" },
+        { path: "notifications", titleKey: "notifications" },
+        { path: "team", titleKey: "team" },
+        { path: "team/add", titleKey: "addTeamMember" },
+        { path: "team/[memberId]", titleKey: "teamMemberDetails" },
+      ],
     },
     {
-      title: sidebarT("branches"),
-      url: "/dashboard/center/branches",
+      path: "parent",
+      titleKey: "parent",
+      children: [
+        { path: "", titleKey: "home" },
+        { path: "bookings", titleKey: "bookings" },
+        { path: "children", titleKey: "myChildren" },
+        { path: "children/add", titleKey: "addChild" },
+        { path: "children/[childId]", titleKey: "childDetails" },
+        { path: "daily-reports", titleKey: "dailyReports" },
+        { path: "daily-reports/[reportId]", titleKey: "reportDetails" },
+      ],
     },
     {
-      title: sidebarT("children-files"),
-      url: "/dashboard/center/children-files",
-    },
-    {
-      title: sidebarT("bookings"),
-      url: "/dashboard/center/bookings",
-    },
-    {
-      title: sidebarT("daily-reports"),
-      url: "/dashboard/center/daily-reports",
-    },
-    {
-      title: sidebarT("site-edit"),
-      url: "/dashboard/center/site-edit",
-    },
-    {
-      title: sidebarT("ad-or-blog-request"),
-      url: "/dashboard/center/ad-or-blog-request",
-    },
-    {
-      title: sidebarT("notifications"),
-      url: "/dashboard/center/notifications",
-    },
-    {
-      title: sidebarT("team"),
-      url: "/dashboard/center/team",
+      path: "admin",
+      titleKey: "admin",
+      children: [
+        { path: "", titleKey: "dashboard" },
+        { path: "advertisement", titleKey: "advertisements" },
+        { path: "advertisement/add", titleKey: "addAdvertisement" },
+        { path: "advertisement/[adId]", titleKey: "advertisementDetails" },
+        { path: "advertisement/center", titleKey: "advertisementCenter" },
+        { path: "blog", titleKey: "blogs" },
+        { path: "blog/add", titleKey: "addBlog" },
+        { path: "blog/[blogId]", titleKey: "blogDetails" },
+        { path: "blog/center", titleKey: "blogCenter" },
+        { path: "bookings", titleKey: "allBookings" },
+        { path: "branches", titleKey: "allBranches" },
+        { path: "branches/[branchId]", titleKey: "branchDetails" },
+        { path: "centers", titleKey: "centers" },
+        { path: "centers/[centerId]", titleKey: "centerDetails" },
+        { path: "children", titleKey: "allChildren" },
+        { path: "children/[childId]", titleKey: "childDetails" },
+        { path: "notifications", titleKey: "notifications" },
+        { path: "parents", titleKey: "parents" },
+        { path: "parents/[parentId]", titleKey: "parentDetails" },
+      ],
     },
   ];
 
-  // Function to generate breadcrumbs based on current path
-  const generateBreadcrumbs = () => {
-    const currentPath = pathname;
-    const breadcrumbs = [];
-
-    // Always add dashboard as first item
-    breadcrumbs.push({
-      title: t("dashboard"),
-      url: "/dashboard/center",
-    });
-
-    // Only add "Home" if we're on the home page
-    if (currentPath === "/dashboard/center") {
-      breadcrumbs.push({
-        title: t("home"),
-        url: "/dashboard/center",
-      });
+  // Generate breadcrumbs based on current path
+  const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
+    const result: BreadcrumbItem[] = [];
+    const segments = pathname.split('/').filter(Boolean);
+    
+    // Skip the locale segment if present
+    const localeIndex = segments.findIndex(s => s === 'ar' || s === 'en' || s === 'ku');
+    const pathSegments = localeIndex >= 0 ? segments.slice(localeIndex + 1) : segments;
+    
+    // If we're at the root dashboard, return empty array
+    if (pathSegments.length <= 1) {
+      return [];
     }
 
-    // Find matching items from the navigation items
-    items.forEach((item) => {
-      // Skip the home item since we handled it above
-      if (item.title === sidebarT("home")) {
-        return;
+    // Find the matching route
+    let currentRoutes = routes;
+    let currentPath = '';
+    
+    for (let i = 1; i < pathSegments.length; i++) {
+      const segment = pathSegments[i];
+      const isLast = i === pathSegments.length - 1;
+      currentPath += `/${segment}`;
+      
+      // Find matching route
+      const route = currentRoutes.find(r => {
+        // Handle dynamic segments
+        if (r.path.startsWith('[') && r.path.endsWith(']')) {
+          return true;
+        }
+        return r.path === segment;
+      });
+
+      if (route) {
+        let title: string;
+        
+        // Try to get translation from the specific route first, then fallback to common
+        try {
+          title = t(`routes.${route.titleKey}`);
+        } catch (e) {
+          try {
+            title = commonT(route.titleKey);
+          } catch (e) {
+            title = route.titleKey;
+          }
+        }
+
+        // For dynamic segments, use the actual segment value in the title
+        if (route.path.startsWith('[') && route.path.endsWith(']')) {
+          title = `${title} #${segment}`;
+        }
+
+        result.push({
+          title,
+          url: `/${pathSegments[0]}${currentPath}`,
+        });
+
+        // Navigate to children routes if they exist
+        if (route.children) {
+          currentRoutes = route.children;
+        } else if (!isLast) {
+          // If no more children but we still have segments, add remaining segments
+          const remainingPath = pathSegments.slice(i + 1).join('/');
+          result.push({
+            title: remainingPath,
+            url: `/${pathSegments[0]}${currentPath}/${remainingPath}`,
+          });
+          break;
+        }
+      } else if (!isLast) {
+        // If no matching route found but it's not the last segment, add it as is
+        result.push({
+          title: segment,
+          url: `/${pathSegments[0]}${currentPath}`,
+        });
       }
+    }
 
-      // Add item if path matches exactly or is a sub-path
-      if (
-        currentPath === item.url ||
-        (item.url !== "" && currentPath.startsWith(item.url))
-      ) {
-        breadcrumbs.push(item);
-      }
-    });
-
-    return breadcrumbs;
-  };
-
-  const breadcrumbs = generateBreadcrumbs();
+    return result;
+  }, [pathname, t, commonT]);
 
   return (
     <header className="flex items-center justify-between px-6 py-4.5">
       {/* Breadcrumbs */}
-      <nav aria-label="breadcrumb" className="text-right w-fit">
-        <ol className="flex items-center gap-1">
+      <Breadcrumb className="w-full flex">
+        <BreadcrumbList>
           {breadcrumbs.map((item, index) => (
-            <li
-              key={`${item.url}-${item.title}`}
-              className="whitespace-nowrap flex items-center gap-1"
-            >
-              {index > 0 && (
-                <span
-                  className={`${
-                    index === breadcrumbs.length - 1
-                      ? "text-primary"
-                      : "text-light-gray"
-                  }`}
-                >
-                  /
-                </span>
-              )}
-              <Link
-                href={item.url}
-                className={`${
-                  index === breadcrumbs.length - 1
-                    ? "font-bold text-primary pointer-events-none"
-                    : index === 0
-                    ? "font-medium text-light-gray pointer-events-none"
-                    : "font-medium text-light-gray hover:underline"
-                }`}
-              >
-                {item.title}
-              </Link>
-            </li>
+            <React.Fragment key={index}>
+              {index > 0 && <BreadcrumbSeparator />}
+              <BreadcrumbItem>
+                {index === breadcrumbs.length - 1 ? (
+                  <BreadcrumbPage className="line-clamp-1" title={item.title}>
+                    {item.title}
+                  </BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={item.url} className="line-clamp-1" title={item.title}>
+                      {item.title}
+                    </Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </React.Fragment>
           ))}
-        </ol>
-      </nav>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       {/* Left Section (appears on right in RTL) */}
       <div className="w-full flex justify-end items-center gap-6">
@@ -137,7 +211,7 @@ export default function Header() {
         {/* Center Section - Search */}
         <div className="hidden sm:block relative w-full max-w-52 mx-4">
           <Input
-            type="text"
+            type="search"
             className="rounded-full py-1.5 px-2.5 pr-11 placeholder:text-mid-gray"
             placeholder={t("search")}
             value={searchQuery}
