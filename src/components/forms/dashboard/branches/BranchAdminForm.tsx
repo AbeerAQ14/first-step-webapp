@@ -37,18 +37,18 @@ const BranchAdminForm = ({
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={(open) => !open && setOpen(open)}>
         <DialogTitle className="sr-only">{t("title")}</DialogTitle>
-        <DialogContent className="sm:max-w-[716px] lg:px-10">
-          <Form onSubmit={onSubmit} branchName={branchName} />
+        <DialogContent className="sm:max-w-[716px] lg:px-10" onInteractOutside={(e) => e.preventDefault()}>
+          <Form onSubmit={onSubmit} branchName={branchName} disabled={disabled} />
         </DialogContent>
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent className="pb-10">
+    <Drawer open={open} onOpenChange={(open) => !open && setOpen(open)}>
+      <DrawerContent className="pb-10" onInteractOutside={(e) => e.preventDefault()}>
         <DrawerTitle className="sr-only">{t("title")}</DrawerTitle>
         <Form
           onSubmit={onSubmit}
