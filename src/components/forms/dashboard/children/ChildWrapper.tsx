@@ -3,6 +3,9 @@
 import React from "react";
 import Child from "./Child";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { CheckCircle2 } from "lucide-react";
 
 const ChildWrapper = ({
   initialValues,
@@ -13,6 +16,8 @@ const ChildWrapper = ({
   mode: "add" | "edit" | "show";
   childId?: string;
 }) => {
+  const router = useRouter();
+
   // Fetch child data if in show/edit mode and childId is provided
   const { data: fetchedChild, isLoading } = useQuery({
     queryKey: ["child", childId],
@@ -34,13 +39,24 @@ const ChildWrapper = ({
       }
     },
     onSuccess: (response) => {
-      console.log(
+      toast(
         mode === "edit"
-          ? "Child updated successfully (mutation):"
-          : "Child added successfully (mutation):",
-        response
+          ? "تم تحديث بيانات الطفل بنجاح!"
+          : "تم إضافة الطفل بنجاح!",
+        {
+          description:
+            mode === "edit"
+              ? "تم تحديث بيانات الطفل بنجاح!"
+              : "تمت إضافة الطفل بنجاح!",
+          icon: <CheckCircle2 className="text-green-500 w-6 h-6" />,
+          className:
+            "bg-green-50 border-green-400 text-green-900 font-bold text-lg",
+          duration: 1800,
+        }
       );
-      // Optionally, redirect or show a UI message here
+      setTimeout(() => {
+        router.replace("/dashboard/parent/children");
+      }, 1500);
     },
     onError: (error: any) => {
       console.error(
@@ -55,16 +71,14 @@ const ChildWrapper = ({
       if (error?.response?.data?.errors) {
         console.error("API validation errors:", error.response.data.errors);
       }
-      // Optionally, show a UI error message here
     },
   });
 
   const onSubmit = (data: any) => {
-    console.log("Submitting form data:", data); // Debug log
+    console.log("Submitting form data:", data); 
     mutation.mutate(data);
   };
 
-  // Map fetched child data to form initial values if needed
   function mapFetchedChildToInitialValues(childData: any) {
     if (!childData) return initialValues;
     return {

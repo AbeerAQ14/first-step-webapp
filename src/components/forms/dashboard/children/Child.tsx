@@ -42,7 +42,6 @@ const Child = ({
           <Button
             size={"sm"}
             type="submit"
-            onClick={() => alert("Submit button clicked!")}
           >
             إضافة الطفل
           </Button>
