@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Allergy, ChronicDisease } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Link, useRouter } from "@/i18n/navigation";
+import React from "react";
 
 const Child = ({
   initialValues,
@@ -38,7 +39,11 @@ const Child = ({
     if (mode === "add") {
       return (
         <>
-          <Button size={"sm"} type="submit">
+          <Button
+            size={"sm"}
+            type="submit"
+            onClick={() => alert("Submit button clicked!")}
+          >
             إضافة الطفل
           </Button>
           <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
@@ -81,6 +86,13 @@ const Child = ({
     },
     mode: "onChange",
   });
+
+  // Debug: Log form errors whenever they change
+  React.useEffect(() => {
+    if (Object.keys(methods.formState.errors).length > 0) {
+      console.log("Form validation errors:", methods.formState.errors);
+    }
+  }, [methods.formState.errors]);
 
   const hasDiseases = methods.watch("chronicDiseases.hasDiseases");
   const diseases = methods.watch("chronicDiseases.diseases");
@@ -352,6 +364,28 @@ const ChildPart = ({
               <FormControl>
                 <Input
                   placeholder={t("mother-name.placeholder")}
+                  {...field}
+                  disabled={readOnly}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Kinship Field */}
+        <FormField
+          control={control}
+          name="kinship"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">صلة القرابة</span>
+                <span className="text-red-500">*</span>
+              </Label>
+              <FormControl>
+                <Input
+                  placeholder="مثال: الأم، الأب، الأخ، الأخت..."
                   {...field}
                   disabled={readOnly}
                 />
