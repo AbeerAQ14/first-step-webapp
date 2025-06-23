@@ -219,8 +219,10 @@ const BranchWrapper = ({
       if ("license_path" in values) result.license_path = values.license_path;
       if ("commercial_record_path" in values)
         result.commercial_record_path = values.commercial_record_path;
+      
+      if ("nursery_name_en" in values) result.name = values.nursery_name_ar;
+      if ("nursery_name_ar" in values) result.nursery_name = values.nursery_name_en;
 
-      if ("name" in values) result.name = values.name;
       if ("email" in values) result.email = values.email;
       if ("address" in values) result.address = values.address;
       if ("phone" in values) result.phone = values.phone;
@@ -260,7 +262,6 @@ const BranchWrapper = ({
         result.special_needs = values.accepted_ages?.includes("disabled");
       }
 
-      if ("nursery_name" in values) result.nursery_name = values.nursery_name;
       if ("location" in values) result.location = values.location;
       if ("city" in values) result.city = values.city;
       if ("neighborhood" in values) result.neighborhood = values.neighborhood;
