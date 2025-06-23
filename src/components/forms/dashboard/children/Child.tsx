@@ -16,20 +16,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Allergy, ChronicDisease } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Link, useRouter } from "@/i18n/navigation";
-import PhoneInput from "@/components/forms/PhoneInput";
+import React from "react";
 
 const Child = ({
   initialValues,
   mode,
   onSubmit,
   childId,
-  isSubmitting,
 }: {
   initialValues: any;
   mode: "add" | "edit" | "show";
   onSubmit: (data: AddChildFormData) => void;
   childId?: string;
-  isSubmitting?: boolean;
 }) => {
   const locale = useLocale();
   const router = useRouter();
@@ -41,8 +39,11 @@ const Child = ({
     if (mode === "add") {
       return (
         <>
-          <Button size={"sm"} type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Adding..." : "إضافة الطفل"}
+          <Button
+            size={"sm"}
+            type="submit"
+          >
+            إضافة الطفل
           </Button>
           <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
             إلغاء
@@ -52,8 +53,8 @@ const Child = ({
     } else if (mode === "edit") {
       return (
         <>
-          <Button size={"sm"} type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "تعديل ملف الطفل"}
+          <Button size={"sm"} type="submit">
+            تعديل ملف الطفل
           </Button>
           <Button size={"sm"} variant={"outline"} onClick={() => router.back()}>
             إلغاء
@@ -85,6 +86,13 @@ const Child = ({
     mode: "onChange",
   });
 
+  // Debug: Log form errors whenever they change
+  React.useEffect(() => {
+    if (Object.keys(methods.formState.errors).length > 0) {
+      console.log("Form validation errors:", methods.formState.errors);
+    }
+  }, [methods.formState.errors]);
+
   const hasDiseases = methods.watch("chronicDiseases.hasDiseases");
   const diseases = methods.watch("chronicDiseases.diseases");
   const hasAllergies = methods.watch("allergies.hasAllergies");
@@ -95,16 +103,13 @@ const Child = ({
     <FormProvider {...methods}>
       <form
         className="w-full space-y-6"
-        onSubmit={methods.handleSubmit((data) => {
-          console.log("Form data:", data);
-          onSubmit(data);
-        })}
+        onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <ParentPart
+        {/* <ParentPart
           control={methods.control}
           locale={locale}
           readOnly={isReadOnly}
-        />
+        /> */}
 
         <ChildPart
           control={methods.control}
@@ -149,121 +154,120 @@ const Child = ({
   );
 };
 
-const ParentPart = ({
-  control,
-  locale,
-  readOnly,
-}: {
-  control: Control<AddChildFormData>;
-  locale: string;
-  readOnly: boolean;
-}) => {
-  const t = useTranslations("auth.parent-signup.form");
-  const sectionT = useTranslations("dashboard.center.children.form.sections");
+export default Child;
 
-  return (
-    <div className="w-full flex flex-col gap-y-4">
-      <h2 className="heading-4 font-medium text-primary">
-        {sectionT("parent")}
-      </h2>
+// const ParentPart = ({
+//   control,
+//   locale,
+//   readOnly,
+// }: {
+//   control: Control<AddChildFormData>;
+//   locale: string;
+//   readOnly: boolean;
+// }) => {
+//   const t = useTranslations("auth.parent-signup.form");
 
-      <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
-        <FormField
-          control={control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <Label>
-                <span className="text-base">{t("name.label")}</span>
-                <span className="text-red-500">*</span>
-              </Label>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder={t("name.placeholder")}
-                  {...field}
-                  disabled={readOnly}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//   return (
+//     <div className="w-full flex flex-col gap-y-4">
+//       <h2 className="heading-4 font-medium text-primary">بيانات ولي الأمر</h2>
 
-        <FormField
-          control={control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <Label>
-                <span className="text-base">{t("phone.label")}</span>
-                <span className="text-red-500">*</span>
-              </Label>
-              <FormControl>
-                <PhoneInput
-                  {...field}
-                  value={field.value?.replace(/^\+966/, "")}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    field.onChange(
-                      `+966${e.target.value.replace(/^(\+966)?/, "")}`
-                    );
-                  }}
-                  locale={locale}
-                  readOnly={readOnly}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//       <div className="grid grid-cols-1 lg:p-4 xl:grid-cols-2 gap-y-4 gap-x-10">
+//         <FormField
+//           control={control}
+//           name="name"
+//           render={({ field }) => (
+//             <FormItem>
+//               <Label>
+//                 <span className="text-base">{t("name.label")}</span>
+//                 <span className="text-red-500">*</span>
+//               </Label>
+//               <FormControl>
+//                 <Input
+//                   type="text"
+//                   placeholder={t("name.placeholder")}
+//                   {...field}
+//                   disabled={readOnly}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-        <FormField
-          control={control}
-          name="kinship"
-          render={({ field }) => (
-            <FormItem>
-              <Label>
-                <span className="text-base">{t("kinship.label")}</span>
-                <span className="text-red-500">*</span>
-              </Label>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder={t("kinship.placeholder")}
-                  {...field}
-                  disabled={readOnly}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//         <FormField
+//           control={control}
+//           name="phone"
+//           render={({ field }) => (
+//             <FormItem>
+//               <Label>
+//                 <span className="text-base">{t("phone.label")}</span>
+//                 <span className="text-red-500">*</span>
+//               </Label>
+//               <FormControl>
+//                 <PhoneInput
+//                   {...field}
+//                   value={field.value?.replace(/^\+966/, "")}
+//                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+//                     field.onChange(
+//                       `+966${e.target.value.replace(/^(\+966)?/, "")}`
+//                     );
+//                   }}
+//                   locale={locale}
+//                   readOnly={readOnly}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-        <FormField
-          control={control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <Label>
-                <span className="text-base">{t("email.label")}</span>
-                <span className="text-red-500">*</span>
-              </Label>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder={t("name.placeholder")}
-                  {...field}
-                  disabled={readOnly}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-    </div>
-  );
-};
+//         <FormField
+//           control={control}
+//           name="relation"
+//           render={({ field }) => (
+//             <FormItem>
+//               <Label>
+//                 <span className="text-base">{t("relation.label")}</span>
+//                 <span className="text-red-500">*</span>
+//               </Label>
+//               <FormControl>
+//                 <Input
+//                   type="text"
+//                   placeholder={t("name.placeholder")}
+//                   {...field}
+//                   disabled={readOnly}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <FormField
+//           control={control}
+//           name="email"
+//           render={({ field }) => (
+//             <FormItem>
+//               <Label>
+//                 <span className="text-base">{t("email.label")}</span>
+//                 <span className="text-red-500">*</span>
+//               </Label>
+//               <FormControl>
+//                 <Input
+//                   type="email"
+//                   placeholder={t("name.placeholder")}
+//                   {...field}
+//                   disabled={readOnly}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
 
 const ChildPart = ({
   control,
@@ -359,6 +363,28 @@ const ChildPart = ({
               <FormControl>
                 <Input
                   placeholder={t("mother-name.placeholder")}
+                  {...field}
+                  disabled={readOnly}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Kinship Field */}
+        <FormField
+          control={control}
+          name="kinship"
+          render={({ field }) => (
+            <FormItem>
+              <Label>
+                <span className="text-base">صلة القرابة</span>
+                <span className="text-red-500">*</span>
+              </Label>
+              <FormControl>
+                <Input
+                  placeholder="مثال: الأم، الأب، الأخ، الأخت..."
                   {...field}
                   disabled={readOnly}
                 />
@@ -824,5 +850,3 @@ const AuthorizationPart = ({
     </div>
   );
 };
-
-export default Child;

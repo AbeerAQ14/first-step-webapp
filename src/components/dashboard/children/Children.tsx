@@ -1,14 +1,13 @@
 "use client";
 
-import { adminService } from "@/services/dashboardApi";
-import ChildCard from "./ChildCard";
 import { useQuery } from "@tanstack/react-query";
-import { parentService } from "@/services/dashboardApi";
-import { Child as ChildType } from "@/types";
+import { adminService, parentService } from "@/services/dashboardApi";
+import ChildCard from "./ChildCard";
 import ChildrenSkeleton from "./ChildrenSkeleton";
-import { useHasRole } from "@/store/authStore";
+import { Child } from "@/types";
 
-interface Child {
+interface AdminChild {
+
   id: number;
   child_name: string;
   birthday_date: string;
@@ -34,59 +33,137 @@ interface Child {
   }>;
 }
 
+type Mode = "admin" | "parent";
+
 const Children = ({
   noEdit,
   baseUrl,
   absoluteBaseUrl,
   childrenData,
+  mode = "admin",
 }: {
   noEdit?: boolean;
   baseUrl?: string;
   absoluteBaseUrl?: string;
-  childrenData?: { userName: string; children: Child[] };
+  childrenData?: { userName: string; children: AdminChild[] };
+  mode?: Mode;
 }) => {
-  const isAdmin = useHasRole("admin");
+  // Admin: use childrenData or fetch admin children
+  // Parent: fetch parent children
+  const isAdmin = mode === "admin";
 
-  // Use the appropriate query based on the user's role
-  const { data: childrenDataResult = [], isLoading: isLoadingChildren } =
-    useQuery<Child[]>({
-      queryKey: [isAdmin ? "children" : "parent-children"],
-      queryFn: isAdmin
-        ? adminService.getChildren
-        : parentService.getParentChildren,
-      enabled: !childrenData,
-    });
+  const adminQuery = useQuery<AdminChild[]>({
+    queryKey: ["children"],
+    queryFn: adminService.getChildren,
+    enabled: isAdmin && !childrenData,
+  });
 
-  if (isLoadingChildren) {
-    return <ChildrenSkeleton />;
+  const parentQuery = useQuery<Child[]>({
+    queryKey: ["parent-children"],
+    queryFn: parentService.getParentChildren,
+    enabled: !isAdmin,
+  });
+
+  let childrenToRender: any[] | undefined = undefined;
+  let userName: string | undefined = undefined;
+  let isLoading = false;
+
+  if (isAdmin) {
+    if (childrenData) {
+      childrenToRender = childrenData.children;
+      userName = childrenData.userName;
+    } else {
+      childrenToRender = adminQuery.data;
+      isLoading = adminQuery.isLoading;
+    }
+  } else {
+    childrenToRender = parentQuery.data;
+    isLoading = parentQuery.isLoading;
   }
 
-  const childrenToRender = childrenData?.children || childrenDataResult;
+  console.log({
+    isAdmin,
+    childrenToRender,
+    adminData: adminQuery.data,
+    parentData: parentQuery.data,
+    isLoading,
+  });
 
-  if (!childrenToRender && isLoadingChildren) {
-    return <div>Loading...</div>;
+  if (adminQuery.error || parentQuery.error) {
+    return (
+      <div>
+        Error:{" "}
+        {(adminQuery.error || parentQuery.error)?.message?.toString() ||
+          "Unknown error"}
+      </div>
+    );
+  }
+
+  if (
+    childrenToRender &&
+    Array.isArray(childrenToRender) &&
+    childrenToRender.length === 0
+  ) {
+    return <div>No children found.</div>;
+  }
+
+  if (!childrenToRender && isLoading) {
+    return <ChildrenSkeleton />;
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {childrenToRender?.map((child) => (
-        <ChildCard
-          key={child.id}
-          id={child.id}
-          name={child.child_name}
-          birthday={child.birthday_date}
-          gender={child.gender}
-          userName={childrenData?.userName || child.user?.name}
-          disease_details={
-            Array.isArray(child.disease_details) ? child.disease_details : []
-          }
-          allergies={child.allergies || []}
-          authorized_people={child.authorized_people || []}
-          noEdit={noEdit}
-          baseUrl={baseUrl}
-          absoluteBaseUrl={absoluteBaseUrl}
-        />
-      ))}
+      {childrenToRender?.map((child) =>
+        isAdmin ? (
+          <ChildCard
+            key={child.id}
+            id={child.id}
+            name={child.child_name}
+            birthday={child.birthday_date}
+            gender={child.gender}
+            userName={userName || child.user.name}
+            disease_details={child.disease_details}
+            allergies={child.allergies}
+            authorized_people={child.authorized_people}
+            noEdit={noEdit}
+            baseUrl={baseUrl}
+            absoluteBaseUrl={absoluteBaseUrl}
+          />
+        ) : (
+          <ChildCard
+            key={child.id}
+            id={child.id}
+            name={child.child_name}
+            birthday={child.birthday_date || ""}
+            gender={child.gender}
+            userName={child.parent_name || ""}
+            disease_details={[]}
+            allergies={
+              child.allergies?.map((a: any) => ({
+                id: a.id,
+                name: a.name,
+                allergy_causes: Array.isArray(a.allergy_causes)
+                  ? a.allergy_causes
+                  : a.allergy_causes
+                  ? [a.allergy_causes]
+                  : [],
+                allergy_emergency: a.allergy_emergency,
+              })) || []
+            }
+            authorized_people={
+              child.authorized_people?.map((p: any) => ({
+                id: p.id,
+                name: p.name,
+                cin: p.cin,
+              })) || []
+            }
+            noEdit={noEdit}
+            baseUrl={baseUrl}
+            absoluteBaseUrl={absoluteBaseUrl}
+          />
+        )
+      )}
+
     </div>
   );
 };

@@ -129,9 +129,7 @@ const createChildStep1Schema = (locale: "ar" | "en" = "ar") =>
     gender: z.enum(["male", "female"], {
       required_error: getErrorMessage("general-answer-required", locale),
     }),
-    kinship: z
-      .string()
-      .min(1, { message: getErrorMessage("general-field-required", locale) }),
+    kinship: z.string().optional(),
   });
 
 export type ChildStep1FormData = z.infer<
