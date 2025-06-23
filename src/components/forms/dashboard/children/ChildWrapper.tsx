@@ -2,16 +2,28 @@
 
 import React from "react";
 import Child from "./Child";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ChildWrapper = ({
   initialValues,
   mode,
+  childId,
 }: {
   initialValues: any;
   mode: "add" | "edit" | "show";
-  branchId?: string;
+  childId?: string;
 }) => {
+  // Fetch child data if in show/edit mode and childId is provided
+  const { data: fetchedChild, isLoading } = useQuery({
+    queryKey: ["child", childId],
+    queryFn: async () => {
+      if (!childId) return null;
+      const { parentService } = await import("@/services/dashboardApi");
+      return parentService.getChild(childId);
+    },
+    enabled: !!childId && mode !== "add",
+  });
+
   const mutation = useMutation({
     mutationFn: async (data: any) => {
       const { parentService } = await import("@/services/dashboardApi");
@@ -38,13 +50,19 @@ const ChildWrapper = ({
     mutation.mutate(data);
   };
 
+  // Use fetched child data as initialValues if available
+  const effectiveInitialValues =
+    mode !== "add" && fetchedChild ? fetchedChild : initialValues;
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <React.Fragment>
       <Child
-        initialValues={initialValues}
+        initialValues={effectiveInitialValues}
         mode={mode}
         onSubmit={onSubmit}
-        childId={branchId}
+        childId={childId}
       />
     </React.Fragment>
   );
