@@ -11,7 +11,7 @@ export type Task = {
 
 export const useTasks = () => {
   const queryClient = useQueryClient();
-  const isCenter = useHasRole('center')
+  const isCenter = useHasRole(["center", "branch_admin"]);
 
   const {
     data: tasks = [],

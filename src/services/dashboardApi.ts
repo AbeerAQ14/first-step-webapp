@@ -1061,8 +1061,8 @@ export const adminService = {
 export const sidebarService = {
   getCenterBirthdays: async () => {
     try {
-      const response = await apiClient.get(`/children-birthdays`);
-      return response.data.data;
+      const response = await apiClient.get(`/child-birthdays`);
+      return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -1071,7 +1071,7 @@ export const sidebarService = {
   getAdminBirthdays: async () => {
     try {
       const response = await apiClient.get(`/dashboard/birthdays`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -1080,7 +1080,7 @@ export const sidebarService = {
   getParentBirthdays: async () => {
     try {
       const response = await apiClient.get(`/parent/birthdays`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -1140,7 +1140,7 @@ export const sidebarService = {
 
   getCenterOccasions: async () => {
     try {
-      const response = await apiClient.get(`/occasions`);
+      const response = await apiClient.get(`/occassions`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1149,7 +1149,7 @@ export const sidebarService = {
 
   getCenterOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.get(`/occasions/${occasionId}`);
+      const response = await apiClient.get(`/occassions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1158,7 +1158,7 @@ export const sidebarService = {
 
   createCenterOccasion: async (payload: { title: string; date: string }) => {
     try {
-      const response = await apiClient.post(`/occasions`, payload);
+      const response = await apiClient.post(`/occassions`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1170,7 +1170,7 @@ export const sidebarService = {
     payload: { title: string; date: string }
   ) => {
     try {
-      const response = await apiClient.put(`/occasions/${occasionId}`, payload);
+      const response = await apiClient.put(`/occassions/${occasionId}`, payload);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1179,7 +1179,7 @@ export const sidebarService = {
 
   deleteCenterOccasion: async (occasionId: string) => {
     try {
-      const response = await apiClient.delete(`/occasions/${occasionId}`);
+      const response = await apiClient.delete(`/occassions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);

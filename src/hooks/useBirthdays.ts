@@ -10,7 +10,7 @@ export type Birthday = {
 
 export const useBirthdays = () => {
   const isAdmin = useHasRole("admin");
-  const isCenter = useHasRole("center");
+  const isCenter = useHasRole(["center", "branch_admin"]);
   const isParent = useHasRole("parent");
 
   const {
