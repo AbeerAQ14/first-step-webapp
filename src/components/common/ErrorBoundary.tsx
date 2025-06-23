@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import SafeImage from './SafeImage';
+
 
 interface Props {
   children: ReactNode;

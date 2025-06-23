@@ -103,7 +103,6 @@ const Bookings: React.FC = () => {
               disabled={isLoading}
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              {/* Search icon can be added back here if SafeImage is found */}
             </div>
           </div>
         </div>
