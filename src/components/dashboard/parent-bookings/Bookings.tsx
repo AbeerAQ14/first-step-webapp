@@ -260,9 +260,11 @@ function InvoiceDialog({
           </div>
           {/* Details Section */}
           <div className="w-full bg-white rounded-lg shadow p-4">
-            <div className="text-primary font-bold mb-2">تفاصيل الحجز</div>
+            <div className="text-primary font-bold mb-2 text-right">
+              تفاصيل الحجز
+            </div>
             <div className="grid grid-cols-2 gap-2 text-sm mb-2">
-              {/* Swap: Render leftFields first, then rightFields */}
+              {/* Match the order of the main booking page: leftFields first, then rightFields */}
               {leftFields.map((field, idx) => (
                 <div key={field.key + "-inv-l-" + idx}>
                   {field.label}:{" "}

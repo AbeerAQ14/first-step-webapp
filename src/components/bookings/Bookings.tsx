@@ -1,74 +1,47 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import BookingCard from './BookingCard';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
-import SafeImage from '@/components/common/SafeImage';
-import { formatToArabicDate, getDaysDifference } from '@/utils/dateUtils';
-
-// Mock data - Replace with actual API calls in production
-const mockBookings = [
-  {
-    id: '1',
-    status: 'awaiting',
-    startDate: '2023-06-15',
-    endDate: '2023-06-20',
-    children: 'محمد أحمد',
-    nursery: 'روضة الأزهار',
-    branch: 'الفرع الرئيسي',
-    program: 'برنامج الروضة الكامل',
-  },
-  {
-    id: '2',
-    status: 'paid',
-    startDate: '2023-06-10',
-    endDate: '2023-06-30',
-    children: 'سارة خالد',
-    nursery: 'روضة الأزهار',
-    branch: 'فرع النخيل',
-    program: 'برنامج نصف يوم',
-  },
-  {
-    id: '3',
-    status: 'pending',
-    startDate: '2023-07-01',
-    endDate: '2023-07-15',
-    children: 'عمر علي',
-    nursery: 'روضة الأزهار',
-    branch: 'الفرع الرئيسي',
-    program: 'برنامج الروضة الكامل',
-  },
-];
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import BookingCard from "./BookingCard";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
+import { formatToArabicDate, getDaysDifference } from "@/utils/dateUtils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { parentService } from "@/services/dashboardApi";
+import { Enrollment } from "@/services/dashboardApi";
 
 const Bookings: React.FC = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [bookings, setBookings] = useState(mockBookings);
+  const [searchQuery, setSearchQuery] = useState("");
+  const queryClient = useQueryClient();
 
-  // Simulate data fetching
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        setIsLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setBookings(mockBookings);
-        setIsLoading(false);
-      } catch (err) {
-        console.error('Error fetching bookings:', err);
-        setError('فشل في تحميل الحجوزات. يرجى المحاولة مرة أخرى.');
-        setIsLoading(false);
-      }
-    };
+  const {
+    data: bookingsData,
+    isLoading,
+    error,
+  } = useQuery<Enrollment[]>({
+    queryKey: ["parentEnrollments"],
+    queryFn: async () => {
+      const response = await parentService.getParentEnrollments();
+      return response.data;
+    },
+  });
 
-    fetchBookings();
-  }, []);
+  const bookings =
+    bookingsData?.map((booking) => ({
+      id: String(booking.id),
+      status: booking.status,
+      startDate: booking.enrollment_date,
+      // FIXME: endDate is the same as startDate from the API
+      endDate: booking.enrollment_date,
+      // FIXME: The API returns parent_name, not child_name
+      children: booking.parent_name,
+      nursery: booking.center_name,
+      branch: booking.branch_name,
+      program: booking.enrollment_type,
+    })) || [];
 
-  const filteredBookings = bookings.filter(booking => {
+  const filteredBookings = bookings.filter((booking) => {
     const searchLower = searchQuery.toLowerCase();
     return (
       booking.children.toLowerCase().includes(searchLower) ||
@@ -86,36 +59,28 @@ const Bookings: React.FC = () => {
   const handleConfirmBooking = async (bookingId: string) => {
     try {
       // In a real app, this would be an API call
-      console.log('Confirming booking:', bookingId);
+      console.log("Confirming booking:", bookingId);
+      // For now, just show an alert and refetch
       alert(`تم تأكيد الحجز: ${bookingId}`);
-      // Update local state to reflect the change
-      setBookings(prevBookings =>
-        prevBookings.map(booking =>
-          booking.id === bookingId ? { ...booking, status: 'paid' } : booking
-        )
-      );
+      queryClient.invalidateQueries({ queryKey: ["parentEnrollments"] });
     } catch (error) {
-      console.error('Error confirming booking:', error);
-      alert('حدث خطأ أثناء تأكيد الحجز. يرجى المحاولة مرة أخرى.');
+      console.error("Error confirming booking:", error);
+      alert("حدث خطأ أثناء تأكيد الحجز. يرجى المحاولة مرة أخرى.");
     }
   };
 
   const handleCancelBooking = async (bookingId: string) => {
     try {
-      if (window.confirm('هل أنت متأكد من رغبتك في إلغاء الحجز؟')) {
-        // In a real app, this would be an API call
-        console.log('Canceling booking:', bookingId);
+      if (window.confirm("هل أنت متأكد من رغبتك في إلغاء الحجز؟")) {
+        // In a real app, this would be an API call to cancel
+        console.log("Canceling booking:", bookingId);
+        // For now, just show an alert and refetch
         alert(`تم إلغاء الحجز: ${bookingId}`);
-        // Update local state to reflect the change
-        setBookings(prevBookings =>
-          prevBookings.map(booking =>
-            booking.id === bookingId ? { ...booking, status: 'rejected' } : booking
-          )
-        );
+        queryClient.invalidateQueries({ queryKey: ["parentEnrollments"] });
       }
     } catch (error) {
-      console.error('Error canceling booking:', error);
-      alert('حدث خطأ أثناء إلغاء الحجز. يرجى المحاولة مرة أخرى.');
+      console.error("Error canceling booking:", error);
+      alert("حدث خطأ أثناء إلغاء الحجز. يرجى المحاولة مرة أخرى.");
     }
   };
 
@@ -138,12 +103,6 @@ const Bookings: React.FC = () => {
               disabled={isLoading}
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <SafeImage
-                src="/images/search-icon.svg"
-                alt="Search"
-                width={16}
-                height={16}
-              />
             </div>
           </div>
         </div>
@@ -157,7 +116,9 @@ const Bookings: React.FC = () => {
               </div>
             ) : error ? (
               <div className="text-center p-6 bg-red-50 rounded-lg">
-                <p className="text-red-600 font-tajawal text-lg">{error}</p>
+                <p className="text-red-600 font-tajawal text-lg">
+                  {error.message}
+                </p>
                 <button
                   onClick={() => window.location.reload()}
                   className="mt-4 px-6 py-2 bg-primary-light text-white rounded-lg font-tajawal font-medium hover:bg-primary-dark transition-colors"
@@ -169,7 +130,13 @@ const Bookings: React.FC = () => {
               filteredBookings.map((booking) => (
                 <BookingCard
                   key={booking.id}
-                  status={booking.status as 'paid' | 'pending' | 'rejected' | 'awaiting'}
+                  status={
+                    booking.status as
+                      | "paid"
+                      | "pending"
+                      | "rejected"
+                      | "awaiting"
+                  }
                   startDate={formatToArabicDate(booking.startDate)}
                   endDate={formatToArabicDate(booking.endDate)}
                   days={getDaysDifference(booking.startDate, booking.endDate)}
@@ -178,18 +145,26 @@ const Bookings: React.FC = () => {
                   branch={booking.branch}
                   program={booking.program}
                   onViewDetails={() => handleViewDetails(booking.id)}
-                  onConfirm={booking.status === 'pending' ? () => handleConfirmBooking(booking.id) : undefined}
-                  onCancel={booking.status !== 'rejected' ? () => handleCancelBooking(booking.id) : undefined}
+                  onConfirm={
+                    booking.status === "pending"
+                      ? () => handleConfirmBooking(booking.id)
+                      : undefined
+                  }
+                  onCancel={
+                    booking.status !== "rejected"
+                      ? () => handleCancelBooking(booking.id)
+                      : undefined
+                  }
                 />
               ))
             ) : (
               <div className="flex flex-col items-center justify-center h-64">
                 <p className="text-accent-neutral font-tajawal text-lg">
-                  {searchQuery ? 'لا توجد نتائج للبحث' : 'لا توجد حجوزات متاحة'}
+                  {searchQuery ? "لا توجد نتائج للبحث" : "لا توجد حجوزات متاحة"}
                 </p>
                 {searchQuery && (
                   <button
-                    onClick={() => setSearchQuery('')}
+                    onClick={() => setSearchQuery("")}
                     className="mt-2 text-accent-primary hover:underline"
                   >
                     مسح البحث
