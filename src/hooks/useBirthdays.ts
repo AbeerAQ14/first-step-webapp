@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { centerService } from "@/services/dashboardApi";
+import { sidebarService } from "@/services/dashboardApi";
+import { useHasRole } from "@/store/authStore";
 
 export type Birthday = {
   id: string;
@@ -8,6 +9,10 @@ export type Birthday = {
 };
 
 export const useBirthdays = () => {
+  const isAdmin = useHasRole("admin");
+  const isCenter = useHasRole(["center", "branch_admin"]);
+  const isParent = useHasRole("parent");
+
   const {
     data: birthdays = [],
     isLoading,
@@ -15,8 +20,16 @@ export const useBirthdays = () => {
   } = useQuery({
     queryKey: ["birthdays"],
     queryFn: async () => {
-      const response = await centerService.getChildrenBirthdays();
-      return response.data.map((birthday: any) => ({
+      let response;
+
+      if (isAdmin) {
+        response = await sidebarService.getAdminBirthdays();
+      } else if (isCenter) {
+        response = await sidebarService.getCenterBirthdays();
+      } else if (isParent) {
+        response = await sidebarService.getParentBirthdays();
+      }
+      return response.map((birthday: any) => ({
         id: birthday.id,
         title: birthday.child_name,
         date: new Date(birthday.birthday_date),

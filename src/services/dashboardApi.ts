@@ -438,15 +438,6 @@ export const centerService = {
     }
   },
 
-  getChildrenBirthdays: async () => {
-    try {
-      const response = await apiClient.get(`/children-birthdays`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
   getBranchTeam: async (id: string) => {
     try {
       const response = await apiClient.get(
@@ -622,106 +613,6 @@ export const centerService = {
           "Content-Type": "multipart/form-data",
         },
       });
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  getTasks: async () => {
-    try {
-      const response = await apiClient.get(`/to-do-centers`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  getTask: async (taskId: string) => {
-    try {
-      const response = await apiClient.get(`/to-do-centers/${taskId}`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  createTask: async (payload: {
-    title: string;
-    date: string;
-    done: boolean;
-  }) => {
-    try {
-      const response = await apiClient.post(`/to-do-centers`, payload);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  updateTask: async (
-    taskId: string,
-    payload: { title: string; date: string; done: boolean }
-  ) => {
-    try {
-      const response = await apiClient.put(`/to-do-centers/${taskId}`, payload);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  deleteTask: async (taskId: string) => {
-    try {
-      const response = await apiClient.delete(`/to-do-centers/${taskId}`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  getOccasions: async () => {
-    try {
-      const response = await apiClient.get(`/occasions`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  getOccasion: async (occasionId: string) => {
-    try {
-      const response = await apiClient.get(`/occasions/${occasionId}`);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  createOccasion: async (payload: { title: string; date: string }) => {
-    try {
-      const response = await apiClient.post(`/occasions`, payload);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  updateOccasion: async (
-    occasionId: string,
-    payload: { title: string; date: string }
-  ) => {
-    try {
-      const response = await apiClient.put(`/occasions/${occasionId}`, payload);
-      return response.data;
-    } catch (error) {
-      throw ApiErrorHandler.handle(error);
-    }
-  },
-
-  deleteOccasion: async (occasionId: string) => {
-    try {
-      const response = await apiClient.delete(`/occasions/${occasionId}`);
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1166,6 +1057,236 @@ export const adminService = {
     }
   },
 };
+
+export const sidebarService = {
+  getCenterBirthdays: async () => {
+    try {
+      const response = await apiClient.get(`/child-birthdays`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getAdminBirthdays: async () => {
+    try {
+      const response = await apiClient.get(`/dashboard/birthdays`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getParentBirthdays: async () => {
+    try {
+      const response = await apiClient.get(`/parent/birthdays`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterTasks: async () => {
+    try {
+      const response = await apiClient.get(`/to-do-centers`);
+      return response.data.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.get(`/to-do-centers/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createCenterTask: async (payload: {
+    title: string;
+    date: string;
+    done: boolean;
+  }) => {
+    try {
+      const response = await apiClient.post(`/to-do-centers`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateCenterTask: async (
+    taskId: string,
+    payload: { title: string; date: string; done: boolean }
+  ) => {
+    try {
+      const response = await apiClient.put(`/to-do-centers/${taskId}`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteCenterTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.delete(`/to-do-centers/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterOccasions: async () => {
+    try {
+      const response = await apiClient.get(`/occassions`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getCenterOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.get(`/occassions/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createCenterOccasion: async (payload: { title: string; date: string }) => {
+    try {
+      const response = await apiClient.post(`/occassions`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateCenterOccasion: async (
+    occasionId: string,
+    payload: { title: string; date: string }
+  ) => {
+    try {
+      const response = await apiClient.put(`/occassions/${occasionId}`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteCenterOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.delete(`/occassions/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  // admins and parents
+  getTasks: async () => {
+    try {
+      const response = await apiClient.get(`/todos`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.get(`/todos/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createTask: async (payload: {
+    title: string;
+    date: string;
+    done: boolean;
+  }) => {
+    try {
+      const response = await apiClient.post(`/todos`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateTask: async (
+    taskId: string,
+    payload: { title: string; date: string; done: boolean }
+  ) => {
+    try {
+      const response = await apiClient.post(`/todos/${taskId}`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteTask: async (taskId: string) => {
+    try {
+      const response = await apiClient.delete(`/todos/${taskId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOccasions: async () => {
+    try {
+      const response = await apiClient.get(`/Occassion-both`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  getOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.get(`/Occassion-both/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  createOccasion: async (payload: { title: string; date: string }) => {
+    try {
+      const response = await apiClient.post(`/Occassion-both`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  updateOccasion: async (
+    occasionId: string,
+    payload: { title: string; date: string }
+  ) => {
+    try {
+      const response = await apiClient.post(`/Occassion-both/${occasionId}`, payload);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  deleteOccasion: async (occasionId: string) => {
+    try {
+      const response = await apiClient.delete(`/Occassion-both/${occasionId}`);
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+}
 
 export interface Enrollment {
   id: number;

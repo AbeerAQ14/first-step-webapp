@@ -7,6 +7,7 @@ import ChildrenSkeleton from "./ChildrenSkeleton";
 import { Child } from "@/types";
 
 interface AdminChild {
+
   id: number;
   child_name: string;
   birthday_date: string;
@@ -162,6 +163,7 @@ const Children = ({
           />
         )
       )}
+
     </div>
   );
 };

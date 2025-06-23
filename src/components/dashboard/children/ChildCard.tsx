@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { Child } from "@/types";
 
 interface ChildCardProps {
   id: number;
@@ -105,7 +106,7 @@ const ChildCard = ({
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
             {disease_details && disease_details.length > 0 ? (
-              disease_details.map((disease) => (
+              disease_details?.map((disease) => (
                 <span key={disease.disease_name}>{disease.disease_name}</span>
               ))
             ) : (
@@ -119,7 +120,7 @@ const ChildCard = ({
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
             {allergies && allergies.length > 0 ? (
-              allergies.map((allergy) => (
+              allergies?.map((allergy) => (
                 <span key={allergy.id}>{allergy.name}</span>
               ))
             ) : (

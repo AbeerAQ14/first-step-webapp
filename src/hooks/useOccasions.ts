@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { centerService } from "@/services/dashboardApi";
+import { sidebarService } from "@/services/dashboardApi";
+import { useHasRole } from "@/store/authStore";
 
 export type Occasion = {
   id: string;
@@ -9,6 +10,7 @@ export type Occasion = {
 
 export const useOccasions = () => {
   const queryClient = useQueryClient();
+  const isCenter = useHasRole(["center", "branch_admin"]);
 
   const {
     data: occasions = [],
@@ -17,7 +19,7 @@ export const useOccasions = () => {
   } = useQuery({
     queryKey: ["occasions"],
     queryFn: async () => {
-      const response = await centerService.getOccasions();
+      const response = await (isCenter ? sidebarService.getCenterOccasions() : sidebarService.getOccasions());
       return response.data.map((occasion: any) => ({
         id: occasion.id,
         title: occasion.title,
@@ -28,11 +30,14 @@ export const useOccasions = () => {
 
   const addOccasion = useMutation({
     mutationFn: async (item: Omit<Occasion, "id">) => {
-      const response = await centerService.createOccasion({
+      const response = await (isCenter ? sidebarService.createCenterOccasion({
         title: item.title,
         date: item.date.toISOString().split("T")[0],
-      });
-      return response;
+      }) : sidebarService.createOccasion({
+        title: item.title,
+        date: item.date.toISOString().split("T")[0],
+      }));
+      return response;  
     },
     onMutate: async (newOccasion) => {
       await queryClient.cancelQueries({ queryKey: ["occasions"] });
@@ -65,12 +70,17 @@ export const useOccasions = () => {
       id: string;
       updates: Partial<Occasion>;
     }) => {
-      await centerService.updateOccasion(id, {
+      await (isCenter ? sidebarService.updateCenterOccasion(id, {
         title: updates.title || "",
         date:
           updates.date?.toISOString().split("T")[0] ||
           new Date().toISOString().split("T")[0],
-      });
+      }) : sidebarService.updateOccasion(id, {
+        title: updates.title || "",
+        date:
+          updates.date?.toISOString().split("T")[0] ||
+          new Date().toISOString().split("T")[0],
+      }));
     },
     onMutate: async ({ id, updates }) => {
       await queryClient.cancelQueries({ queryKey: ["occasions"] });
@@ -98,7 +108,7 @@ export const useOccasions = () => {
 
   const deleteOccasion = useMutation({
     mutationFn: async (id: string) => {
-      await centerService.deleteOccasion(id);
+      await (isCenter ? sidebarService.deleteCenterOccasion(id) : sidebarService.deleteOccasion(id));
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: ["occasions"] });

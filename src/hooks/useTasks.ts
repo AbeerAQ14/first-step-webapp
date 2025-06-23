@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { centerService } from "@/services/dashboardApi";
+import { sidebarService } from "@/services/dashboardApi";
+import { useHasRole } from "@/store/authStore";
 
 export type Task = {
   id: string;
@@ -10,6 +11,7 @@ export type Task = {
 
 export const useTasks = () => {
   const queryClient = useQueryClient();
+  const isCenter = useHasRole(["center", "branch_admin"]);
 
   const {
     data: tasks = [],
@@ -18,8 +20,8 @@ export const useTasks = () => {
   } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const response = await centerService.getTasks();
-      return response.data.map((task: any) => ({
+      const response = await (isCenter ? sidebarService.getCenterTasks() : sidebarService.getTasks());
+      return response.map((task: any) => ({
         id: task.id,
         title: task.title,
         date: new Date(task.date),
@@ -30,11 +32,15 @@ export const useTasks = () => {
 
   const addTask = useMutation({
     mutationFn: async (item: Omit<Task, "id">) => {
-      const response = await centerService.createTask({
+      const response = await (isCenter ? sidebarService.createCenterTask({
         title: item.title,
         date: item.date.toISOString().split("T")[0],
         done: item.done,
-      });
+      }) : sidebarService.createTask({
+        title: item.title,
+        date: item.date.toISOString().split("T")[0],
+        done: item.done,
+      }));
       return response;
     },
     onMutate: async (newTask) => {
@@ -73,13 +79,19 @@ export const useTasks = () => {
       id: string;
       updates: Partial<Task>;
     }) => {
-      await centerService.updateTask(id, {
+      await (isCenter ? sidebarService.updateCenterTask(id, {
         title: updates.title || "",
         date:
           updates.date?.toISOString().split("T")[0] ||
           new Date().toISOString().split("T")[0],
         done: updates.done ?? false,
-      });
+      }) : sidebarService.updateTask(id, {
+        title: updates.title || "",
+        date:
+          updates.date?.toISOString().split("T")[0] ||
+          new Date().toISOString().split("T")[0],
+        done: updates.done ?? false,
+      }));
     },
     onMutate: async ({ id, updates }) => {
       await queryClient.cancelQueries({ queryKey: ["tasks"] });
@@ -105,7 +117,7 @@ export const useTasks = () => {
 
   const deleteTask = useMutation({
     mutationFn: async (id: string) => {
-      await centerService.deleteTask(id);
+      await (isCenter ? sidebarService.deleteCenterTask(id) : sidebarService.deleteTask(id));
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: ["tasks"] });
@@ -132,11 +144,15 @@ export const useTasks = () => {
       const task = tasks.find((t: Task) => t.id === id);
       if (!task) throw new Error("Task not found");
 
-      await centerService.updateTask(id, {
+      await (isCenter ? sidebarService.updateCenterTask(id, {
         title: task.title,
         date: task.date.toISOString().split("T")[0],
         done,
-      });
+      }) : sidebarService.updateTask(id, {
+        title: task.title,
+        date: task.date.toISOString().split("T")[0],
+        done,
+      }));
     },
     onMutate: async ({ id, done }) => {
       await queryClient.cancelQueries({ queryKey: ["tasks"] });
