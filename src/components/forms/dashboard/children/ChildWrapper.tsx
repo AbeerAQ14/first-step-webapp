@@ -7,7 +7,6 @@ import { useMutation } from "@tanstack/react-query";
 const ChildWrapper = ({
   initialValues,
   mode,
-  branchId,
 }: {
   initialValues: any;
   mode: "add" | "edit" | "show";
