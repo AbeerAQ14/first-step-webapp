@@ -13,7 +13,7 @@ export default async function ChildrenPage() {
         </Button>
       </div>
 
-      <Children />
+      <Children mode="parent" />
     </div>
   );
 }

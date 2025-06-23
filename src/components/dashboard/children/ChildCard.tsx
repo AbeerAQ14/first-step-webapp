@@ -1,20 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { Child } from "@/types";
-
-const ChildCard = ({
-  child,
-  noEdit,
-  baseUrl,
-  absoluteBaseUrl,
-}: {
-  child: Child;
-  noEdit?: boolean;
-  baseUrl?: string;
-  absoluteBaseUrl?: string;
-}) => {
-  const token = localStorage.getItem("auth token");
 
 interface ChildCardProps {
   id: number;
@@ -43,7 +29,6 @@ interface ChildCardProps {
   absoluteBaseUrl?: string;
 }
 
-
 const ChildCard = ({
   id,
   name,
@@ -61,7 +46,6 @@ const ChildCard = ({
     <div className="bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
       <div className="flex flex-col gap-y-6">
         <div className="flex items-start gap-4">
-
           {gender === "boy" ? (
             <Image
               src="/assets/illustrations/boy.png"
@@ -79,7 +63,6 @@ const ChildCard = ({
           )}
 
           <div className="flex flex-col gap-2 lg:gap-4">
-
             <p className="font-bold text-primary text-xl">{name}</p>
             <span className="font-medium text-mid-gray flex gap-1">
               <span>تاريخ الميلاد:</span>
@@ -98,7 +81,6 @@ const ChildCard = ({
 
         <div className="flex gap-4">
           <Button asChild size={"sm"}>
-
             <Link href={`${absoluteBaseUrl || baseUrl || "children"}/${id}`}>
               عرض ملف الطفل
             </Link>
@@ -106,7 +88,6 @@ const ChildCard = ({
           {!noEdit && (
             <Button asChild size={"sm"} variant={"outline"}>
               <Link
-
                 href={`${absoluteBaseUrl || baseUrl || "children"}/${id}/edit`}
               >
                 تعديل ملف الطفل
@@ -123,7 +104,6 @@ const ChildCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-
             {disease_details && disease_details.length > 0 ? (
               disease_details.map((disease) => (
                 <span key={disease.disease_name}>{disease.disease_name}</span>
@@ -138,7 +118,6 @@ const ChildCard = ({
           <p className="mb-1 font-medium text-primary text-xl">الحساسية</p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-
             {allergies && allergies.length > 0 ? (
               allergies.map((allergy) => (
                 <span key={allergy.id}>{allergy.name}</span>
@@ -155,7 +134,6 @@ const ChildCard = ({
           </p>
 
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
-
             {authorized_people?.map((person) => (
               <span key={person.id}>
                 {person.name} - {person.cin}
