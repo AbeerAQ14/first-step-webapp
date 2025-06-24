@@ -759,9 +759,12 @@
           "description": "An unexpected error occurred while loading the data. Check your internet connection, or try again later.",
           "retry": "Try Again"
         },
+        "update_admin": "Update Admin",
+        "assign_admin": "Assign Admin",
         "admin": {
           "title": "Create Branch Admin Account",
           "success": "{branchName} branch has been created successfully",
+          "assigned": "branch admin has been assigned successfully",
           "form": {
             "name": {
               "label": "Name",
@@ -778,7 +781,8 @@
             "password-confirm": {
               "label": "Confirm Password",
               "placeholder": "Re-enter admin password"
-            }
+            },
+            "submit": "Submit"
           }
         },
         "delete_dialog": {

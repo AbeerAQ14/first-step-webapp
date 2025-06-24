@@ -391,6 +391,24 @@ export const centerService = {
     }
   },
 
+  updateBranchAdmin: async (userId: string, payload: BranchAdminFormData) => {
+    try {
+      const response = await apiClient.post(
+        `/branches/${userId}/update-admin`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
   deleteBranch: async (id: number) => {
     try {
       const response = await apiClient.delete(`/branches/${id}`);
