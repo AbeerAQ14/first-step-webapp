@@ -196,23 +196,58 @@ export function transformParentDataToExpectedPayload(
 }
 
 function transformChildData(formData: ParentRegisterFormDataInput): Child {
+  // Helper to serialize disease details as JSON string or null
+  const diseaseDetailsArr = transformDiseases(formData.chronicDiseases);
+  const disease_details =
+    diseaseDetailsArr.length > 0 ? JSON.stringify(diseaseDetailsArr) : null;
+
+  // Helper to map authorized people to required structure
+  const authorized_people = (formData.authorizedPersons || []).map(
+    (person) => ({
+      id: 0,
+      child_id: 0,
+      name: person.name,
+      cin: person.idNumber,
+      created_at: "",
+      updated_at: "",
+    })
+  );
+
+  // Helper to map allergies to required structure
+  const allergiesArr = transformAllergies(formData.allergies);
+  const allergies = allergiesArr.map((allergy) => ({
+    id: 0,
+    child_id: 0,
+    name: allergy.name,
+    allergy_causes: (allergy.allergy_causes || []).join(", "),
+    allergy_emergency: allergy.allergy_emergency,
+    created_at: "",
+    updated_at: "",
+  }));
+
   return {
+    id: 0,
+    user_id: 0,
     child_name: formData.childName,
     birthday_date: formatBirthdayDate(formData.birthDate),
     gender: mapGender(formData.gender),
-    disease: formData.chronicDiseases?.hasDiseases === "yes",
-    disease_details: transformDiseases(formData.chronicDiseases),
-    allergy: formData.allergies?.hasAllergies === "yes",
-    allergy_name: getFirstAllergyType(formData.allergies),
+    disease: formData.chronicDiseases?.hasDiseases === "yes" ? 1 : 0,
+    disease_details: disease_details,
+    allergy: formData.allergies?.hasAllergies === "yes" ? 1 : 0,
     parent_name: formData.fatherName,
     mother_name: formData.motherName,
-    kinship: formData.kinship,
-    recommendations: formData.recommendations,
-    description_3_words: formData.childDescription || "",
-    things_child_likes: formData.favoriteThings || "",
-    notes: formData.comments,
-    authorized_persons: transformAuthorizedPersons(formData.authorizedPersons),
-    allergies: transformAllergies(formData.allergies),
+    recommendations: formData.recommendations ?? null,
+    created_at: "",
+    updated_at: "",
+    center_id: null,
+    description_3_words: formData.childDescription ?? null,
+    things_child_likes: formData.favoriteThings ?? null,
+    notes: formData.comments ?? null,
+    Kinship: formData.kinship ?? null,
+    center_branch_id: null,
+    enrollments: [],
+    authorized_people: authorized_people,
+    allergies: allergies,
   };
 }
 
