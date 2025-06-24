@@ -4,7 +4,18 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["images.unsplash.com", "back.firststep-app.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "back.firststep-app.com",
+        port: "",
+      },
+    ],
   },
 };
 

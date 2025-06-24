@@ -4,6 +4,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+COPY next.config.ts ./
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
