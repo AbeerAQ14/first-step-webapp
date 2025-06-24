@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -45,7 +44,8 @@ const BranchCard = ({
       <div className="flex flex-col gap-y-6">
         <div className="flex items-start gap-4">
           <Image
-            src={branch.imageUrl || "/assets/logos/instagram-logo.png"}
+            className="size-20 object-center object-cover rounded-full bg-primary-blue/20"
+            src={branch.logo || "/assets/logos/instagram-logo.png"}
             width={81.66}
             height={80}
             alt="Branch Logo"
@@ -75,7 +75,7 @@ const BranchCard = ({
           </div>
         </div>
 
-        <div className="flex gap-5 lg:gap-x-10">
+        <div className="flex gap-3">
           <Button asChild size={"sm"}>
             <Link href={`${baseUrl || "branches"}/${branch.id}`}>
               {t("view")}
