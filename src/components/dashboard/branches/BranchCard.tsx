@@ -75,7 +75,7 @@ const BranchCard = ({
           </div>
         </div>
 
-        <div className="flex gap-5 lg:gap-x-10">
+        <div className="flex gap-3">
           <Button asChild size={"sm"}>
             <Link href={`${baseUrl || "branches"}/${branch.id}`}>
               {t("view")}

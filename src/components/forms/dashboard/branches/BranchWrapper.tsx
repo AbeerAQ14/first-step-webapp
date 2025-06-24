@@ -10,7 +10,6 @@ import {
   createBranchSchema,
 } from "@/lib/schemas";
 import Branch from "./Branch";
-import BranchAdminForm from "./BranchAdminForm";
 import { useMutation } from "@tanstack/react-query";
 import { useBranch } from "@/hooks/useBranches";
 import { centerService } from "@/services/dashboardApi";
@@ -20,21 +19,32 @@ import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 
+interface BranchWrapperProps {
+  editBranchId?: string;
+  mode: "add" | "edit";
+  onBranchData?: (data: any) => void;
+  onBranchCreated?: (data: { id: string; name: string }) => void;
+}
+
 const BranchWrapper = ({
   editBranchId,
   mode,
-}: {
-  editBranchId?: string;
-  mode: "add" | "edit";
-}) => {
+  onBranchData,
+  onBranchCreated,
+}: BranchWrapperProps) => {
   const [branchId, setBranchId] = useState(null);
-  const [open, setOpen] = useState(false);
+
   const [apiErrors, setApiErrors] = useState<Record<string, string[]>>({});
   const locale = useLocale();
   const router = useRouter();
 
-  const { data: fetchedBranch, isLoading: isFetchingBranch } =
-    useBranch(editBranchId);
+  const { data: fetchedBranch, isLoading: isFetchingBranch } = useBranch(editBranchId);
+
+  useEffect(() => {
+    if (fetchedBranch && onBranchData) {
+      onBranchData(fetchedBranch);
+    }
+  }, [fetchedBranch, onBranchData]);
 
   const transformedInitialValues: BranchFormData | undefined = useMemo(() => {
     if (!fetchedBranch) return undefined;
@@ -153,7 +163,6 @@ const BranchWrapper = ({
     onSuccess: (data) => {
       toast.success("Branch updated successfully");
       setBranchId(data.id);
-      setOpen(true);
       setApiErrors({});
     },
     onError: handleApiError,
@@ -166,8 +175,15 @@ const BranchWrapper = ({
     onSuccess: (data) => {
       toast.success("Branch created successfully");
       setBranchId(data.id);
-      setOpen(true);
       setApiErrors({});
+      
+      // Call onBranchCreated with the new branch data if provided
+      if (onBranchCreated) {
+        onBranchCreated({
+          id: data.id,
+          name: data.name || ''
+        });
+      }
     },
     onError: handleApiError,
   });
@@ -178,7 +194,6 @@ const BranchWrapper = ({
     },
     onSuccess: (data) => {
       toast.success("Branch admin assigned successfully");
-      setOpen(false);
       router.back();
       setApiErrors({});
     },
@@ -319,9 +334,7 @@ const BranchWrapper = ({
     }
   };
 
-  const onSubmitAdmin = (data: BranchAdminFormData) => {
-    branchMutation.mutate(data);
-  };
+
 
   if (mode === "edit" && isFetchingBranch) {
     return <BranchFormSkeleton />;
@@ -368,15 +381,7 @@ const BranchWrapper = ({
         </form>
       </FormProvider>
 
-      {mode === "add" && (
-        <BranchAdminForm
-          open={open}
-          setOpen={setOpen}
-          onSubmit={onSubmitAdmin}
-          branchName={methods.getValues().nursery_name_en}
-          disabled={branchMutation.isPending || branchMutation.isPending}
-        />
-      )}
+
     </React.Fragment>
   );
 };
