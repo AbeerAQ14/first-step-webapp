@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { use, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Header from "@/components/dashboard/Header";
@@ -10,11 +10,12 @@ import { useAuthStore } from "@/store/authStore";
 
 export default function DashboardLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = use(params);
   const { user } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
