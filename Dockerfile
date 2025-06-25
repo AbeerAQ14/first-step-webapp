@@ -4,6 +4,9 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+RUN apk add --no-cache libc6-compat vips-dev fftw-dev libpng libjpeg-turbo-dev libwebp-dev libexif-dev
+RUN npm install sharp
+
 COPY next.config.ts ./
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
