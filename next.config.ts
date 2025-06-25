@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         hostname: "back.firststep-app.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "development.firststep-app.com",
+        port: "",
+      },
     ],
   },
 };
