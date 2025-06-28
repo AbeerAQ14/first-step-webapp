@@ -196,7 +196,7 @@ export default function Header({
       {/* Left: Sidebar toggle & Breadcrumbs */}
       <div className="w-fit flex items-center gap-x-6">
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="flex justify-center items-center bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white/90 transition-colors rounded-lg size-8 cursor-pointer" />
+          <SidebarTrigger className="fixed md:relative md:inset-0 left-4 top-4 rtl:left-auto rtl:right-4 flex justify-center items-center bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white/90 transition-colors rounded-lg size-8 cursor-pointer" />
         </div>
 
         {/* Breadcrumbs */}
