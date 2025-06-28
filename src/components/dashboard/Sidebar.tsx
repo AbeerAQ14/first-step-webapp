@@ -7,16 +7,25 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useLocale, useTranslations } from "next-intl";
+import { useAuthUser } from "@/store/authStore";
 import { dashboardIcons } from "@/components/general/icons";
+import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect } from "react";
 
 const getCenterNavbar = (t: any) => [
   {
@@ -129,8 +138,17 @@ const adminNavbar = [
 
 const DashboardSideBar = () => {
   const pathname = usePathname();
+  const { state, setOpen } = useSidebar();
   const locale = useLocale();
   const t = useTranslations("dashboard.center.sidebar");
+  const isMobile = useIsMobile();
+
+  // Auto-expand sidebar when switching from mobile to desktop
+  useEffect(() => {
+    if (isMobile && state === "collapsed") {
+      setOpen(true);
+    }
+  }, [isMobile, state, setOpen]);
 
   const navbar = pathname.includes("/dashboard/center")
     ? getCenterNavbar(t)
@@ -148,13 +166,16 @@ const DashboardSideBar = () => {
     <Sidebar
       className="h-screen py-10"
       side={locale === "ar" ? "right" : "left"}
-      collapsible="offcanvas"
+      collapsible="icon"
     >
       <SidebarHeader className="mb-4 justify-center items-center">
         <Image
-          className=""
-          src="/assets/logos/instagram-logo.png"
-          width={81.66}
+          className={cn(
+            "size-20 aspect-square object-center object-cover rounded-full bg-primary-blue/20",
+            state === "collapsed" ? "size-fit" : ""
+          )}
+          src={"/assets/logos/instagram-logo.png"}
+          width={80}
           height={80}
           alt="Nersery Logo"
         />
@@ -176,24 +197,47 @@ const DashboardSideBar = () => {
                       <Button asChild className="bg-transparent shadow-none">
                         <Link
                           href={item.url}
-                          className={`flex justify-start items-center space-x-2 px-4 py-6.5 w-full rounded-lg transition-colors ${
+                          className={cn(
+                            "flex justify-start items-center space-x-2 px-4 py-6.5 w-full rounded-lg transition-colors",
                             isActive
                               ? "!bg-primary !text-white !font-bold"
                               : "bg-transparent !text-mid-gray"
-                          }`}
+                          )}
                         >
-                          <div
-                            className={`rounded-[.5rem] w-fit p-2 ${
-                              isActive ? "bg-white" : "bg-primary"
-                            }`}
-                          >
-                            <item.icon
-                              className={`size-4 ${
-                                isActive ? "text-primary" : "text-white"
-                              }`}
-                            />
-                          </div>
-                          <span>{item.title}</span>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div
+                                className={cn(
+                                  "rounded-[.5rem] w-fit",
+                                  isActive ? "bg-white" : "bg-primary",
+                                  state === "collapsed"
+                                    ? "bg-transparent"
+                                    : "p-2"
+                                )}
+                              >
+                                <item.icon
+                                  className={cn(
+                                    state === "collapsed"
+                                      ? "size-4.5"
+                                      : "size-4",
+                                    state === "collapsed" && !isActive
+                                      ? "text-primary"
+                                      : state === "collapsed" && isActive
+                                      ? "text-white"
+                                      : isActive
+                                      ? "text-primary"
+                                      : "text-white"
+                                  )}
+                                />
+                              </div>
+                            </TooltipTrigger>
+                            {state === "collapsed" && (
+                              <TooltipContent side="right" align="center">
+                                {item.title}
+                              </TooltipContent>
+                            )}
+                          </Tooltip>
+                          {state !== "collapsed" && <span>{item.title}</span>}
                         </Link>
                       </Button>
                     </SidebarMenuButton>
@@ -204,13 +248,35 @@ const DashboardSideBar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="mt-4 justify-end items-center">
-        <Image
-          src="/assets/logos/complete_logo.svg"
-          alt="logo"
-          width={157.6}
-          height={40}
-        />
+      <SidebarFooter
+        className={cn(
+          "mt-4 justify-end items-center",
+          state === "collapsed" ? "my-4" : ""
+        )}
+      >
+        <Link href="/" className={state === "collapsed" ? "w-full h-full" : ""}>
+          <Image
+            className={cn(
+              "w-8",
+              state === "collapsed"
+                ? "opacity-100 duration-1000 ease-in"
+                : "opacity-0 h-0"
+            )}
+            src={"/assets/logos/logo.svg"}
+            alt="logo"
+            width={64.09}
+            height={80}
+          />
+          <Image
+            className={cn(
+              state === "expanded" ? "opacity-100 duration-500" : "opacity-0"
+            )}
+            src={"/assets/logos/complete_logo.svg"}
+            alt="logo"
+            width={157.6}
+            height={40}
+          />
+        </Link>
       </SidebarFooter>
     </Sidebar>
   );

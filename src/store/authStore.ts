@@ -15,6 +15,8 @@ interface User {
   updated_at: string;
   national_number: string | null;
   branch_id: number;
+  logo: string | null;
+  nurcery_name: string | null;
 }
 
 interface AuthState {

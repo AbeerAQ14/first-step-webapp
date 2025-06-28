@@ -1,10 +1,10 @@
 "use client";
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Header from "@/components/dashboard/Header";
 import MainSidebar from "@/components/dashboard/Sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import SecondarySidebar from "@/components/dashboard/SecondarySidebar";
 import { useAuthStore } from "@/store/authStore";
 
@@ -19,6 +19,13 @@ export default function DashboardLayout({
   const { user } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
+
+  // Sidebar open state (for both sidebars)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
+  // Secondary sidebar state for xl screens
+  const [secondarySidebarOpen, setSecondarySidebarOpen] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -45,19 +52,32 @@ export default function DashboardLayout({
   }, [user, pathname, router, locale]);
 
   return (
-    <SidebarProvider>
+    <SidebarProvider open={sidebarOpen} onOpenChange={setSidebarOpen}>
       <MainSidebar />
       <main className="grow">
-        <SidebarTrigger
-          className="md:hidden fixed top-4 left-4 rtl:left-auto 
-          rtl:right-4 z-50 bg-white/80 backdrop-blur-sm shadow-sm 
-          hover:bg-white/90 transition-colors rounded-lg size-10"
+        <Header
+          onToggleFullscreen={() => {
+            if (sidebarOpen || secondarySidebarOpen) {
+              setSidebarOpen(false);
+              setSecondarySidebarOpen(false);
+            } else {
+              setSidebarOpen(true);
+              setSecondarySidebarOpen(true);
+            }
+          }}
+          sidebarOpen={sidebarOpen}
+          secondarySidebarOpen={secondarySidebarOpen}
         />
-        <Header />
         <div className="px-4 md:px-10 py-10">{children}</div>
       </main>
+      {/* SecondarySidebar only on xl screens, toggleable */}
       <div className="hidden xl:block">
-        <SecondarySidebar />
+        <SidebarProvider
+          open={secondarySidebarOpen}
+          onOpenChange={setSecondarySidebarOpen}
+        >
+          <SecondarySidebar />
+        </SidebarProvider>
       </div>
     </SidebarProvider>
   );
