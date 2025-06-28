@@ -4,14 +4,7 @@ import CenterCard from "./CenterCard";
 import { useCenters } from "@/hooks/useBranches";
 
 const Centers = () => {
-  const {
-    data: centers,
-    isLoading,
-    error,
-    refetch
-  } = useCenters()
-
-  console.log(error)
+  const { data: centers, isLoading, error } = useCenters();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>حدث خطأ أثناء تحميل الحضانات</div>;

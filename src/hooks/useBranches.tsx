@@ -79,7 +79,7 @@ export const useCenters = () => {
     queryKey: ["centers"],
     queryFn: async () => {
       const response = await adminService.getCenters();
-      return response.data.map((center: any) => mapCenterData(center, t));
+      return response.map((center: any) => mapCenterData(center, t));
     },
   });
 
