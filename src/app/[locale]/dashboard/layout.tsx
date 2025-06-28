@@ -7,6 +7,10 @@ import MainSidebar from "@/components/dashboard/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import SecondarySidebar from "@/components/dashboard/SecondarySidebar";
 import { useAuthStore } from "@/store/authStore";
+import {
+  useSecondarySidebarOpen,
+  useSetSecondarySidebarOpen,
+} from "@/store/sidebarStore";
 
 export default function DashboardLayout({
   children,
@@ -20,12 +24,12 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Sidebar open state (for both sidebars)
+  // Sidebar open state (for main sidebar only)
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  // Secondary sidebar state for xl screens
-  const [secondarySidebarOpen, setSecondarySidebarOpen] = useState(true);
+  // Secondary sidebar state from global store
+  const secondarySidebarOpen = useSecondarySidebarOpen();
+  const setSecondarySidebarOpen = useSetSecondarySidebarOpen();
 
   useEffect(() => {
     if (user) {
