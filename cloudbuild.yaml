@@ -1,36 +1,64 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-  machineType: "E2_HIGHCPU_8"
+  machineType: E2_HIGHCPU_8
+  volumes:
+    - name: docker-cache
+      path: /kaniko/cache
 
 steps:
-  # Step 1: Build and push the image using Kaniko with caching enabled
-  # Kaniko will build the image and push it to the specified destination.
-  # The --cache=true flag tells Kaniko to cache layers.
-  # On subsequent builds, Kaniko will pull a cached base image and only rebuild changed layers.
-  - name: "gcr.io/kaniko/executor:latest"
-    id: Build and Push
+  # Step 0: Try to pull previous cached image
+  - name: "gcr.io/cloud-builders/docker"
+    id: Pull Cache
+    entrypoint: bash
     args:
-      - "--destination=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest"
-      - "--context=."
-      - "--dockerfile=Dockerfile" # Assumes your Dockerfile is in the root
-      - "--cache=true"
-      - "--cache-ttl=24h" # Cache layers for 24 hours
+      - -c
+      - |
+        docker pull europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:cache || echo "No cache image found."
 
-  # Step 2: Deploy the newly pushed image to Cloud Run
-  # This step now runs AFTER the image has been successfully built and pushed by Kaniko.
+  # Step 1: Build Docker image using pulled cache
+  - name: "gcr.io/cloud-builders/docker"
+    id: Build
+    args:
+      - build
+      - "--cache-from=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:cache"
+      - "--tag=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest"
+      - "--tag=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:cache"
+      - "."
+
+  # (Optional) Step 1.5: Show debug images (can be removed later)
+  - name: "gcr.io/cloud-builders/docker"
+    id: Debug Images
+    entrypoint: bash
+    args:
+      - -c
+      - docker images
+
+  # Step 2: Push both production and cache images
+  - name: "gcr.io/cloud-builders/docker"
+    id: Push Latest
+    args:
+      - push
+      - europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: Push Cache
+    args:
+      - push
+      - europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:cache
+
+  # Step 3: Deploy to Cloud Run
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: Deploy
     entrypoint: gcloud
     args:
-      - "run"
-      - "deploy"
-      - "first-step-frontend"
-      - "--image=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest"
-      - "--region=europe-west1"
-      - "--platform=managed"
-      - "--port=3000"
-      - "--allow-unauthenticated"
+      - run
+      - deploy
+      - first-step-frontend
+      - --image=europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest
+      - --region=europe-west1
+      - --platform=managed
+      - --port=3000
+      - --allow-unauthenticated
 
-# This section tells Cloud Build which image to report as the final build artifact.
 images:
-  - "europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest"
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/first-step-images/first-step-frontend:latest
