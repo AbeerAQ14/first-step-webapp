@@ -905,6 +905,40 @@
           "authorizedPeople": "Authorized People",
           "none": "None"
         }
+      },
+      "bookings": {
+        "fields": {
+          "status": "Booking Status",
+          "startDay": "Start Day",
+          "endDay": "End Day",
+          "daysCount": "Number of Days",
+          "childName": "Child/Children",
+          "className": "Nursery",
+          "branch": "Branch",
+          "program": "Program",
+          "paymentMethod": "Payment Method"
+        },
+        "actions": {
+          "showDetails": "Show Booking Details",
+          "cancel": "Cancel Booking"
+        },
+        "status": {
+          "accepted": "Paid",
+          "pending": "Pending Payment",
+          "rejected": "Rejected",
+          "waiting_confirmation": "Waiting for Confirmation",
+          "canceled": "Canceled",
+          "cancelled": "Canceled"
+        },
+        "dialogs": {
+          "cancelTitle": "Confirm Booking Cancellation",
+          "cancelDescription": "Are you sure you want to cancel this booking? This action cannot be undone.",
+          "cancelConfirm": "Yes, Cancel Booking",
+          "cancelCancel": "Back"
+        },
+        "error": "An error occurred while loading data",
+        "cancelSuccess": "Booking cancelled successfully",
+        "cancelError": "An error occurred while cancelling the booking"
       }
     },
     "header": {

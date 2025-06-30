@@ -900,6 +900,40 @@
           "authorizedPeople": "الأشخاص المفوضة",
           "none": "لا يوجد"
         }
+      },
+      "bookings": {
+        "fields": {
+          "status": "حالة الحجز",
+          "startDay": "بداية يوم",
+          "endDay": "نهاية يوم",
+          "daysCount": "عدد الأيام",
+          "childName": "الطفل/الأطفال",
+          "className": "الحضانة",
+          "branch": "الفرع",
+          "program": "البرنامج",
+          "paymentMethod": "طريقة الدفع"
+        },
+        "actions": {
+          "showDetails": "عرض تفاصيل الحجز",
+          "cancel": "الغاء الحجز"
+        },
+        "status": {
+          "accepted": "تم الدفع",
+          "pending": "في انتظار الدفع",
+          "rejected": "مرفوض",
+          "waiting_confirmation": "في انتظار التأكيد",
+          "canceled": "ملغي",
+          "cancelled": "ملغي"
+        },
+        "dialogs": {
+          "cancelTitle": "تأكيد إلغاء الحجز",
+          "cancelDescription": "هل أنت متأكد أنك تريد إلغاء هذا الحجز؟ لا يمكن التراجع عن هذه العملية.",
+          "cancelConfirm": "نعم، إلغاء الحجز",
+          "cancelCancel": "تراجع"
+        },
+        "error": "حدث خطأ أثناء تحميل البيانات",
+        "cancelSuccess": "تم إلغاء الحجز بنجاح",
+        "cancelError": "حدث خطأ أثناء إلغاء الحجز"
       }
     },
     "header": {
