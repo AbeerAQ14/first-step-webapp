@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEffect } from "react";
+import { useAuthUser } from "@/store/authStore";
 
 const getCenterNavbar = (t: any) => [
   {
@@ -141,6 +142,7 @@ const DashboardSideBar = () => {
   const locale = useLocale();
   const t = useTranslations("dashboard.center.sidebar");
   const isMobile = useIsMobile();
+  const user = useAuthUser();
 
   // Auto-expand sidebar when switching from mobile to desktop
   useEffect(() => {
@@ -173,7 +175,7 @@ const DashboardSideBar = () => {
             "size-20 aspect-square object-center object-cover rounded-full bg-primary-blue/20",
             state === "collapsed" ? "size-fit" : ""
           )}
-          src={"/assets/logos/instagram-logo.png"}
+          src={user?.logo || "/assets/logos/instagram-logo.png"}
           width={80}
           height={80}
           alt="Nersery Logo"
