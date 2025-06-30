@@ -885,6 +885,28 @@
         }
       }
     },
+    "parent": {
+      "children": {
+        "title": "Children",
+        "add": "Add Child",
+        "error": "Error: {error}",
+        "unknownError": "Unknown error",
+        "noChildren": "No children found.",
+        "card": {
+          "birthday": "Birthday:",
+          "gender": "Gender:",
+          "male": "Male",
+          "female": "Female",
+          "parentName": "Parent Name:",
+          "viewProfile": "View Child's Profile",
+          "editProfile": "Edit Child's Profile",
+          "chronicDiseases": "Chronic Diseases",
+          "allergies": "Allergies",
+          "authorizedPeople": "Authorized People",
+          "none": "None"
+        }
+      }
+    },
     "header": {
       "dashboard": "Dashboard",
       "home": "Home",

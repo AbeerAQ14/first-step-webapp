@@ -880,6 +880,28 @@
         }
       }
     },
+    "parent": {
+      "children": {
+        "title": "الأطفال",
+        "add": "إضافة طفل",
+        "error": "خطأ: {error}",
+        "unknownError": "خطأ غير معروف",
+        "noChildren": "لم يتم العثور على أطفال.",
+        "card": {
+          "birthday": "تاريخ الميلاد:",
+          "gender": "الجنس:",
+          "male": "ذكر",
+          "female": "أنثى",
+          "parentName": "اسم ولي الأمر:",
+          "viewProfile": "عرض ملف الطفل",
+          "editProfile": "تعديل ملف الطفل",
+          "chronicDiseases": "الأمراض المزمنة",
+          "allergies": "الحساسية",
+          "authorizedPeople": "الأشخاص المفوضة",
+          "none": "لا يوجد"
+        }
+      }
+    },
     "header": {
       "dashboard": "لوحة التحكم",
       "home": "الرئيسية",
