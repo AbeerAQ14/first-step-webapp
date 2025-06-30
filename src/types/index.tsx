@@ -227,6 +227,7 @@ export interface Blog {
   description: string;
   image: string;
   author?: string;
+  readingTime: string;
   created_at: string;
   published_at: string;
 }
