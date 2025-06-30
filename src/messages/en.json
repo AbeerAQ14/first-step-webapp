@@ -939,6 +939,13 @@
         "error": "An error occurred while loading data",
         "cancelSuccess": "Booking cancelled successfully",
         "cancelError": "An error occurred while cancelling the booking"
+      },
+      "reports": {
+        "title": "Daily Reports",
+        "error": "Failed to fetch reports",
+        "permissionError": "You do not have permission to view these reports",
+        "deleteSuccess": "Report deleted successfully",
+        "deleteError": "Failed to delete report"
       }
     },
     "header": {
@@ -1152,6 +1159,20 @@
           "count": "Booking Count",
           "income": "Income",
           "currency": "SAR"
+        }
+      },
+      "reports": {
+        "fields": {
+          "childNumber": "Child Number",
+          "childName": "Child Name",
+          "nurseryName": "Nursery",
+          "reportDate": "Report Date",
+          "control": "Control"
+        },
+        "actions": {
+          "view": "View",
+          "download": "Download",
+          "delete": "Delete"
         }
       }
     },
