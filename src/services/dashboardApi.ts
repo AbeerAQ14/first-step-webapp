@@ -640,7 +640,7 @@ export const centerService = {
   getCenterStats: async () => {
     try {
       const response = await apiClient.get(`/center/statistics`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -649,7 +649,7 @@ export const centerService = {
   getBranchStats: async () => {
     try {
       const response = await apiClient.get(`/branch/statistics`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -1188,7 +1188,10 @@ export const sidebarService = {
     payload: { title: string; date: string }
   ) => {
     try {
-      const response = await apiClient.put(`/occassions/${occasionId}`, payload);
+      const response = await apiClient.put(
+        `/occassions/${occasionId}`,
+        payload
+      );
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1289,7 +1292,10 @@ export const sidebarService = {
     payload: { title: string; date: string }
   ) => {
     try {
-      const response = await apiClient.post(`/Occassion-both/${occasionId}`, payload);
+      const response = await apiClient.post(
+        `/Occassion-both/${occasionId}`,
+        payload
+      );
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1304,7 +1310,7 @@ export const sidebarService = {
       throw ApiErrorHandler.handle(error);
     }
   },
-}
+};
 
 export interface Enrollment {
   id: number;

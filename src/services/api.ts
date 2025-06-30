@@ -349,13 +349,21 @@ export const nurseryService = {
               process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
           },
           next: {
-            revalidate: 86400,
+            revalidate: 1,
           },
         }
       );
 
       const data = await res.json();
-      console.log("nurseries response: ", data);
+      if (Array.isArray(data.data)) {
+        console.log(
+          "nurseries (nursery_name, user_id): ",
+          data.data.map((nursery: any) => ({
+            nursery_name: nursery.nursery_name,
+            user_id: nursery.user_id,
+          }))
+        );
+      }
 
       if (!res.ok) {
         throw {
