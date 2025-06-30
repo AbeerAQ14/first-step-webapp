@@ -109,7 +109,7 @@ const BlogRequestForm = () => {
                   <label
                     htmlFor="image-upload1"
                     className={clsx(
-                      "w-full aspect-[1440/680] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
+                      "w-full aspect-[1440/610] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors",
                       preview1 && "p-2"
                     )}
                   >
@@ -118,7 +118,7 @@ const BlogRequestForm = () => {
                         src={preview1}
                         alt="Preview"
                         width={1440}
-                        height={600}
+                        height={610}
                         className="rounded-md object-cover h-full w-full"
                       />
                     ) : (

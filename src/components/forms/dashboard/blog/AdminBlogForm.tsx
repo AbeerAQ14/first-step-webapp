@@ -105,7 +105,7 @@ const AdminBlogForm = ({
                   />
                   <label
                     htmlFor="main-image-upload"
-                    className="w-full aspect-[1440/680] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors"
+                    className="w-full aspect-[1440/610] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-colors"
                   >
                     {previewMain ? (
                       <img
