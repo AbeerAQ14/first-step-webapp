@@ -843,8 +843,8 @@ export const createBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
     content: z.string().min(30, "محتوى التدوينة مطلوب (نص MDX)"),
     mainImage: createImageSchema(
       1440,
-      680,
-      "يجب أن يكون مقاس الصورة 1440 × 680",
+      610,
+      "يجب أن يكون مقاس الصورة 610",
       locale
     ),
     cardImage: createImageSchema(
@@ -884,8 +884,8 @@ export const createAdminBlogRequestSchema = (locale: "ar" | "en" = "ar") =>
     }),
     mainImage: createImageSchema(
       1440,
-      680,
-      "يجب أن يكون مقاس الصورة 1440 × 680",
+      610,
+      "يجب أن يكون مقاس الصورة 610",
       locale
     ),
     cardImage: createImageSchema(
