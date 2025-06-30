@@ -16,7 +16,6 @@ import {
 import { Link, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useLocale, useTranslations } from "next-intl";
-import { useAuthUser } from "@/store/authStore";
 import { dashboardIcons } from "@/components/general/icons";
 import { cn } from "@/lib/utils";
 import {
@@ -107,12 +106,12 @@ const adminNavbar = [
   {
     title: "الحضانات والمراكز", // Children
     url: "/dashboard/admin/centers",
-    icon: dashboardIcons.files,
+    icon: dashboardIcons.building,
   },
   {
     title: "أولياء الأمور", // Children
     url: "/dashboard/admin/parents",
-    icon: dashboardIcons.files,
+    icon: dashboardIcons.person,
   },
   {
     title: "الحجوزات", // Bookings
@@ -122,17 +121,17 @@ const adminNavbar = [
   {
     title: "إعلان", // Children
     url: "/dashboard/admin/advertisement",
-    icon: dashboardIcons.files,
+    icon: dashboardIcons.request,
   },
   {
     title: "مدونة", // Daily Reports
     url: "/dashboard/admin/blog",
-    icon: dashboardIcons.reports,
+    icon: dashboardIcons.blog,
   },
   {
     title: "الإشعارات", // Daily Reports
     url: "/dashboard/admin/notifications",
-    icon: dashboardIcons.reports,
+    icon: dashboardIcons.notifications,
   },
 ];
 
