@@ -354,6 +354,9 @@ export const nurseryService = {
         }
       );
 
+      const data = await res.json();
+      console.log("nurseries response: ", data);
+
       if (!res.ok) {
         throw {
           message: "Failed to fetch nurseries",
@@ -362,7 +365,6 @@ export const nurseryService = {
         };
       }
 
-      const data = await res.json();
       return data.data as CenterRegisterPayload[];
     } catch (error) {
       throw ApiErrorHandler.handle(error);
