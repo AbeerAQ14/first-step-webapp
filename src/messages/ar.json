@@ -944,6 +944,73 @@
       }
     },
     "admin": {
+      "blog": {
+        "tabs": {
+          "firstStep": "مدونات First step",
+          "centers": "مدونات الحضانات والمراكز"
+        },
+        "loading": "جاري التحميل...",
+        "error": "حدث خطأ أثناء جلب البيانات",
+        "noTitle": "بدون عنوان",
+        "addBlog": "إضافة مدونة",
+        "editBlog": "تعديل مدونة",
+        "centers": {
+          "title": "المدونات",
+          "loading": "جاري التحميل...",
+          "error": "حدث خطأ أثناء جلب البيانات"
+        },
+        "add": {
+          "success": "تمت إضافة المدونة بنجاح",
+          "error": "حدث خطأ أثناء إضافة المدونة"
+        },
+        "edit": {
+          "title": "تعديل المدونة",
+          "success": "تم تحديث المدونة بنجاح",
+          "error": "حدث خطأ أثناء تحديث المدونة",
+          "loading": "جاري التحميل...",
+          "fetchError": "حدث خطأ أثناء جلب بيانات المدونة"
+        },
+        "details": {
+          "loading": "جاري التحميل...",
+          "error": "حدث خطأ أثناء جلب بيانات المدونة"
+        },
+        "center": {
+          "loading": "جاري التحميل...",
+          "error": "حدث خطأ أثناء جلب البيانات",
+          "noTitle": "لا يوجد عنوان",
+          "center": "حضانة أو مركز",
+          "pendingBlogs": "مدونات في انتظار القبول",
+          "acceptedBlogs": "مدونات مقبولة",
+          "rejectedBlogs": "مدونات مرفوضة",
+          "acceptBlog": "قبول المدونة",
+          "rejectBlog": "رفض المدونة",
+          "readTime": "٣ دقائق قراءة",
+          "imageAlt": "صورة الغلاف",
+          "editBlog": "تعديل المدونة"
+        },
+        "form": {
+          "coverImage": "صورة الغلاف",
+          "cardImage": "صورة البطاقة",
+          "chooseCoverImage": "اختر صورة الغلاف",
+          "chooseCardImage": "اختر صورة البطاقة",
+          "preview": "معاينة",
+          "titleAr": "العنوان (عربي)",
+          "titleEn": "العنوان (إنجليزي)",
+          "descriptionAr": "الوصف (عربي)",
+          "descriptionEn": "الوصف (إنجليزي)",
+          "contentAr": "المحتوى (عربي)",
+          "contentEn": "المحتوى (إنجليزي)",
+          "titleArPlaceholder": "العنوان بالعربية",
+          "titleEnPlaceholder": "العنوان بالإنجليزية",
+          "descriptionArPlaceholder": "الوصف بالعربية",
+          "descriptionEnPlaceholder": "الوصف بالإنجليزية",
+          "contentArPlaceholder": "محتوى التدوينة بالعربية",
+          "contentEnPlaceholder": "محتوى التدوينة بالإنجليزية",
+          "save": "حفظ",
+          "saving": "جاري الحفظ...",
+          "cancel": "إلغاء"
+        }
+      },
       "cards": {
         "children": "عدد الأطفال",
         "centers": "عدد الحضانات",
@@ -1299,6 +1366,15 @@
         "acceptedAds": "إعلانات مقبولة",
         "pendingAds": "إعلانات قيد الانتظار",
         "rejectedAds": "إعلانات مرفوضة"
+      },
+      "centerBlogs": {
+        "id": "#",
+        "center": "اسم المركز",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "acceptedBlogs": "المدونات المقبولة",
+        "pendingBlogs": "المدونات المعلقة",
+        "rejectedBlogs": "المدونات المرفوضة"
       }
     },
     "children": {

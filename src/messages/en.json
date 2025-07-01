@@ -949,6 +949,73 @@
       }
     },
     "admin": {
+      "blog": {
+        "tabs": {
+          "firstStep": "First Step Blogs",
+          "centers": "Centers' Blogs"
+        },
+        "loading": "Loading...",
+        "error": "An error occurred while fetching data",
+        "noTitle": "No title",
+        "addBlog": "Add Blog",
+        "editBlog": "Edit Blog",
+        "centers": {
+          "title": "Blogs",
+          "loading": "Loading...",
+          "error": "An error occurred while fetching data"
+        },
+        "add": {
+          "success": "Blog added successfully",
+          "error": "An error occurred while adding the blog"
+        },
+        "edit": {
+          "title": "Edit Blog",
+          "success": "Blog updated successfully",
+          "error": "An error occurred while updating the blog",
+          "loading": "Loading...",
+          "fetchError": "An error occurred while fetching blog data"
+        },
+        "details": {
+          "loading": "Loading...",
+          "error": "An error occurred while fetching blog data"
+        },
+        "center": {
+          "loading": "Loading...",
+          "error": "An error occurred while fetching data",
+          "noTitle": "No title",
+          "center": "Nursery or Center",
+          "pendingBlogs": "Pending Blogs",
+          "acceptedBlogs": "Accepted Blogs",
+          "rejectedBlogs": "Rejected Blogs",
+          "acceptBlog": "Accept blog",
+          "rejectBlog": "Reject blog",
+          "readTime": "3 min read",
+          "imageAlt": "Blog cover image",
+          "editBlog": "Edit Blog"
+        },
+        "form": {
+          "coverImage": "Cover Image",
+          "cardImage": "Card Image",
+          "chooseCoverImage": "Choose cover image",
+          "chooseCardImage": "Choose card image",
+          "preview": "Preview",
+          "titleAr": "Title (Arabic)",
+          "titleEn": "Title (English)",
+          "descriptionAr": "Description (Arabic)",
+          "descriptionEn": "Description (English)",
+          "contentAr": "Content (Arabic)",
+          "contentEn": "Content (English)",
+          "titleArPlaceholder": "Title in Arabic",
+          "titleEnPlaceholder": "Title in English",
+          "descriptionArPlaceholder": "Description in Arabic",
+          "descriptionEnPlaceholder": "Description in English",
+          "contentArPlaceholder": "Content in Arabic",
+          "contentEnPlaceholder": "Content in English",
+          "save": "Save",
+          "saving": "Saving...",
+          "cancel": "Cancel"
+        }
+      },
       "cards": {
         "children": "Number of Children",
         "centers": "Number of Nurseries",
@@ -1304,6 +1371,15 @@
         "acceptedAds": "Accepted Ads",
         "pendingAds": "Pending Ads",
         "rejectedAds": "Rejected Ads"
+      },
+      "centerBlogs": {
+        "id": "#",
+        "center": "Center Or Nursery",
+        "phone": "Phone Number",
+        "email": "Email",
+        "acceptedBlogs": "Accepted Blogs",
+        "pendingBlogs": "Pending Blogs",
+        "rejectedBlogs": "Rejected Blogs"
       }
     },
     "children": {

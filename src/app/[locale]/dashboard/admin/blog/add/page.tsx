@@ -6,8 +6,10 @@ import AdminBlogForm from "@/components/forms/dashboard/blog/AdminBlogForm";
 import { adminService } from "@/services/dashboardApi";
 import { toast } from "sonner";
 import { AdminBlogRequestFormData } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
 
 export default function AdminBlogAddPage() {
+  const t = useTranslations("dashboard.admin.blog.add");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -24,10 +26,10 @@ export default function AdminBlogAddPage() {
         mainImage: data.mainImage?.[0] as File,
         cardImage: data.cardImage?.[0] as File,
       });
-      toast("تمت إضافة المدونة بنجاح");
+      toast(t("success"));
       router.back();
     } catch (error) {
-      toast("حدث خطأ أثناء إضافة المدونة");
+      toast(t("error"));
     } finally {
       setLoading(false);
     }

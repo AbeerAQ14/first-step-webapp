@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Icons } from "../icons";
 import { Blog } from "@/types";
+import { useTranslations } from "next-intl";
 
 interface AdminBlogCardProps {
   blog: Blog & { status: string };
@@ -16,13 +17,15 @@ const AdminBlogCard = ({
   onReject,
   loading,
 }: AdminBlogCardProps) => {
+  const t = useTranslations("dashboard.admin.blog.center");
+
   return (
     <div className="bg-white shadow-card min-w-60 p-2 pb-4 flex flex-col items-start gap-y-2 rounded-2xl text-left rtl:text-right relative">
       <div className="w-full h-40 rounded-xl overflow-hidden relative">
         <Image
           className="object-cover object-center"
           src={blog.image}
-          alt=""
+          alt={t("imageAlt")}
           fill
         />
       </div>
@@ -33,7 +36,7 @@ const AdminBlogCard = ({
       <div className="w-full flex items-end justify-between text-sm">
         <div className="flex flex-col gap-y-2">
           <span className="text-secondary-orange font-medium text-sm">
-            مدة القراءة 3 دقائق
+            {t("readTime")}
           </span>
         </div>
         <div className="flex items-center gap-x-0.5">
@@ -51,7 +54,7 @@ const AdminBlogCard = ({
             onClick={onAccept}
             disabled={loading}
           >
-            قبول المدونة
+            {t("acceptBlog")}
           </Button>
           <Button
             variant="destructive"
@@ -59,7 +62,7 @@ const AdminBlogCard = ({
             onClick={onReject}
             disabled={loading}
           >
-            رفض المدونة
+            {t("rejectBlog")}
           </Button>
         </div>
       )}
