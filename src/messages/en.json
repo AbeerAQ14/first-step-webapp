@@ -948,6 +948,43 @@
         "deleteError": "Failed to delete report"
       }
     },
+    "admin": {
+      "cards": {
+        "children": "Number of Children",
+        "centers": "Number of Nurseries",
+        "parents": "Number of Parents",
+        "firstStepAds": "Number of First Step Ads",
+        "centerAds": "Number of Center/Nursery Ads"
+      },
+      "charts": {
+        "bookingsComparison": "Bookings Comparison",
+        "enrollments": "Enrollments"
+      },
+      "center": {
+        "title": "Centers",
+        "branches": "Branches",
+        "table": {
+          "name": "Name",
+          "address": "Address",
+          "children": "Children",
+          "bookings": "Bookings",
+          "acceptedAges": "Accepted Ages",
+          "availableServices": "Available Services",
+          "actions": "Actions"
+        },
+        "actions": {
+          "add": "Add Center",
+          "edit": "Edit Center",
+          "delete": "Delete Center",
+          "view": "View Center"
+        },
+        "error": {
+          "load": "Could not load centers",
+          "unexpected": "An unexpected error occurred while loading the data. Check your internet connection, or try again later."
+        },
+        "loading": "Loading Data..."
+      }
+    },
     "header": {
       "dashboard": "Dashboard",
       "home": "Home",

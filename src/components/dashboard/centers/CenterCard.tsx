@@ -4,8 +4,10 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { CenterCardType } from "@/hooks/useBranches";
+import { useTranslations } from "next-intl";
 
-const CenterCard = ({ center }: {center:CenterCardType}) => {
+const CenterCard = ({ center }: { center: CenterCardType }) => {
+  const t = useTranslations("dashboard.admin.center");
 
   return (
     <div className="relative bg-sidebar border-b border-light-gray p-6 flex flex-col lg:flex-row gap-8">
@@ -19,35 +21,31 @@ const CenterCard = ({ center }: {center:CenterCardType}) => {
             alt="Nursery Logo"
           />
           <div className="flex flex-col gap-2 lg:gap-4">
-            <p className="font-bold text-primary text-xl">
-              {center.name}
-            </p>
+            <p className="font-bold text-primary text-xl">{center.name}</p>
             <span className="font-medium text-mid-gray flex gap-1">
-              <span>العنوان:</span>
-              <span>
-                {center.address || "-"}
-              </span>
+              <span>{t("table.address")}:</span>
+              <span>{center.address || "-"}</span>
             </span>
             <span className="font-medium text-mid-gray flex gap-1">
-              <span>عدد الأطفال:</span>
+              <span>{t("table.children")}:</span>
               <span>{center.childrenCount ?? "-"}</span>
             </span>
             <span className="font-medium text-mid-gray flex gap-1">
-              <span>مجموع الحجوزات:</span>
+              <span>{t("table.bookings")}:</span>
               <span>{center.bookingsCount ?? "-"}</span>
             </span>
           </div>
         </div>
         <div className="flex gap-5 lg:gap-x-10">
           <Button asChild size={"sm"}>
-            <Link href={`centers/${center.id}`}>عرض الحضانة</Link>
+            <Link href={`centers/${center.id}`}>{t("actions.view")}</Link>
           </Button>
         </div>
       </div>
       <div className="flex flex-col gap-y-4">
         <div>
           <p className="mb-1 font-medium text-primary text-xl">
-            الأعمار المقبولة
+            {t("table.acceptedAges")}
           </p>
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
             {center.acceptedAges.length > 0 ? (
@@ -59,7 +57,9 @@ const CenterCard = ({ center }: {center:CenterCardType}) => {
           </div>
         </div>
         <div>
-          <p className="mb-1 font-medium text-primary text-xl">الفروع</p>
+          <p className="mb-1 font-medium text-primary text-xl">
+            {t("branches")}
+          </p>
           <div className="flex flex-col gap-y-1 font-medium text-mid-gray">
             {center.branches.length > 0 ? (
               center.branches.map((branch) => (

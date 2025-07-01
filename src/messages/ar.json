@@ -943,6 +943,43 @@
         "deleteError": "فشل في حذف التقرير"
       }
     },
+    "admin": {
+      "cards": {
+        "children": "عدد الأطفال",
+        "centers": "عدد الحضانات",
+        "parents": "عدد أولياء الأمور",
+        "firstStepAds": "عدد إعلانات First Step",
+        "centerAds": "عدد إعلانات الحضانات والمراكز"
+      },
+      "charts": {
+        "bookingsComparison": "مقارنة الحجوزات",
+        "enrollments": "الحجوزات"
+      },
+      "center": {
+        "title": "المراكز",
+        "branches": "الفروع",
+        "table": {
+          "name": "الاسم",
+          "address": "العنوان",
+          "children": "الأطفال",
+          "bookings": "الحجوزات",
+          "acceptedAges": "الأعمار المقبولة",
+          "availableServices": "الخدمات المتاحة",
+          "actions": "الإجراءات"
+        },
+        "actions": {
+          "add": "إضافة مركز",
+          "edit": "تعديل المركز",
+          "delete": "حذف المركز",
+          "view": "عرض المركز"
+        },
+        "error": {
+          "load": "تعذر تحميل المراكز",
+          "unexpected": "حدث خطأ غير متوقع أثناء تحميل البيانات. تحقق من اتصالك بالإنترنت، أو حاول مرة أخرى لاحقًا."
+        },
+        "loading": "جارى تحميل البيانا..."
+      }
+    },
     "header": {
       "dashboard": "لوحة التحكم",
       "home": "الرئيسية",
