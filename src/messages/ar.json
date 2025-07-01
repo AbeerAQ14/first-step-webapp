@@ -978,6 +978,35 @@
           "unexpected": "حدث خطأ غير متوقع أثناء تحميل البيانات. تحقق من اتصالك بالإنترنت، أو حاول مرة أخرى لاحقًا."
         },
         "loading": "جارى تحميل البيانا..."
+      },
+      "parents": {
+        "tabs": {
+          "parents": "أولياء الأمور",
+          "children": "الأطفال"
+        },
+        "details": {
+          "parentInfo": "بيانات ولي الأمر",
+          "childrenInfo": "بيانات الأطفال",
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات",
+          "form": {
+            "name": "الاسم",
+            "namePlaceholder": "الاسم بالكامل كما في الهوية",
+            "phone": "رقم الجوال",
+            "email": "البريد الإلكتروني",
+            "emailPlaceholder": "مثال: example@email.com",
+            "nationalId": "رقم الهوية"
+          }
+        },
+        "card": {
+          "phone": "رقم الجوال:",
+          "email": "البريد الإلكتروني:",
+          "nationalId": "رقم الهوية:",
+          "viewParent": "عرض ولي الأمر",
+          "childrenCount": "عدد الأطفال",
+          "childrenCountValue": "{count, plural, zero {لا يوجد أطفال} one {# طفل} two {# طفلان} few {# أطفال} many {# طفلاً} other {# طفل}}",
+          "childrenNames": "أسماء الأطفال"
+        }
       }
     },
     "header": {

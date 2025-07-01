@@ -983,6 +983,35 @@
           "unexpected": "An unexpected error occurred while loading the data. Check your internet connection, or try again later."
         },
         "loading": "Loading Data..."
+      },
+      "parents": {
+        "tabs": {
+          "parents": "Parents",
+          "children": "Children"
+        },
+        "details": {
+          "parentInfo": "Parent Information",
+          "childrenInfo": "Children's Information",
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data",
+          "form": {
+            "name": "Name",
+            "namePlaceholder": "Full name as in ID",
+            "phone": "Phone Number",
+            "email": "Email",
+            "emailPlaceholder": "example: example@email.com",
+            "nationalId": "National ID"
+          }
+        },
+        "card": {
+          "phone": "Phone:",
+          "email": "Email:",
+          "nationalId": "National ID:",
+          "viewParent": "View Parent",
+          "childrenCount": "Number of Children",
+          "childrenCountValue": "{count, plural, one {# child} other {# children}}",
+          "childrenNames": "Children's Names"
+        }
       }
     },
     "header": {
