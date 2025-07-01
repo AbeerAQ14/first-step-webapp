@@ -43,7 +43,7 @@ export default async function NurseryPage({
     <div>
       <Header name={readableName} />
       <Branches />
-      <Advertisment slides={slides} />
+      {/* <Advertisment slides={slides} /> */}
     </div>
   );
 }
