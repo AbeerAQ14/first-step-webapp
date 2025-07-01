@@ -1012,6 +1012,62 @@
           "childrenCountValue": "{count, plural, one {# child} other {# children}}",
           "childrenNames": "Children's Names"
         }
+      },
+      "advertisement": {
+        "tabs": {
+          "firstStep": "First Step Ads",
+          "centers": "Nurseries and Centers Ads"
+        },
+        "adminAds": {
+          "addNewAd": "Add New Ad",
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data",
+          "noAds": "No ads available",
+          "deleteSuccess": "Ad deleted successfully",
+          "deleteError": "An error occurred while deleting the ad",
+          "editAd": "Edit Ad",
+          "deleteAd": "Delete Ad"
+        },
+        "details": {
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data"
+        },
+        "edit": {
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data",
+          "pageTitle": "Edit Ad"
+        },
+        "adDetails": {
+          "updateSuccess": "Ad updated successfully",
+          "updateError": "An error occurred while updating the ad",
+          "deleteSuccess": "Ad deleted successfully",
+          "deleteError": "An error occurred while deleting the ad",
+          "acceptSuccess": "Ad accepted successfully",
+          "acceptError": "An error occurred while accepting the ad",
+          "rejectSuccess": "Ad rejected successfully",
+          "rejectError": "An error occurred while rejecting the ad",
+          "editAd": "Edit Ad",
+          "deleteAd": "Delete Ad",
+          "acceptAd": "Accept Ad",
+          "rejectAd": "Reject Ad",
+          "deleting": "Deleting...",
+          "accepting": "Accepting...",
+          "rejecting": "Rejecting...",
+          "updating": "Updating..."
+        },
+        "center": {
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data",
+          "pageTitle": "Nursery or Center",
+          "pendingAds": "Pending Approval Ads",
+          "acceptedAds": "Accepted Ads",
+          "rejectedAds": "Rejected Ads"
+        },
+        "centers": {
+          "loading": "Loading...",
+          "errorLoading": "An error occurred while loading data",
+          "reservations": "Reservations"
+        }
       }
     },
     "header": {
@@ -1240,6 +1296,14 @@
           "download": "Download",
           "delete": "Delete"
         }
+      },
+      "centerAds": {
+        "center": "Center Or Nursery",
+        "phone": "Phone Number",
+        "email": "Email",
+        "acceptedAds": "Accepted Ads",
+        "pendingAds": "Pending Ads",
+        "rejectedAds": "Rejected Ads"
       }
     },
     "children": {

@@ -1007,6 +1007,62 @@
           "childrenCountValue": "{count, plural, zero {لا يوجد أطفال} one {# طفل} two {# طفلان} few {# أطفال} many {# طفلاً} other {# طفل}}",
           "childrenNames": "أسماء الأطفال"
         }
+      },
+      "advertisement": {
+        "tabs": {
+          "firstStep": "إعلانات First step",
+          "centers": "إعلانات الحضانات والمراكز"
+        },
+        "adminAds": {
+          "addNewAd": "إضافة إعلان جديد",
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات",
+          "noAds": "لا توجد إعلانات متاحة",
+          "deleteSuccess": "تم حذف الإعلان بنجاح",
+          "deleteError": "حدث خطأ أثناء حذف الإعلان",
+          "editAd": "تعديل الإعلان",
+          "deleteAd": "حذف الإعلان"
+        },
+        "details": {
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات"
+        },
+        "edit": {
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات",
+          "pageTitle": "تعديل الإعلان"
+        },
+        "adDetails": {
+          "updateSuccess": "تم تحديث الإعلان بنجاح",
+          "updateError": "حدث خطأ أثناء تحديث الإعلان",
+          "deleteSuccess": "تم حذف الإعلان بنجاح",
+          "deleteError": "حدث خطأ أثناء حذف الإعلان",
+          "acceptSuccess": "تم قبول الإعلان بنجاح",
+          "acceptError": "حدث خطأ أثناء قبول الإعلان",
+          "rejectSuccess": "تم رفض الإعلان بنجاح",
+          "rejectError": "حدث خطأ أثناء رفض الإعلان",
+          "editAd": "تعديل الإعلان",
+          "deleteAd": "حذف الإعلان",
+          "acceptAd": "قبول الإعلان",
+          "rejectAd": "رفض الإعلان",
+          "deleting": "جاري الحذف...",
+          "accepting": "جاري القبول...",
+          "rejecting": "جاري الرفض...",
+          "updating": "جاري التحديث..."
+        },
+        "center": {
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات",
+          "pageTitle": "الحضانة أو المركز",
+          "pendingAds": "إعلانات في انتظار القبول",
+          "acceptedAds": "إعلانات مقبولة",
+          "rejectedAds": "إعلانات مرفوضة"
+        },
+        "centers": {
+          "loading": "جاري التحميل...",
+          "errorLoading": "حدث خطأ أثناء جلب البيانات",
+          "reservations": "الحجوزات"
+        }
       }
     },
     "header": {
@@ -1235,6 +1291,14 @@
           "download": "تحميل",
           "delete": "حذف"
         }
+      },
+      "centerAds": {
+        "center": "المركز أو الحضانة",
+        "phone": "رقم الجوال",
+        "email": "البريد الإلكتروني",
+        "acceptedAds": "إعلانات مقبولة",
+        "pendingAds": "إعلانات قيد الانتظار",
+        "rejectedAds": "إعلانات مرفوضة"
       }
     },
     "children": {
