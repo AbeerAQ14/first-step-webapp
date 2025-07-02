@@ -17,7 +17,9 @@
       "sign-in": "Sign In",
       "already-have-account": "Already have an account?",
       "join-parent": "Join as Parent",
-      "join-center": "Join as Center"
+      "join-center": "Join as Center",
+      "dashboard": "Dashboard",
+      "logout": "Logout"
     }
   },
   "faqs": {

@@ -640,7 +640,7 @@ export const centerService = {
   getCenterStats: async () => {
     try {
       const response = await apiClient.get(`/center/statistics`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }
@@ -649,7 +649,7 @@ export const centerService = {
   getBranchStats: async () => {
     try {
       const response = await apiClient.get(`/branch/statistics`);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
     }

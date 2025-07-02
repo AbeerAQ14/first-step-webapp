@@ -1,32 +1,53 @@
 import { useTranslations } from "next-intl";
-import { useAuthStore, useAuthToken } from "@/store/authStore";
+import { useAuthStore, useAuthToken, useAuthUser } from "@/store/authStore";
 import { Link } from "@/i18n/navigation";
 import { Button } from "../ui/button";
 
 const NavbarButton = () => {
   const token = useAuthToken();
+  const user = useAuthUser();
   const authStore = useAuthStore();
   const tBtns = useTranslations("navbar.buttons");
 
+  // Determine dashboard path based on user role
+  let dashboardPath = null;
+  if (user && user.role) {
+    if (user.role === "admin") dashboardPath = "/dashboard/admin";
+    else if (user.role === "center" || user.role === "branch_admin")
+      dashboardPath = "/dashboard/center";
+    else if (user.role === "parent") dashboardPath = "/dashboard/parent";
+  }
+
   return (
-    <Button size={"sm"} asChild>
-      {1 === 1 ? (
-        !token ? (
-          <Link href="/sign-in" className="inline-block">
+    <div className="flex gap-2 items-center">
+      {!token ? (
+        <Button size={"sm"} asChild>
+          <Link href="/sign-in" className="inline-block font-semibold">
             <span className="font-normal text-xs">
               {tBtns("already-have-account")}
             </span>
             <span>{tBtns("sign-in")}</span>
           </Link>
-        ) : (
-          <span onClick={() => authStore.clearAuth()}>Logout</span>
-        )
+        </Button>
       ) : (
-        <Link href="/sign-up" className="inline-block">
-          {tBtns("sign-up")}
-        </Link>
+        <>
+          {dashboardPath && (
+            <Button size={"sm"} asChild>
+              <Link href={dashboardPath} className="inline-block font-semibold" >
+                {tBtns("dashboard")}
+              </Link>
+            </Button>
+          )}
+          <Button
+            size={"sm"}
+            variant="outline"
+            onClick={() => authStore.clearAuth()}
+          >
+            {tBtns("logout")}
+          </Button>
+        </>
       )}
-    </Button>
+    </div>
   );
 };
 
