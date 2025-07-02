@@ -1011,6 +1011,7 @@
           "cancel": "إلغاء"
         }
       },
+      "loading": "جاري التحميل...",
       "cards": {
         "children": "عدد الأطفال",
         "centers": "عدد الحضانات",
@@ -1375,7 +1376,8 @@
         "acceptedBlogs": "المدونات المقبولة",
         "pendingBlogs": "المدونات المعلقة",
         "rejectedBlogs": "المدونات المرفوضة"
-      }
+      },
+      "noResults": "لا توجد نتائج."
     },
     "children": {
       "search": {
