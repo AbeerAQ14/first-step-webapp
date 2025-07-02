@@ -222,12 +222,12 @@ export interface ChildInfoData {
 
 // ===== Content Types =====
 export interface Blog {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
   author?: string;
-  readingTime: string;
+  reading_time: string;
   created_at: string;
   published_at: string;
 }
