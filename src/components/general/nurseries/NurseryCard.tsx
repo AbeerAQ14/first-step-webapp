@@ -9,7 +9,7 @@ import { createSlug } from "@/lib/utils";
 const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
   const slug = createSlug(nursery.nursery_name, "ar");
   return (
-    <Link href={`/nurseries/${slug}`} className="block">
+    // <Link href={`/nurseries/${slug}`} className="block">
       <div className="px-2 py-1 shadow-[0px_4px_36px_rgba(0,0,0,0.08)] rounded-2xl">
         <div className="flex flex-col gap-4 lg:flex-row rtl:lg:flex-row-reverse lg:justify-between lg:h-full">
           <div className="relative flex-1 grow lg:max-w-[18.75rem] aspect-[300/200] rounded-[.75rem] overflow-hidden">
@@ -50,7 +50,7 @@ const NurseryCard = ({ nursery }: { nursery: CenterRegisterPayload }) => {
           </div>
         </div>
       </div>
-    </Link>
+    // </Link>
   );
 };
 
