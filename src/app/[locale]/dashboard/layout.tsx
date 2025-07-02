@@ -20,26 +20,38 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   useEffect(() => {
-    if (user) {
-      const role = user.role;
+    console.log("DashboardLayout useEffect - user:", user);
+    if (!user) {
+      toast.error("You are not authorized to view this page.");
+      router.push(`/${locale}`); // Redirect to home page
+      return;
+    }
+    const role = user.role;
+    console.log("DashboardLayout useEffect - role:", role);
+    const allowedRoles = ["admin", "center", "branch_admin", "parent"];
+    const parentDashboard = `/${locale}/dashboard/parent`;
+    const adminDashboard = `/${locale}/dashboard/admin`;
+    const centerDashboard = `/${locale}/dashboard/center`;
 
-      const parentDashboard = `/${locale}/dashboard/parent`;
-      const adminDashboard = `/${locale}/dashboard/admin`;
-      const centerDashboard = `/${locale}/dashboard/center`;
+    // Prevent users with no role from accessing the dashboard
+    if (!role || !allowedRoles.includes(role)) {
+      toast.error("You are not authorized to view this page.");
+      router.push(`/${locale}`); // Redirect to home page
+      return;
+    }
 
-      if (role === "parent" && !pathname.startsWith(parentDashboard)) {
-        toast.error("You are not authorized to view this page.");
-        router.push(parentDashboard);
-      } else if (
-        (role === "center" || role === "branch_admin") &&
-        !pathname.startsWith(centerDashboard)
-      ) {
-        toast.error("You are not authorized to view this page.");
-        router.push(centerDashboard);
-      } else if (role === "admin" && !pathname.startsWith(adminDashboard)) {
-        toast.error("You are not authorized to view this page.");
-        router.push(adminDashboard);
-      }
+    if (role === "parent" && !pathname.startsWith(parentDashboard)) {
+      toast.error("You are not authorized to view this page.");
+      router.push(parentDashboard);
+    } else if (
+      (role === "center" || role === "branch_admin") &&
+      !pathname.startsWith(centerDashboard)
+    ) {
+      toast.error("You are not authorized to view this page.");
+      router.push(centerDashboard);
+    } else if (role === "admin" && !pathname.startsWith(adminDashboard)) {
+      toast.error("You are not authorized to view this page.");
+      router.push(adminDashboard);
     }
   }, [user, pathname, router, locale]);
 
