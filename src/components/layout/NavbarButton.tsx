@@ -22,7 +22,7 @@ const NavbarButton = () => {
     <div className="flex gap-2 items-center">
       {!token ? (
         <Button size={"sm"} asChild>
-          <Link href="/sign-in" className="inline-block">
+          <Link href="/sign-in" className="inline-block font-semibold">
             <span className="font-normal text-xs">
               {tBtns("already-have-account")}
             </span>
@@ -33,7 +33,7 @@ const NavbarButton = () => {
         <>
           {dashboardPath && (
             <Button size={"sm"} asChild>
-              <Link href={dashboardPath} className="inline-block">
+              <Link href={dashboardPath} className="inline-block font-semibold" >
                 {tBtns("dashboard")}
               </Link>
             </Button>
