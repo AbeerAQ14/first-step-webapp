@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import BlogCard from "@/components/general/blog/BlogCard";
 import { blogService } from "@/services/api";
 import { Blog } from "@/types";
+import { useTranslations } from "next-intl";
 
 interface RelatedBlogsProps {
   locale: string;
@@ -12,14 +13,21 @@ interface RelatedBlogsProps {
 }
 
 export function RelatedBlogs({ locale, currentBlogId }: RelatedBlogsProps) {
+  const t = useTranslations("blog");
+
   // Fetch latest blogs
-  const { data: latestBlogs, isLoading } = useQuery<Blog[]>({
+  const {
+    data: latestBlogs,
+    isLoading,
+    error,
+  } = useQuery<Blog[]>({
     queryKey: ["latest-blogs", locale],
     queryFn: () => blogService.getLatestBlogs(locale),
   });
 
   // Filter out the current blog from the related blogs
-  const relatedBlogs = latestBlogs?.filter(blog => blog.id !== currentBlogId) || [];
+  const relatedBlogs =
+    latestBlogs?.filter((blog) => blog.id !== currentBlogId) || [];
 
   if (isLoading) {
     return (
@@ -37,8 +45,13 @@ export function RelatedBlogs({ locale, currentBlogId }: RelatedBlogsProps) {
     );
   }
 
+  if (error) {
+    console.error("Error loading related blogs:", error);
+    return <p className="text-red-500">{t("errorLoadingBlogs")}</p>;
+  }
+
   if (relatedBlogs.length === 0) {
-    return <p>No related blogs found</p>;
+    return <p className="text-gray-500">{t("noRelatedBlogs")}</p>;
   }
 
   return (

@@ -122,7 +122,14 @@
   "blog": {
     "title": "We all have an experience to share",
     "blog": "Blog",
-    "subtitle": "Articles and resources on childcare and work-life balance"
+    "subtitle": "Articles and resources on childcare and work-life balance",
+    "relatedBlogs": "Related Blogs",
+    "minutes": "minutes",
+    "blogImageAlt": "Blog image",
+    "noRelatedBlogs": "No related blogs found",
+    "errorLoadingBlogs": "Error loading blogs. Please try again later.",
+    "acceptBlog": "Accept",
+    "rejectBlog": "Reject"
   },
   "nurseries": {
     "search": "Search for a center or nursery",

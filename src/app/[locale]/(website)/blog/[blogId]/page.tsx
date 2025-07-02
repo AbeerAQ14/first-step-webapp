@@ -1,5 +1,6 @@
 import { RelatedBlogs } from "@/components/blog/RelatedBlogs";
 import { blogService } from "@/services/api";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 export const revalidate = 86400;
@@ -10,6 +11,7 @@ export default async function BlogPage({
   params: Promise<{ locale: string; blogId: string }>;
 }) {
   const { locale, blogId } = await params;
+  const t = await getTranslations("blog");
 
   const blog = await blogService.getBlogById(blogId, locale);
 
@@ -32,7 +34,7 @@ export default async function BlogPage({
         />
 
         <div className="flex-1 flex flex-col items-center">
-          <h4 className="text-primary">مدونة ذات صلة</h4>
+          <h4 className="text-primary">{t("relatedBlogs")}</h4>
           <RelatedBlogs locale={locale} currentBlogId={blogId} />
         </div>
       </div>

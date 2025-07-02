@@ -223,13 +223,16 @@ export interface ChildInfoData {
 // ===== Content Types =====
 export interface Blog {
   id: string;
-  title: string;
-  description: string;
+  title: string | { [key: string]: string };
+  description: string | { [key: string]: string };
   image: string;
+  file?: string; // For the main blog image
+  content?: { [key: string]: string };
   author?: string;
   reading_time: string;
   created_at: string;
   published_at: string;
+  status?: 'pending' | 'approved' | 'rejected';
 }
 
 export interface AdSlide {
