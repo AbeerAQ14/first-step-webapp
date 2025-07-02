@@ -637,8 +637,23 @@
     }
   },
   "dashboard": {
-    "center": {
-      "sidebar": {
+    "sidebar": {
+      "parent": {
+        "home": "الرئيسية",
+        "children": "أطفالي",
+        "bookings": "الحجوزات",
+        "reports": "التقارير اليومية"
+      },
+      "admin": {
+        "home": "الرئيسية",
+        "centers": "الحضانات والمراكز",
+        "parents": "أولياء الأمور",
+        "bookings": "الحجوزات",
+        "advertisement": "إعلان",
+        "blog": "مدونة",
+        "notifications": "الإشعارات"
+      },
+      "center": {
         "home": "الرئيسية",
         "branches": "فروعي",
         "children-files": "ملفات الأطفال",
@@ -648,7 +663,9 @@
         "ad-or-blog-request": "طلب إعلان أو مدونة",
         "notifications": "الإشعارات",
         "team": "فريق العمل"
-      },
+      }
+    },
+    "center": {
       "branches": {
         "title": "الفروع",
         "add": "إضافة فرع",

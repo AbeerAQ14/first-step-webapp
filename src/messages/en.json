@@ -641,8 +641,23 @@
     }
   },
   "dashboard": {
-    "center": {
-      "sidebar": {
+    "sidebar": {
+      "parent": {
+        "home": "Home",
+        "children": "My Children",
+        "bookings": "Bookings",
+        "reports": "Daily Reports"
+      },
+      "admin": {
+        "home": "Home",
+        "centers": "Nurseries & Centers",
+        "parents": "Parents",
+        "bookings": "Bookings",
+        "advertisement": "Advertisement",
+        "blog": "Blog",
+        "notifications": "Notifications"
+      },
+      "center": {
         "home": "Home",
         "branches": "My Branches",
         "children-files": "Children Files",
@@ -652,7 +667,9 @@
         "ad-or-blog-request": "Ad or Blog Request",
         "notifications": "Notifications",
         "team": "Team"
-      },
+      }
+    },
+    "center": {
       "ad-or-blog-request": {
         "title": "Advertisements",
         "request-ad": "Request Ad",

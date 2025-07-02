@@ -29,108 +29,108 @@ import { useAuthUser } from "@/store/authStore";
 
 const getCenterNavbar = (t: any) => [
   {
-    title: t("home"),
+    title: t("center.home"),
     url: "/dashboard/center",
     icon: dashboardIcons.home,
   },
   {
-    title: t("branches"),
+    title: t("center.branches"),
     url: "/dashboard/center/branches",
     icon: dashboardIcons.branches,
   },
   {
-    title: t("children-files"),
+    title: t("center.children-files"),
     url: "/dashboard/center/children-files",
     icon: dashboardIcons.files,
   },
   {
-    title: t("bookings"),
+    title: t("center.bookings"),
     url: "/dashboard/center/bookings",
     icon: dashboardIcons.bookings,
   },
   {
-    title: t("daily-reports"),
+    title: t("center.daily-reports"),
     url: "/dashboard/center/daily-reports",
     icon: dashboardIcons.reports,
   },
   // {
-  //   title: t("site-edit"),
+  //   title: t("center.site-edit"),
   //   url: "/dashboard/center/site-edit",
   //   icon: dashboardIcons.site,
   // },
   {
-    title: t("ad-or-blog-request"),
+    title: t("center.ad-or-blog-request"),
     url: "/dashboard/center/ad-or-blog-request",
     icon: dashboardIcons.request,
   },
   {
-    title: t("notifications"),
+    title: t("center.notifications"),
     url: "/dashboard/center/notifications",
     icon: dashboardIcons.notifications,
   },
   {
-    title: t("team"),
+    title: t("center.team"),
     url: "/dashboard/center/team",
     icon: dashboardIcons.team,
   },
 ];
 
-const parentNavbar = [
+const getParentNavbar = (t: any) => [
   // {
-  //   title: "الرئيسية", // Home
+  //   title: t("parent.home"),
   //   url: "/dashboard/parent",
   //   icon: dashboardIcons.home,
   // },
   {
-    title: "أطفالي", // Children
+    title: t("parent.children"),
     url: "/dashboard/parent/children",
     icon: dashboardIcons.files,
   },
   {
-    title: "الحجوزات", // Bookings
+    title: t("parent.bookings"),
     url: "/dashboard/parent/bookings",
     icon: dashboardIcons.bookings,
   },
   {
-    title: "التقارير اليومية", // Daily Reports
+    title: t("parent.reports"),
     url: "/dashboard/parent/daily-reports",
     icon: dashboardIcons.reports,
   },
 ];
 
-const adminNavbar = [
+const getAdminNavbar = (t: any) => [
   {
-    title: "الرئيسية", // Home
+    title: t("admin.home"),
     url: "/dashboard/admin",
     icon: dashboardIcons.home,
   },
   {
-    title: "الحضانات والمراكز", // Children
+    title: t("admin.centers"),
     url: "/dashboard/admin/centers",
     icon: dashboardIcons.building,
   },
   {
-    title: "أولياء الأمور", // Children
+    title: t("admin.parents"),
     url: "/dashboard/admin/parents",
     icon: dashboardIcons.person,
   },
   {
-    title: "الحجوزات", // Bookings
+    title: t("admin.bookings"),
     url: "/dashboard/admin/bookings",
     icon: dashboardIcons.bookings,
   },
   {
-    title: "إعلان", // Children
+    title: t("admin.advertisement"),
     url: "/dashboard/admin/advertisement",
     icon: dashboardIcons.request,
   },
   {
-    title: "مدونة", // Daily Reports
+    title: t("admin.blog"),
     url: "/dashboard/admin/blog",
     icon: dashboardIcons.blog,
   },
   {
-    title: "الإشعارات", // Daily Reports
+    title: t("admin.notifications"),
     url: "/dashboard/admin/notifications",
     icon: dashboardIcons.notifications,
   },
@@ -140,7 +140,7 @@ const DashboardSideBar = () => {
   const pathname = usePathname();
   const { state, setOpen } = useSidebar();
   const locale = useLocale();
-  const t = useTranslations("dashboard.center.sidebar");
+  const t = useTranslations("dashboard.sidebar");
   const isMobile = useIsMobile();
   const user = useAuthUser();
 
@@ -154,8 +154,8 @@ const DashboardSideBar = () => {
   const navbar = pathname.includes("/dashboard/center")
     ? getCenterNavbar(t)
     : pathname.includes("dashboard/admin")
-    ? adminNavbar
-    : parentNavbar;
+    ? getAdminNavbar(t)
+    : getParentNavbar(t);
 
   const basePathname = pathname.includes("/dashboard/center")
     ? "/dashboard/center"
