@@ -8,7 +8,7 @@ const SocialQR = () => {
     <section dir="ltr" className="container mx-auto px-4">
       <div className="relative max-w-3xl mx-auto">
         <div className="max-w-fit mx-auto p-8 text-center sm:absolute -top-10 right-0">
-          <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-196.26deg] rotate-z-180 rotate-y-180 absolute top-[20%] right-[70%]">
+          <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-196.26deg] rotate-z-180 rotate-y-180 absolute top-[20%] right-[70%] z-[-1]">
             <Image
               src="/assets/icons/arrow.svg"
               alt="Arrow"
@@ -16,7 +16,7 @@ const SocialQR = () => {
               height={91.82}
             />
           </div>
-          <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-248.91deg] absolute top-[120%] right-[20%] md:top-[130%] md:right-[22%] xl:top-[170%] xl:right-[4%]">
+          <div className="hidden sm:block w-52 md:w-60 xl:w-full rotate-[-248.91deg] absolute top-[120%] right-[20%] md:top-[130%] md:right-[22%] xl:top-[170%] xl:right-[4%] z-[-1]">
             <Image
               src="/assets/icons/arrow.svg"
               alt="Arrow"
