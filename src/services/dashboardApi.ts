@@ -1077,9 +1077,9 @@ export const adminService = {
 
   acceptCenter: async (centerId: string) => {
     try {
-      const response = await apiClient.post(`/dashboard/centers/${centerId}`, {
-        status: "confirmed",
-      });
+      const response = await apiClient.put(
+        `/dashboard/centers/${centerId}/confirm`
+      );
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
@@ -1088,9 +1088,9 @@ export const adminService = {
 
   rejectCenter: async (centerId: string) => {
     try {
-      const response = await apiClient.post(`/dashboard/centers/${centerId}`, {
-        status: "canceled",
-      });
+      const response = await apiClient.put(
+        `/dashboard/centers/${centerId}/reject`
+      );
       return response.data;
     } catch (error) {
       throw ApiErrorHandler.handle(error);
