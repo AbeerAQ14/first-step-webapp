@@ -168,13 +168,13 @@ export default function AdminDashboardHome() {
     }
   };
 
-  const months = Object.keys(stats.enrollments_over_time || {}).sort();
+  const months = Object.keys(stats?.enrollments_over_time || {}).sort();
   const lastThreeMonths = months.slice(-3);
 
   const rows = lastThreeMonths.map((month, index) => {
-    const currentValue = stats.enrollments_over_time?.[month] || 0;
+    const currentValue = stats?.enrollments_over_time?.[month] || 0;
     const previousValue =
-      stats.enrollments_over_time?.[months[months.length - 4 + index]] || 0;
+      stats?.enrollments_over_time?.[months[months.length - 4 + index]] || 0;
     const isUp = currentValue > previousValue;
 
     return {

@@ -1136,6 +1136,12 @@
           "errorLoading": "An error occurred while loading data",
           "reservations": "Reservations"
         }
+      },
+      "bookings": {
+        "title": "Bookings",
+        "loading": "Loading...",
+        "errorLoading": "An error occurred while loading data. Please try again later.",
+        "noBookings": "No bookings available."
       }
     },
     "header": {
