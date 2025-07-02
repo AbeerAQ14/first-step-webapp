@@ -17,6 +17,7 @@ export interface CenterCardType {
   }>;
   childrenCount: number;
   bookingsCount: number;
+  status: string;
 }
 
 export interface BranchCardType {
@@ -47,6 +48,7 @@ const mapCenterData = (apiData: any, t: any): CenterCardType => {
         ]
       : [apiData.accepted_ages],
     logo: apiData.logo,
+    status: apiData.status,
   };
 };
 

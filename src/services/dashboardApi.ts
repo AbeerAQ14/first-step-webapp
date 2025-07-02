@@ -1074,6 +1074,28 @@ export const adminService = {
       throw ApiErrorHandler.handle(error);
     }
   },
+
+  acceptCenter: async (centerId: string) => {
+    try {
+      const response = await apiClient.post(`/dashboard/centers/${centerId}`, {
+        status: "confirmed",
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
+
+  rejectCenter: async (centerId: string) => {
+    try {
+      const response = await apiClient.post(`/dashboard/centers/${centerId}`, {
+        status: "canceled",
+      });
+      return response.data;
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  },
 };
 
 export const sidebarService = {
