@@ -28,7 +28,7 @@ export default async function BlogPage({
       </div>
 
       <div className="mt-9 container px-4 mx-auto flex flex-col gap-6 lg:flex-row xl:gap-12 2xl:gap-14.5">
-        <div className="flex-[3]" dir="rtl">
+        <div className="flex-[3]">
           <div className="prose prose-lg mx-auto">
             <h1 className="text-2xl prose prose-lg">
               {typeof blog.title === "string"
