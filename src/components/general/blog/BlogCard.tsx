@@ -23,7 +23,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
         />
       </div>
 
-      <Link href={`blog/${blog.id}`} className="text-primary font-bold">
+      <Link href={`/blog/${blog.id}`} className="text-primary font-bold">
         {typeof blog.title === "string" ? blog.title : blog.title?.[locale]}
       </Link>
 
