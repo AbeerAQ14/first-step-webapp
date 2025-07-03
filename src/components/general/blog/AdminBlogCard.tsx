@@ -6,9 +6,9 @@ import { useTranslations, useLocale } from "next-intl";
 
 interface AdminBlogCardProps {
   blog: Blog;
-  onAccept: () => void;
-  onReject: () => void;
-  loading: boolean;
+  onAccept?: () => void;
+  onReject?: () => void;
+  loading?: boolean;
 }
 
 const AdminBlogCard = ({

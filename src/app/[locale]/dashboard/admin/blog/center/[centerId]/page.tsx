@@ -55,12 +55,15 @@ export default function CenterBlogsPage({
                   blog={blog}
                   onAccept={() => alert(`${t("acceptBlog")}: ${blog.title}`)}
                   onReject={() => alert(`${t("rejectBlog")}: ${blog.title}`)}
+                  loading={false}
                 />
               ))}
           </div>
         </div>
         <div className="space-y-4">
-          <p className="heading-4 text-primary font-medium">{t("acceptedBlogs")}</p>
+          <p className="heading-4 text-primary font-medium">
+            {t("acceptedBlogs")}
+          </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogs
               .map(mapBlogToCard)
@@ -71,7 +74,9 @@ export default function CenterBlogsPage({
           </div>
         </div>
         <div className="space-y-4">
-          <p className="heading-4 text-primary font-medium">{t("rejectedBlogs")}</p>
+          <p className="heading-4 text-primary font-medium">
+            {t("rejectedBlogs")}
+          </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogs
               .map(mapBlogToCard)

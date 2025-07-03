@@ -242,9 +242,11 @@
 
 @layer base {
   * {
+    font-family: var(--font-primary), sans-serif;
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: var(--font-primary), sans-serif;
     @apply bg-background text-foreground max-w-screen overflow-x-hidden;
   }
   section:not([aria-label="Notifications alt+T"]) {
