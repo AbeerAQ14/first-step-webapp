@@ -302,7 +302,7 @@ export const blogService = {
             process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
         },
         next: {
-          revalidate: 86400,
+          revalidate: 1,
         },
       });
 
@@ -334,7 +334,7 @@ export const blogService = {
               process.env.NEXT_PUBLIC_X_AUTHORIZATION_SECRET || "",
           },
           next: {
-            revalidate: 86400,
+            revalidate: 1,
           },
         }
       );

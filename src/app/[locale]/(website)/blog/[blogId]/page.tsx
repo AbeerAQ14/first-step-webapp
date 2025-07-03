@@ -3,7 +3,7 @@ import { blogService } from "@/services/api";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
-export const revalidate = 86400;
+// export const revalidate = 86400;
 
 export default async function BlogPage({
   params,
